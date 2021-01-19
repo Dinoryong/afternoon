@@ -5,13 +5,15 @@ const colors = {
   gray: {
     default: "#d1d1d1",
     light: "#eeeeee",
-    dark: "#767676",
+    dark: "#a0a0a0",
+    darker: "#767676",
   },
   green: {
     default: "#3CB462",
+    dark: "#37A866",
   },
   white: {
-    default: "FFFFFF",
+    default: "#FFFFFF",
   },
 };
 
