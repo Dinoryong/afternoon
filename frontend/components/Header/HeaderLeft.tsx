@@ -3,6 +3,7 @@ import styled from "@emotion/styled";
 import Image from "next/image";
 import Link from "next/link";
 import Button from "../Button";
+import color from "../../styles/theme";
 
 const Container = styled.div`
   display: flex;
@@ -26,9 +27,8 @@ const TitleBox = styled.div`
   display: flex;
   flex-direction: column;
   margin-left: 12px;
-  margin-right: 18px;
   min-width: 134px;
-  color: #111111;
+  color: ${color.black.default};
 `;
 
 const TitleText = styled.a`
@@ -49,15 +49,15 @@ const SearchBox = styled.div`
   height: 38px;
   width: 100%;
   max-width: 800px;
-  background-color: #eee;
+  background-color: ${color.gray.light};
   :not(:focus-within) {
     :hover {
-      border-color: #d1d1d1;
+      border-color: ${color.gray.default};
     }
   }
   :focus-within {
     background-color: white;
-    border-color: #d1d1d1;
+    border-color: ${color.gray.default};
   }
   transition: all 0.2s;
 `;
@@ -81,7 +81,7 @@ const SearchInput = styled("input")`
     outline: none;
   }
   ::placeholder {
-    color: #767676;
+    color: ${color.gray.dark};
   }
 `;
 
