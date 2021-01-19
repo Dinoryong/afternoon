@@ -4,14 +4,28 @@ import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
+import org.hibernate.annotations.CreationTimestamp;
+import org.hibernate.annotations.UpdateTimestamp;
 
 import javax.persistence.*;
+import java.time.LocalDate;
 
 @Entity
 @Getter @NoArgsConstructor @AllArgsConstructor  @Builder
 public class Posts {
-    @Column(name = "posts_id")
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
-    private Long id;
+    private Long postsId;
+    private String postsTitle;
+    private String postsContents;
+    private String postsPhoto;
+    @CreationTimestamp
+    private LocalDate postsWriteTime;
+    @UpdateTimestamp
+    private LocalDate postsUpdateTime;
+    //private List pins;
+    private String postsLocation;
+    private int postsLike;
+    //private List tags;
+
 }
