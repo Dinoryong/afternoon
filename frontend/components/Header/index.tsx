@@ -1,6 +1,7 @@
 import React from "react";
 import styled from "@emotion/styled";
 import HeaderLeft from "./HeaderLeft";
+import HeaderCenter from "./HeaderCenter";
 import HeaderRight from "./HeaderRight";
 
 const Container = styled.div`
@@ -30,6 +31,7 @@ const index = () => {
     <Container>
       <Wrapper>
         <HeaderLeft />
+        <HeaderCenter />
         <HeaderRight />
       </Wrapper>
     </Container>

@@ -48,7 +48,7 @@ const SearchBox = styled.div`
   border: 1px solid transparent;
   height: 38px;
   width: 100%;
-  max-width: 800px;
+  max-width: 700px;
   background-color: ${color.gray.light};
   :not(:focus-within) {
     :hover {
@@ -59,7 +59,7 @@ const SearchBox = styled.div`
     background-color: white;
     border-color: ${color.gray.default};
   }
-  transition: all 0.2s;
+  transition: all 0.3s;
 `;
 
 const SearchIcon = styled.div`
@@ -103,13 +103,19 @@ const HeaderLeft = () => {
           </TitleBox>
         </LogoBox>
       </Link>
-      <Button btnText="내 피드" />
+      <Button
+        btnText="내 피드"
+        btnWidth="80px"
+        btnMarginLeft="16px"
+        btnMarginRight="20px"
+      />
       <SearchBox>
         <SearchIcon>
           <Image
             src="/assets/icons/search_black_light.png"
             layout="fill"
             objectFit="contain"
+            quality="100"
           />
         </SearchIcon>
         <SearchInput placeholder="태그 또는 사용자를 검색해보세요!" />
