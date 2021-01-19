@@ -9,6 +9,7 @@ import org.hibernate.annotations.CreationTimestamp;
 import org.hibernate.annotations.UpdateTimestamp;
 
 import javax.persistence.*;
+import javax.transaction.Transactional;
 import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
@@ -19,22 +20,42 @@ public class Account {
 
     @Id @GeneratedValue(strategy = GenerationType.AUTO)
     private Long accountId;
-    private String accountNickname;
 
-    private String accountEmail;
+    //기본 정보
     private String accountName;
-    private Long accountAuthNum;
+
+    //unique key
+    @Column(unique = true)
+    private String accountNickname;
+    @Column(unique = true)
+    private String accountEmail;
+
+    //시간 관련
     @CreationTimestamp
     private LocalDate accountCreateDate;
     @UpdateTimestamp
     private LocalDate accountUpdateDate;
-    private Boolean accountAuthFlag;
-//    @ManyToMany
-//    @Builder.Default
-//    private List<Account> accountFollowing=new ArrayList<>();
-//    @ManyToMany(mappedBy = "following")
-//    @Builder.Default
-//    private List<Account> accountFollower=new ArrayList<>();
+
+    //인증
+    @Builder.Default
+    private Long accountAuthNum=0L;
+
+    //임시 고객
+    @Builder.Default
+    @Enumerated(EnumType.STRING)
+    private Role accountRole = Role.TEMPORARY;
+
+    @Builder.Default
+    private String accountDesc="";
+
+    @Builder.Default
+    @ManyToMany
+    private List<Account> following=new ArrayList<>();
+
+    @Builder.Default
+    @ManyToMany(mappedBy = "following")
+    private List<Account> follower=new ArrayList<>();
+
     //private List<Tag> tags;
 //    @Builder
 //    public Account(String accountNickname,String accountEmail,String accountName,Long accountAuthNum){
@@ -43,4 +64,8 @@ public class Account {
 //        this.accountName=accountName;
 //    }
 
+    public void followAccount(Account account){
+        this.getFollowing().add(account);
+        account.getFollower().add(this);
+    }
 }
