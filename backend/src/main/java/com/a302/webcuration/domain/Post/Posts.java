@@ -1,13 +1,14 @@
 package com.a302.webcuration.domain.Post;
 
 import lombok.AllArgsConstructor;
+import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 
 import javax.persistence.*;
 
 @Entity
-@Getter @NoArgsConstructor @AllArgsConstructor
+@Getter @NoArgsConstructor @AllArgsConstructor  @Builder
 public class Posts {
     @Column(name = "posts_id")
     @Id
