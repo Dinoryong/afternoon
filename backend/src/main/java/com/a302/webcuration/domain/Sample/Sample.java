@@ -17,6 +17,8 @@ public class Sample {
 
     private String userName;
 
+    private String userEmail;
+
     private int userAge;
 
 }

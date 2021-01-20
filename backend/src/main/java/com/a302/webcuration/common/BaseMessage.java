@@ -1,12 +1,12 @@
 package com.a302.webcuration.common;
 
 import lombok.AllArgsConstructor;
-import lombok.Data;
+import lombok.Getter;
 
-@Data
+@AllArgsConstructor @Getter
 public class BaseMessage {
 
     private BaseStatus status;
-    private String message;
-    private Object data;
+    private Object Info;
+
 }

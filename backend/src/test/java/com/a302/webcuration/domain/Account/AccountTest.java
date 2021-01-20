@@ -13,7 +13,7 @@ public class AccountTest extends BaseDomainTest {
     {
         //Given
         //우석
-        String accountName = "dntjr";
+        String accountName = "우석";
         String accountNickname = "dntjrrr";
         String accountEmail = "dntjr11";
 
@@ -26,7 +26,7 @@ public class AccountTest extends BaseDomainTest {
         accountRepository.save(account);
         //재웅
         //Given
-        accountName = "wodnd";
+        accountName = "재웅";
         accountNickname = "wodnddd";
         accountEmail = "wownd11";
 
@@ -39,7 +39,7 @@ public class AccountTest extends BaseDomainTest {
         accountRepository.save(account2);
         //재욱
         //Given
-        accountName = "wodnr";
+        accountName = "재욱";
         accountNickname = "wodnrrr";
         accountEmail = "wodnrrr";
 
