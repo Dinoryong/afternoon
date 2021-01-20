@@ -10,15 +10,21 @@ const Container = styled.div`
   border-left: 1px solid ${color.gray.default};
 `;
 
-const HeaderRight = () => {
+type HeaderProps = {
+  routerPath?: String;
+};
+
+const HeaderRight = ({ routerPath }: HeaderProps) => {
   return (
     <Container>
       <Button
         btnText="로그인"
         btnWidth="60px"
-        btnBorderColor="transparent"
         btnHoverBorderColor="transparent"
         btnMarginLeft="0px"
+        btnBorderColor="transparent"
+        btnBgColor={routerPath === "/" ? "transparent" : null}
+        btnTextColor={routerPath === "/" ? "white" : null}
       ></Button>
       <Button
         btnText="회원가입"

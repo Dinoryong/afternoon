@@ -4,6 +4,7 @@ import Image from "next/image";
 import Link from "next/link";
 import Button from "../Button";
 import color from "../../styles/theme";
+import { route } from "next/dist/next-server/server/router";
 
 const Container = styled.div`
   display: flex;
@@ -72,7 +73,7 @@ const SearchIcon = styled.div`
   cursor: pointer;
 `;
 
-const SearchInput = styled("input")`
+const SearchInput = styled("input")<HeaderProps>`
   border: 0px;
   background-color: transparent;
   width: 100%;
@@ -81,23 +82,46 @@ const SearchInput = styled("input")`
     outline: none;
   }
   ::placeholder {
-    color: ${color.gray.dark};
+    color: ${(props) =>
+      props.routerPath === "/" ? color.white.default : color.gray.dark};
   }
 `;
 
-const HeaderLeft = () => {
+type HeaderProps = {
+  routerPath?: String;
+};
+
+const HeaderLeft = ({ routerPath }: HeaderProps) => {
+  const props = { routerPath };
+
+  const titleBoxStyle = {
+    color: routerPath === "/" ? color.white.default : color.black.default,
+  };
+
+  const searchBoxStyle = {
+    backgroundColor: routerPath === "/" ? "transparent" : color.gray.light,
+  };
+
+  const searchInputStyle = {
+    color: routerPath === "/" ? color.white.default : null,
+  };
+
   return (
     <Container>
       <Link href="/">
         <LogoBox>
           <LogoImage>
             <Image
-              src="/assets/logos/pinset_logo_black.png"
+              src={
+                routerPath === "/"
+                  ? "/assets/logos/pinset_logo_white.png"
+                  : "/assets/logos/pinset_logo_black.png"
+              }
               layout="fill"
               objectFit="contain"
             />
           </LogoImage>
-          <TitleBox>
+          <TitleBox style={titleBoxStyle}>
             <TitleText>PINSET</TitleText>
             <SloganText>Share Pins from Photos</SloganText>
           </TitleBox>
@@ -108,17 +132,29 @@ const HeaderLeft = () => {
         btnWidth="80px"
         btnMarginLeft="16px"
         btnMarginRight="20px"
+        btnHoverBorderColor={routerPath === "/" ? "transparent" : null}
+        btnBgColor={routerPath === "/" ? "transparent" : null}
+        btnTextColor={routerPath === "/" ? "white" : null}
+        btnBorderColor={routerPath === "/" ? "white" : null}
       />
-      <SearchBox>
+      <SearchBox style={searchBoxStyle}>
         <SearchIcon>
           <Image
-            src="/assets/icons/search_black_light.png"
+            src={
+              routerPath === "/"
+                ? "/assets/icons/search_white.png"
+                : "/assets/icons/search_black_light.png"
+            }
             layout="fill"
             objectFit="contain"
             quality="100"
           />
         </SearchIcon>
-        <SearchInput placeholder="태그 또는 사용자를 검색해보세요!" />
+        <SearchInput
+          {...props}
+          style={searchInputStyle}
+          placeholder="태그 또는 사용자를 검색해보세요!"
+        />
       </SearchBox>
     </Container>
   );
