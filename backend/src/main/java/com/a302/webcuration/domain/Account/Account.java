@@ -53,7 +53,11 @@ public class Account {
 
     @Builder.Default
     @ManyToMany(fetch = FetchType.EAGER)
+<<<<<<< backend/src/main/java/com/a302/webcuration/domain/Account/Account.java
+    private List<Account> following=new ArrayList<>();
+=======
     private Set<Account> following=new HashSet<>();
+>>>>>>> backend/src/main/java/com/a302/webcuration/domain/Account/Account.java
 
     @Builder.Default
     @ManyToMany(mappedBy = "following")
