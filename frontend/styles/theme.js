@@ -11,8 +11,11 @@ const colors = {
     default: "#3CB462",
   },
   white: {
-    default: "FFFFFF",
+    default: "#FFFFFF",
   },
+  red: {
+    default: "#DD2222",
+  }
 };
 
 export default colors;
