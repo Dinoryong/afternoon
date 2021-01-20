@@ -12,29 +12,53 @@ const Container = styled.div`
   min-width: 170px;
 `;
 
-const NoticeIcon = styled.div`
+const NoticeIcon = styled.div<HeaderProps>`
   position: relative;
   display: flex;
   justify-content: center;
   align-items: center;
   padding: 5px;
   cursor: pointer;
+  border: 1px solid transparent;
   border-radius: 50%;
   :hover {
-    border-color: ${color.black.default};
+    border-color: ${(props) =>
+      props.routerPath === "/" ? color.white.default : "transparent"};
+    /* background-color: ${(props) =>
+      props.routerPath === "/" ? color.gray.light : "transparent"}; */
   }
 `;
 
-const HeaderRight = () => {
+type HeaderProps = {
+  routerPath?: String;
+};
+
+const HeaderRight = ({ routerPath }: HeaderProps) => {
   const [noticeImg, setNoticeImg] = useState<string>(
-    "/assets/icons/bell_black_light.png"
+    routerPath === "/"
+      ? "/assets/icons/bell_white.png"
+      : "/assets/icons/bell_black_light.png"
   );
 
   const onMouseOver = (): void => {
-    setNoticeImg("/assets/icons/bell_black.png");
+    setNoticeImg(
+      routerPath === "/"
+        ? "/assets/icons/bell_white.png"
+        : "/assets/icons/bell_black.png"
+    );
   };
   const onMouseLeave = (): void => {
-    setNoticeImg("/assets/icons/bell_black_light.png");
+    setNoticeImg(
+      routerPath === "/"
+        ? "/assets/icons/bell_white.png"
+        : "/assets/icons/bell_black_light.png"
+    );
+  };
+
+  const props = { routerPath };
+
+  const noticeIconStyle = {
+    borderRadius: "50%",
   };
 
   return (
@@ -44,11 +68,18 @@ const HeaderRight = () => {
         btnWidth="80px"
         btnMarginLeft="20px"
         btnMarginRight="20px"
+        btnHoverBorderColor={routerPath === "/" ? "transparent" : null}
+        btnBgColor={routerPath === "/" ? "transparent" : null}
+        btnTextColor={routerPath === "/" ? "white" : null}
+        btnBorderColor={routerPath === "/" ? "white" : null}
       ></Button>
-      <NoticeIcon>
+      <NoticeIcon
+        onMouseOver={onMouseOver}
+        onMouseLeave={onMouseLeave}
+        {...props}
+        style={noticeIconStyle}
+      >
         <Image
-          onMouseOver={onMouseOver}
-          onMouseLeave={onMouseLeave}
           src={noticeImg}
           width="20"
           height="20"

@@ -3,8 +3,10 @@ import styled from "@emotion/styled";
 import HeaderLeft from "./HeaderLeft";
 import HeaderCenter from "./HeaderCenter";
 import HeaderRight from "./HeaderRight";
+import { useRouter } from "next/router";
 
 const Container = styled.div`
+  z-index: 10;
   position: fixed;
   justify-content: center;
   display: flex;
@@ -23,16 +25,29 @@ const Wrapper = styled.div`
   justify-content: space-between;
   align-items: center;
   padding: 0px 20px;
-  color: #767676;
 `;
 
 const index = () => {
+  const router = useRouter();
+  const routerPath = router.pathname;
+
+  console.log(routerPath);
+
+  const containerStyle = {
+    display: routerPath === "/signup" ? "none" : "flex",
+    boxShadow:
+      routerPath === "/"
+        ? "none"
+        : "0px 4px 12px rgba(0, 0, 0, 0.08), 0px 0px 1px rgba(1, 0, 0, 0.1)",
+    backgroundColor: routerPath === "/" ? "transparent" : "white",
+  };
+
   return (
-    <Container>
+    <Container style={containerStyle}>
       <Wrapper>
-        <HeaderLeft />
-        <HeaderCenter />
-        <HeaderRight />
+        <HeaderLeft routerPath={routerPath} />
+        <HeaderCenter routerPath={routerPath} />
+        <HeaderRight routerPath={routerPath} />
       </Wrapper>
     </Container>
   );

@@ -7,7 +7,7 @@ const Container = styled.div`
   width: 100%;
   justify-content: center;
   align-items: center;
-  padding-top: 62px;
+  background-color: rgba(0, 0, 0, 0.3);
 `;
 
 const index = () => {
