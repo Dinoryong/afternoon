@@ -25,7 +25,22 @@ public class AccountControllerTest extends BaseControllerTest {
                 .content(objectMapper.writeValueAsString(followRequest)))
                 .andExpect(status().isOk())
                 .andDo(print());
-
     }
+
+    @Test
+    public void 로그인_성공() throws Exception {
+        //When
+        AccountDto.FollowRequest followRequest = AccountDto.FollowRequest.builder()
+                .aId(1L)
+                .bId(2L)
+                .build();
+
+        mockMvc.perform(post("/api/account/follow")
+                .contentType(MediaType.APPLICATION_JSON)
+                .content(objectMapper.writeValueAsString(followRequest)))
+                .andExpect(status().isOk())
+                .andDo(print());
+    }
+
 
 }

@@ -57,46 +57,5 @@ public class SampleController {
 
     }
 
-    @PostMapping("/1")
-    public ResponseEntity regSampleAddMessage(@RequestBody @Valid SampleDto.RegSampleRequest regSampleRequest, Errors errors)
-    {
 
-        BaseMessage message = new BaseMessage();
-        //데이터 바인딩 과정에서 error 발생(ex.id 같은 입력될 수 없는 값이 들어와서 데이터를 바인딩할 수 없는 경우)
-        if(errors.hasErrors())
-        {
-            message.setStatus(BaseStatus.NOT_FOUND);
-            message.setMessage("실패");
-            message.setData(errors);
-
-            return new ResponseEntity(message,HttpStatus.BAD_REQUEST);
-        }
-
-        //유효성 검사
-        sampleValidator.validate(regSampleRequest,errors);
-
-        //유효하지 않은 값이 입력되는 경우 (ex. 나이에 -1값이 들어오는 경우) + xxValidator 에서 체크한다.
-        if(errors.hasErrors())
-        {
-            message.setStatus(BaseStatus.NOT_FOUND);
-            message.setMessage("실패");
-            message.setData(errors);
-            return new ResponseEntity(message,HttpStatus.BAD_REQUEST);
-        }
-
-        //DTO -> Entity
-        Sample sample = regSampleRequest.toEntity();
-
-        //Repo에 저장
-        this.sampleRepository.save(sample);
-
-
-        message.setStatus(BaseStatus.OK);
-        message.setMessage("성공");
-        message.setData(sample);
-
-        //정상 작동 메세지 전달
-        return new ResponseEntity(message,HttpStatus.OK);
-
-    }
 }

@@ -49,7 +49,7 @@ public class Account {
     private String accountDesc="";
 
     @Builder.Default
-    @ManyToMany
+    @ManyToMany(fetch = FetchType.EAGER)
     private List<Account> following=new ArrayList<>();
 
     @Builder.Default
