@@ -49,10 +49,4 @@ dependencies {
 
     //ModelMapper
     implementation group: 'org.modelmapper', name: 'modelmapper', version: '2.3.8'
-
-    //JWT
-    implementation 'io.jsonwebtoken:jjwt:0.9.1'
-
-    //Mail
-    implementation 'org.springframework.boot:spring-boot-starter-mail'
 }

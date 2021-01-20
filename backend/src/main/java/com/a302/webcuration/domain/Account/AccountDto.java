@@ -45,22 +45,6 @@ public class AccountDto {
                     .build();
         }
     }
-<<<<<<< backend/src/main/java/com/a302/webcuration/domain/Account/AccountDto.java
-
-    @Getter @Setter @Builder
-    public static class LoginAccountRequest {
-        @NotNull
-        @Email
-        private String accountEmail;
-
-        public Account toEntity()
-        {
-            return Account.builder()
-                    .accountEmail(this.accountEmail)
-                    .build();
-        }
-    }
-=======
     @Getter @Setter
     //계정 생성 결과
     public static class CreateAccountResponse
@@ -79,5 +63,4 @@ public class AccountDto {
 
     }
 
->>>>>>> backend/src/main/java/com/a302/webcuration/domain/Account/AccountDto.java
 }
