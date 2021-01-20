@@ -14,4 +14,8 @@ public enum BaseStatus {
     int httpStatusCode;
     String httpStatus;
 
+<<<<<<< backend/src/main/java/com/a302/webcuration/common/BaseStatus.java
 }
+=======
+}
+>>>>>>> backend/src/main/java/com/a302/webcuration/common/BaseStatus.java

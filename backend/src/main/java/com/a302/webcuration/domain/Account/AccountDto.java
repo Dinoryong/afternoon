@@ -1,18 +1,20 @@
 package com.a302.webcuration.domain.Account;
 
-import com.a302.webcuration.domain.Sample.Sample;
 import lombok.Builder;
 import lombok.Getter;
 import lombok.Setter;
+import org.modelmapper.ModelMapper;
 
 import javax.validation.constraints.Email;
 import javax.validation.constraints.NotNull;
+import java.time.LocalDate;
 
 public class AccountDto {
 
     @Getter
     @Setter
     @Builder
+    //계정 팔로잉
     public static class FollowRequest {
         @NotNull
         private Long aId;
@@ -43,6 +45,7 @@ public class AccountDto {
                     .build();
         }
     }
+<<<<<<< backend/src/main/java/com/a302/webcuration/domain/Account/AccountDto.java
 
     @Getter @Setter @Builder
     public static class LoginAccountRequest {
@@ -57,4 +60,24 @@ public class AccountDto {
                     .build();
         }
     }
+=======
+    @Getter @Setter
+    //계정 생성 결과
+    public static class CreateAccountResponse
+    {
+        private Long accountId;
+
+        private String accountName;
+        private String accountNickname;
+        private String accountEmail;
+
+        private LocalDate accountCreateDate;
+        private LocalDate accountUpdateDate;
+
+        private Role accountRole;
+        private String accountDesc;
+
+    }
+
+>>>>>>> backend/src/main/java/com/a302/webcuration/domain/Account/AccountDto.java
 }
