@@ -6,8 +6,6 @@ import com.a302.webcuration.domain.Account.AccountRepository;
 import lombok.RequiredArgsConstructor;
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.mail.SimpleMailMessage;
-import org.springframework.mail.javamail.JavaMailSender;
 import org.springframework.stereotype.Service;
 
 import javax.transaction.Transactional;
@@ -30,9 +28,6 @@ public class AccountService {
         return accounts;
     }
 
-    @Autowired
-    private JavaMailSender mailSender;
-
     @Transactional
     public void follow(AccountDto.FollowRequest followRequest){
         Account aAccount= accountRepository.findById(followRequest.getAId())
@@ -45,19 +40,4 @@ public class AccountService {
 
         bAccount.followAccount(aAccount);
     }
-
-    public void sendMail(String userpwd, String email) {
-        // TODO Auto-generated method stub
-        SimpleMailMessage message = new SimpleMailMessage();
-        message.setTo(email);
-        message.setSubject("HappyHouse 비밀번호찾기 안내 메일입니다.");
-        message.setText("비밀번호는 "+userpwd+"입니다.");
-        System.out.println("message "+ message);
-        mailSender.send(message);
-    }
-    //수정 필요
-    public Account login(String accountEmail) {
-        return accountRepository.findByAccountEmail(accountEmail);
-    }
-
 }

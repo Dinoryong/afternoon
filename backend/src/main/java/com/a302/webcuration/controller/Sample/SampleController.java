@@ -58,9 +58,6 @@ public class SampleController {
 
     }
 
-<<<<<<< backend/src/main/java/com/a302/webcuration/controller/Sample/SampleController.java
-
-=======
     @PostMapping("/1")
     public ResponseEntity regSampleAddMessage(@RequestBody @Valid SampleDto.RegSampleRequest regSampleRequest, Errors errors)
     {
@@ -89,5 +86,4 @@ public class SampleController {
         return new ResponseEntity(new BaseMessage(BaseStatus.CREATED,sample),HttpStatus.CREATED);
 
     }
->>>>>>> backend/src/main/java/com/a302/webcuration/controller/Sample/SampleController.java
 }
