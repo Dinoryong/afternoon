@@ -1,6 +1,7 @@
 package com.a302.webcuration.domain.Account;
 
 import com.a302.webcuration.domain.Tag.Tag;
+import jdk.nashorn.internal.ir.annotations.Ignore;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Getter;
@@ -12,7 +13,9 @@ import javax.persistence.*;
 import javax.transaction.Transactional;
 import java.time.LocalDate;
 import java.util.ArrayList;
+import java.util.HashSet;
 import java.util.List;
+import java.util.Set;
 
 @Entity
 @Getter @NoArgsConstructor @AllArgsConstructor @Builder
@@ -49,12 +52,12 @@ public class Account {
     private String accountDesc="";
 
     @Builder.Default
-    @ManyToMany
-    private List<Account> following=new ArrayList<>();
+    @ManyToMany(fetch = FetchType.EAGER)
+    private Set<Account> following=new HashSet<>();
 
     @Builder.Default
     @ManyToMany(mappedBy = "following")
-    private List<Account> follower=new ArrayList<>();
+    private Set<Account> follower=new HashSet<>();
 
     //private List<Tag> tags;
 //    @Builder

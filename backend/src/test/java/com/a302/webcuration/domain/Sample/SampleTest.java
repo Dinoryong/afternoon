@@ -13,7 +13,7 @@ import static org.junit.Assert.*;
 
 @SpringBootTest
 @RunWith(SpringRunner.class)
-@ActiveProfiles("test")
+//@ActiveProfiles("test")
 public class SampleTest {
 
     @Autowired
@@ -31,10 +31,12 @@ public class SampleTest {
         //Given
         String name = "choi1";
         int age = 11;
+        String email = "12312";
 
         Sample sample = Sample.builder()
                 .userName(name)
                 .userAge(age)
+                .userEmail(email)
                 .build();
 
         sampleRepository.save(sample);
