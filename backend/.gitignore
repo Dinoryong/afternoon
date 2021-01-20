@@ -38,3 +38,6 @@ out/
 
 # etc
 desktop.ini
+
+# properties
+**/*.properties
