@@ -1,5 +1,6 @@
 import React, { useEffect, useState } from "react";
 import Button from "../../components/ExampleButton";
+import LoginModal from "../../components/LoginModal";
 import styled from "@emotion/styled";
 
 const Container = styled.div`
@@ -46,6 +47,7 @@ const index = () => {
     <Container style={{ height: windowHeight }}>
       <BgOpacityFrame></BgOpacityFrame>
       <Content>안녕하세요</Content>
+      <LoginModal></LoginModal>
     </Container>
   );
 };

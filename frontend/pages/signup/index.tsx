@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from "react";
 import styled from "@emotion/styled";
-import Modal from "../../components/LoginModal";
+import SignupModal from "../../components/SignupModal";
 import Image from "next/image";
 // import Button from "../../components/Buttons"
 
@@ -158,8 +158,8 @@ const index = () => {
 						<TextBox3>"amy"님이 3년 전에 업로드한 사진입니다</TextBox3>
 					</MiniBox3>
 				</InnerBox1>
-        <InnerBox2>
-					<Modal></Modal>
+        		<InnerBox2>
+					<SignupModal></SignupModal>
 				</InnerBox2>
       </Content>
     </Container>

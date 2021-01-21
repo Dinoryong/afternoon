@@ -4,7 +4,7 @@ import styled from "@emotion/styled";
 import color from "../../styles/theme";
 import Image from "next/image";
 import UserModalTop from "../UserModal/UserModalTop";
-import LoginMiddle from "./LoginMiddle";
+import SignupMiddle from "./SignupMiddle";
 import UserModalBottom from "../UserModal/UserModalBottom";
 import UserModalFoot from "../UserModal/UserModalFoot";
 
@@ -27,12 +27,12 @@ const index = () => {
   return (
     <Container>
       <UserModalTop></UserModalTop>
-      <LoginMiddle></LoginMiddle>
+      <SignupMiddle></SignupMiddle>
       <UserModalBottom
-        bottomText="다른 SNS계정으로 로그인하기"
-        snsText1="Facebook으로 로그인"
-        snsText2="카카오톡으로 로그인"
-        snsText3="Google로 로그인"
+        bottomText="다른 SNS계정으로 가입하기"
+        snsText1="Facebook으로 가입하기"
+        snsText2="카카오톡으로 가입하기"
+        snsText3="Google로 가입하기"
       ></UserModalBottom>
       <UserModalFoot footText="계정이 없으신가요? 회원가입하기"></UserModalFoot>
     </Container>
