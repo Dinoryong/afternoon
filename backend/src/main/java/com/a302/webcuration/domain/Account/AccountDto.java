@@ -104,4 +104,10 @@ public class AccountDto {
 
     }
 
+    @Getter @Setter @RequiredArgsConstructor
+    //팔로워
+    public static class LoginRequest{
+        private String accountEmail;
+    }
+
 }

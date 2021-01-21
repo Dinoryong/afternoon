@@ -28,7 +28,7 @@ public class AccountTest extends BaseDomainTest {
         //Given
         accountName = "재웅";
         accountNickname = "wodnddd";
-        accountEmail = "wownd11";
+        accountEmail = "jason967@naver.com";
 
         Account account2 = Account.builder()
                 .accountName(accountName)

@@ -33,7 +33,7 @@ public class AccountControllerTest extends BaseControllerTest {
     }
 
     @Test
-    public void Account_proflie_조회_성공() throws Exception {
+    public void Account_profile_조회_성공() throws Exception {
 
         Long id = 1L;
         mockMvc.perform(get("/api/account/"+Long.toString(id))
@@ -44,8 +44,6 @@ public class AccountControllerTest extends BaseControllerTest {
 
     @Test
     public void Account_조회_성공() throws Exception {
-
-
         mockMvc.perform(get("/api/account")
                 .contentType(MediaType.APPLICATION_JSON))
                 .andExpect(status().isOk())
