@@ -49,7 +49,7 @@ const SearchBox = styled.div`
   border: 1px solid transparent;
   height: 38px;
   width: 100%;
-  max-width: 700px;
+  /* max-width: 700px; */
   background-color: ${color.gray.light};
   :not(:focus-within) {
     :hover {

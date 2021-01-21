@@ -20,7 +20,7 @@ const Container = styled.div`
 const Wrapper = styled.div`
   display: flex;
   width: 100%;
-  max-width: 1280px;
+  /* max-width: 1280px; */
   height: 100%;
   justify-content: space-between;
   align-items: center;
