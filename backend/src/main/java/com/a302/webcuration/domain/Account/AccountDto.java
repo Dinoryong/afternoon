@@ -115,4 +115,10 @@ public class AccountDto {
         private String accountAuthNum;
     }
 
+    @Getter @Setter @RequiredArgsConstructor
+    public static class AccountInfoInHeader{
+        private Long accountId;
+        private String accountEmail;
+    }
+
 }

@@ -33,7 +33,10 @@ public class AccountController {
     public static final Logger logger = LoggerFactory.getLogger(AccountController.class);
     private final ModelMapper modelMapper;
 
-    @PostMapping
+
+    //---------------------------------- 회원 ------------------------------------------------
+
+    @PostMapping("/signup")
     public ResponseEntity createAccount(@RequestBody @Valid AccountDto.CreateAccountRequest createAccountRequest, Errors errors)
     {
         if(errors.hasErrors())
@@ -48,7 +51,7 @@ public class AccountController {
     }
 
     @GetMapping("/{id}")
-    public ResponseEntity createAccount(@PathVariable Long id, Errors errors)
+    public ResponseEntity retrieveAccountById(@PathVariable Long id, Errors errors)
     {
         if(errors.hasErrors())
         {
@@ -68,6 +71,21 @@ public class AccountController {
         accountService.follow(followRequest);
         return ResponseEntity.ok().build();
     }
+
+
+    //-------------------------------------- 로그인 -----------------------------------------------------
+
+
+    @GetMapping("/relogin")
+    public ResponseEntity relogin(@RequestHeader(value = "Authorization") String token)
+    {
+        //System.out.println(token);
+        Object o =  accountService.decryptToken(token);
+        logger.info(o.toString());
+        return ResponseEntity.ok().build();
+    }
+
+
 
     @PostMapping("/login")
     public ResponseEntity login(@RequestBody AccountDto.LoginRequest loginRequest) {
