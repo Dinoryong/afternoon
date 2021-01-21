@@ -45,6 +45,7 @@ public class AccountControllerTest extends BaseControllerTest {
     @Test
     public void Account_조회_성공() throws Exception {
         mockMvc.perform(get("/api/account")
+                .header("Auth-Token","BlahBlah")
                 .contentType(MediaType.APPLICATION_JSON))
                 .andExpect(status().isOk())
                 .andDo(print());
@@ -137,6 +138,16 @@ public class AccountControllerTest extends BaseControllerTest {
         mockMvc.perform(post("/api/account/loginvalidation")
                 .contentType(MediaType.APPLICATION_JSON)
                 .content(objectMapper.writeValueAsString(account)))
+                .andExpect(status().isOk())
+                .andDo(print());
+    }
+
+    //Bearer + ' ' + JWT토큰
+    @Test
+    public void 재로그인() throws Exception {
+        mockMvc.perform(get("/api/account/relogin")
+                .header("Authorization","Bearer eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJzdWIiOiLroZzqt7jsnbjthqDtgbAiLCJleHAiOjE2MTEyMjcwNzksImFjY291bnQiOnsiYWNjb3VudElkIjoyLCJhY2NvdW50RW1haWwiOiJqYXNvbjk2N0BuYXZlci5jb20ifX0.CIkuxTTN6VJ9MZ1Dzu1FX4qlpKYQivYE62buoJHmKBE")
+                .contentType(MediaType.APPLICATION_JSON))
                 .andExpect(status().isOk())
                 .andDo(print());
     }

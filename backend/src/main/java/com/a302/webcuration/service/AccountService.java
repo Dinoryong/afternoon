@@ -5,11 +5,15 @@ import com.a302.webcuration.domain.Account.Account;
 import com.a302.webcuration.domain.Account.AccountDto;
 import com.a302.webcuration.domain.Account.AccountRepository;
 import com.a302.webcuration.domain.Account.Role;
+import io.jsonwebtoken.Claims;
+import io.jsonwebtoken.Jws;
+import io.jsonwebtoken.Jwts;
 import lombok.RequiredArgsConstructor;
 import org.modelmapper.ModelMapper;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.http.HttpStatus;
 import org.springframework.mail.SimpleMailMessage;
 import org.springframework.mail.javamail.JavaMailSender;
@@ -26,7 +30,11 @@ public class AccountService {
     private final ModelMapper modelMapper;
     private final JavaMailSender mailSender;
     private final JwtService jwtService;
+
+    @Value("${token.signiturekey}")
+    private String signature ;
     public static final Logger logger = LoggerFactory.getLogger(AccountService.class);
+
     @Transactional
     public List<AccountDto.CreateAccountResponse> findAll()
     {
@@ -65,6 +73,24 @@ public class AccountService {
         profile.setFollowingCnt(followingCnt);
 
         return profile;
+    }
+
+    @Transactional
+    //AccountDto.AccountInfoInHeader
+    public Object decryptToken(String tokenKey)
+    {
+        String token=tokenKey.substring(7);
+
+        Jws<Claims> claims = null;
+
+        try {
+            claims = Jwts.parser().setSigningKey(signature.getBytes()).parseClaimsJws(token);
+            logger.info("TokenKey :"+claims.getBody().get("account"));
+        } catch (final Exception e) {
+            logger.info("복호화 실패");
+            throw new RuntimeException();
+        }
+        return claims.getBody().get("account");
     }
 
     @Transactional
@@ -121,7 +147,8 @@ public class AccountService {
     // TODO: 수정하기
     public Map loginInfo(Account account){
         Map<String, Object> resultMap = new HashMap<>();
-        String token = jwtService.create(account);
+        String token = "Bearer ";
+        token += jwtService.create(modelMapper.map(account,AccountDto.AccountInfoInHeader.class));
         logger.trace("로그인 토큰정보 : {}", token);
         resultMap.put("auth-token", token);
         resultMap.put("id", account.getAccountId());
