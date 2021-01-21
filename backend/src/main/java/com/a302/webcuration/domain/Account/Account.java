@@ -44,7 +44,7 @@ public class Account {
 
     //인증
     @Builder.Default
-    private Long accountAuthNum=0L;
+    private String accountAuthNum="";
 
     //임시 고객
     @Builder.Default
@@ -58,6 +58,10 @@ public class Account {
     @Builder.Default
     @ManyToMany(mappedBy = "following")
     private Set<Account> follower=new HashSet<>();
+
+    public void changeAuthNum(String accountAuthNum){
+        this.accountAuthNum=accountAuthNum;
+    }
 
     //private List<Tag> tags;
 //    @Builder

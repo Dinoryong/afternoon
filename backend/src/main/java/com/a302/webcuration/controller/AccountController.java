@@ -71,11 +71,22 @@ public class AccountController {
     }
 
     @PostMapping("/login")
-    public ResponseEntity<Map<String, Object>> login(@RequestBody Account account) {
+    public ResponseEntity login(@RequestBody AccountDto.LoginRequest loginRequest) {
+        //이메일 보내줌 email 전송
+        accountService.login(loginRequest);
+        return ResponseEntity.ok().build();
+    }
+    // TODO: 2021-01-21 DTO 
+    @PostMapping("/loginvalidation")
+    public ResponseEntity<Map<String, Object>> loginValidation(@RequestBody AccountDto.LoginRequest loginRequest) {
+        //email, authNum 받음
         Map<String, Object> resultMap = new HashMap<>();
         HttpStatus status = null;
         try {
-            Account loginAccount = accountService.login(account.getAccountEmail());
+            /*
+            findByEmail(loginRequest)
+             */
+            Account loginAccount = accountService.loginValidation(loginRequest.getAccountEmail());
             System.out.println(loginAccount);
             if(loginAccount != null) {
 //				jwt.io에서 확인
