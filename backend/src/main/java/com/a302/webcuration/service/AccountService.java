@@ -96,15 +96,18 @@ public class AccountService {
         }
     }
 
-    // TODO: 2021-01-21 수정 필요 
+    // TODO: 2021-01-21 수정 필요
+    @Transactional
     public Map loginValidation(AccountDto.LoginValidationRequest loginValidationRequest) {
         Account account=accountRepository.findByAccountEmail(loginValidationRequest.getAccountEmail());
         Map<String, Object> resultMap = new HashMap<>();
         if(account.getAccountAuthNum().equals(loginValidationRequest.getAccountAuthNum())){
+            System.out.println("------------------인증키 일치!------------------");
             //로그인 성공
             //최초로그인 성공한 사람인지
             if(account.getAccountRole().equals(Role.TEMPORARY)){
                 //인증된 사용자로 변환
+                System.out.println("------------------첫 로그인!------------------");
                 account.changeRole(Role.CERTIFICATED);
                 //DB에 저장이 되나 확인
             }
@@ -115,13 +118,13 @@ public class AccountService {
         return resultMap;
     }
 
-    // TODO: 2021-01-21 ResponseLoginDTO 만들기 
+    // TODO: 수정하기
     public Map loginInfo(Account account){
         Map<String, Object> resultMap = new HashMap<>();
         String token = jwtService.create(account);
         logger.trace("로그인 토큰정보 : {}", token);
         resultMap.put("auth-token", token);
-        resultMap.put("id", account.getAccountName());
+        resultMap.put("id", account.getAccountId());
         resultMap.put("email", account.getAccountEmail());
         return resultMap;
     }

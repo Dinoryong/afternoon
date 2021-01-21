@@ -127,4 +127,18 @@ public class AccountControllerTest extends BaseControllerTest {
                 .andDo(print());
     }
 
+    @Test
+    public void LoginValidation_성공() throws Exception {
+
+        AccountDto.LoginValidationRequest account = new AccountDto.LoginValidationRequest();
+        account.setAccountEmail("jason967@naver.com");
+        account.setAccountAuthNum("glu7gqbc");
+
+        mockMvc.perform(post("/api/account/loginvalidation")
+                .contentType(MediaType.APPLICATION_JSON)
+                .content(objectMapper.writeValueAsString(account)))
+                .andExpect(status().isOk())
+                .andDo(print());
+    }
+
 }
