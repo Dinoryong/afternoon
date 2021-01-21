@@ -113,4 +113,18 @@ public class AccountControllerTest extends BaseControllerTest {
                 .andDo(print());
     }
 
+    @Test
+    public void Login_이메일요청_성공() throws Exception {
+
+        AccountDto.LoginRequest account = new AccountDto.LoginRequest();
+        account.setAccountEmail("jason967@naver.com");
+
+
+        mockMvc.perform(post("/api/account/login")
+                .contentType(MediaType.APPLICATION_JSON)
+                .content(objectMapper.writeValueAsString(account)))
+                .andExpect(status().isOk())
+                .andDo(print());
+    }
+
 }

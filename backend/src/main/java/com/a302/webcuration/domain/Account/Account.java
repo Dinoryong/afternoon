@@ -63,6 +63,10 @@ public class Account {
         this.accountAuthNum=accountAuthNum;
     }
 
+    public void changeRole(Role accountRole){
+        this.accountRole=accountRole;
+    }
+
     //private List<Tag> tags;
 //    @Builder
 //    public Account(String accountNickname,String accountEmail,String accountName,Long accountAuthNum){

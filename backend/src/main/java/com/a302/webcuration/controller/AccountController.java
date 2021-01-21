@@ -28,8 +28,7 @@ import java.util.Map;
 public class AccountController {
     private final AccountService accountService;
     private final AccountRepository accountRepository;
-    @Autowired
-    private JwtService jwtService;
+    private final JwtService jwtService;
 
     public static final Logger logger = LoggerFactory.getLogger(AccountController.class);
     private final ModelMapper modelMapper;
@@ -76,38 +75,36 @@ public class AccountController {
         accountService.login(loginRequest);
         return ResponseEntity.ok().build();
     }
-    // TODO: 2021-01-21 DTO 
-    @PostMapping("/loginvalidation")
-    public ResponseEntity<Map<String, Object>> loginValidation(@RequestBody AccountDto.LoginRequest loginRequest) {
-        //email, authNum 받음
-        Map<String, Object> resultMap = new HashMap<>();
-        HttpStatus status = null;
-        try {
-            /*
-            findByEmail(loginRequest)
-             */
-            Account loginAccount = accountService.loginValidation(loginRequest.getAccountEmail());
-            System.out.println(loginAccount);
-            if(loginAccount != null) {
-//				jwt.io에서 확인
-//				로그인 성공했다면 토큰을 생성한다.
-                String token = jwtService.create(loginAccount);
-                logger.trace("로그인 토큰정보 : {}", token);
-
-                resultMap.put("auth-token", token);
-                resultMap.put("id", loginAccount.getAccountName());
-                resultMap.put("name", loginAccount.getAccountEmail());
-                status = HttpStatus.ACCEPTED;
-            } else {
-                resultMap.put("message", "로그인 실패");
-                status = HttpStatus.BAD_REQUEST;
-            }
-        } catch (Exception e) {
-            logger.error("로그인 실패 : {}", e);
-            resultMap.put("message", e.getMessage());
-            status = HttpStatus.INTERNAL_SERVER_ERROR;
-        }
-        return new ResponseEntity<Map<String, Object>>(resultMap, status);
-    }
+//    // TODO: 2021-01-21 DTO
+//    @PostMapping("/loginvalidation")
+//    public ResponseEntity loginValidation(@RequestBody AccountDto.LoginValidationRequest loginValidationRequest) {
+//        //email, authNum 받음 DTO 따로 또 만들기 loginValidationRequest
+//        //email로 findByEmail 한 account 이 account의 authNum이랑 authNum 비교
+//        //맞으면 로그인 성공했으니 토큰이랑 유저 정보 보내주기, 틀리면 적절한 문구 여기서 + 최초로그인 성공한 사람(accountRole==TEMP) 였던 사람은 cert로 변경
+//
+//        try {
+//            accountService.loginValidation(loginValidationRequest);
+//
+//            if(loginAccount != null) {
+////				jwt.io에서 확인
+////				로그인 성공했다면 토큰을 생성한다.
+//                String token = jwtService.create(loginAccount);
+//                logger.trace("로그인 토큰정보 : {}", token);
+//
+//                resultMap.put("auth-token", token);
+//                resultMap.put("id", loginAccount.getAccountName());
+//                resultMap.put("name", loginAccount.getAccountEmail());
+//                status = HttpStatus.ACCEPTED;
+//            } else {
+//                resultMap.put("message", "로그인 실패");
+//                status = HttpStatus.BAD_REQUEST;
+//            }
+//        } catch (Exception e) {
+//            logger.error("로그인 실패 : {}", e);
+//            resultMap.put("message", e.getMessage());
+//            status = HttpStatus.INTERNAL_SERVER_ERROR;
+//        }
+//        return new ResponseEntity<Map<String, Object>>(resultMap, status);
+//    }
 
 }
