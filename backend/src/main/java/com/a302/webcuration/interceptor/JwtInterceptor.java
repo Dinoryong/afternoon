@@ -1,6 +1,6 @@
 package com.a302.webcuration.interceptor;
 
-import com.a302.webcuration.domain.Jwt.JwtService;
+import com.a302.webcuration.service.JwtService;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;

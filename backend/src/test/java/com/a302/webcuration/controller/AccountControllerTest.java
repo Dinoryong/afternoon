@@ -20,8 +20,8 @@ public class AccountControllerTest extends BaseControllerTest {
 
         //When
         AccountDto.FollowRequest followRequest = AccountDto.FollowRequest.builder()
-                .aId(1L)
-                .bId(3L)
+                .aId(2L)
+                .bId(1L)
                 .build();
 
         mockMvc.perform(post("/api/account/follow")
@@ -30,6 +30,16 @@ public class AccountControllerTest extends BaseControllerTest {
                 .andExpect(status().isOk())
                 .andDo(print());
 
+    }
+
+    @Test
+    public void Account_proflie_조회_성공() throws Exception {
+
+        Long id = 1L;
+        mockMvc.perform(get("/api/account/"+Long.toString(id))
+                .contentType(MediaType.APPLICATION_JSON))
+                .andExpect(status().isOk())
+                .andDo(print());
     }
 
     @Test

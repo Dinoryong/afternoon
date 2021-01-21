@@ -1,4 +1,4 @@
-package com.a302.webcuration.domain.Jwt;
+package com.a302.webcuration.service;
 
 import com.a302.webcuration.domain.Account.Account;
 import io.jsonwebtoken.*;

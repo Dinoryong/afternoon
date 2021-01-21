@@ -1,13 +1,15 @@
 package com.a302.webcuration.domain.Account;
 
-import lombok.Builder;
-import lombok.Getter;
-import lombok.Setter;
+import lombok.*;
+import org.hibernate.annotations.CreationTimestamp;
+import org.hibernate.annotations.UpdateTimestamp;
 import org.modelmapper.ModelMapper;
 
+import javax.persistence.Column;
 import javax.validation.constraints.Email;
 import javax.validation.constraints.NotNull;
 import java.time.LocalDate;
+import java.util.List;
 
 public class AccountDto {
 
@@ -20,6 +22,45 @@ public class AccountDto {
         private Long aId;
         @NotNull
         private Long bId;
+    }
+
+    @Getter @Setter @RequiredArgsConstructor
+    //팔로워
+    public static class FollowerDto{
+        private Long id;
+        private String name;
+        private String nickname;
+    }
+
+    @Getter @Setter @RequiredArgsConstructor
+    //팔로워
+    public static class FollowingDto{
+        private Long id;
+        private String name;
+        private String nickname;
+    }
+
+    @Getter @Setter @RequiredArgsConstructor
+    public static class AccountProfile{
+
+        private String name;
+
+        private String nickname;
+
+        private String email;
+
+        private LocalDate accountCreateDate;
+
+        private String accountDesc;
+
+        private List<AccountDto.FollowingDto> profileFollowing;
+
+        private List<AccountDto.FollowerDto> profileFollower;
+
+        private int followingCnt;
+
+        private int followerCnt;
+
     }
 
     @Getter @Setter @Builder
