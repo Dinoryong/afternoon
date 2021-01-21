@@ -12,6 +12,7 @@ import org.hibernate.annotations.UpdateTimestamp;
 import javax.persistence.*;
 import javax.transaction.Transactional;
 import java.time.LocalDate;
+import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.List;
@@ -37,7 +38,7 @@ public class Account {
     @CreationTimestamp
     private LocalDate accountCreateDate;
     @UpdateTimestamp
-    private LocalDate accountUpdateDate;
+    private LocalDateTime accountUpdateDate;
 
     @Builder.Default
     private String accountDesc="";
