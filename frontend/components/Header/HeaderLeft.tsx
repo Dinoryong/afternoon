@@ -4,7 +4,6 @@ import Image from "next/image";
 import Link from "next/link";
 import Button from "../Button";
 import color from "../../styles/theme";
-import { route } from "next/dist/next-server/server/router";
 
 const Container = styled.div`
   display: flex;
@@ -136,6 +135,7 @@ const HeaderLeft = ({ routerPath }: HeaderProps) => {
         btnBgColor={routerPath === "/" ? "transparent" : null}
         btnTextColor={routerPath === "/" ? "white" : null}
         btnBorderColor={routerPath === "/" ? "white" : null}
+        btnRouterPush="/feed"
       />
       <SearchBox style={searchBoxStyle}>
         <SearchIcon>

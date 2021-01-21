@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import styled from "@emotion/styled";
 import Button from "../Button";
 import Image from "next/image";
@@ -40,6 +40,14 @@ const HeaderRight = ({ routerPath }: HeaderProps) => {
       : "/assets/icons/bell_black_light.png"
   );
 
+  useEffect(() => {
+    setNoticeImg(
+      routerPath === "/"
+        ? "/assets/icons/bell_white.png"
+        : "/assets/icons/bell_black_light.png"
+    );
+  }, [routerPath]);
+
   const onMouseOver = (): void => {
     setNoticeImg(
       routerPath === "/"
@@ -72,7 +80,8 @@ const HeaderRight = ({ routerPath }: HeaderProps) => {
         btnBgColor={routerPath === "/" ? "transparent" : null}
         btnTextColor={routerPath === "/" ? "white" : null}
         btnBorderColor={routerPath === "/" ? "white" : null}
-      ></Button>
+        btnRouterPush="/post"
+      />
       <NoticeIcon
         onMouseOver={onMouseOver}
         onMouseLeave={onMouseLeave}

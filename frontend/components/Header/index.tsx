@@ -31,8 +31,6 @@ const index = () => {
   const router = useRouter();
   const routerPath = router.pathname;
 
-  console.log(routerPath);
-
   const containerStyle = {
     display: routerPath === "/signup" ? "none" : "flex",
     boxShadow:

@@ -1,6 +1,7 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import styled from "@emotion/styled";
 import color from "../../styles/theme";
+import { useRouter } from "next/router";
 
 const Container = styled.div`
   display: flex;
@@ -38,6 +39,7 @@ type ButtonProps = {
   btnFontSize?: string;
   btnHoverBorderColor?: string;
   btnHoverBgColor?: string;
+  btnRouterPush?: string;
 };
 
 const index = ({
@@ -55,20 +57,34 @@ const index = ({
   btnHoverTextColor = color.black.default,
   btnHoverBorderColor = color.black.default,
   btnHoverBgColor,
+  btnRouterPush = "",
 }: ButtonProps) => {
   const [bgColor, setBgColor] = useState<string>(btnBgColor);
   const [borderColor, setBorderColor] = useState<string>(btnBorderColor);
   const [textColor, setTextColor] = useState<string>(btnTextColor);
+
+  const router = useRouter();
+
+  useEffect(() => {
+    setBgColor(btnBgColor);
+    setBorderColor(btnBorderColor);
+    setTextColor(btnTextColor);
+  }, [btnBgColor, btnBorderColor, btnTextColor]);
 
   const onMouseOver = (): void => {
     setBgColor(btnHoverBgColor);
     setBorderColor(btnHoverBorderColor);
     setTextColor(btnHoverTextColor);
   };
+
   const onMouseLeave = (): void => {
     setBgColor(btnBgColor);
     setBorderColor(btnBorderColor);
     setTextColor(btnTextColor);
+  };
+
+  const onClick = (): void => {
+    router.push(btnRouterPush);
   };
 
   return (
@@ -88,6 +104,7 @@ const index = ({
       }}
       onMouseOver={onMouseOver}
       onMouseLeave={onMouseLeave}
+      onClick={onClick}
     >
       {btnText}
     </Container>
