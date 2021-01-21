@@ -5,16 +5,13 @@ import com.a302.webcuration.common.BaseStatus;
 import com.a302.webcuration.domain.Account.Account;
 import com.a302.webcuration.domain.Account.AccountDto;
 import com.a302.webcuration.domain.Account.AccountRepository;
-import com.a302.webcuration.domain.Jwt.JwtService;
+import com.a302.webcuration.service.JwtService;
 import com.a302.webcuration.service.AccountService;
 import lombok.RequiredArgsConstructor;
 import org.modelmapper.internal.Errors;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
-import com.a302.webcuration.domain.Account.AccountValidator;
-import com.a302.webcuration.service.AccountService;
-import lombok.RequiredArgsConstructor;
 import org.modelmapper.ModelMapper;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -22,7 +19,6 @@ import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
 
-import javax.validation.Valid;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -50,6 +46,16 @@ public class AccountController {
         accountRepository.save(account);
 
         return new ResponseEntity(new BaseMessage(BaseStatus.CREATED,createAccountRequest),HttpStatus.CREATED);
+    }
+
+    @GetMapping("/{id}")
+    public ResponseEntity createAccount(@PathVariable Long id, Errors errors)
+    {
+        if(errors.hasErrors())
+        {
+            return new ResponseEntity(new BaseMessage(BaseStatus.BAD_REQUEST,errors), HttpStatus.BAD_REQUEST);
+        }
+        return new ResponseEntity(new BaseMessage(BaseStatus.OK,accountService.findAccountById(id)),HttpStatus.OK);
     }
 
     @GetMapping

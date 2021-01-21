@@ -5,13 +5,13 @@ import com.a302.webcuration.domain.Account.AccountDto;
 import com.a302.webcuration.domain.Account.AccountRepository;
 import lombok.RequiredArgsConstructor;
 import org.modelmapper.ModelMapper;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.mail.SimpleMailMessage;
 import org.springframework.mail.javamail.JavaMailSender;
 import org.springframework.stereotype.Service;
 
 import javax.transaction.Transactional;
 import java.util.ArrayList;
+import java.util.Iterator;
 import java.util.List;
 
 @Service
@@ -20,7 +20,9 @@ public class AccountService {
 
     private final AccountRepository accountRepository;
     private final ModelMapper modelMapper;
+    private JavaMailSender mailSender;
 
+    @Transactional
     public List<AccountDto.CreateAccountResponse> findAll()
     {
         List<AccountDto.CreateAccountResponse> accounts = new ArrayList<>();
@@ -30,7 +32,35 @@ public class AccountService {
         return accounts;
     }
 
-    private JavaMailSender mailSender;
+    @Transactional
+    public AccountDto.AccountProfile findAccountById(Long id)
+    {
+        Account account = accountRepository.findAccountByAccountId(id);
+        System.out.println("account = " + account.getAccountName());
+        AccountDto.AccountProfile profile = modelMapper.map(account,AccountDto.AccountProfile.class);
+
+        List<AccountDto.FollowingDto> following = new ArrayList<>();
+        List<AccountDto.FollowerDto> follower = new ArrayList<>();
+        int followingCnt = account.getFollowing().size();
+        int followerCnt = account.getFollower().size();
+        Iterator<Account> iterFollower = account.getFollower().iterator();
+        while(iterFollower.hasNext())
+        {
+            follower.add(modelMapper.map(iterFollower.next(),AccountDto.FollowerDto.class));
+        }
+        Iterator<Account> iterFollowing = account.getFollowing().iterator();
+        while(iterFollowing.hasNext())
+        {
+            following.add(modelMapper.map(iterFollowing.next(),AccountDto.FollowingDto.class));
+        }
+
+        profile.setProfileFollower(follower);
+        profile.setProfileFollowing(following);
+        profile.setFollowerCnt(followerCnt);
+        profile.setFollowingCnt(followingCnt);
+
+        return profile;
+    }
 
     @Transactional
     public void follow(AccountDto.FollowRequest followRequest){

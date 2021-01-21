@@ -39,6 +39,9 @@ public class Account {
     @UpdateTimestamp
     private LocalDate accountUpdateDate;
 
+    @Builder.Default
+    private String accountDesc="";
+
     //인증
     @Builder.Default
     private Long accountAuthNum=0L;
@@ -47,9 +50,6 @@ public class Account {
     @Builder.Default
     @Enumerated(EnumType.STRING)
     private Role accountRole = Role.TEMPORARY;
-
-    @Builder.Default
-    private String accountDesc="";
 
     @Builder.Default
     @ManyToMany(fetch = FetchType.EAGER)
