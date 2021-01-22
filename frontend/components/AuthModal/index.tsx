@@ -4,7 +4,7 @@ import styled from "@emotion/styled";
 import color from "../../styles/theme";
 import Image from "next/image";
 import UserModalTop from "../UserModal/UserModalTop";
-import LoginMiddle from "./LoginMiddle";
+import AuthModal from "./AuthMiddle";
 import UserModalBottom from "../UserModal/UserModalBottom";
 import UserModalFoot from "../UserModal/UserModalFoot";
 
@@ -12,7 +12,6 @@ const Container = styled.div`
   width: 400px;
   height: 600px;
   display: flex;
-  position: relative;
   flex-direction: column;
   align-items: center;
   justify-content: center;
@@ -44,7 +43,7 @@ const index = () => {
         ></Image>
       </Xbutton>
       <UserModalTop></UserModalTop>
-      <LoginMiddle></LoginMiddle>
+      <AuthModal></AuthModal>
       <UserModalBottom
         bottomText="다른 SNS계정으로 로그인하기"
         snsText1="Facebook으로 로그인"

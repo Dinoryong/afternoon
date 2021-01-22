@@ -12,17 +12,17 @@ const Container = styled.div`
 
 const InputBox = styled.div`
   display: flex;
+  flex-direction: column;
   width: 300px;
-  height: 40px;
-  justify-content: center;
+  justify-content: space-between;
   align-items: center;
   padding: 0px 10px;
   margin: 8px 0px;
 `;
 
-const InputNumber = styled.input`
+const InputEmail = styled.input`
   display: flex;
-  width: 200px;
+  width: 300px;
   height: 40px;
   border: solid 2px ${color.gray.default};
   border-radius: 4px;
@@ -36,6 +36,7 @@ const InputNumber = styled.input`
   :focus {
     outline: none;
   }
+  margin-bottom: 20px;
 `;
 
 const ButtonBox = styled.div`
@@ -49,7 +50,7 @@ const ButtonBox = styled.div`
 const Text = styled.div`
   display: flex;
   width: 300px;
-  margin-top: 4px;
+  /* margin-top: 4px; */
   justify-content: center;
   align-items: center;
   font-size: 12px;
@@ -63,75 +64,34 @@ const LoginButton = styled.div`
   height: 45px;
   justify-content: center;
   align-items: center;
-  margin-bottom: 20px;
+  margin-top: 16px;
+  margin-bottom: 1px;
 `;
 
 const LoginMiddle = () => {
   return (
     <Container>
       <InputBox>
-        <InputNumber placeholder={"인증번호를 입력해주세요"}></InputNumber>
-        <ButtonBox>
+        <InputEmail
+          placeholder={"이메일을 입력해주세요 (example@site.com)"}
+        ></InputEmail>
+        <Text>로그인 요청하기 버튼을 누르시면</Text>
+        <Text>이메일로 인증번호가 발송됩니다</Text>
+        <LoginButton>
           <Button
-            btnBgColor={color.red.light}
-            btnWidth="100px"
-            btnText="인증번호 확인"
+            btnBgColor={color.gray.light}
+            btnWidth="300px"
+            btnText="로그인 요청하기"
             btnTextColor={color.white.default}
-            btnHeight="42px"
+            btnHeight="40px"
             btnFontWeight={700}
             btnBorderColor="transparent"
             btnHoverBorderColor="transparent"
-            btnHoverBgColor={color.red.dark}
+            btnHoverBgColor={color.gray.semidark}
             btnHoverTextColor={color.white.default}
           />
-        </ButtonBox>
+        </LoginButton>
       </InputBox>
-      <InputBox>
-        <ButtonBox>
-          <Button
-            btnBgColor="transparent"
-            btnWidth="100px"
-            btnText="메일함으로 이동"
-            btnTextColor={color.gray.dark}
-            btnHeight="42px"
-            btnFontSize="10"
-            btnFontWeight={300}
-            btnBorderColor="transparent"
-            btnHoverBorderColor="transparent"
-            btnHoverBgColor="transparent"
-            btnHoverTextColor={color.black.default}
-          />
-        </ButtonBox>
-        <ButtonBox>
-          <Button
-            btnBgColor="transparent"
-            btnWidth="100px"
-            btnText="인증번호 재발송"
-            btnTextColor={color.gray.dark}
-            btnHeight="42px"
-            btnFontSize="10"
-            btnFontWeight={300}
-            btnBorderColor="transparent"
-            btnHoverBorderColor="transparent"
-            btnHoverBgColor="transparent"
-            btnHoverTextColor={color.black.default}
-          />
-        </ButtonBox>
-      </InputBox>
-      <LoginButton>
-        <Button
-          btnBgColor={color.gray.light}
-          btnWidth="300px"
-          btnText="로그인"
-          btnTextColor={color.white.default}
-          btnHeight="40px"
-          btnFontWeight={700}
-          btnBorderColor="transparent"
-          btnHoverBorderColor="transparent"
-          btnHoverBgColor={color.gray.semidark}
-          btnHoverTextColor={color.white.default}
-        />
-      </LoginButton>
     </Container>
   );
 };

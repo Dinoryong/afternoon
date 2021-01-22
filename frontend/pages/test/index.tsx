@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from "react";
-import LoginModal from "../../components/LoginModal";
+import Authmodal from "../../components/Authmodal";
 import styled from "@emotion/styled";
 
 const Container = styled.div`
@@ -44,7 +44,7 @@ const index = () => {
   return (
     <Container style={{ height: windowHeight }}>
       {/* <BgOpacityFrame></BgOpacityFrame> */}
-      <Content><LoginModal></LoginModal></Content>
+      <Content><Authmodal></Authmodal></Content>
     </Container>
   );
 };
