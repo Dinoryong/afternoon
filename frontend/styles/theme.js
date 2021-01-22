@@ -1,4 +1,4 @@
-const colors = {
+const color = {
   black: {
     default: "#111111",
   },
@@ -27,8 +27,26 @@ const colors = {
   },
   yellow: {
     default: "#FFD400",
-    dark: "#EEC300"
-  }
+    dark: "#EEC300",
+  },
+  homeTag: {
+    zero: "#FFFFFF",
+    one: "#f5f5f5",
+    two: "#eef0f1",
+    a: "#c8c8c8",
+    b: "#edcd48",
+    c: "#689cfa",
+    d: "#f57f78",
+    e: "#705ebc",
+    f: "#e664a5",
+    g: "#56d1dd",
+    h: "#b6bdcd",
+    i: "#ff8b5b",
+    j: "#b9bbbe",
+    k: "#f37b61",
+    l: "#c988db",
+    m: "#49caf5",
+  },
 };
 
-export default colors;
+export default color;
