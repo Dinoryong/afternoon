@@ -1,10 +1,9 @@
 import React, { useEffect, useState } from "react";
-import Button from "../../components/ExampleButton";
+import Authmodal from "../../components/Authmodal";
 import styled from "@emotion/styled";
 
 const Container = styled.div`
   position: relative;
-  /* margin-top: 80px; */
   height: 100%;
   background-color: #eeeeee;
   display: flex;
@@ -44,8 +43,8 @@ const index = () => {
 
   return (
     <Container style={{ height: windowHeight }}>
-      <BgOpacityFrame></BgOpacityFrame>
-      <Content>안녕하세요</Content>
+      {/* <BgOpacityFrame></BgOpacityFrame> */}
+      <Content><Authmodal></Authmodal></Content>
     </Container>
   );
 };
