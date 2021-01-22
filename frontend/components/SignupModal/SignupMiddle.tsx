@@ -20,7 +20,6 @@ const InputName = styled.input`
   display: flex;
 	width: 300px;
 	height: 40px;
-	/* margin: 5px; */
   border: solid 2px ${color.gray.default};
   border-radius: 4px;
   justify-content: center;
@@ -28,7 +27,6 @@ const InputName = styled.input`
   padding: 0px 10px;
   ::placeholder{
     font-size: 12px;
-    /* padding-left: 10px; */
   }
   font-size: 12px;
   :focus {
@@ -48,7 +46,6 @@ const InputNickname = styled.input`
   padding: 0px 10px;
   ::placeholder{
     font-size: 12px;
-    /* padding-left: 10px; */
   }
   font-size: 12px;
   :focus {
@@ -106,9 +103,7 @@ const SignupMiddle = () => {
               btnBorderColor="transparent"
               btnHoverBorderColor="transparent"
               btnHoverBgColor={color.red.dark}
-              btnHoverTextColor={color.white.default}
-              >
-            </Button>
+              btnHoverTextColor={color.white.default}/>
           </SignupButton>
         </Container>
   );

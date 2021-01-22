@@ -131,7 +131,7 @@ const index = () => {
   return (
     <Container style={{ height: windowHeight }}>
       <Image
-        src="/assets/images/signup_img.jpg"
+        src="/assets/images/signupImg.jpg"
 				layout="fill"
         objectFit="cover"
       ></Image>

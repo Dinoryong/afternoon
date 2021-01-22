@@ -69,9 +69,7 @@ const UserModalBottom = ({ bottomText, snsText1, snsText2, snsText3 }:BottomProp
               btnBorderColor="transparent"
               btnHoverBorderColor="transparent"
               btnHoverBgColor={color.blue.dark}
-              btnHoverTextColor={color.white.default}
-              >
-            </Button>
+              btnHoverTextColor={color.white.default}/>
           </SnsButton1>
           <SnsButton2>
           <Button
@@ -84,9 +82,7 @@ const UserModalBottom = ({ bottomText, snsText1, snsText2, snsText3 }:BottomProp
               btnBorderColor="transparent"
               btnHoverBorderColor="transparent"
               btnHoverBgColor={color.yellow.dark}
-              btnHoverTextColor={color.black.default}
-              >
-            </Button>
+              btnHoverTextColor={color.black.default}/>
           </SnsButton2>
           <SnsButton3>
             <Button
@@ -99,9 +95,7 @@ const UserModalBottom = ({ bottomText, snsText1, snsText2, snsText3 }:BottomProp
               btnBorderColor="transparent"
               btnHoverBorderColor="transparent"
               btnHoverBgColor={color.gray.semidark}
-              btnHoverTextColor={color.black.default}
-              >
-            </Button>
+              btnHoverTextColor={color.black.default}/>
           </SnsButton3>
         </Container>
   );

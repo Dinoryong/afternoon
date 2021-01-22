@@ -1,11 +1,9 @@
 import React, { useEffect, useState } from "react";
-import Button from "../../components/ExampleButton";
 import LoginModal from "../../components/LoginModal";
 import styled from "@emotion/styled";
 
 const Container = styled.div`
   position: relative;
-  /* margin-top: 80px; */
   height: 100%;
   background-color: #eeeeee;
   display: flex;
@@ -45,9 +43,8 @@ const index = () => {
 
   return (
     <Container style={{ height: windowHeight }}>
-      <BgOpacityFrame></BgOpacityFrame>
-      <Content>안녕하세요</Content>
-      <LoginModal></LoginModal>
+      {/* <BgOpacityFrame></BgOpacityFrame> */}
+      <Content><LoginModal></LoginModal></Content>
     </Container>
   );
 };
