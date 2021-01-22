@@ -13,7 +13,7 @@ import org.springframework.test.web.servlet.MockMvc;
 @SpringBootTest
 @RunWith(SpringRunner.class)
 @AutoConfigureMockMvc
-@ActiveProfiles("test")
+//@ActiveProfiles("test")
 @Ignore
 public class BaseControllerTest {
 
