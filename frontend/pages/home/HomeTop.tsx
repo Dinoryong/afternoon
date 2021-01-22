@@ -58,7 +58,7 @@ const BgOpacityFrame = styled.div<DemensionProps>`
   width: 100%;
   height: 100%;
   background-color: ${color.black.default};
-  opacity: ${(props) => (props.frameIndex === props.currentIndex ? 0.1 : 0.7)};
+  opacity: ${(props) => (props.frameIndex === props.currentIndex ? 0.05 : 0.7)};
   cursor: ${(props) =>
     props.frameIndex === props.currentIndex ? "default" : "pointer"};
   transition: opacity 0.5s;
@@ -100,7 +100,10 @@ const HomeTop = () => {
   const maxIndex: number = 3;
 
   const onMouseOver = ({ index }: FrameProps): void => {
-    if (currentIndex === index - 1 || (currentIndex === 3 && index === 0)) {
+    if (
+      currentIndex === index - 1 ||
+      (currentIndex === maxIndex && index === 0)
+    ) {
       setOverIndex(index);
     }
   };

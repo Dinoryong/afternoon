@@ -25,7 +25,7 @@ const HeaderRight = ({ routerPath }: HeaderProps) => {
         btnBorderColor="transparent"
         btnBgColor={routerPath === "/" ? "transparent" : null}
         btnTextColor={routerPath === "/" ? "white" : null}
-      ></Button>
+      />
       <Button
         btnText="회원가입"
         btnWidth="80px"
@@ -36,7 +36,8 @@ const HeaderRight = ({ routerPath }: HeaderProps) => {
         btnHoverBorderColor={color.green.dark}
         btnHoverTextColor={color.white.default}
         btnMarginRight="0px"
-      ></Button>
+        btnRouterPush="/signup"
+      />
     </Container>
   );
 };
