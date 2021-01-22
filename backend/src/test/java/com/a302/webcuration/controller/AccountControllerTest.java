@@ -3,8 +3,6 @@ package com.a302.webcuration.controller;
 import com.a302.webcuration.common.BaseControllerTest;
 import com.a302.webcuration.domain.Account.Account;
 import com.a302.webcuration.domain.Account.AccountDto;
-import com.a302.webcuration.domain.Sample.SampleDto;
-import org.junit.Before;
 import org.junit.Test;
 import org.springframework.http.MediaType;
 
@@ -15,28 +13,12 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 
 public class AccountControllerTest extends BaseControllerTest {
 
-    @Test
-    public void follow_성공() throws Exception {
-
-        //When
-        AccountDto.FollowRequest followRequest = AccountDto.FollowRequest.builder()
-                .aId(2L)
-                .bId(1L)
-                .build();
-
-        mockMvc.perform(post("/api/account/follow")
-                .contentType(MediaType.APPLICATION_JSON)
-                .content(objectMapper.writeValueAsString(followRequest)))
-                .andExpect(status().isOk())
-                .andDo(print());
-
-    }
 
     @Test
     public void Account_profile_조회_성공() throws Exception {
 
         Long id = 1L;
-        mockMvc.perform(get("/api/account/"+Long.toString(id))
+        mockMvc.perform(get("/api/accounts/" +Long.toString(id))
                 .contentType(MediaType.APPLICATION_JSON))
                 .andExpect(status().isOk())
                 .andDo(print());
@@ -44,7 +26,7 @@ public class AccountControllerTest extends BaseControllerTest {
 
     @Test
     public void Account_조회_성공() throws Exception {
-        mockMvc.perform(get("/api/account")
+        mockMvc.perform(get("/api/accounts")
                 .header("Auth-Token","BlahBlah")
                 .contentType(MediaType.APPLICATION_JSON))
                 .andExpect(status().isOk())
@@ -60,7 +42,7 @@ public class AccountControllerTest extends BaseControllerTest {
                 .accountEmail("Test@test.com")
                 .build();
 
-        mockMvc.perform(post("/api/account")
+        mockMvc.perform(post("/api/accounts")
                 .contentType(MediaType.APPLICATION_JSON)
                 .content(objectMapper.writeValueAsString(createAccountRequest)))
                 .andExpect(status().isCreated())
@@ -78,7 +60,7 @@ public class AccountControllerTest extends BaseControllerTest {
                 .accountNickname("TestNickname")
                 .build();
 
-        mockMvc.perform(post("/api/account")
+        mockMvc.perform(post("/api/accounts")
                 .contentType(MediaType.APPLICATION_JSON)
                 .content(objectMapper.writeValueAsString(createAccountRequest)))
                 .andExpect(status().isBadRequest())
@@ -94,7 +76,7 @@ public class AccountControllerTest extends BaseControllerTest {
                 .accountNickname("TestNickname")
                 .build();
 
-        mockMvc.perform(post("/api/account")
+        mockMvc.perform(post("/api/accounts")
                 .contentType(MediaType.APPLICATION_JSON)
                 .content(objectMapper.writeValueAsString(createAccountRequest)))
                 .andExpect(status().isBadRequest())
@@ -107,12 +89,14 @@ public class AccountControllerTest extends BaseControllerTest {
         //When
         AccountDto.CreateAccountRequest createAccountRequest = AccountDto.CreateAccountRequest.builder().build();
 
-        mockMvc.perform(post("/api/account")
+        mockMvc.perform(post("/api/accounts")
                 .contentType(MediaType.APPLICATION_JSON)
                 .content(objectMapper.writeValueAsString(createAccountRequest)))
                 .andExpect(status().isBadRequest())
                 .andDo(print());
     }
+
+    //---------------------------------로그인-------------------------------------------
 
     @Test
     public void Login_이메일요청_성공() throws Exception {
@@ -120,8 +104,7 @@ public class AccountControllerTest extends BaseControllerTest {
         AccountDto.LoginRequest account = new AccountDto.LoginRequest();
         account.setAccountEmail("jason967@naver.com");
 
-
-        mockMvc.perform(post("/api/account/login")
+        mockMvc.perform(post("/api/accounts/login")
                 .contentType(MediaType.APPLICATION_JSON)
                 .content(objectMapper.writeValueAsString(account)))
                 .andExpect(status().isOk())
@@ -129,27 +112,81 @@ public class AccountControllerTest extends BaseControllerTest {
     }
 
     @Test
-    public void LoginValidation_성공() throws Exception {
+    public void Login_이메일요청_실패_형식오류() throws Exception {
 
-        AccountDto.LoginValidationRequest account = new AccountDto.LoginValidationRequest();
+        AccountDto.LoginRequest account = new AccountDto.LoginRequest();
+        account.setAccountEmail("ㄹasdkom");
+
+        mockMvc.perform(post("/api/accounts/login")
+                .contentType(MediaType.APPLICATION_JSON)
+                .content(objectMapper.writeValueAsString(account)))
+                .andExpect(status().isBadRequest())
+                .andDo(print());
+    }
+
+    @Test
+    public void Login_이메일요청_실패_존재하지않음() throws Exception {
+
+        AccountDto.LoginRequest account = new AccountDto.LoginRequest();
+        account.setAccountEmail("none@test.com");
+
+        mockMvc.perform(post("/api/accounts/login")
+                .contentType(MediaType.APPLICATION_JSON)
+                .content(objectMapper.writeValueAsString(account)))
+                .andExpect(status().isBadRequest())
+                .andDo(print());
+    }
+
+    @Test
+    public void Login_AuthKey_성공() throws Exception {
+
+        AccountDto.LoginAuthKeyRequest account = new AccountDto.LoginAuthKeyRequest();
         account.setAccountEmail("jason967@naver.com");
-        account.setAccountAuthNum("glu7gqbc");
+        account.setAccountAuthNum("w7z3ti68");
 
-        mockMvc.perform(post("/api/account/loginvalidation")
+        mockMvc.perform(post("/api/accounts/login/auth")
                 .contentType(MediaType.APPLICATION_JSON)
                 .content(objectMapper.writeValueAsString(account)))
                 .andExpect(status().isOk())
                 .andDo(print());
     }
 
-    //Bearer + ' ' + JWT토큰
     @Test
-    public void 재로그인() throws Exception {
-        mockMvc.perform(get("/api/account/relogin")
-                .header("Authorization","Bearer eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJzdWIiOiLroZzqt7jsnbjthqDtgbAiLCJleHAiOjE2MTEyMjcwNzksImFjY291bnQiOnsiYWNjb3VudElkIjoyLCJhY2NvdW50RW1haWwiOiJqYXNvbjk2N0BuYXZlci5jb20ifX0.CIkuxTTN6VJ9MZ1Dzu1FX4qlpKYQivYE62buoJHmKBE")
+    public void Token_얻어오기_AccountId() throws Exception {
+        mockMvc.perform(get("/api/accounts/login/user")
+                .header("Authorization","Bearer eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJzdWIiOiLroZzqt7jsnbjthqDtgbAiLCJleHAiOjE2MTEyNzMwODcsImFjY291bnRJZCI6Mn0.KijOVp6eYCP0g3L4skvSVDmPZXb3h18ItGCEgcveRpE")
                 .contentType(MediaType.APPLICATION_JSON))
                 .andExpect(status().isOk())
                 .andDo(print());
     }
+
+    //-------------------------------------팔로잉-------------------------------------
+    @Test
+    public void follow_성공() throws Exception {
+
+        String yourId = "3";
+        String token = "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJzdWIiOiLroZzqt7jsnbjthqDtgbAiLCJleHAiOjE2MTEyODM1NzIsImFjY291bnRJZCI6Mn0.lyWtT3TXdFCKaCnnjTYAv6KXwr86s31JNGFNPLdarh8";
+        mockMvc.perform(post("/api/accounts/follow/"+yourId)
+                .header("Authorization","Bearer "+token)
+                .contentType(MediaType.APPLICATION_JSON))
+                .andExpect(status().isOk())
+                .andDo(print());
+
+    }
+
+    @Test
+    public void follow_실패() throws Exception {
+
+        String yourId = "2";
+        String token = "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJzdWIiOiLroZzqt7jsnbjthqDtgbAiLCJleHAiOjE2MTEyODM1NzIsImFjY291bnRJZCI6Mn0.lyWtT3TXdFCKaCnnjTYAv6KXwr86s31JNGFNPLdarh8";
+
+        mockMvc.perform(post("/api/accounts/follow/"+yourId)
+                .header("Authorization","Bearer "+token)
+                .contentType(MediaType.APPLICATION_JSON))
+                .andExpect(status().isBadRequest())
+                .andDo(print());
+
+    }
+
 
 }

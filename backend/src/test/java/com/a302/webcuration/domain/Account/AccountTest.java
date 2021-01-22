@@ -50,25 +50,6 @@ public class AccountTest extends BaseDomainTest {
                 .build();
 
         accountRepository.save(account3);
-//        account2.followAccount(account);
-//        account3.followAccount(account);
-//        account3.followAccount(account2);
-
-//        accountRepository.save(account);
-//        accountRepository.save(account2);
-//        accountRepository.save(account3);
-
-//        for (Account a : account.getFollower()) {
-//            System.out.println("a.getAccountName() = " + a.getAccountName());
-//        }
-//
-//        int size=account.getFollower().size();
-//        System.out.println("우석을 follow하는 사람 수 getFollower size = " + size);
-//        size=account.getFollowing().size();
-//        System.out.println("우석이 follwoing하는 사람 수 getFollowing size = " + size);
-//        size=account2.getFollower().size();
-//        System.out.println("재웅이 follow하는 사람 수 getFollower size = " + size);
-        
     }
 
 }

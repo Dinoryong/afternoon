@@ -5,25 +5,22 @@ import com.a302.webcuration.common.BaseStatus;
 import com.a302.webcuration.domain.Account.Account;
 import com.a302.webcuration.domain.Account.AccountDto;
 import com.a302.webcuration.domain.Account.AccountRepository;
-import com.a302.webcuration.service.JwtService;
 import com.a302.webcuration.service.AccountService;
+import com.a302.webcuration.service.JwtService;
 import lombok.RequiredArgsConstructor;
-import org.modelmapper.internal.Errors;
+import org.modelmapper.ModelMapper;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.modelmapper.ModelMapper;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.validation.Errors;
 import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
-
-import java.util.HashMap;
 import java.util.Map;
 
 @RestController
-@RequestMapping(value = "/api/account")
+@RequestMapping(value = "/api/accounts")
 @RequiredArgsConstructor
 public class AccountController {
     private final AccountService accountService;
@@ -31,8 +28,11 @@ public class AccountController {
     private final JwtService jwtService;
 
     public static final Logger logger = LoggerFactory.getLogger(AccountController.class);
+
     private final ModelMapper modelMapper;
 
+
+    //get을 제외한 모든 요청은 다 토큰 필요하도록 매핑
 
     //---------------------------------- 회원 ------------------------------------------------
 
@@ -66,53 +66,52 @@ public class AccountController {
         return new ResponseEntity(new BaseMessage(BaseStatus.OK,accountService.findAll()),HttpStatus.OK);
     }
 
-    @PostMapping("/follow")
-    public ResponseEntity follow(@RequestBody AccountDto.FollowRequest followRequest){
-        accountService.follow(followRequest);
+    //--------------------------------------팔로잉------------------------------------------------------
+
+    @PostMapping("/follow/{yourId}")
+    public ResponseEntity follow(@PathVariable Long yourId, @RequestHeader(value = "Authorization") String token){
+
+        Long myId = accountService.getAccountId(token);
+        boolean can = accountService.followValidator(myId,yourId);
+        if(!can)
+        {
+            return ResponseEntity.badRequest().build();
+        }
+        accountService.follow(myId, yourId);
+
         return ResponseEntity.ok().build();
     }
-
-
     //-------------------------------------- 로그인 -----------------------------------------------------
 
-
-    @GetMapping("/relogin")
-    public ResponseEntity relogin(@RequestHeader(value = "Authorization") String token)
-    {
-        //System.out.println(token);
-        Object o =  accountService.decryptToken(token);
-        logger.info(o.toString());
-        return ResponseEntity.ok().build();
-    }
-
-
-
     @PostMapping("/login")
-    public ResponseEntity login(@RequestBody AccountDto.LoginRequest loginRequest) {
-        //이메일 보내줌 email 전송
+    public ResponseEntity login(@RequestBody @Valid AccountDto.LoginRequest loginRequest,Errors errors) {
+
+        if(errors.hasErrors())
+        {
+            return new ResponseEntity(new BaseMessage(BaseStatus.BAD_REQUEST,errors), HttpStatus.BAD_REQUEST);
+        }
+
+        accountService.ExistEmailAddress(loginRequest,errors);
+
+        if(errors.hasErrors())
+        {
+            return new ResponseEntity(new BaseMessage(BaseStatus.BAD_REQUEST,errors), HttpStatus.BAD_REQUEST);
+        }
+
         accountService.login(loginRequest);
         return ResponseEntity.ok().build();
     }
-//    // TODO: 2021-01-21 수정하기
-    @PostMapping("/loginvalidation")
-    public ResponseEntity loginValidation(@RequestBody AccountDto.LoginValidationRequest loginValidationRequest) {
-        //email, authNum 받음 DTO 따로 또 만들기 loginValidationRequest
-        //email로 findByEmail 한 account 이 account의 authNum이랑 authNum 비교
-        //맞으면 로그인 성공했으니 토큰이랑 유저 정보 보내주기, 틀리면 적절한 문구 여기서 + 최초로그인 성공한 사람(accountRole==TEMP) 였던 사람은 cert로 변경
 
-        //--------------Testing------------------------------
-
-
-            Map<String, Object> resultMap ;
-            resultMap =  accountService.loginValidation(loginValidationRequest);
-            HttpStatus status = null;
-            if(resultMap.containsKey("id")) {
-                status = HttpStatus.ACCEPTED;
-            } else {
-                status = HttpStatus.BAD_REQUEST;
-            }
-            //--------------------------------------------------------------------------------
-
+    @PostMapping("/login/auth")
+    public ResponseEntity loginValidation(@RequestBody AccountDto.LoginAuthKeyRequest loginAuthKeyRequest) {
+        Map<String, Object> resultMap ;
+        resultMap =  accountService.loginWithAuthKey(loginAuthKeyRequest);
+        HttpStatus status = null;
+        if(resultMap.containsKey("AccountId")) {
+            status = HttpStatus.ACCEPTED;
+        } else {
+            status = HttpStatus.BAD_REQUEST;
+        }
         return new ResponseEntity(resultMap, status);
     }
 

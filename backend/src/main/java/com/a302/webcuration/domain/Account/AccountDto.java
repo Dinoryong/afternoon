@@ -20,8 +20,6 @@ public class AccountDto {
     public static class FollowRequest {
         @NotNull
         private Long aId;
-        @NotNull
-        private Long bId;
     }
 
     @Getter @Setter @RequiredArgsConstructor
@@ -106,11 +104,12 @@ public class AccountDto {
 
     @Getter @Setter @RequiredArgsConstructor
     public static class LoginRequest{
+        @Email(message = "알맞은 이메일 형식이 아닙니다.")
         private String accountEmail;
     }
 
     @Getter @Setter @RequiredArgsConstructor
-    public static class LoginValidationRequest{
+    public static class LoginAuthKeyRequest {
         private String accountEmail;
         private String accountAuthNum;
     }

@@ -1,6 +1,5 @@
 package com.a302.webcuration.service;
 
-import com.a302.webcuration.controller.AccountController;
 import com.a302.webcuration.domain.Account.Account;
 import com.a302.webcuration.domain.Account.AccountDto;
 import com.a302.webcuration.domain.Account.AccountRepository;
@@ -12,12 +11,11 @@ import lombok.RequiredArgsConstructor;
 import org.modelmapper.ModelMapper;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
-import org.springframework.http.HttpStatus;
 import org.springframework.mail.SimpleMailMessage;
 import org.springframework.mail.javamail.JavaMailSender;
 import org.springframework.stereotype.Service;
+import org.springframework.validation.Errors;
 
 import javax.transaction.Transactional;
 import java.util.*;
@@ -75,9 +73,7 @@ public class AccountService {
         return profile;
     }
 
-    @Transactional
-    //AccountDto.AccountInfoInHeader
-    public Object decryptToken(String tokenKey)
+    public Long getAccountId(String tokenKey)
     {
         String token=tokenKey.substring(7);
 
@@ -85,74 +81,84 @@ public class AccountService {
 
         try {
             claims = Jwts.parser().setSigningKey(signature.getBytes()).parseClaimsJws(token);
-            logger.info("TokenKey :"+claims.getBody().get("account"));
+            logger.info("AccountId :"+claims.getBody().get("accountId"));
         } catch (final Exception e) {
             logger.info("복호화 실패");
             throw new RuntimeException();
         }
-        return claims.getBody().get("account");
+        return  Long.parseLong(claims.getBody().get("accountId").toString());
+    }
+
+    //TODO 구체적인 예외로 처리할 것
+    public boolean followValidator(Long myId,Long yourId)
+    {
+        Account account = accountRepository.findAccountByAccountId(yourId);
+        if(account==null)
+        {
+            return false;
+        }
+        if(myId==yourId)
+        {
+            return false;
+        }
+        if(yourId<0){
+            return false;
+        }
+        return true;
     }
 
     @Transactional
-    public void follow(AccountDto.FollowRequest followRequest){
-
-        Account aAccount= accountRepository.findById(followRequest.getAId())
-                .orElseThrow(()->new
-                        IllegalArgumentException("a 유저가 없습니다"));
-
-        Account bAccount= accountRepository.findById(followRequest.getBId())
-                .orElseThrow(()->new
-                        IllegalArgumentException("b 유저가 없습니다"));
-
-        bAccount.followAccount(aAccount);
+    public void follow(Long myId,Long yourId){
+        Account aAccount= accountRepository.findAccountByAccountId(myId);
+        Account bAccount= accountRepository.findAccountByAccountId(yourId);
+        aAccount.followAccount(bAccount);
     }
 
-    @Transactional
-    public void login(AccountDto.LoginRequest loginRequest)
+    //존재하는 이메일 여부 판정
+    public void ExistEmailAddress(AccountDto.LoginRequest loginRequest, Errors errors)
     {
         Account account = accountRepository.findByAccountEmail(loginRequest.getAccountEmail());
-        if(account==null){
-            //이메일에 해당하는 사용자 없음
-
-        }else{
-            //이메일에 해당하는 사용자 있음
-            String authCode = createEmailCode();
-            account.changeAuthNum(authCode);
-            sendMail(account.getAccountEmail(),authCode);
+        if(account==null)
+        {
+            errors.rejectValue("AccountEmail","doesn't exist","등록되지 않은 이메일입니다.");
         }
     }
 
-    // TODO: 2021-01-21 수정 필요
     @Transactional
-    public Map loginValidation(AccountDto.LoginValidationRequest loginValidationRequest) {
-        Account account=accountRepository.findByAccountEmail(loginValidationRequest.getAccountEmail());
+    //이메일 보내고 AuthKey Database에 저장
+    public void login(AccountDto.LoginRequest loginRequest)
+    {
+        Account account = accountRepository.findByAccountEmail(loginRequest.getAccountEmail());
+        String authCode = createEmailCode();
+        //db에 저장
+        account.changeAuthNum(authCode);
+        sendMail(account.getAccountEmail(),authCode);
+    }
+
+    @Transactional
+    public Map loginWithAuthKey(AccountDto.LoginAuthKeyRequest loginAuthKeyRequest) {
+        Account account=accountRepository.findByAccountEmail(loginAuthKeyRequest.getAccountEmail());
         Map<String, Object> resultMap = new HashMap<>();
-        if(account.getAccountAuthNum().equals(loginValidationRequest.getAccountAuthNum())){
-            System.out.println("------------------인증키 일치!------------------");
-            //로그인 성공
-            //최초로그인 성공한 사람인지
+        if(account.getAccountAuthNum().equals(loginAuthKeyRequest.getAccountAuthNum())){
+            logger.info("인증키 일치!");
             if(account.getAccountRole().equals(Role.TEMPORARY)){
-                //인증된 사용자로 변환
-                System.out.println("------------------첫 로그인!------------------");
+                logger.info("처음으로 로그인된 계정입니다. 관심태그를 입력 받아야 합니다.");
                 account.changeRole(Role.CERTIFICATED);
-                //DB에 저장이 되나 확인
             }
             resultMap=loginInfo(account);
         }else{
-            resultMap.put("message", "로그인 실패");
+            resultMap.put("message", "인증키가 일치하지 않습니다.");
         }
         return resultMap;
     }
 
-    // TODO: 수정하기
     public Map loginInfo(Account account){
         Map<String, Object> resultMap = new HashMap<>();
-        String token = "Bearer ";
-        token += jwtService.create(modelMapper.map(account,AccountDto.AccountInfoInHeader.class));
+        String token = "Bearer "+jwtService.create(account.getAccountId());
         logger.trace("로그인 토큰정보 : {}", token);
-        resultMap.put("auth-token", token);
-        resultMap.put("id", account.getAccountId());
-        resultMap.put("email", account.getAccountEmail());
+        resultMap.put("Authorization", token);
+        resultMap.put("AccountId", account.getAccountId());
+        resultMap.put("AccountEmail", account.getAccountEmail());
         return resultMap;
     }
 
@@ -177,7 +183,6 @@ public class AccountService {
         }
         return newCode;
     }
-
 
 
 }
