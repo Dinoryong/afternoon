@@ -17,10 +17,12 @@ public class Pin {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     private Long pinId;
-    private Double locY;
-    private Double locX;
-    private String link;
-    private String contents;
+    private Double pinLocY;
+    private Double pinLocX;
+    private String pinLink;
+    private String pinContents;
+    //해당하는 사진의 순서를 위한 핀넘버링
+    private Integer pinNum;
 
     @Builder.Default
     @OneToMany(mappedBy = "pin")

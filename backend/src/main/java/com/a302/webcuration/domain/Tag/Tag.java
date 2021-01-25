@@ -31,8 +31,6 @@ public class Tag {
     @Builder.Default
     private List<Tag> child=new ArrayList<>();
 
-    //이거 대신 다대다로 Account 와 연관
-    //private int tagUserCount;
     @ManyToMany(mappedBy = "tags")
     @Builder.Default
     private List<Account> accounts=new ArrayList<>();

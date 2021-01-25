@@ -1,5 +1,6 @@
 package com.a302.webcuration.domain.Account;
 
+import com.a302.webcuration.domain.Post.Posts;
 import com.a302.webcuration.domain.Tag.Tag;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
@@ -49,7 +50,7 @@ public class Account {
     @Builder.Default
     @Enumerated(EnumType.STRING)
     private Role accountRole = Role.TEMPORARY;
-
+    //팔로잉
     @Builder.Default
     @ManyToMany(fetch = FetchType.EAGER)
     private Set<Account> following=new HashSet<>();
@@ -57,10 +58,18 @@ public class Account {
     @Builder.Default
     @ManyToMany(mappedBy = "following")
     private Set<Account> follower=new HashSet<>();
-
+    //관심 태그
     @Builder.Default
     @ManyToMany
     private List<Tag> tags=new ArrayList<>();
+    //좋아요한 게시글
+    @Builder.Default
+    @ManyToMany
+    private List<Posts> likePosts=new ArrayList<>();
+    //내가 쓴 게시글
+    @Builder.Default
+    @OneToMany(mappedBy = "postWriter")
+    private List<Posts> myPosts=new ArrayList<>();
 
     public void changeAuthKey(String accountAuthKey){
         this.accountAuthKey =accountAuthKey;

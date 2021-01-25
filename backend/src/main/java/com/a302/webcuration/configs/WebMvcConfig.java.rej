@@ -1,0 +1,9 @@
+diff a/backend/src/main/java/com/a302/webcuration/configs/WebMvcConfig.java b/backend/src/main/java/com/a302/webcuration/configs/WebMvcConfig.java	(rejected hunks)
+@@ -9,7 +9,6 @@
+     @Override
+     public void addCorsMappings(CorsRegistry registry) {
+         registry.addMapping("/**")
+-                .allowedOrigins("http://localhost:3000", "http://localhost:8080")
+                 .allowedOrigins("http://localhost:3000", "http://118.34.136.73:8080")
+                 .exposedHeaders("Authorization")	//make client read header("jwt-token")
+         ;
