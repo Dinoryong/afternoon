@@ -39,7 +39,7 @@ public class AccountController {
 
     //---------------------------------- 회원 ------------------------------------------------
 
-    @PostMapping("/signup")
+    @PostMapping
     public ResponseEntity createAccount(@RequestBody @Valid AccountDto.CreateAccountRequest createAccountRequest, Errors errors)
     {
         if(errors.hasErrors())
@@ -54,12 +54,8 @@ public class AccountController {
     }
 
     @GetMapping("/{id}")
-    public ResponseEntity retrieveAccountById(@PathVariable Long id, Errors errors)
+    public ResponseEntity retrieveAccountById(@PathVariable Long id)
     {
-        if(errors.hasErrors())
-        {
-            return new ResponseEntity(new BaseMessage(BaseStatus.BAD_REQUEST,errors), HttpStatus.BAD_REQUEST);
-        }
         return new ResponseEntity(new BaseMessage(BaseStatus.OK,accountService.findAccountById(id)),HttpStatus.OK);
     }
 
