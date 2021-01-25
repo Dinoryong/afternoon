@@ -12,6 +12,7 @@ const Container = styled.div`
 const Wrapper = styled.div<homBottomProps>`
   display: flex;
   width: 100%;
+  min-height: 800px;
 `;
 
 const BigBox = styled.div`
@@ -59,12 +60,17 @@ const HomeBottom = () => {
             <HomeTagBox
               boxFrameColor={color.homeTag.b}
               boxBgColor={color.homeTag.two}
+              boxTitleText="와인룸"
             />
           </SmallBox>
           <SmallBox>
             <HomeTagBox
               boxFrameColor={color.homeTag.c}
               boxBgColor={color.homeTag.zero}
+              boxBgImage={"/assets/images/objects/squba.png"}
+              boxImagePosition="right"
+              boxCountText={78}
+              boxTitleText="스킨스쿠버"
             />
           </SmallBox>
         </SmallGroup>
