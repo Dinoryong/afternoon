@@ -37,7 +37,7 @@ public class AccountControllerTest extends BaseControllerTest {
     public void Account_생성_성공() throws Exception {
         //When
         AccountDto.CreateAccountRequest createAccountRequest = AccountDto.CreateAccountRequest.builder()
-                .accountName("우석")
+                .accountName("한우석")
                 .accountNickname("dntjr22")
                 .accountEmail("dntjr4772@naver.com")
                 .build();
