@@ -57,7 +57,7 @@ public class LoginService2 {
             case "login-request":
                 logger.info(loginRequest.getAccountEmail()+"로 이메일 성공적으로 보냄");
                 return loginRequest(loginRequest);
-                //break;
+            //break;
             case "check-authKey-off":
                 logger.info("인증키 일치여부가 확인되었습니다.");
                 return checkAuthKeyOff(loginRequest);
@@ -72,7 +72,9 @@ public class LoginService2 {
     {
         String email = getAccountEmail(token);
         Long id = getAccountId(token);
-        if(request.getId().equals(id)&&request.getAccountEmail().equals(email))
+        logger.info(email+" "+id);
+        logger.info(request.getAccountId().toString());
+        if(request.getAccountId()==id && request.getAccountEmail().equals(email))
         {
             return new BaseMessage(BaseStatus.OK,accountRepository.findAccountByAccountId(id));
         }
@@ -141,7 +143,7 @@ public class LoginService2 {
 
         try {
             claims = Jwts.parser().setSigningKey(signature.getBytes()).parseClaimsJws(token);
-            logger.info("AccountId :"+claims.getBody().get("accountId"));
+            logger.info("accountEmail :"+claims.getBody().get("accountEmail"));
         } catch (final Exception e) {
             logger.info("복호화 실패");
             throw new RuntimeException();
@@ -158,9 +160,11 @@ public class LoginService2 {
             logger.info("인증키 일치!");
             String email = account.getAccountEmail();
             Long id = account.getAccountId();
+            resultMap = loginInfo(id,email);
+            String token = "Bearer "+jwtService.create(id,email);
             resultMap.put("message","인증키가 일치합니다.");
             resultMap.put("match","true");
-            return new BaseMessage(BaseStatus.OK,resultMap,loginInfo(id,email));
+            return new BaseMessage(BaseStatus.OK,resultMap,token);
         }else{
             resultMap.put("message", "인증키가 일치하지 않습니다.");
             resultMap.put("match","false");
@@ -170,15 +174,9 @@ public class LoginService2 {
 
     public Map loginInfo(Long id, String email){
         Map<String, Object> resultMap = new HashMap<>();
-        String token = "Bearer "+jwtService.create(id,email);
-        logger.trace("로그인 토큰정보 : {}", token);
-        resultMap.put("Authorization", token);
-        resultMap.put("AccountId", id);
-        resultMap.put("AccountEmail", email);
+        resultMap.put("accountId", id);
+        resultMap.put("accountEmail", email);
         return resultMap;
     }
-
-
-
 
 }

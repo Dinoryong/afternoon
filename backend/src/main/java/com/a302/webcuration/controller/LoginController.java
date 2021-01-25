@@ -11,6 +11,7 @@ import lombok.RequiredArgsConstructor;
 import org.modelmapper.ModelMapper;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.validation.Errors;
@@ -46,7 +47,11 @@ public class LoginController {
         {
             return new ResponseEntity(new BaseMessage(BaseStatus.BAD_REQUEST,errors), HttpStatus.BAD_REQUEST);
         }
-        return new ResponseEntity(loginService.login(loginRequest),HttpStatus.OK);
+        BaseMessage bs = loginService.login(loginRequest);
+
+        HttpHeaders httpHeaders = new HttpHeaders();
+        httpHeaders.add("Authorization",bs.getHeaders().toString());
+        return new ResponseEntity(bs.getInfo(),httpHeaders,HttpStatus.OK);
     }
 
     @PostMapping("/auto-login")

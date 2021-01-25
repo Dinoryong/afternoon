@@ -114,7 +114,7 @@ public class AccountDto {
         private String accountEmail;
         private String accountAuthKey;
 
-        private Long id;
+        private Long accountId;
 
     }
 

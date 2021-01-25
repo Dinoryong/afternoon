@@ -18,7 +18,7 @@ public class JwtService {
 
 	@Value("${token.signiturekey}")
 	private String signature ;
-	private Long expireMin = 20L;
+	private Long expireMin = 1L;
 
 //	로그인 성공시 사용자 정보를 기반으로 JWTToken을 생성하여 반환.
 	public String create(Long id,String email) {
