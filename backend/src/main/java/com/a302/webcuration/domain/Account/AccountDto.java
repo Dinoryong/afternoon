@@ -1,5 +1,6 @@
 package com.a302.webcuration.domain.Account;
 
+import io.swagger.annotations.ApiModelProperty;
 import lombok.*;
 import org.hibernate.annotations.CreationTimestamp;
 import org.hibernate.annotations.UpdateTimestamp;
@@ -12,6 +13,7 @@ import java.time.LocalDate;
 import java.util.List;
 
 public class AccountDto {
+
 
     @Getter
     @Setter
@@ -101,17 +103,19 @@ public class AccountDto {
         private String accountDesc;
 
     }
-
     @Getter @Setter @RequiredArgsConstructor
     public static class LoginRequest{
+
+        //TODO
+        //@NotNull
+        private String act;
+
         @Email(message = "알맞은 이메일 형식이 아닙니다.")
         private String accountEmail;
-    }
+        private String accountAuthKey;
 
-    @Getter @Setter @RequiredArgsConstructor
-    public static class LoginAuthKeyRequest {
-        private String accountEmail;
-        private String accountAuthNum;
+        private Long id;
+
     }
 
     @Getter @Setter @RequiredArgsConstructor

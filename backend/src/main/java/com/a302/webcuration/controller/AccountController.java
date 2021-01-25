@@ -7,6 +7,9 @@ import com.a302.webcuration.domain.Account.AccountDto;
 import com.a302.webcuration.domain.Account.AccountRepository;
 import com.a302.webcuration.service.AccountService;
 import com.a302.webcuration.service.JwtService;
+import io.swagger.annotations.ApiImplicitParam;
+import io.swagger.annotations.ApiModelProperty;
+import io.swagger.annotations.ApiParam;
 import lombok.RequiredArgsConstructor;
 import org.modelmapper.ModelMapper;
 import org.slf4j.Logger;
@@ -66,53 +69,23 @@ public class AccountController {
         return new ResponseEntity(new BaseMessage(BaseStatus.OK,accountService.findAll()),HttpStatus.OK);
     }
 
+
+    //TODO 팔로잉 기능 일시중지
     //--------------------------------------팔로잉------------------------------------------------------
 
-    @PostMapping("/follow/{yourId}")
-    public ResponseEntity follow(@PathVariable Long yourId, @RequestHeader(value = "Authorization") String token){
+//    @PostMapping("/follow/{yourId}")
+//    public ResponseEntity follow(@PathVariable Long yourId, @RequestHeader(value = "Authorization") String token){
+//
+//        Long myId = accountService.getAccountId(token);
+//        boolean can = accountService.followValidator(myId,yourId);
+//        if(!can)
+//        {
+//            return ResponseEntity.badRequest().build();
+//        }
+//        accountService.follow(myId, yourId);
+//
+//        return ResponseEntity.ok().build();
+//    }
 
-        Long myId = accountService.getAccountId(token);
-        boolean can = accountService.followValidator(myId,yourId);
-        if(!can)
-        {
-            return ResponseEntity.badRequest().build();
-        }
-        accountService.follow(myId, yourId);
-
-        return ResponseEntity.ok().build();
-    }
-    //-------------------------------------- 로그인 -----------------------------------------------------
-
-    @PostMapping("/login")
-    public ResponseEntity login(@RequestBody @Valid AccountDto.LoginRequest loginRequest,Errors errors) {
-
-        if(errors.hasErrors())
-        {
-            return new ResponseEntity(new BaseMessage(BaseStatus.BAD_REQUEST,errors), HttpStatus.BAD_REQUEST);
-        }
-
-        accountService.ExistEmailAddress(loginRequest,errors);
-
-        if(errors.hasErrors())
-        {
-            return new ResponseEntity(new BaseMessage(BaseStatus.BAD_REQUEST,errors), HttpStatus.BAD_REQUEST);
-        }
-
-        accountService.login(loginRequest);
-        return ResponseEntity.ok().build();
-    }
-
-    @PostMapping("/login/auth")
-    public ResponseEntity loginValidation(@RequestBody AccountDto.LoginAuthKeyRequest loginAuthKeyRequest) {
-        Map<String, Object> resultMap ;
-        resultMap =  accountService.loginWithAuthKey(loginAuthKeyRequest);
-        HttpStatus status = null;
-        if(resultMap.containsKey("AccountId")) {
-            status = HttpStatus.ACCEPTED;
-        } else {
-            status = HttpStatus.BAD_REQUEST;
-        }
-        return new ResponseEntity(resultMap, status);
-    }
 
 }

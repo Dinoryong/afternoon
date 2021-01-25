@@ -40,6 +40,30 @@ public class SampleTest {
                 .build();
 
         sampleRepository.save(sample);
+
+        String name1 = "park1";
+        int age1 = 11;
+        String email1 = "12312";
+
+        Sample sample1 = Sample.builder()
+                .userName(name1)
+                .userAge(age1)
+                .userEmail(email1)
+                .build();
+
+        sampleRepository.save(sample1);
+
+        String name2 = "Lee1";
+        int age2 = 11;
+        String email2 = "12312";
+
+        Sample sample2 = Sample.builder()
+                .userName(name2)
+                .userAge(age2)
+                .userEmail(email2)
+                .build();
+
+        sampleRepository.save(sample2);
     }
 
 

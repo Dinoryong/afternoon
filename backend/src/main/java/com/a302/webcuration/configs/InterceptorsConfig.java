@@ -18,8 +18,8 @@ public class InterceptorsConfig implements WebMvcConfigurer {
     //    JwtInterceptor를 설치
     @Override
     public void addInterceptors(InterceptorRegistry registry) {
-        registry.addInterceptor(jwtInterceptor).addPathPatterns("/api/**")  //기본 적용 경로
-                .excludePathPatterns(Arrays.asList("/api/accounts/**"));  //제외 적용 경로
+//        registry.addInterceptor(jwtInterceptor).addPathPatterns("/api/**")  //기본 적용 경로
+//                .excludePathPatterns(Arrays.asList("/api/accounts/**"));  //제외 적용 경로
     }
 
     // Interceptor를 이용해서 처리하므로 전역의 Cross Origin 처리를 해준다.

@@ -1,7 +1,6 @@
 package com.a302.webcuration.domain.Account;
 
 import com.a302.webcuration.domain.Tag.Tag;
-import jdk.nashorn.internal.ir.annotations.Ignore;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Getter;
@@ -10,7 +9,6 @@ import org.hibernate.annotations.CreationTimestamp;
 import org.hibernate.annotations.UpdateTimestamp;
 
 import javax.persistence.*;
-import javax.transaction.Transactional;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
@@ -45,7 +43,7 @@ public class Account {
 
     //인증
     @Builder.Default
-    private String accountAuthNum="";
+    private String accountAuthKey ="";
 
     //임시 고객
     @Builder.Default
@@ -64,8 +62,8 @@ public class Account {
     @ManyToMany
     private List<Tag> tags=new ArrayList<>();
 
-    public void changeAuthNum(String accountAuthNum){
-        this.accountAuthNum=accountAuthNum;
+    public void changeAuthKey(String accountAuthKey){
+        this.accountAuthKey =accountAuthKey;
     }
 
     public void changeRole(Role accountRole){
