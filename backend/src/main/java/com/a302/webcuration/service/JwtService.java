@@ -21,7 +21,7 @@ public class JwtService {
 	private Long expireMin = 20L;
 
 //	로그인 성공시 사용자 정보를 기반으로 JWTToken을 생성하여 반환.
-	public String create(Long accountId) {
+	public String create(Long id,String email) {
 		JwtBuilder jwtBuilder = Jwts.builder();
 //		JWT Token = Header + Payload + Signature
 		
@@ -33,7 +33,8 @@ public class JwtService {
 		jwtBuilder
 			.setSubject("로그인토큰") // 토큰의 제목 설정
 			.setExpiration(new Date(System.currentTimeMillis() + 1000 * 60 * expireMin)) // 유효기간 설정
-			.claim("accountId", accountId); // 담고 싶은 정보 설정.
+			.claim("accountId", id)
+		.claim("accountEmail",email); // 담고 싶은 정보 설정.
 		
 //		signature 설정
 		jwtBuilder.signWith(SignatureAlgorithm.HS256, signature.getBytes());

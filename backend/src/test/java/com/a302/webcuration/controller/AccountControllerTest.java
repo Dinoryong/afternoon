@@ -96,60 +96,6 @@ public class AccountControllerTest extends BaseControllerTest {
                 .andDo(print());
     }
 
-    //---------------------------------로그인-------------------------------------------
-
-    @Test
-    public void Login_이메일요청_성공() throws Exception {
-
-        AccountDto.LoginRequest account = new AccountDto.LoginRequest();
-        account.setAccountEmail("dntjr4772@naver.com");
-
-        mockMvc.perform(post("/api/accounts/login")
-                .contentType(MediaType.APPLICATION_JSON)
-                .content(objectMapper.writeValueAsString(account)))
-                .andExpect(status().isOk())
-                .andDo(print());
-    }
-
-    @Test
-    public void Login_이메일요청_실패_형식오류() throws Exception {
-
-        AccountDto.LoginRequest account = new AccountDto.LoginRequest();
-        account.setAccountEmail("ㄹasdkom");
-
-        mockMvc.perform(post("/api/accounts/login")
-                .contentType(MediaType.APPLICATION_JSON)
-                .content(objectMapper.writeValueAsString(account)))
-                .andExpect(status().isBadRequest())
-                .andDo(print());
-    }
-
-    @Test
-    public void Login_이메일요청_실패_존재하지않음() throws Exception {
-
-        AccountDto.LoginRequest account = new AccountDto.LoginRequest();
-        account.setAccountEmail("none@test.com");
-
-        mockMvc.perform(post("/api/accounts/login")
-                .contentType(MediaType.APPLICATION_JSON)
-                .content(objectMapper.writeValueAsString(account)))
-                .andExpect(status().isBadRequest())
-                .andDo(print());
-    }
-
-    @Test
-    public void Login_AuthKey_성공() throws Exception {
-
-        AccountDto.LoginAuthKeyRequest account = new AccountDto.LoginAuthKeyRequest();
-        account.setAccountEmail("dntjr4772@naver.com");
-        account.setAccountAuthNum("6mcoqhe3");
-
-        mockMvc.perform(post("/api/accounts/login/auth")
-                .contentType(MediaType.APPLICATION_JSON)
-                .content(objectMapper.writeValueAsString(account)))
-                .andExpect(status().isOk())
-                .andDo(print());
-    }
 
 
     //-------------------------------------팔로잉-------------------------------------
