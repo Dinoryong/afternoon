@@ -60,6 +60,10 @@ public class Account {
     @ManyToMany(mappedBy = "following")
     private Set<Account> follower=new HashSet<>();
 
+    @Builder.Default
+    @ManyToMany
+    private List<Tag> tags=new ArrayList<>();
+
     public void changeAuthNum(String accountAuthNum){
         this.accountAuthNum=accountAuthNum;
     }
@@ -67,14 +71,6 @@ public class Account {
     public void changeRole(Role accountRole){
         this.accountRole=accountRole;
     }
-
-    //private List<Tag> tags;
-//    @Builder
-//    public Account(String accountNickname,String accountEmail,String accountName,Long accountAuthNum){
-//        this.accountNickname=accountNickname;
-//        this.accountEmail=accountEmail;
-//        this.accountName=accountName;
-//    }
 
     public void followAccount(Account account){
         this.getFollowing().add(account);

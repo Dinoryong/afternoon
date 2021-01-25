@@ -1,5 +1,7 @@
 package com.a302.webcuration.domain.Post;
 
+import com.a302.webcuration.domain.Pin.Pin;
+import com.a302.webcuration.domain.Tag.Tag;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Getter;
@@ -9,6 +11,8 @@ import org.hibernate.annotations.UpdateTimestamp;
 
 import javax.persistence.*;
 import java.time.LocalDate;
+import java.util.ArrayList;
+import java.util.List;
 
 @Entity
 @Getter @NoArgsConstructor @AllArgsConstructor  @Builder
@@ -23,9 +27,13 @@ public class Posts {
     private LocalDate postsWriteTime;
     @UpdateTimestamp
     private LocalDate postsUpdateTime;
-    //private List pins;
+    @Builder.Default
+    @OneToMany
+    private List<Pin> pins=new ArrayList<>();
     private String postsLocation;
     private int postsLike;
-    //private List tags;
+    @Builder.Default
+    @ManyToMany
+    private List<Tag> tags=new ArrayList<>();
 
 }
