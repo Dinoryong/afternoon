@@ -1,5 +1,7 @@
 package com.a302.webcuration.domain.Tag;
 
+import com.a302.webcuration.domain.Account.Account;
+import com.a302.webcuration.domain.Post.Posts;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Getter;
@@ -15,13 +17,32 @@ public class Tag {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     private Long tagId;
+    //태그 정보
+    @Column(unique = true)
     private String tagTitle;
+
     private String tagDesc;
-    private int tagUserCount;
+
+    @Builder.Default
     @ManyToOne
-    private Tag parent;
+    private Tag parent=null;
+
     @OneToMany(mappedBy = "parent")
     @Builder.Default
     private List<Tag> child=new ArrayList<>();
 
+    //이거 대신 다대다로 Account 와 연관
+    //private int tagUserCount;
+    @ManyToMany(mappedBy = "tags")
+    @Builder.Default
+    private List<Account> accounts=new ArrayList<>();
+
+    @ManyToMany(mappedBy = "tags")
+    @Builder.Default
+    private List<Posts> posts=new ArrayList<>();
+
+    public void setParent(Tag parent) {
+        this.parent = parent;
+        parent.getChild().add(this);
+    }
 }
