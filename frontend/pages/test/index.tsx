@@ -2,12 +2,21 @@ import React, { useEffect, useState } from "react";
 // import Authmodal from "../../components/Authmodal";
 import styled from "@emotion/styled";
 import { GET_SAMPLE, POST_SAMPLE } from "../api/hello";
+import {
+  AUTO_LOGIN,
+  CHECK_EMAIL,
+  CONFIRM_LOGIN,
+  REQUEST_LOGIN,
+  LOG_OUT,
+  SIGN_UP,
+} from "../api/user";
 
 const Container = styled.div`
   position: relative;
   height: 100%;
   background-color: #eeeeee;
   display: flex;
+  flex-direction: column;
   justify-content: center;
   align-items: center;
 `;
@@ -34,8 +43,8 @@ const Content = styled.div`
 
 const SampleBtn = styled.div`
   display: flex;
-  width: 200px;
-  height: 80px;
+  width: 300px;
+  height: 120px;
   background-color: #fff;
   border: 2px solid black;
   color: black;
@@ -44,6 +53,7 @@ const SampleBtn = styled.div`
   cursor: pointer;
   justify-content: center;
   align-items: center;
+  margin-bottom: 10px;
 `;
 
 const index = () => {
@@ -56,30 +66,52 @@ const index = () => {
     });
   });
 
+  const signupProps = {
+    accountName: "리재욱",
+    accountEmail: "dngngn3045@gmail.com",
+    accountNickname: "재욱",
+  };
+
+  const loginProps = {
+    act: "login-request",
+    accountEmail: "dev.nanjae@gmail.com",
+  };
+
+  const checkProps1 = {
+    act: "check-authKey-off",
+    accountEmail: "dev.nanjae@gmail.com",
+    accountAuthKey: "6x63anje",
+  };
+
+  const checkProps2 = {
+    act: "check-authKey-on",
+    accountEmail: "dev.nanjae@gmail.com",
+    accountAuthKey: "6x63anje",
+  };
+
+  // useEffect(function mount(): void {
+  //   if (window.sessionStorage.getItem("authToken") !== null) {
+  //     AUTO_LOGIN();
+  //   }
+  // });
+
   return (
     <Container style={{ height: windowHeight }}>
-      {/* <BgOpacityFrame></BgOpacityFrame> */}
-      {/* <Content>
-        <Authmodal></Authmodal>
-      </Content> */}
-      <SampleBtn
-        onClick={() => {
-          GET_SAMPLE();
-        }}
-      >
-        GET 테스트
+      <SampleBtn onClick={() => GET_SAMPLE()}>서버 테스트</SampleBtn>
+      <SampleBtn onClick={() => SIGN_UP(signupProps)}>
+        회원가입 테스트
       </SampleBtn>
-      <SampleBtn
-        onClick={() => {
-          POST_SAMPLE({
-            userAge: 30,
-            userName: "이재욱",
-            userEmail: "dngngn3045@naver.com",
-          });
-        }}
-      >
-        POST 테스트
+      <SampleBtn onClick={() => REQUEST_LOGIN(loginProps)}>
+        이메일로 인증번호 보내기
       </SampleBtn>
+      <SampleBtn onClick={() => CHECK_EMAIL(checkProps1)}>
+        인증번호 확인 요청
+      </SampleBtn>
+      <SampleBtn onClick={() => CONFIRM_LOGIN(checkProps2)}>
+        로그인 요청
+      </SampleBtn>
+      <SampleBtn onClick={() => AUTO_LOGIN()}>자동 로그인 테스트</SampleBtn>
+      <SampleBtn onClick={() => LOG_OUT()}>로그아웃 테스트</SampleBtn>
     </Container>
   );
 };
