@@ -1,10 +1,12 @@
-import React from "react";
+import React, { useState } from "react";
 import styled from "@emotion/styled";
 import Image from "next/image";
 import UserModalTop from "../UserModal/UserModalTop";
 import LoginMiddle from "./LoginMiddle";
 import UserModalBottom from "../UserModal/UserModalBottom";
 import UserModalFoot from "../UserModal/UserModalFoot";
+import { useSelector, useDispatch } from "react-redux";
+import AuthMiddle from "./AuthMiddle";
 
 const Container = styled.div`
   width: 400px;
@@ -29,12 +31,26 @@ const Xbutton = styled.div`
   position: absolute;
   top: 22px;
   right: 22px;
+  cursor: pointer;
 `;
 
+const useCounter = () => {
+  const dispatch = useDispatch();
+  const toggle = async () => {
+    await dispatch({ type: "TOGGLE" });
+  };
+  return { toggle };
+};
+
 const index = () => {
+  const [authState, setAuthState] = useState(0);
+  const [currentEmail, setCurrentEmail] = useState("");
+
+  const { toggle } = useCounter();
+
   return (
     <Container>
-      <Xbutton>
+      <Xbutton onClick={toggle}>
         <Image
           src="/assets/icons/x_mark.png"
           layout="fill"
@@ -42,7 +58,14 @@ const index = () => {
         ></Image>
       </Xbutton>
       <UserModalTop></UserModalTop>
-      <LoginMiddle></LoginMiddle>
+      {authState === 0 ? (
+        <LoginMiddle
+          setAuthState={setAuthState}
+          setCurrentEmail={setCurrentEmail}
+        ></LoginMiddle>
+      ) : (
+        <AuthMiddle></AuthMiddle>
+      )}
       <UserModalBottom
         bottomText="다른 SNS계정으로 로그인하기"
         snsText1="Facebook으로 로그인"

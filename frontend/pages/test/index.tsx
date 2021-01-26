@@ -11,6 +11,8 @@ import {
   SIGN_UP,
 } from "../api/user";
 
+import { useSelector, useDispatch } from "react-redux";
+
 const Container = styled.div`
   position: relative;
   height: 100%;
@@ -19,26 +21,6 @@ const Container = styled.div`
   flex-direction: column;
   justify-content: center;
   align-items: center;
-`;
-
-const BgOpacityFrame = styled.div`
-  position: absolute;
-  width: 100%;
-  height: 100%;
-  background-color: black;
-  opacity: 0.3;
-`;
-
-const Content = styled.div`
-  position: absolute;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  width: 100%;
-  height: 100%;
-  font-size: 36px;
-  font-weight: 700;
-  color: white;
 `;
 
 const SampleBtn = styled.div`
@@ -55,6 +37,28 @@ const SampleBtn = styled.div`
   align-items: center;
   margin-bottom: 10px;
 `;
+
+const useCounter = () => {
+  const count = useSelector((state) => state.base.count);
+  const isShown = useSelector((state) => state.login.isShown);
+  const dispatch = useDispatch();
+  const increment = () =>
+    dispatch({
+      type: "INCREMENT",
+    });
+  const decrement = () =>
+    dispatch({
+      type: "DECREMENT",
+    });
+  const reset = () =>
+    dispatch({
+      type: "RESET",
+    });
+  const toggle = () => {
+    dispatch({ type: "TOGGLE" });
+  };
+  return { isShown, toggle, count, increment, decrement, reset };
+};
 
 const index = () => {
   const [windowHeight, setWindowHeight] = useState<number>();
@@ -95,9 +99,21 @@ const index = () => {
   //   }
   // });
 
+  // const state = useSelector((state) => state.state);
+
+  const { isShown, toggle, count, increment, decrement, reset } = useCounter();
+
   return (
     <Container style={{ height: windowHeight }}>
-      <SampleBtn onClick={() => GET_SAMPLE()}>서버 테스트</SampleBtn>
+      <SampleBtn
+        onClick={() => {
+          toggle();
+          console.log(isShown);
+        }}
+      >
+        redux 테스트
+      </SampleBtn>
+      {/* <SampleBtn onClick={() => GET_SAMPLE()}>서버 테스트</SampleBtn>
       <SampleBtn onClick={() => SIGN_UP(signupProps)}>
         회원가입 테스트
       </SampleBtn>
@@ -111,7 +127,7 @@ const index = () => {
         로그인 요청
       </SampleBtn>
       <SampleBtn onClick={() => AUTO_LOGIN()}>자동 로그인 테스트</SampleBtn>
-      <SampleBtn onClick={() => LOG_OUT()}>로그아웃 테스트</SampleBtn>
+      <SampleBtn onClick={() => LOG_OUT()}>로그아웃 테스트</SampleBtn> */}
     </Container>
   );
 };
