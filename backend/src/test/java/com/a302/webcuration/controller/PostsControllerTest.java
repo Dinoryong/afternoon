@@ -32,7 +32,7 @@ public class PostsControllerTest extends BaseControllerTest {
                 .postsPhotos(postsPhotos)
                 .postsLocation(postsLocation)
                 .build();
-        String token ="eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJzdWIiOiLroZzqt7jsnbjthqDtgbAiLCJleHAiOjE2MTE1NzU4MzUsImFjY291bnRJZCI6NX0.t_2NAzSXVJfbavs_18PB1JAZB3HDLGISNUSvbHja6p0";
+        String token ="eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJzdWIiOiLroZzqt7jsnbjthqDtgbAiLCJleHAiOjE2MTIwNTU3OTEsImFjY291bnRJZCI6OCwiYWNjb3VudEVtYWlsIjoiamFzb245NjdAbmF2ZXIuY29tIn0.CZW_w793fCa1U2b7DIdEPr15e1EML5s2FmndxpRlB8Q";
 
         mockMvc.perform(post("/api/posts")
                 .header("Authorization","Bearer "+token)

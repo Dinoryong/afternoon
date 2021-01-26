@@ -59,7 +59,7 @@ public class LoginControllerTest extends BaseControllerTest {
     @Test
     public void Login_AuthKey_Off_성공() throws Exception {
 
-        String AuthKey = "cs9c3z1b";
+        String AuthKey = "awr8nhoh";
 
         AccountDto.LoginRequest  account = new AccountDto.LoginRequest();
         account.setAct("check-authKey-off");
@@ -93,7 +93,7 @@ public class LoginControllerTest extends BaseControllerTest {
     @Test
     public void Login_AuthKey_On_성공() throws Exception {
 
-        String AuthKey = "cs9c3z1b";
+        String AuthKey = "n3bpclje";
 
         AccountDto.LoginRequest  account = new AccountDto.LoginRequest();
         account.setAct("check-authKey-on");
@@ -110,12 +110,12 @@ public class LoginControllerTest extends BaseControllerTest {
     @Test
     public void auto_login_성공() throws Exception {
 
-        String AuthKey = "cs9c3z1b";
+        String AuthKey = "cs9cz1b";
         Long id = 8L;
         String email = "jason967@naver.com";
         AccountDto.LoginRequest  account = new AccountDto.LoginRequest();
         account.setAccountEmail(email);
-        account.setId(id);
+        account.setAccountId(id);
 
         String token = "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJzdWIiOiLroZzqt7jsnbjthqDtgbAiLCJleHAiOjE2MTE1NzU5NzUsImFjY291bnRJZCI6OCwiYWNjb3VudEVtYWlsIjoiamFzb245NjdAbmF2ZXIuY29tIn0.sWbVaWkClcwxqi6SMr-A64yce14qIYvB__9tHtuDits";
 

@@ -7,6 +7,7 @@ import com.a302.webcuration.domain.Account.AccountDto;
 import com.a302.webcuration.domain.Account.AccountRepository;
 import com.a302.webcuration.service.AccountService;
 import com.a302.webcuration.service.JwtService;
+import com.a302.webcuration.service.LoginService2;
 import io.swagger.annotations.ApiImplicitParam;
 import io.swagger.annotations.ApiModelProperty;
 import io.swagger.annotations.ApiParam;
@@ -28,6 +29,7 @@ import java.util.Map;
 public class AccountController {
     private final AccountService accountService;
     private final AccountRepository accountRepository;
+    private final LoginService2 loginService;
     private final JwtService jwtService;
 
     public static final Logger logger = LoggerFactory.getLogger(AccountController.class);
@@ -37,7 +39,7 @@ public class AccountController {
 
     //get을 제외한 모든 요청은 다 토큰 필요하도록 매핑
 
-    //---------------------------------- 회원 ------------------------------------------------
+    //---------------------------------- 회원 생성 ------------------------------------------------
 
     @PostMapping
     public ResponseEntity createAccount(@RequestBody @Valid AccountDto.CreateAccountRequest createAccountRequest, Errors errors)
@@ -53,6 +55,20 @@ public class AccountController {
         return new ResponseEntity(new BaseMessage(BaseStatus.CREATED,createAccountRequest),HttpStatus.CREATED);
     }
 
+    //-------------------------------수정--------------------------
+    @PutMapping("/{id}")
+    public ResponseEntity updateAccount(@PathVariable Long id , @RequestBody @Valid AccountDto.UpdateRequest request)
+    {
+        accountService.updateAccount(id,request);
+
+        //TODO 예외처리
+        //일단 오류 체킹 안하고 accepted받기
+        return new ResponseEntity(HttpStatus.ACCEPTED);
+
+    }
+
+
+    //---------------------조회--------------------
     @GetMapping("/{id}")
     public ResponseEntity retrieveAccountById(@PathVariable Long id)
     {
@@ -66,22 +82,22 @@ public class AccountController {
     }
 
 
-    //TODO 팔로잉 기능 일시중지
     //--------------------------------------팔로잉------------------------------------------------------
 
-//    @PostMapping("/follow/{yourId}")
-//    public ResponseEntity follow(@PathVariable Long yourId, @RequestHeader(value = "Authorization") String token){
-//
-//        Long myId = accountService.getAccountId(token);
-//        boolean can = accountService.followValidator(myId,yourId);
-//        if(!can)
-//        {
-//            return ResponseEntity.badRequest().build();
-//        }
-//        accountService.follow(myId, yourId);
-//
-//        return ResponseEntity.ok().build();
-//    }
+    @PutMapping("/my-following")
+    public ResponseEntity follow(@RequestBody AccountDto.FollowRequest request, @RequestHeader(value = "Authorization") String token){
+
+        Long myId = jwtService.getAccountId(token);
+        Long yourId = request.getYourId();
+        logger.info("my: "+myId+" your: "+yourId);
+        BaseMessage bm = accountService.follow(myId, yourId);
+        HttpStatus httpStatus = HttpStatus.OK;
+        if(bm.getStatus().equals(BaseStatus.BAD_REQUEST))
+        {
+            httpStatus=HttpStatus.BAD_REQUEST;
+        }
+        return new ResponseEntity(bm.getInfo(),httpStatus);
+    }
 
 
 }

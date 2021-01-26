@@ -70,8 +70,8 @@ public class LoginService2 {
 
     public BaseMessage autoLogin(AccountDto.LoginRequest request,String token)
     {
-        String email = getAccountEmail(token);
-        Long id = getAccountId(token);
+        String email = jwtService.getAccountEmail(token);
+        Long id = jwtService.getAccountId(token);
         logger.info(email+" "+id);
         logger.info(request.getAccountId().toString());
         if(request.getAccountId()==id && request.getAccountEmail().equals(email))
@@ -120,36 +120,7 @@ public class LoginService2 {
         }
     }
 
-    public Long getAccountId(String tokenKey)
-    {
-        String token=tokenKey.substring(7);
 
-        Jws<Claims> claims = null;
-
-        try {
-            claims = Jwts.parser().setSigningKey(signature.getBytes()).parseClaimsJws(token);
-            logger.info("AccountId :"+claims.getBody().get("accountId"));
-        } catch (final Exception e) {
-            logger.info("복호화 실패");
-            throw new RuntimeException();
-        }
-        return  Long.parseLong(claims.getBody().get("accountId").toString());
-    }
-    public String getAccountEmail(String tokenKey)
-    {
-        String token=tokenKey.substring(7);
-
-        Jws<Claims> claims = null;
-
-        try {
-            claims = Jwts.parser().setSigningKey(signature.getBytes()).parseClaimsJws(token);
-            logger.info("accountEmail :"+claims.getBody().get("accountEmail"));
-        } catch (final Exception e) {
-            logger.info("복호화 실패");
-            throw new RuntimeException();
-        }
-        return  claims.getBody().get("accountEmail").toString();
-    }
 
 
     @Transactional

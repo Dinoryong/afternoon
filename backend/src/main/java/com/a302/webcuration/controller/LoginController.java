@@ -48,9 +48,15 @@ public class LoginController {
             return new ResponseEntity(new BaseMessage(BaseStatus.BAD_REQUEST,errors), HttpStatus.BAD_REQUEST);
         }
         BaseMessage bs = loginService.login(loginRequest);
-
+        //TODO 오류 발견
         HttpHeaders httpHeaders = new HttpHeaders();
-        httpHeaders.add("Authorization",bs.getHeaders().toString());
+        //수정 해야됌-------------------------------------
+        httpHeaders.add("test","temp");
+        if(bs.getHeaders()!=null)
+        {
+         httpHeaders.add("Authorization",bs.getHeaders().toString());
+        }
+        //----------------------------------------------------------------------
         return new ResponseEntity(bs.getInfo(),httpHeaders,HttpStatus.OK);
     }
 

@@ -21,9 +21,7 @@ public class Posts {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     private Long postsId;
-    @Column(unique = true)
     private String postsTitle;
-    @Column(unique = true)
     private String postsContents;
     //@ElementCollection List<String> 사용 가능 참조 링크 - (https://antoniogoncalves.org/2009/11/01/mapping-and-querying-a-list-of-primitive-types-with-jpa-2-0/)
     @ElementCollection

@@ -6,8 +6,7 @@ import com.a302.webcuration.domain.Account.AccountDto;
 import org.junit.Test;
 import org.springframework.http.MediaType;
 
-import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
-import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
+import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.*;
 import static org.springframework.test.web.servlet.result.MockMvcResultHandlers.print;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
@@ -96,34 +95,110 @@ public class AccountControllerTest extends BaseControllerTest {
                 .andDo(print());
     }
 
-
-
-    //-------------------------------------팔로잉-------------------------------------
     @Test
-    public void follow_성공() throws Exception {
+    public void Account_update_성공() throws Exception {
 
-        String yourId = "3";
-        String token = "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJzdWIiOiLroZzqt7jsnbjthqDtgbAiLCJleHAiOjE2MTEyODM1NzIsImFjY291bnRJZCI6Mn0.lyWtT3TXdFCKaCnnjTYAv6KXwr86s31JNGFNPLdarh8";
-        mockMvc.perform(post("/api/accounts/follow/"+yourId)
-                .header("Authorization","Bearer "+token)
-                .contentType(MediaType.APPLICATION_JSON))
-                .andExpect(status().isOk())
+        String Id = "8";
+
+        AccountDto.UpdateRequest request = new AccountDto.UpdateRequest();
+        request.setAccountDesc("안녕하세요");
+
+
+        mockMvc.perform(put("/api/accounts/"+Id)
+                .contentType(MediaType.APPLICATION_JSON)
+                .content(objectMapper.writeValueAsString(request)))
+                .andExpect(status().isAccepted())
                 .andDo(print());
 
     }
 
     @Test
-    public void follow_실패() throws Exception {
+    public void Account_update_실패() throws Exception {
 
-        String yourId = "2";
-        String token = "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJzdWIiOiLroZzqt7jsnbjthqDtgbAiLCJleHAiOjE2MTEyODM1NzIsImFjY291bnRJZCI6Mn0.lyWtT3TXdFCKaCnnjTYAv6KXwr86s31JNGFNPLdarh8";
+        String Id = "7";
 
-        mockMvc.perform(post("/api/accounts/follow/"+yourId)
+        AccountDto.UpdateRequest request = new AccountDto.UpdateRequest();
+        request.setAccountDesc("안녕하세요");
+        request.setAccountNickname("dntjrrr");
+
+        mockMvc.perform(put("/api/accounts/"+Id)
+                .contentType(MediaType.APPLICATION_JSON)
+                .content(objectMapper.writeValueAsString(request)))
+                .andExpect(status().isAccepted())
+                .andDo(print());
+    }
+
+    //-------------------------------------팔로잉-------------------------------------
+    @Test
+    public void follow_성공() throws Exception {
+
+        Long yourId = 7L;
+
+        AccountDto.FollowRequest request =new  AccountDto.FollowRequest();
+        request.setYourId(yourId);
+
+
+        String token = "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJzdWIiOiLroZzqt7jsnbjthqDtgbAiLCJleHAiOjE2MTIwNzUxOTMsImFjY291bnRJZCI6OCwiYWNjb3VudEVtYWlsIjoiamFzb245NjdAbmF2ZXIuY29tIn0.oSNxdvgG04n3aiDdrIR3_22OHsc_tMvb1c1mJ26sLAs";
+        mockMvc.perform(put("/api/accounts/my-following")
                 .header("Authorization","Bearer "+token)
-                .contentType(MediaType.APPLICATION_JSON))
+                .contentType(MediaType.APPLICATION_JSON)
+                .content(objectMapper.writeValueAsString(request)))
+                .andExpect(status().isOk())
+                .andDo(print());
+    }
+
+    @Test
+    public void follow_실패_셀프팔로우() throws Exception {
+
+        Long yourId = 8L;
+
+        AccountDto.FollowRequest request =new  AccountDto.FollowRequest();
+        request.setYourId(yourId);
+
+
+        String token = "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJzdWIiOiLroZzqt7jsnbjthqDtgbAiLCJleHAiOjE2MTIwNzUxOTMsImFjY291bnRJZCI6OCwiYWNjb3VudEVtYWlsIjoiamFzb245NjdAbmF2ZXIuY29tIn0.oSNxdvgG04n3aiDdrIR3_22OHsc_tMvb1c1mJ26sLAs";
+        mockMvc.perform(put("/api/accounts/my-following")
+                .header("Authorization","Bearer "+token)
+                .contentType(MediaType.APPLICATION_JSON)
+                .content(objectMapper.writeValueAsString(request)))
                 .andExpect(status().isBadRequest())
                 .andDo(print());
+    }
 
+    @Test
+    public void follow_실패_없는사람() throws Exception {
+
+        Long yourId = 1L;
+
+        AccountDto.FollowRequest request =new  AccountDto.FollowRequest();
+        request.setYourId(yourId);
+
+
+        String token = "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJzdWIiOiLroZzqt7jsnbjthqDtgbAiLCJleHAiOjE2MTIwNzUxOTMsImFjY291bnRJZCI6OCwiYWNjb3VudEVtYWlsIjoiamFzb245NjdAbmF2ZXIuY29tIn0.oSNxdvgG04n3aiDdrIR3_22OHsc_tMvb1c1mJ26sLAs";
+        mockMvc.perform(put("/api/accounts/my-following")
+                .header("Authorization","Bearer "+token)
+                .contentType(MediaType.APPLICATION_JSON)
+                .content(objectMapper.writeValueAsString(request)))
+                .andExpect(status().isBadRequest())
+                .andDo(print());
+    }
+
+    @Test
+    public void follow_실패_이상한값() throws Exception {
+
+        Long yourId = -1L;
+
+        AccountDto.FollowRequest request =new  AccountDto.FollowRequest();
+        request.setYourId(yourId);
+
+
+        String token = "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJzdWIiOiLroZzqt7jsnbjthqDtgbAiLCJleHAiOjE2MTIwNzUxOTMsImFjY291bnRJZCI6OCwiYWNjb3VudEVtYWlsIjoiamFzb245NjdAbmF2ZXIuY29tIn0.oSNxdvgG04n3aiDdrIR3_22OHsc_tMvb1c1mJ26sLAs";
+        mockMvc.perform(put("/api/accounts/my-following")
+                .header("Authorization","Bearer "+token)
+                .contentType(MediaType.APPLICATION_JSON)
+                .content(objectMapper.writeValueAsString(request)))
+                .andExpect(status().isBadRequest())
+                .andDo(print());
     }
 
 

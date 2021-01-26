@@ -18,7 +18,7 @@ public class JwtService {
 
 	@Value("${token.signiturekey}")
 	private String signature ;
-	private Long expireMin = 1L;
+	private Long expireMin = 60*24*5L;
 
 //	로그인 성공시 사용자 정보를 기반으로 JWTToken을 생성하여 반환.
 	public String create(Long id,String email) {
@@ -64,4 +64,35 @@ public class JwtService {
         // Claims는 Map의 구현체이다.
         return claims.getBody();
     }
+
+	public Long getAccountId(String tokenKey)
+	{
+		String token=tokenKey.substring(7);
+
+		Jws<Claims> claims = null;
+
+		try {
+			claims = Jwts.parser().setSigningKey(signature.getBytes()).parseClaimsJws(token);
+			logger.info("AccountId :"+claims.getBody().get("accountId"));
+		} catch (final Exception e) {
+			logger.info("복호화 실패");
+			throw new RuntimeException();
+		}
+		return  Long.parseLong(claims.getBody().get("accountId").toString());
+	}
+	public String getAccountEmail(String tokenKey)
+	{
+		String token=tokenKey.substring(7);
+
+		Jws<Claims> claims = null;
+
+		try {
+			claims = Jwts.parser().setSigningKey(signature.getBytes()).parseClaimsJws(token);
+			logger.info("accountEmail :"+claims.getBody().get("accountEmail"));
+		} catch (final Exception e) {
+			logger.info("복호화 실패");
+			throw new RuntimeException();
+		}
+		return  claims.getBody().get("accountEmail").toString();
+	}
 }

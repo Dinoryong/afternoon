@@ -1,5 +1,7 @@
 package com.a302.webcuration.service;
 
+import com.a302.webcuration.common.BaseMessage;
+import com.a302.webcuration.common.BaseStatus;
 import com.a302.webcuration.domain.Account.Account;
 import com.a302.webcuration.domain.Account.AccountDto;
 import com.a302.webcuration.domain.Account.AccountRepository;
@@ -75,31 +77,37 @@ public class AccountService {
         return profile;
     }
 
-
-
-    //TODO 구체적인 예외로 처리할 것
-    public boolean followValidator(Long myId,Long yourId)
-    {
-        Account account = accountRepository.findAccountByAccountId(yourId);
-        if(account==null)
+    @Transactional
+    public void updateAccount(Long id,AccountDto.UpdateRequest request) {
+        try {
+            Account account = accountRepository.findAccountByAccountId(id);
+            account.updateAccount(request);
+        }catch (Exception e)
         {
-            return false;
+            //TODO exception 구체화하기
+            logger.error(e.getMessage());
         }
-        if(myId==yourId)
-        {
-            return false;
-        }
-        if(yourId<0){
-            return false;
-        }
-        return true;
     }
 
     @Transactional
-    public void follow(Long myId,Long yourId){
-        Account aAccount= accountRepository.findAccountByAccountId(myId);
-        Account bAccount= accountRepository.findAccountByAccountId(yourId);
-        aAccount.followAccount(bAccount);
+    public BaseMessage follow(Long myId, Long yourId){
+        Map<String, Object> resultMap = new HashMap<>();
+        if(myId==yourId)
+        {
+            resultMap.put("message","자기 자신을 팔로우 할 수 없습니다.");
+            return new BaseMessage( BaseStatus.BAD_REQUEST,resultMap);
+        }
+        try {
+            Account aAccount= accountRepository.findAccountByAccountId(myId);
+            Account bAccount= accountRepository.findAccountByAccountId(yourId);
+            aAccount.followAccount(bAccount);
+            resultMap.put("message",myId+"가 "+yourId+" 를 팔로우하였습니다.");
+            return new BaseMessage(BaseStatus.OK,resultMap);
+        }catch (Exception e)
+        {
+            resultMap.put("message","객체가 존재하지 않습니다.");
+            return new BaseMessage( BaseStatus.BAD_REQUEST,resultMap);
+        }
     }
 
 }

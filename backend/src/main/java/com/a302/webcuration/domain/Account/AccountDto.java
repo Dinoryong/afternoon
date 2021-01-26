@@ -16,12 +16,12 @@ public class AccountDto {
 
 
     @Getter
-    @Setter
-    @Builder
     //계정 팔로잉
+    @Setter
+    @RequiredArgsConstructor
     public static class FollowRequest {
         @NotNull
-        private Long aId;
+        private Long yourId;
     }
 
     @Getter @Setter @RequiredArgsConstructor
@@ -61,6 +61,14 @@ public class AccountDto {
 
         private int followerCnt;
 
+    }
+
+    @Getter @Setter @RequiredArgsConstructor
+    public static class UpdateRequest
+    {
+        private String accountDesc;
+        //닉네임도 수정할 지 말지 생각
+        private String accountNickname;
     }
 
     @Getter @Setter @Builder
