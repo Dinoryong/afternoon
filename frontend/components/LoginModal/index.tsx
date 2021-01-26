@@ -1,7 +1,5 @@
 import React from "react";
-import Button from "../Button";
 import styled from "@emotion/styled";
-import color from "../../styles/theme";
 import Image from "next/image";
 import UserModalTop from "../UserModal/UserModalTop";
 import LoginMiddle from "./LoginMiddle";

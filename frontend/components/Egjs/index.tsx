@@ -40,9 +40,9 @@ const index = () => {
       onAppend={({ startLoading }) => {
         startLoading();
         const itemList = [];
-        for (var i = 0; i < 24; i++) {
+        for (var i = 0; i < 22; i++) {
           itemList.push(
-            <ItemEl src={`/assets/images/home_bg_` + (i % 4) + `.jpg`} />
+            <ItemEl src={`/assets/images/home_bg_` + (i % 11) + `.jpg`} />
           );
         }
         setTestList((testList) => [...testList, itemList]);

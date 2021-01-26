@@ -4,6 +4,7 @@ import Image from "next/image";
 import Link from "next/link";
 import Button from "../Button";
 import color from "../../styles/theme";
+import { NextRouter } from "next/router";
 
 const Container = styled.div`
   display: flex;
@@ -88,9 +89,10 @@ const SearchInput = styled("input")<HeaderProps>`
 
 type HeaderProps = {
   routerPath?: String;
+  router?: NextRouter;
 };
 
-const HeaderLeft = ({ routerPath }: HeaderProps) => {
+const HeaderLeft = ({ router, routerPath }: HeaderProps) => {
   const props = { routerPath };
 
   const titleBoxStyle = {
@@ -135,7 +137,9 @@ const HeaderLeft = ({ routerPath }: HeaderProps) => {
         btnBgColor={routerPath === "/" ? "transparent" : null}
         btnTextColor={routerPath === "/" ? "white" : null}
         btnBorderColor={routerPath === "/" ? "white" : null}
-        btnRouterPush="/feed"
+        btnOnClick={(): void => {
+          router.push("/feed");
+        }}
       />
       <SearchBox style={searchBoxStyle}>
         <SearchIcon>

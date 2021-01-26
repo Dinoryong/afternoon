@@ -40,6 +40,7 @@ type ButtonProps = {
   btnHoverBorderColor?: string;
   btnHoverBgColor?: string;
   btnRouterPush?: string;
+  btnOnClick?: Function;
 };
 
 const index = ({
@@ -57,13 +58,13 @@ const index = ({
   btnHoverTextColor = color.black.default,
   btnHoverBorderColor = color.black.default,
   btnHoverBgColor,
-  btnRouterPush = "",
+  btnOnClick = () => {
+    console.log("onClick : 기능없음");
+  },
 }: ButtonProps) => {
   const [bgColor, setBgColor] = useState<string>(btnBgColor);
   const [borderColor, setBorderColor] = useState<string>(btnBorderColor);
   const [textColor, setTextColor] = useState<string>(btnTextColor);
-
-  const router = useRouter();
 
   useEffect(() => {
     setBgColor(btnBgColor);
@@ -84,7 +85,7 @@ const index = ({
   };
 
   const onClick = (): void => {
-    router.push(btnRouterPush);
+    btnOnClick();
   };
 
   return (

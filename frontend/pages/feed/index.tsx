@@ -17,6 +17,7 @@ const Wrapper = styled.div`
   display: flex;
   flex-direction: column;
   width: 1280px;
+  /* width: 100%; */
 `;
 
 const DynamicComponentWithNoSSR = dynamic(
