@@ -5,6 +5,7 @@ import com.a302.webcuration.common.BaseStatus;
 import com.a302.webcuration.domain.Account.Account;
 import com.a302.webcuration.domain.Account.AccountDto;
 import com.a302.webcuration.domain.Account.AccountRepository;
+import com.a302.webcuration.domain.Tag.TagRepository;
 import com.a302.webcuration.service.AccountService;
 import com.a302.webcuration.service.JwtService;
 import com.a302.webcuration.service.LoginService2;
@@ -31,7 +32,7 @@ public class AccountController {
     private final AccountRepository accountRepository;
     private final LoginService2 loginService;
     private final JwtService jwtService;
-
+    private final TagRepository tagRepository;
     public static final Logger logger = LoggerFactory.getLogger(AccountController.class);
 
     private final ModelMapper modelMapper;
@@ -99,5 +100,14 @@ public class AccountController {
         return new ResponseEntity(bm.getInfo(),httpStatus);
     }
 
-
+    @PutMapping("/mytag")
+    public ResponseEntity selectTag(@RequestBody AccountDto.AccountTagRequest accountTagRequest, @RequestHeader(value = "Authorization") String token){
+        if(!accountTagRequest.getTags().isEmpty()){
+            logger.info("관심태그 지정");
+            accountService.selectTag(accountTagRequest,token);
+        }else{
+            logger.info("지정한 관심태그가 없습니다");
+        }
+        return ResponseEntity.ok().build();
+    }
 }

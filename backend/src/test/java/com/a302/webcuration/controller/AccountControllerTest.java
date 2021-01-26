@@ -3,15 +3,22 @@ package com.a302.webcuration.controller;
 import com.a302.webcuration.common.BaseControllerTest;
 import com.a302.webcuration.domain.Account.Account;
 import com.a302.webcuration.domain.Account.AccountDto;
+import com.a302.webcuration.domain.Tag.Tag;
+import com.a302.webcuration.domain.Tag.TagRepository;
 import org.junit.Test;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.MediaType;
+
+import java.util.ArrayList;
+import java.util.List;
 
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.*;
 import static org.springframework.test.web.servlet.result.MockMvcResultHandlers.print;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
 public class AccountControllerTest extends BaseControllerTest {
-
+    @Autowired
+    TagRepository tagRepository;
 
     @Test
     public void Account_profile_조회_성공() throws Exception {
@@ -37,7 +44,7 @@ public class AccountControllerTest extends BaseControllerTest {
         //When
         AccountDto.CreateAccountRequest createAccountRequest = AccountDto.CreateAccountRequest.builder()
                 .accountName("한우석")
-                .accountNickname("dntjr22")
+                .accountNickname("dntjrrf")
                 .accountEmail("dntjr4772@naver.com")
                 .build();
 
@@ -198,6 +205,41 @@ public class AccountControllerTest extends BaseControllerTest {
                 .contentType(MediaType.APPLICATION_JSON)
                 .content(objectMapper.writeValueAsString(request)))
                 .andExpect(status().isBadRequest())
+                .andDo(print());
+    }
+
+    @Test
+    public void 관심태그지정_성공() throws Exception{
+
+        //When
+        //작업공간
+//        String tagTitle = "작업공간";
+//        String tagDesc = "작업공간입니다";
+//        Tag tag1= Tag.builder()
+//                .tagTitle(tagTitle)
+//                .tagDesc(tagDesc)
+//                .build();
+//        //작업공간-개발자
+//        tagTitle = "개발자";
+//        tagDesc = "개발자 작업공간입니다";
+//        Tag tag2= Tag.builder()
+//                .tagTitle(tagTitle)
+//                .tagDesc(tagDesc)
+//                .build();
+//        tag2.setParent(tag1);
+        List<Tag> tags=new ArrayList<>();
+        Tag tag2=tagRepository.findByTagTitle("개발자");
+        tags.add(tag2);
+        AccountDto.AccountTagRequest accountTagRequest=new AccountDto.AccountTagRequest(tags);
+
+
+
+        String token="eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJzdWIiOiLroZzqt7jsnbjthqDtgbAiLCJleHAiOjE2MTIwNzg5OTMsImFjY291bnRJZCI6MSwiYWNjb3VudEVtYWlsIjoiZG50anI0NzcyQG5hdmVyLmNvbSJ9.k29fcNEffXVLZ-R9tFDdGN0Cp4Z1EtDCPdlXp3smyV4";
+        mockMvc.perform(put("/api/accounts/mytag")
+                .header("Authorization","Bearer "+token)
+                .contentType(MediaType.APPLICATION_JSON)
+                .content(objectMapper.writeValueAsString(accountTagRequest)))
+                .andExpect(status().isOk())
                 .andDo(print());
     }
 

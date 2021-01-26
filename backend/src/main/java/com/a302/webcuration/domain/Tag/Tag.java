@@ -2,6 +2,7 @@ package com.a302.webcuration.domain.Tag;
 
 import com.a302.webcuration.domain.Account.Account;
 import com.a302.webcuration.domain.Post.Posts;
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Getter;
@@ -9,7 +10,9 @@ import lombok.NoArgsConstructor;
 
 import javax.persistence.*;
 import java.util.ArrayList;
+import java.util.HashSet;
 import java.util.List;
+import java.util.Set;
 
 @Entity
 @Getter @NoArgsConstructor @AllArgsConstructor @Builder
@@ -27,17 +30,18 @@ public class Tag {
     @ManyToOne
     private Tag parent=null;
 
+    @JsonIgnore
     @OneToMany(mappedBy = "parent")
     @Builder.Default
     private List<Tag> child=new ArrayList<>();
-
-    @ManyToMany(mappedBy = "tags")
+    //Hibernate MultipleBagFetchException 때문에 List-> Set으로 https://perfectacle.github.io/2019/05/01/hibernate-multiple-bag-fetch-exception/
+    @ManyToMany(fetch = FetchType.EAGER)
     @Builder.Default
-    private List<Account> accounts=new ArrayList<>();
+    private Set<Account> accounts=new HashSet<>();
 
-    @ManyToMany(mappedBy = "tags")
+    @ManyToMany(fetch = FetchType.EAGER)
     @Builder.Default
-    private List<Posts> posts=new ArrayList<>();
+    private Set<Posts> posts=new HashSet<>();
 
     public void setParent(Tag parent) {
         this.parent = parent;

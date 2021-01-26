@@ -32,6 +32,7 @@ public class AccountService {
 
     private final AccountRepository accountRepository;
     private final ModelMapper modelMapper;
+    private final LoginService2 accountService;
     private final JavaMailSender mailSender;
     private final JwtService jwtService;
 
@@ -108,6 +109,14 @@ public class AccountService {
             resultMap.put("message","객체가 존재하지 않습니다.");
             return new BaseMessage( BaseStatus.BAD_REQUEST,resultMap);
         }
+    }
+
+    @Transactional
+    public void selectTag(AccountDto.AccountTagRequest accountTagRequest, String token){
+        Long myId = accountService.getAccountId(token);
+        Account account=accountRepository.findAccountByAccountId(myId);
+        // TODO: 2021-01-26 account의 관심태그 설정
+        account.tagging(accountTagRequest.getTags());
     }
 
 }
