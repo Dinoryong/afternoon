@@ -113,7 +113,7 @@ public class AccountService {
 
     @Transactional
     public void selectTag(AccountDto.AccountTagRequest accountTagRequest, String token){
-        Long myId = accountService.getAccountId(token);
+        Long myId = jwtService.getAccountId(token);
         Account account=accountRepository.findAccountByAccountId(myId);
         // TODO: 2021-01-26 account의 관심태그 설정
         account.tagging(accountTagRequest.getTags());
