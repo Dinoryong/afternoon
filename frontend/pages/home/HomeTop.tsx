@@ -20,13 +20,23 @@ const HomeTop = () => {
   useEffect(function mount() {
     setWindowHeight(window.innerHeight);
     setWindowWidth(window.innerWidth);
+
     setTimeout(() => {
       setDisplayState(true);
     }, 1);
-    window.addEventListener("resize", function () {
+
+    const resizeHandler = () => {
       setWindowHeight(window.innerHeight);
       setWindowWidth(window.innerWidth);
-    });
+    };
+
+    const cleanup = () => {
+      window.removeEventListener("resize", resizeHandler);
+    };
+
+    window.addEventListener("resize", resizeHandler);
+
+    return cleanup;
   });
 
   const maxIndex: number = 3;

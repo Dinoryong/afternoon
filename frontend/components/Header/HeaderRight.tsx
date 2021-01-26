@@ -2,6 +2,7 @@ import React from "react";
 import styled from "@emotion/styled";
 import Button from "../Button";
 import color from "../../styles/theme";
+import { NextRouter } from "next/router";
 
 const Container = styled.div`
   display: flex;
@@ -12,9 +13,10 @@ const Container = styled.div`
 
 type HeaderProps = {
   routerPath?: String;
+  router?: NextRouter;
 };
 
-const HeaderRight = ({ routerPath }: HeaderProps) => {
+const HeaderRight = ({ router, routerPath }: HeaderProps) => {
   return (
     <Container>
       <Button
@@ -25,6 +27,9 @@ const HeaderRight = ({ routerPath }: HeaderProps) => {
         btnBorderColor="transparent"
         btnBgColor={routerPath === "/" ? "transparent" : null}
         btnTextColor={routerPath === "/" ? "white" : null}
+        btnOnClick={(): void => {
+          console.log("login");
+        }}
       />
       <Button
         btnText="회원가입"
@@ -36,7 +41,9 @@ const HeaderRight = ({ routerPath }: HeaderProps) => {
         btnHoverBorderColor={color.green.dark}
         btnHoverTextColor={color.white.default}
         btnMarginRight="0px"
-        btnRouterPush="/signup"
+        btnOnClick={(): void => {
+          router.push("/signup");
+        }}
       />
     </Container>
   );
