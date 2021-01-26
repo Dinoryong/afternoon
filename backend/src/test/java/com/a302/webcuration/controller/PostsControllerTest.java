@@ -14,12 +14,11 @@ import static org.springframework.test.web.servlet.result.MockMvcResultHandlers.
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
 public class PostsControllerTest extends BaseControllerTest {
-    // TODO: 2021-01-25 게시글 생성은 되는데 무한루프 오류뜸 
     @Test
     public void Posts_생성_성공() throws Exception{
         //When
         //Given
-        String postsTitle="내 작업공간 어때??";
+        String postsTitle="내 작업공간 어때??!!!!";
         String postsContents="이런거 있어";
         String postsLocation="수원시 팔달구";
         List<String> postsPhotos=new ArrayList<>();
@@ -32,7 +31,7 @@ public class PostsControllerTest extends BaseControllerTest {
                 .postsPhotos(postsPhotos)
                 .postsLocation(postsLocation)
                 .build();
-        String token ="eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJzdWIiOiLroZzqt7jsnbjthqDtgbAiLCJleHAiOjE2MTIwNTU3OTEsImFjY291bnRJZCI6OCwiYWNjb3VudEVtYWlsIjoiamFzb245NjdAbmF2ZXIuY29tIn0.CZW_w793fCa1U2b7DIdEPr15e1EML5s2FmndxpRlB8Q";
+        String token ="eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJzdWIiOiLroZzqt7jsnbjthqDtgbAiLCJleHAiOjE2MTIwNTc0MDksImFjY291bnRJZCI6MSwiYWNjb3VudEVtYWlsIjoiZG50anI0NzcyQG5hdmVyLmNvbSJ9.ceBcJeIUf9aUsORAfNJT521rHdDfxH5bGp-dnWRP7dc";
 
         mockMvc.perform(post("/api/posts")
                 .header("Authorization","Bearer "+token)

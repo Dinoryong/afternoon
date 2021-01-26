@@ -2,7 +2,11 @@ package com.a302.webcuration.domain.Account;
 
 import com.a302.webcuration.domain.Post.Posts;
 import com.a302.webcuration.domain.Tag.Tag;
-import lombok.*;
+import com.fasterxml.jackson.annotation.JsonIgnore;
+import lombok.AllArgsConstructor;
+import lombok.Builder;
+import lombok.Getter;
+import lombok.NoArgsConstructor;
 import org.hibernate.annotations.CreationTimestamp;
 import org.hibernate.annotations.UpdateTimestamp;
 
@@ -57,7 +61,7 @@ public class Account {
     private Set<Account> follower=new HashSet<>();
     //관심 태그
     @Builder.Default
-    @ManyToMany
+    @ManyToMany(mappedBy = "accounts")
     private List<Tag> tags=new ArrayList<>();
     //좋아요한 게시글
     @Builder.Default
@@ -65,6 +69,7 @@ public class Account {
     private List<Posts> likePosts=new ArrayList<>();
     //내가 쓴 게시글
     @Builder.Default
+    @JsonIgnore
     @OneToMany(mappedBy = "postWriter")
     private List<Posts> myPosts=new ArrayList<>();
 
@@ -85,5 +90,12 @@ public class Account {
     public void followAccount(Account account){
         this.getFollowing().add(account);
         account.getFollower().add(this);
+    }
+    // TODO: 2021-01-26 tag 설정 양방향
+    public void tagging(List<Tag> tags){
+        for(Tag tag: tags) {
+            this.getTags().add(tag);
+            tag.getAccounts().add(this);
+        }
     }
 }

@@ -23,7 +23,7 @@ public class Posts {
     private Long postsId;
     private String postsTitle;
     private String postsContents;
-    //@ElementCollection List<String> 사용 가능 참조 링크 - (https://antoniogoncalves.org/2009/11/01/mapping-and-querying-a-list-of-primitive-types-with-jpa-2-0/)
+    //@ElementCollection - List<String> 사용 가능 참조 링크 - (https://antoniogoncalves.org/2009/11/01/mapping-and-querying-a-list-of-primitive-types-with-jpa-2-0/)
     @ElementCollection
     private List<String> postsPhotos;
     @CreationTimestamp
@@ -40,11 +40,10 @@ public class Posts {
     private List<Account> likeAccounts=new ArrayList<>();
     //작성자 (cascade = CascadeType.ALL) 안할시 오류(영속성 전이를 사용하면 부모 엔티티를 저장할 때 자식 엔티티도 함께 저장)
     //post 검색시 작성자도 같이 알아야하므로 (fetch = FetchType.EAGER)
-
     @ManyToOne
     private Account postWriter;
     @Builder.Default
-    @ManyToMany
+    @ManyToMany(mappedBy = "posts")
     private List<Tag> tags=new ArrayList<>();
 
 

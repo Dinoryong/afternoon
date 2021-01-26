@@ -1,5 +1,6 @@
 package com.a302.webcuration.domain.Account;
 
+import com.a302.webcuration.domain.Tag.Tag;
 import io.swagger.annotations.ApiModelProperty;
 import lombok.*;
 import org.hibernate.annotations.CreationTimestamp;
@@ -10,6 +11,7 @@ import javax.persistence.Column;
 import javax.validation.constraints.Email;
 import javax.validation.constraints.NotNull;
 import java.time.LocalDate;
+import java.util.LinkedList;
 import java.util.List;
 
 public class AccountDto {
@@ -130,6 +132,12 @@ public class AccountDto {
     public static class AccountInfoInHeader{
         private Long accountId;
         private String accountEmail;
+    }
+    //태그 설정
+    @Getter @Setter @NoArgsConstructor @AllArgsConstructor
+    public static class AccountTagRequest{
+
+        private List<Tag> tags;
     }
 
 }
