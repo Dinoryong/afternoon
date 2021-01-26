@@ -43,9 +43,9 @@ const index = () => {
   return (
     <Container style={containerStyle}>
       <Wrapper>
-        <HeaderLeft routerPath={routerPath} />
+        <HeaderLeft router={router} routerPath={routerPath} />
         <HeaderCenter routerPath={routerPath} />
-        <HeaderRight routerPath={routerPath} />
+        <HeaderRight router={router} routerPath={routerPath} />
       </Wrapper>
     </Container>
   );

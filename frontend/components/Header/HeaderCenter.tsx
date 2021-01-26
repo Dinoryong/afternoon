@@ -3,6 +3,7 @@ import styled from "@emotion/styled";
 import Button from "../Button";
 import Image from "next/image";
 import color from "../../styles/theme";
+import { NextRouter } from "next/router";
 
 const Container = styled.div`
   display: flex;
@@ -80,7 +81,7 @@ const HeaderRight = ({ routerPath }: HeaderProps) => {
         btnBgColor={routerPath === "/" ? "transparent" : null}
         btnTextColor={routerPath === "/" ? "white" : null}
         btnBorderColor={routerPath === "/" ? "white" : null}
-        btnRouterPush="/post"
+        btnOnClick={(): void => {}}
       />
       <NoticeIcon
         onMouseOver={onMouseOver}

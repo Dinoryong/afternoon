@@ -97,19 +97,6 @@ const MiniBox3 = styled.div`
   /* height: 40%; */
 `;
 
-const MiniMini1 = styled.div`
-  display: flex;
-  width: 100%;
-  height: 65%;
-`;
-
-const MiniMini2 = styled.div`
-  display: flex;
-  flex-direction: column;
-  width: 100%;
-  height: 35%;
-`;
-
 const InnerBox2 = styled.div`
   display: flex;
   justify-content: center;
@@ -146,7 +133,7 @@ const index = () => {
       ></Image>
       <BgOpacityFrame></BgOpacityFrame>
       <Content>
-        <InnerBox1 style={{ height: windowHeight - 80 }}>
+        <InnerBox1 style={{ height: `${windowHeight - 80}px` }}>
           <MiniBox1>
             <Link href="/">
               <LogoBox>
@@ -159,13 +146,7 @@ const index = () => {
             </Link>
           </MiniBox1>
           <MiniBox2>
-            <TextBox1
-              onClick={(): void => {
-                event({text:"아브라카다브라"});
-              }}
-            >
-              당신이 꿈꾸던 공간을...
-            </TextBox1>
+            <TextBox1>당신이 꿈꾸던 공간을...</TextBox1>
             <TextBox2>
               2,490,795 개의 작업공간을 무료료 고해상도로 어디에서든 구경할 수
               있습니다
