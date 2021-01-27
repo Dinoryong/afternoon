@@ -10,17 +10,6 @@ const baseInitialState = {
   count: 0,
 };
 
-const loginInitialState = {
-  isShown: false,
-  autoLogin: false,
-  loginState: false,
-};
-
-const initialState = {
-  base: baseInitialState,
-  login: loginInitialState,
-};
-
 const baseReducer = (state = initialState.base, action) => {
   switch (action.type) {
     case "TICK":
@@ -47,6 +36,12 @@ const baseReducer = (state = initialState.base, action) => {
     default:
       return state;
   }
+};
+
+const loginInitialState = {
+  isShown: false,
+  autoLogin: false,
+  loginState: false,
 };
 
 const loginReducer = (state = initialState.login, action) => {
@@ -94,9 +89,29 @@ const loginReducer = (state = initialState.login, action) => {
   }
 };
 
+const submitInitialState = {
+  submitShown: false,
+};
+
+const submitReducer = (state = initialState.submit, action) => {
+  switch (action.type) {
+    case "TOGGLE_SUBMIT":
+      return { ...state, submitShown: !state.submitShown };
+    default:
+      return state;
+  }
+};
+
+const initialState = {
+  base: baseInitialState,
+  login: loginInitialState,
+  submit: submitInitialState,
+};
+
 const rootReducer = combineReducers({
   base: baseReducer,
   login: loginReducer,
+  submit: submitReducer,
 });
 
 function initStore(preloadedState = initialState) {

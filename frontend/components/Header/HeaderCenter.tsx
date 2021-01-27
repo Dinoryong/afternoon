@@ -3,7 +3,7 @@ import styled from "@emotion/styled";
 import Button from "../Button";
 import Image from "next/image";
 import color from "../../styles/theme";
-import { NextRouter } from "next/router";
+import { useDispatch } from "react-redux";
 
 const Container = styled.div`
   display: flex;
@@ -33,7 +33,20 @@ type HeaderProps = {
   routerPath?: String;
 };
 
+const useCounter = () => {
+  const dispatch = useDispatch();
+  const toggleSubmit = async () => {
+    await dispatch({ type: "TOGGLE_SUBMIT" });
+  };
+
+  return {
+    toggleSubmit,
+  };
+};
+
 const HeaderRight = ({ routerPath }: HeaderProps) => {
+  const { toggleSubmit } = useCounter();
+
   const [noticeImg, setNoticeImg] = useState<string>(
     routerPath === "/"
       ? "/assets/icons/bell_white.png"
@@ -65,7 +78,7 @@ const HeaderRight = ({ routerPath }: HeaderProps) => {
         btnBgColor={routerPath === "/" ? "transparent" : null}
         btnTextColor={routerPath === "/" ? "white" : null}
         btnBorderColor={routerPath === "/" ? "white" : null}
-        btnOnClick={(): void => {}}
+        btnOnClick={toggleSubmit}
       />
       <NoticeIcon {...props} style={noticeIconStyle}>
         <Image
