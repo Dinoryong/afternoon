@@ -3,7 +3,7 @@ import styled from "@emotion/styled";
 import Button from "../../components/Button";
 import color from "../../styles/theme";
 import Image from "next/image";
-import PreferTag from "../../components/PreferTags";
+import PreferTags from "../../components/PreferTags";
 
 const Container = styled.div`
   display: flex;
@@ -11,15 +11,16 @@ const Container = styled.div`
   justify-content: center;
   align-items: center;
   padding-top: 62px;
-  padding-left: 80px;
-  padding-right: 80px;
-  width: 1280px;
+  /* padding-left: 80px;
+  padding-right: 80px; */
+  width: 100%;
   height: 1200px;
 `;
 
 const Wrapper = styled.div`
   display: flex;
-  width: 100%;
+  width: 1280px;
+  height: 1200px;
   flex-direction: column;
   justify-content: space-between;
   align-items: center;
@@ -31,6 +32,7 @@ const TopBox = styled.div`
   width: 100%;
   align-items: center;
   padding: 50px;
+  margin-bottom: 50px;
 `;
 
 const InnerBox1 = styled.div`
@@ -57,35 +59,9 @@ const MiddleBox = styled.div`
   display: flex;
   flex-direction: column;
   width: 100%;
-  height: 800px;
+  height: 700px;
   justify-content: space-between;
-`;
-
-const TagBox = styled.div`
-  display: flex;
-  flex-direction: column;
-  position: relative;
-  width: 300px;
-  height: 150px;
-  background-color: gray;
-  justify-content: center;
-`;
-
-const TagName = styled.div`
-  display: flex;
-  justify-content: center;
-  position: relative;
-  color: ${color.white.default};
-  font-size: 30px;
-  font-weight: 700;
-`;
-
-const BgOpacityFrame = styled.div`
-  position: absolute;
-  width: 100%;
-  height: 100%;
-  background-color: black;
-  opacity: 0.3;
+  margin-bottom: 30px;
 `;
 
 const BottomBox = styled.div`
@@ -109,24 +85,7 @@ const index = () => {
           </InnerBox2>
         </TopBox>
         <MiddleBox>
-          <TagBox>
-            <Image
-              src="/assets/images/designer_desk.jpg"
-              layout="fill"
-              objectFit="fill"
-              ></Image>
-            <BgOpacityFrame></BgOpacityFrame>
-            <TagName>디자이너</TagName>
-          </TagBox>
-          <TagBox>
-            <Image
-              src="/assets/images/designer_desk.jpg"
-              layout="fill"
-              objectFit="fill"
-              ></Image>
-            <BgOpacityFrame></BgOpacityFrame>
-            <TagName>엔지니어</TagName>
-          </TagBox>
+          <PreferTags></PreferTags>
         </MiddleBox>
         <BottomBox>
           <Button
