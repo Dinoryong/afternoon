@@ -1,63 +1,166 @@
 import axios from "axios";
-import API_ROOT_URI from "../../secrets";
+import secrets from "../../secrets";
+
+const API_ROOT_URI = secrets.API_ROOT_URI;
+const VIA_API_DEV = secrets.VIA_API_DEV;
 
 export const SIGN_UP = async (req) => {
-  console.log(req);
-  await axios.post(API_ROOT_URI + "/api/accounts", req).then((res) => {
-    console.log(res.data);
-  });
+  if (!VIA_API_DEV) {
+    try {
+      return { status: 200, data: {} };
+    } catch (error) {
+      console.log(error);
+    }
+    return { status: false };
+  } else {
+    // API 요청 시 실행
+    let data = {};
+    let status = 0;
+
+    try {
+      await axios.post(`${API_ROOT_URI}/api/accounts`, req).then((res) => {
+        console.log(res);
+        data = res.data;
+        status = res.status;
+      });
+      return { status, data };
+    } catch (error) {
+      console.log(error);
+    }
+
+    return { status: status };
+  }
 };
 
 export const REQUEST_LOGIN = async (req) => {
-  try {
-    // await axios.post(API_ROOT_URI + "/api/login", loginProps).then((res) => {
-    //   console.log(res.data);
-    // });
-    return { status: true, accountEmail: req.accountEmail };
-  } catch (error) {
-    console.log(error);
+  if (!VIA_API_DEV) {
+    try {
+      return { status: 200, data: {} };
+    } catch (error) {
+      console.log(error);
+    }
+    return { status: false };
+  } else {
+    // API 요청 시 실행
+    let data = {};
+    let status = 0;
+
+    try {
+      await axios.post(API_ROOT_URI + "/api/login", req).then((res) => {
+        console.log(res);
+        data = res.data;
+        status = res.status;
+      });
+      return { status, data };
+    } catch (error) {
+      console.log(error);
+    }
+    return { status: false };
   }
-  return { status: false };
 };
 
 export const CHECK_EMAIL = async (req) => {
-  await axios.post(API_ROOT_URI + "/api/login", req).then((res) => {
-    console.log(res.data);
-  });
+  if (!VIA_API_DEV) {
+    try {
+      return { status: 200, data: {} };
+    } catch (error) {
+      console.log(error);
+    }
+    return { status: false };
+  } else {
+    // API 요청 시 실행
+    let data = {};
+    let status = 0;
+
+    try {
+      await axios.post(API_ROOT_URI + "/api/login", req).then((res) => {
+        console.log(res);
+        data = res.data;
+        status = res.status;
+      });
+      return { status, data };
+    } catch (error) {
+      console.log(error);
+    }
+    return { status: false };
+  }
 };
 
 export const CONFIRM_LOGIN = async (req) => {
-  await axios.post(API_ROOT_URI + "/api/login", req).then((res) => {
-    console.log(res.data);
-    console.log(res.headers);
-    const authToken = res.headers.authorization.slice(7);
-    console.log(authToken);
-    window.sessionStorage.setItem("accountEmail", res.data.accountEmail);
-    window.sessionStorage.setItem("accountId", res.data.accountId);
-    window.sessionStorage.setItem("authToken", authToken);
-  });
+  if (!VIA_API_DEV) {
+    try {
+      return { status: 200, data: {}, headers: {} };
+    } catch (error) {
+      console.log(error);
+    }
+    return { status: false };
+  } else {
+    // API 요청 시 실행
+    let data;
+    let status;
+    let headers;
+
+    try {
+      await axios.post(API_ROOT_URI + "/api/login", req).then((res) => {
+        console.log(res);
+        data = res.data;
+        status = res.status;
+        headers = res.headers;
+      });
+      return {
+        status,
+        data,
+        headers,
+      };
+    } catch (error) {
+      console.log(error);
+    }
+    return {
+      status: false,
+    };
+  }
 };
 
 export const LOG_OUT = async () => {
-  window.sessionStorage.removeItem("authToken");
-  window.sessionStorage.removeItem("accountId");
-  window.sessionStorage.removeItem("accountEmail");
+  window.localStorage.removeItem("authToken");
+  window.localStorage.removeItem("accountId");
+  window.localStorage.removeItem("accountEmail");
 };
 
 export const AUTO_LOGIN = async () => {
-  const accountEmail = window.sessionStorage.getItem("accountEmail");
-  const accountId = window.sessionStorage.getItem("accountId");
-  const authToken = window.sessionStorage.getItem("authToken");
+  const accountEmail = window.localStorage.getItem("accountEmail");
+  const accountId = window.localStorage.getItem("accountId");
+  const authToken = window.localStorage.getItem("authToken");
+  if (!VIA_API_DEV) {
+    try {
+      return { status: 200, data: {} };
+    } catch (error) {
+      console.log(error);
+    }
+    return { status: false };
+  } else {
+    // API 요청 시 실행
+    let status;
+    let data;
 
-  await axios
-    .post(
-      API_ROOT_URI + "/api/auto-login",
-      { accountId, accountEmail },
-      {
-        headers: { Authorization: `Bearer ${authToken}` },
-      }
-    )
-    .then((res) => {
-      console.log(res.data);
-    });
+    try {
+      await axios
+        .post(
+          API_ROOT_URI + "/api/auto-login",
+          { accountId, accountEmail },
+          {
+            headers: { Authorization: `Bearer ${authToken}` },
+          }
+        )
+        .then((res) => {
+          console.log(res);
+          status = res.status;
+          data = res.data;
+        });
+      return { status, data };
+    } catch (error) {
+      console.log(error);
+    }
+    return { status: false };
+  }
 };

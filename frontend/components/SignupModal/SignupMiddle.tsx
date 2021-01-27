@@ -1,7 +1,9 @@
-import React from "react";
+import React, { useState } from "react";
 import Button from "../Button";
 import styled from "@emotion/styled";
 import color from "../../styles/theme";
+import { SIGN_UP } from "../../pages/api/user";
+import { useRouter } from "next/router";
 
 // 가장 바깥 구획 나누기
 const Container = styled.div`
@@ -78,16 +80,51 @@ const SignupButton = styled.div`
 `;
 
 const SignupMiddle = () => {
+  const router = useRouter();
+
+  const [inputName, setInputName] = useState("");
+  const [inputNickName, setInputNickName] = useState("");
+  const [inputEmail, setInputEmail] = useState("");
+
+  const requestSignup = async () => {
+    const signupProps = {
+      accountName: inputName,
+      accountEmail: inputEmail,
+      accountNickname: inputNickName,
+    };
+
+    const result = await SIGN_UP(signupProps);
+
+    if (result.status) {
+      alert("회원가입에 성공했습니다.");
+      router.push("/");
+    } else {
+      alert("회원가입에 실패했습니다.");
+    }
+  };
+
   return (
     <Container>
       <InputName
         placeholder={"이름을 입력해주세요. (영문, 한글 2글자 이상)"}
+        value={inputName}
+        onChange={(e) => {
+          setInputName(e.target.value);
+        }}
       ></InputName>
       <InputNickname
         placeholder={"닉네임을 입력해주세요. (영문, 한글 2글자 이상)"}
+        value={inputNickName}
+        onChange={(e) => {
+          setInputNickName(e.target.value);
+        }}
       ></InputNickname>
       <InputEmail
         placeholder={"이메일을 입력해주세요. (example@site.com)"}
+        value={inputEmail}
+        onChange={(e) => {
+          setInputEmail(e.target.value);
+        }}
       ></InputEmail>
       <SignupButton>
         <Button
@@ -101,6 +138,7 @@ const SignupMiddle = () => {
           btnHoverBorderColor="transparent"
           btnHoverBgColor={color.red.dark}
           btnHoverTextColor={color.white.default}
+          btnOnClick={requestSignup}
         />
       </SignupButton>
     </Container>
