@@ -6,6 +6,7 @@ import HeaderRight from "./HeaderRight";
 import { useRouter } from "next/router";
 import { useSelector, useDispatch } from "react-redux";
 import LoginModal from "../LoginModal";
+import SubmitModal from "../SubmitModal";
 import { AUTO_LOGIN } from "../../pages/api/user";
 
 const Container = styled.div`
@@ -30,7 +31,7 @@ const Wrapper = styled.div`
   padding: 0px 20px;
 `;
 
-const LoginFrame = styled.div`
+const ModalFrame = styled.div`
   position: absolute;
   display: flex;
   justify-content: center;
@@ -44,11 +45,15 @@ const CloseBg = styled.div`
   position: absolute;
   width: 100%;
   height: 100%;
+  cursor: zoom-out;
 `;
 
 const useCounter = () => {
   const isShown = useSelector((state) => state.login.isShown);
+  const loginState = useSelector((state) => state.login.loginState);
   const autoLogin = useSelector((state) => state.login.autoLogin);
+  const submitShown = useSelector((state) => state.submit.submitShown);
+
   const dispatch = useDispatch();
   const toggle = async () => {
     await dispatch({ type: "TOGGLE" });
@@ -62,8 +67,15 @@ const useCounter = () => {
   const loginStateFalse = async () => {
     await dispatch({ type: "LOGIN_STATE_FALSE" });
   };
+  const toggleSubmit = async () => {
+    await dispatch({ type: "TOGGLE_SUBMIT" });
+  };
+
   return {
     autoLoginCheck,
+    toggleSubmit,
+    submitShown,
+    loginState,
     loginStateTrue,
     loginStateFalse,
     autoLogin,
@@ -78,20 +90,23 @@ const index = () => {
 
   const {
     autoLoginCheck,
+    toggleSubmit,
+    submitShown,
     loginStateTrue,
     loginStateFalse,
+    loginState,
     isShown,
     autoLogin,
     toggle,
   } = useCounter();
 
+  const [windowWidth, setWindowWidth] = useState<number>();
   const [windowHeight, setWindowHeight] = useState<number>();
 
   useEffect(() => {
     autoLoginCheck();
 
     const doAutoLogin = async () => {
-      // console.log("실행");
       const result = await AUTO_LOGIN();
       if (result.status === 200) {
         loginStateTrue();
@@ -101,12 +116,16 @@ const index = () => {
     };
 
     if (autoLogin) {
-      doAutoLogin();
+      if (loginState) {
+        doAutoLogin();
+      }
     }
 
+    setWindowWidth(window.innerWidth);
     setWindowHeight(window.innerHeight);
 
     const resizeHandler = () => {
+      setWindowWidth(window.innerWidth);
       setWindowHeight(window.innerHeight);
     };
 
@@ -136,10 +155,21 @@ const index = () => {
     <Container style={containerStyle}>
       {isShown && (
         <>
-          <LoginFrame style={{ height: windowHeight }}>
+          <ModalFrame style={{ height: windowHeight }}>
             <CloseBg onClick={toggle}></CloseBg>
             <LoginModal></LoginModal>
-          </LoginFrame>
+          </ModalFrame>
+        </>
+      )}
+      {submitShown && (
+        <>
+          <ModalFrame style={{ height: windowHeight }}>
+            <CloseBg onClick={toggleSubmit}></CloseBg>
+            <SubmitModal
+              windowWidth={windowWidth}
+              windowHeight={windowHeight}
+            ></SubmitModal>
+          </ModalFrame>
         </>
       )}
       <Wrapper>
