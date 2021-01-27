@@ -52,4 +52,8 @@ public class AccountTest extends BaseDomainTest {
         accountRepository.save(account3);
     }
 
+    @Test
+    public void 유저_삭제() {
+        accountRepository.deleteAll();
+    }
 }

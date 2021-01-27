@@ -139,13 +139,13 @@ public class AccountControllerTest extends BaseControllerTest {
     @Test
     public void follow_성공() throws Exception {
 
-        Long yourId = 7L;
+        Long yourId = 11L;
 
         AccountDto.FollowRequest request =new  AccountDto.FollowRequest();
         request.setYourId(yourId);
 
 
-        String token = "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJzdWIiOiLroZzqt7jsnbjthqDtgbAiLCJleHAiOjE2MTIwNzUxOTMsImFjY291bnRJZCI6OCwiYWNjb3VudEVtYWlsIjoiamFzb245NjdAbmF2ZXIuY29tIn0.oSNxdvgG04n3aiDdrIR3_22OHsc_tMvb1c1mJ26sLAs";
+        String token = "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJzdWIiOiLroZzqt7jsnbjthqDtgbAiLCJleHAiOjE2MTIwODUwMjAsImFjY291bnRJZCI6OSwiYWNjb3VudEVtYWlsIjoiZG50anIxMUBuYXZlci5jb20ifQ.CarkzmADg9ppKFpb0H6FznJa4uyTUMFcHPVhD_xsJ8Q";
         mockMvc.perform(put("/api/accounts/my-following")
                 .header("Authorization","Bearer "+token)
                 .contentType(MediaType.APPLICATION_JSON)
@@ -157,13 +157,13 @@ public class AccountControllerTest extends BaseControllerTest {
     @Test
     public void follow_실패_셀프팔로우() throws Exception {
 
-        Long yourId = 8L;
+        Long yourId = 9L;
 
         AccountDto.FollowRequest request =new  AccountDto.FollowRequest();
         request.setYourId(yourId);
 
 
-        String token = "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJzdWIiOiLroZzqt7jsnbjthqDtgbAiLCJleHAiOjE2MTIwNzUxOTMsImFjY291bnRJZCI6OCwiYWNjb3VudEVtYWlsIjoiamFzb245NjdAbmF2ZXIuY29tIn0.oSNxdvgG04n3aiDdrIR3_22OHsc_tMvb1c1mJ26sLAs";
+        String token = "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJzdWIiOiLroZzqt7jsnbjthqDtgbAiLCJleHAiOjE2MTIwODUwMjAsImFjY291bnRJZCI6OSwiYWNjb3VudEVtYWlsIjoiZG50anIxMUBuYXZlci5jb20ifQ.CarkzmADg9ppKFpb0H6FznJa4uyTUMFcHPVhD_xsJ8Q";
         mockMvc.perform(put("/api/accounts/my-following")
                 .header("Authorization","Bearer "+token)
                 .contentType(MediaType.APPLICATION_JSON)
@@ -175,13 +175,13 @@ public class AccountControllerTest extends BaseControllerTest {
     @Test
     public void follow_실패_없는사람() throws Exception {
 
-        Long yourId = 1L;
+        Long yourId = 2L;
 
         AccountDto.FollowRequest request =new  AccountDto.FollowRequest();
         request.setYourId(yourId);
 
 
-        String token = "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJzdWIiOiLroZzqt7jsnbjthqDtgbAiLCJleHAiOjE2MTIwNzUxOTMsImFjY291bnRJZCI6OCwiYWNjb3VudEVtYWlsIjoiamFzb245NjdAbmF2ZXIuY29tIn0.oSNxdvgG04n3aiDdrIR3_22OHsc_tMvb1c1mJ26sLAs";
+        String token = "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJzdWIiOiLroZzqt7jsnbjthqDtgbAiLCJleHAiOjE2MTIwODUwMjAsImFjY291bnRJZCI6OSwiYWNjb3VudEVtYWlsIjoiZG50anIxMUBuYXZlci5jb20ifQ.CarkzmADg9ppKFpb0H6FznJa4uyTUMFcHPVhD_xsJ8Q";
         mockMvc.perform(put("/api/accounts/my-following")
                 .header("Authorization","Bearer "+token)
                 .contentType(MediaType.APPLICATION_JSON)
@@ -199,7 +199,7 @@ public class AccountControllerTest extends BaseControllerTest {
         request.setYourId(yourId);
 
 
-        String token = "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJzdWIiOiLroZzqt7jsnbjthqDtgbAiLCJleHAiOjE2MTIwNzUxOTMsImFjY291bnRJZCI6OCwiYWNjb3VudEVtYWlsIjoiamFzb245NjdAbmF2ZXIuY29tIn0.oSNxdvgG04n3aiDdrIR3_22OHsc_tMvb1c1mJ26sLAs";
+        String token = "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJzdWIiOiLroZzqt7jsnbjthqDtgbAiLCJleHAiOjE2MTIwODUwMjAsImFjY291bnRJZCI6OSwiYWNjb3VudEVtYWlsIjoiZG50anIxMUBuYXZlci5jb20ifQ.CarkzmADg9ppKFpb0H6FznJa4uyTUMFcHPVhD_xsJ8Q";
         mockMvc.perform(put("/api/accounts/my-following")
                 .header("Authorization","Bearer "+token)
                 .contentType(MediaType.APPLICATION_JSON)
@@ -213,27 +213,16 @@ public class AccountControllerTest extends BaseControllerTest {
 
         //When
         //작업공간
-//        String tagTitle = "작업공간";
-//        String tagDesc = "작업공간입니다";
-//        Tag tag1= Tag.builder()
-//                .tagTitle(tagTitle)
-//                .tagDesc(tagDesc)
-//                .build();
-//        //작업공간-개발자
-//        tagTitle = "개발자";
-//        tagDesc = "개발자 작업공간입니다";
-//        Tag tag2= Tag.builder()
-//                .tagTitle(tagTitle)
-//                .tagDesc(tagDesc)
-//                .build();
-//        tag2.setParent(tag1);
-        List<Tag> tags=new ArrayList<>();
-        Tag tag2=tagRepository.findByTagTitle("개발자");
-        tags.add(tag2);
-        AccountDto.AccountTagRequest accountTagRequest=new AccountDto.AccountTagRequest(tags);
-
-
-
+        AccountDto.AccountTagRequest accountTagRequest=new AccountDto.AccountTagRequest();
+        String tagName="인테리어";
+        accountTagRequest.getTagName().add(tagName);
+        tagName="서재";
+        accountTagRequest.getTagName().add(tagName);
+        tagName="테라스";
+        accountTagRequest.getTagName().add(tagName);
+//        AccountDto.AccountTagRequest accountTagRequest=new AccountDto.AccountTagRequest();
+//        Tag tag=tagRepository.findByTagTitle("개발자");
+//        accountTagRequest.getTags().add(tag);
         String token="eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJzdWIiOiLroZzqt7jsnbjthqDtgbAiLCJleHAiOjE2MTIwNzg5OTMsImFjY291bnRJZCI6MSwiYWNjb3VudEVtYWlsIjoiZG50anI0NzcyQG5hdmVyLmNvbSJ9.k29fcNEffXVLZ-R9tFDdGN0Cp4Z1EtDCPdlXp3smyV4";
         mockMvc.perform(put("/api/accounts/mytag")
                 .header("Authorization","Bearer "+token)
@@ -242,6 +231,5 @@ public class AccountControllerTest extends BaseControllerTest {
                 .andExpect(status().isOk())
                 .andDo(print());
     }
-
 
 }

@@ -91,11 +91,9 @@ public class Account {
         this.getFollowing().add(account);
         account.getFollower().add(this);
     }
-    // TODO: 2021-01-26 tag 설정 양방향
-    public void tagging(List<Tag> tags){
-        for(Tag tag: tags) {
+
+    public void tagging(Tag tag){
             this.getTags().add(tag);
             tag.getAccounts().add(this);
-        }
     }
 }

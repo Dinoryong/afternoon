@@ -74,6 +74,12 @@ public class LoginController {
             return new ResponseEntity(new BaseMessage(BaseStatus.BAD_REQUEST,errors), HttpStatus.BAD_REQUEST);
         }
 
-        return new ResponseEntity(loginService.autoLogin(loginRequest,token), HttpStatus.OK);
+        BaseMessage bm = loginService.autoLogin(loginRequest,token);
+        HttpStatus httpStatus = HttpStatus.OK;
+        if(bm.getStatus().equals(BaseStatus.BAD_REQUEST))
+        {
+            httpStatus=HttpStatus.BAD_REQUEST;
+        }
+        return new ResponseEntity(bm.getInfo(), httpStatus);
     }
 }

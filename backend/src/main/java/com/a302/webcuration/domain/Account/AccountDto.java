@@ -11,6 +11,7 @@ import javax.persistence.Column;
 import javax.validation.constraints.Email;
 import javax.validation.constraints.NotNull;
 import java.time.LocalDate;
+import java.util.ArrayList;
 import java.util.LinkedList;
 import java.util.List;
 
@@ -134,10 +135,10 @@ public class AccountDto {
         private String accountEmail;
     }
     //태그 설정
-    @Getter @Setter @NoArgsConstructor @AllArgsConstructor
+    @Getter @Setter @RequiredArgsConstructor
     public static class AccountTagRequest{
-
-        private List<Tag> tags;
+        private List<String> tagName=new ArrayList<>();
+        //private List<Tag> tags=new ArrayList<>();
     }
 
 }

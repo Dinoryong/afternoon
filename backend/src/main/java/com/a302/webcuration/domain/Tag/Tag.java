@@ -35,11 +35,11 @@ public class Tag {
     @Builder.Default
     private List<Tag> child=new ArrayList<>();
     //Hibernate MultipleBagFetchException 때문에 List-> Set으로 https://perfectacle.github.io/2019/05/01/hibernate-multiple-bag-fetch-exception/
-    @ManyToMany(fetch = FetchType.EAGER)
+    @ManyToMany
     @Builder.Default
     private Set<Account> accounts=new HashSet<>();
 
-    @ManyToMany(fetch = FetchType.EAGER)
+    @ManyToMany
     @Builder.Default
     private Set<Posts> posts=new HashSet<>();
 

@@ -1,6 +1,7 @@
 package com.a302.webcuration.domain.Post;
 
 import com.a302.webcuration.domain.Account.Account;
+import com.a302.webcuration.domain.Tag.Tag;
 import lombok.Builder;
 import lombok.Getter;
 import lombok.Setter;
@@ -18,6 +19,7 @@ public class PostsDto {
         private String postsContents;
         private List<String> postsPhotos;
         private String postsLocation;
+        private List<Tag> postsTags;
 
         public Posts toEntity(Account postWriter){
             return Posts.builder()
@@ -25,6 +27,7 @@ public class PostsDto {
                     .postsContents(postsContents)
                     .postsPhotos(postsPhotos)
                     .postsLocation(postsLocation)
+                    .postsTags(postsTags)
                     .postWriter(postWriter)
                     .build();
         }

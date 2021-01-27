@@ -6,6 +6,8 @@ import com.a302.webcuration.domain.Account.Account;
 import com.a302.webcuration.domain.Account.AccountDto;
 import com.a302.webcuration.domain.Account.AccountRepository;
 import com.a302.webcuration.domain.Account.Role;
+import com.a302.webcuration.domain.Tag.Tag;
+import com.a302.webcuration.domain.Tag.TagRepository;
 import io.jsonwebtoken.Claims;
 import io.jsonwebtoken.Jws;
 import io.jsonwebtoken.Jwts;
@@ -34,6 +36,8 @@ public class AccountService {
     private final ModelMapper modelMapper;
     private final LoginService2 accountService;
     private final JavaMailSender mailSender;
+    private final TagRepository tagRepository;
+
     private final JwtService jwtService;
 
 
@@ -115,8 +119,19 @@ public class AccountService {
     public void selectTag(AccountDto.AccountTagRequest accountTagRequest, String token){
         Long myId = jwtService.getAccountId(token);
         Account account=accountRepository.findAccountByAccountId(myId);
-        // TODO: 2021-01-26 account의 관심태그 설정
-        account.tagging(accountTagRequest.getTags());
+        //작업공간, 요리사, 개발자
+        //findAll 전체 태그 list 와 선택한 관심태그 list 같은 것만 tagging
+
+        try {
+            for(String tagName: accountTagRequest.getTagName()) {
+                Tag tag= tagRepository.findByTagTitle(tagName);
+                account.tagging(tag);
+            }
+        }catch (Exception e){
+            logger.error(e.getMessage());
+        }
+
+
     }
 
 }

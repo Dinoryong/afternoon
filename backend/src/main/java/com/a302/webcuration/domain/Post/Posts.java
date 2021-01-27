@@ -3,6 +3,7 @@ package com.a302.webcuration.domain.Post;
 import com.a302.webcuration.domain.Account.Account;
 import com.a302.webcuration.domain.Pin.Pin;
 import com.a302.webcuration.domain.Tag.Tag;
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Getter;
@@ -38,14 +39,11 @@ public class Posts {
     @Builder.Default
     @ManyToMany(mappedBy = "likePosts")
     private List<Account> likeAccounts=new ArrayList<>();
-    //작성자 (cascade = CascadeType.ALL) 안할시 오류(영속성 전이를 사용하면 부모 엔티티를 저장할 때 자식 엔티티도 함께 저장)
-    //post 검색시 작성자도 같이 알아야하므로 (fetch = FetchType.EAGER)
     @ManyToOne
     private Account postWriter;
+    //@JsonIgnore
     @Builder.Default
     @ManyToMany(mappedBy = "posts")
-    private List<Tag> tags=new ArrayList<>();
-
-
+    private List<Tag> postsTags =new ArrayList<>();
 
 }
