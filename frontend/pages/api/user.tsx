@@ -9,9 +9,15 @@ export const SIGN_UP = async (req) => {
 };
 
 export const REQUEST_LOGIN = async (req) => {
-  await axios.post(API_ROOT_URI + "/api/login", req).then((res) => {
-    console.log(res.data);
-  });
+  try {
+    // await axios.post(API_ROOT_URI + "/api/login", loginProps).then((res) => {
+    //   console.log(res.data);
+    // });
+    return { status: true, accountEmail: req.accountEmail };
+  } catch (error) {
+    console.log(error);
+  }
+  return { status: false };
 };
 
 export const CHECK_EMAIL = async (req) => {

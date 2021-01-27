@@ -3,6 +3,7 @@ import styled from "@emotion/styled";
 import Button from "../Button";
 import color from "../../styles/theme";
 import { NextRouter } from "next/router";
+import { useDispatch } from "react-redux";
 
 const Container = styled.div`
   display: flex;
@@ -16,7 +17,17 @@ type HeaderProps = {
   router?: NextRouter;
 };
 
+const useCounter = () => {
+  const dispatch = useDispatch();
+  const toggle = async () => {
+    await dispatch({ type: "TOGGLE" });
+  };
+  return { toggle };
+};
+
 const HeaderRight = ({ router, routerPath }: HeaderProps) => {
+  const { toggle } = useCounter();
+
   return (
     <Container>
       <Button
@@ -28,7 +39,7 @@ const HeaderRight = ({ router, routerPath }: HeaderProps) => {
         btnBgColor={routerPath === "/" ? "transparent" : null}
         btnTextColor={routerPath === "/" ? "white" : null}
         btnOnClick={(): void => {
-          console.log("login");
+          toggle();
         }}
       />
       <Button

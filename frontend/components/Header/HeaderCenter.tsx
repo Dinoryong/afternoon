@@ -10,7 +10,7 @@ const Container = styled.div`
   justify-content: flex-end;
   align-items: center;
   padding-right: 20px;
-  min-width: 170px;
+  min-width: 180px;
 `;
 
 const NoticeIcon = styled.div<HeaderProps>`
@@ -24,10 +24,9 @@ const NoticeIcon = styled.div<HeaderProps>`
   border-radius: 50%;
   :hover {
     border-color: ${(props) =>
-      props.routerPath === "/" ? color.white.default : "transparent"};
-    /* background-color: ${(props) =>
-      props.routerPath === "/" ? color.gray.light : "transparent"}; */
+      props.routerPath === "/" ? color.white.default : color.gray.darker};
   }
+  transition: all 0.2s;
 `;
 
 type HeaderProps = {
@@ -49,21 +48,6 @@ const HeaderRight = ({ routerPath }: HeaderProps) => {
     );
   }, [routerPath]);
 
-  const onMouseOver = (): void => {
-    setNoticeImg(
-      routerPath === "/"
-        ? "/assets/icons/bell_white.png"
-        : "/assets/icons/bell_black.png"
-    );
-  };
-  const onMouseLeave = (): void => {
-    setNoticeImg(
-      routerPath === "/"
-        ? "/assets/icons/bell_white.png"
-        : "/assets/icons/bell_black_light.png"
-    );
-  };
-
   const props = { routerPath };
 
   const noticeIconStyle = {
@@ -83,18 +67,14 @@ const HeaderRight = ({ routerPath }: HeaderProps) => {
         btnBorderColor={routerPath === "/" ? "white" : null}
         btnOnClick={(): void => {}}
       />
-      <NoticeIcon
-        onMouseOver={onMouseOver}
-        onMouseLeave={onMouseLeave}
-        {...props}
-        style={noticeIconStyle}
-      >
+      <NoticeIcon {...props} style={noticeIconStyle}>
         <Image
           src={noticeImg}
-          width="20"
-          height="20"
+          width="22"
+          height="22"
           quality="100"
           objectFit="contain"
+          loading="eager"
         />
       </NoticeIcon>
     </Container>
