@@ -94,7 +94,7 @@ const index = () => {
   };
 
   // useEffect(function mount(): void {
-  //   if (window.sessionStorage.getItem("authToken") !== null) {
+  //   if (window.localStorage.getItem("authToken") !== null) {
   //     AUTO_LOGIN();
   //   }
   // });
@@ -108,7 +108,7 @@ const index = () => {
       <SampleBtn
         onClick={() => {
           toggle();
-          console.log(isShown);
+          // console.log(isShown);
         }}
       >
         redux 테스트

@@ -64,7 +64,7 @@ const index = () => {
           setCurrentEmail={setCurrentEmail}
         ></LoginMiddle>
       ) : (
-        <AuthMiddle></AuthMiddle>
+        <AuthMiddle currentEmail={currentEmail}></AuthMiddle>
       )}
       <UserModalBottom
         bottomText="다른 SNS계정으로 로그인하기"

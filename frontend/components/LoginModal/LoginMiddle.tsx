@@ -84,7 +84,7 @@ const LoginMiddle = ({ setAuthState, setCurrentEmail }) => {
 
       if (result.status) {
         setAuthState(1);
-        setCurrentEmail(result.accountEmail);
+        setCurrentEmail(inputEmail);
       } else {
         alert("로그인 요청 실패");
       }

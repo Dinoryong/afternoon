@@ -1,7 +1,10 @@
-import React from "react";
+import React, { useState } from "react";
 import Button from "../Button";
 import styled from "@emotion/styled";
 import color from "../../styles/theme";
+import { CHECK_EMAIL, CONFIRM_LOGIN } from "../../pages/api/user";
+import { useRouter } from "next/router";
+import { useSelector, useDispatch } from "react-redux";
 
 const Container = styled.div`
   display: flex;
@@ -71,11 +74,75 @@ const LoginButton = styled.div`
   margin-bottom: 10px;
 `;
 
-const AuthMiddle = () => {
+const useCounter = () => {
+  const dispatch = useDispatch();
+  const toggle = async () => {
+    await dispatch({ type: "TOGGLE" });
+  };
+  const autoLoginCheck = async () => {
+    await dispatch({ type: "AUTO_LOGIN_CHECK" });
+  };
+  return { toggle, autoLoginCheck };
+};
+
+const AuthMiddle = ({ currentEmail }) => {
+  const [authKey, setAuthKey] = useState("");
+
+  const router = useRouter();
+
+  const { toggle, autoLoginCheck } = useCounter();
+
+  const requestCheckEmail = async () => {
+    const checkProps = {
+      act: "check-authKey-off",
+      accountEmail: currentEmail,
+      accountAuthKey: authKey,
+    };
+
+    const result = await CHECK_EMAIL(checkProps);
+
+    if (result.status === 200) {
+      alert("이메일 인증 성공");
+    } else {
+      alert("이메일 인증 실패");
+    }
+  };
+
+  const requestConfirmLogin = async () => {
+    const checkProps = {
+      act: "check-authKey-on",
+      accountEmail: currentEmail,
+      accountAuthKey: authKey,
+    };
+
+    const result = await CONFIRM_LOGIN(checkProps);
+
+    if (result.status === 200) {
+      alert("로그인 성공");
+
+      const authToken = result.headers.authorization.slice(7);
+
+      window.localStorage.setItem("accountEmail", result.data.accountEmail);
+      window.localStorage.setItem("accountId", `${result.data.accountId}`);
+      window.localStorage.setItem("authToken", authToken);
+      autoLoginCheck();
+      toggle();
+      router.push("/feed");
+    } else {
+      alert("로그인 실패 : " + result.status);
+    }
+  };
+
   return (
     <Container>
       <InputBox>
-        <InputNumber placeholder={"인증번호를 입력해주세요"}></InputNumber>
+        <InputNumber
+          placeholder={"인증번호를 입력해주세요"}
+          value={authKey}
+          onChange={(e) => {
+            setAuthKey(e.target.value);
+          }}
+        ></InputNumber>
         <ConfirmButton>
           <Button
             btnBgColor={color.red.light}
@@ -88,6 +155,7 @@ const AuthMiddle = () => {
             btnHoverBorderColor="transparent"
             btnHoverBgColor={color.red.dark}
             btnHoverTextColor={color.white.default}
+            btnOnClick={requestCheckEmail}
           />
         </ConfirmButton>
       </InputBox>
@@ -107,6 +175,7 @@ const AuthMiddle = () => {
           btnHoverBorderColor="transparent"
           btnHoverBgColor={color.gray.semidark}
           btnHoverTextColor={color.white.default}
+          btnOnClick={requestConfirmLogin}
         />
       </LoginButton>
     </Container>

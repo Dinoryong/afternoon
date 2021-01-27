@@ -120,10 +120,6 @@ const index = () => {
     });
   });
 
-  const event = ({ text = "기본값" }: EventProps): void => {
-    console.log("click : " + text);
-  };
-
   return (
     <Container style={{ height: windowHeight }}>
       <Image

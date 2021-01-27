@@ -6,6 +6,7 @@ import HeaderRight from "./HeaderRight";
 import { useRouter } from "next/router";
 import { useSelector, useDispatch } from "react-redux";
 import LoginModal from "../LoginModal";
+import { AUTO_LOGIN } from "../../pages/api/user";
 
 const Container = styled.div`
   position: fixed;
@@ -47,41 +48,80 @@ const CloseBg = styled.div`
 
 const useCounter = () => {
   const isShown = useSelector((state) => state.login.isShown);
+  const autoLogin = useSelector((state) => state.login.autoLogin);
   const dispatch = useDispatch();
   const toggle = async () => {
     await dispatch({ type: "TOGGLE" });
   };
-  return { isShown, toggle };
+  const autoLoginCheck = async () => {
+    await dispatch({ type: "AUTO_LOGIN_CHECK" });
+  };
+  const loginStateTrue = async () => {
+    await dispatch({ type: "LOGIN_STATE_TRUE" });
+  };
+  const loginStateFalse = async () => {
+    await dispatch({ type: "LOGIN_STATE_FALSE" });
+  };
+  return {
+    autoLoginCheck,
+    loginStateTrue,
+    loginStateFalse,
+    autoLogin,
+    isShown,
+    toggle,
+  };
 };
 
 const index = () => {
   const router = useRouter();
   const routerPath = router.pathname;
 
-  const { isShown, toggle } = useCounter();
+  const {
+    autoLoginCheck,
+    loginStateTrue,
+    loginStateFalse,
+    isShown,
+    autoLogin,
+    toggle,
+  } = useCounter();
 
   const [windowHeight, setWindowHeight] = useState<number>();
 
-  useEffect(
-    function mount() {
-      document.body.style.overflow = isShown ? "hidden" : "scroll";
+  useEffect(() => {
+    autoLoginCheck();
 
+    const doAutoLogin = async () => {
+      // console.log("실행");
+      const result = await AUTO_LOGIN();
+      if (result.status === 200) {
+        loginStateTrue();
+      } else {
+        loginStateFalse();
+      }
+    };
+
+    if (autoLogin) {
+      doAutoLogin();
+    }
+
+    setWindowHeight(window.innerHeight);
+
+    const resizeHandler = () => {
       setWindowHeight(window.innerHeight);
+    };
 
-      const resizeHandler = () => {
-        setWindowHeight(window.innerHeight);
-      };
+    window.addEventListener("resize", resizeHandler);
 
-      window.addEventListener("resize", resizeHandler);
+    const cleanup = () => {
+      window.removeEventListener("resize", resizeHandler);
+    };
 
-      const cleanup = () => {
-        window.removeEventListener("resize", resizeHandler);
-      };
+    return cleanup;
+  });
 
-      return cleanup;
-    },
-    [isShown]
-  );
+  useEffect(() => {
+    document.body.style.overflow = isShown ? "hidden" : "scroll";
+  }, [isShown]);
 
   const containerStyle = {
     display: routerPath === "/signup" ? "none" : "flex",

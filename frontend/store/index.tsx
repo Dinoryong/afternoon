@@ -1,5 +1,6 @@
 import { useMemo } from "react";
 import { combineReducers, createStore } from "redux";
+import { AUTO_LOGIN } from "../pages/api/user";
 
 let store;
 
@@ -11,6 +12,8 @@ const baseInitialState = {
 
 const loginInitialState = {
   isShown: false,
+  autoLogin: false,
+  loginState: false,
 };
 
 const initialState = {
@@ -49,10 +52,42 @@ const baseReducer = (state = initialState.base, action) => {
 const loginReducer = (state = initialState.login, action) => {
   switch (action.type) {
     case "TOGGLE":
-      let isShown = state.isShown;
       return {
         ...state,
-        isShown: !isShown,
+        isShown: !state.isShown,
+      };
+    case "AUTO_LOGIN_CHECK":
+      const accountEmail = window.localStorage.getItem("accountEmail");
+      const accountId = window.localStorage.getItem("accountId");
+      const authToken = window.localStorage.getItem("authToken");
+
+      if (accountEmail !== null && accountId !== null && authToken !== null) {
+        state.autoLogin = true;
+      } else {
+        state.autoLogin = false;
+      }
+
+      return {
+        ...state,
+        autoLogin: state.autoLogin,
+      };
+    case "AUTO_LOGIN_FALSE":
+      state.autoLogin = false;
+      return {
+        ...state,
+        autoLogin: state.autoLogin,
+      };
+    case "LOGIN_STATE_TRUE":
+      state.loginState = true;
+      return {
+        ...state,
+        loginState: state.loginState,
+      };
+    case "LOGIN_STATE_FALSE":
+      state.loginState = false;
+      return {
+        ...state,
+        loginState: state.loginState,
       };
     default:
       return state;

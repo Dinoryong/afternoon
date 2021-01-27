@@ -46,10 +46,10 @@ const index = () => {
           );
         }
         setTestList((testList) => [...testList, itemList]);
-        console.log(testList);
+        // console.log(testList);
       }}
-      onLayoutComplete={(e) => console.log("layoutComplete")}
-      onImageError={(e) => console.log("imageError")}
+      // onLayoutComplete={(e) => console.log("layoutComplete")}
+      // onImageError={(e) => console.log("imageError")}
     >
       {testList.map((tl) => {
         return tl;
