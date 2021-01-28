@@ -5,6 +5,8 @@ import Button from "../Button";
 import UploadButtonBox from "./UploadButtonBox";
 import UploadPreviewBox from "./UploadPreviewBox";
 import firebase from "firebase";
+import { keyframes } from "@emotion/react";
+import { useSelector } from "react-redux";
 
 const Container = styled.div`
   display: flex;
@@ -40,6 +42,7 @@ const TopWrapperRow = styled.div`
 const UploadBtnDiv = styled.div`
   display: flex;
   flex-direction: column;
+  position: relative;
   width: 50%;
   height: 100%;
   justify-content: center;
@@ -73,6 +76,59 @@ const ButtonDiv = styled.div`
   display: flex;
 `;
 
+const bounce = keyframes`
+  from, 20%, 53%, 80%, to {
+    transform: translateY(0px);
+    height: 96px;
+    width: 110px;
+  }
+
+  40%, 43% {
+    transform: translateY(-30px);
+    height: 111px;
+    width: 81px;
+  }
+
+  70% {
+    transform: translateY(-15px);
+    height: 104px;
+    width: 88px;
+  }
+
+  90% {
+    transform: translateY(-4px);
+    height: 98px;
+    width: 94px;
+  }
+`;
+
+const ProgressContainer = styled.div`
+  position: absolute;
+  display: flex;
+  flex-direction: column;
+  width: 100%;
+  height: 100%;
+  justify-content: center;
+  align-items: center;
+  border: 2px dashed ${color.gray.default};
+  background-color: ${color.white.default};
+  cursor: pointer;
+`;
+
+const ProgressBox = styled.div`
+  font-weight: 700;
+  color: ${color.black.default};
+  border-radius: 50%;
+  background-color: ${color.blue.default};
+  color: ${color.white.default};
+  width: 96px;
+  height: 96px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  animation: ${bounce} 1s ease infinite;
+`;
+
 const makeid = (length) => {
   var result = "";
   var characters =
@@ -84,8 +140,18 @@ const makeid = (length) => {
   return result;
 };
 
+const useCounter = () => {
+  const submitShown = useSelector((state) => state.submit.submitShown);
+
+  return {
+    submitShown,
+  };
+};
+
 const PhotoUpload = () => {
   const storage = firebase.storage();
+
+  const { submitShown } = useCounter();
 
   const [imageAsFile1, setImageAsFile1] = useState({
     image: null,
@@ -109,21 +175,44 @@ const PhotoUpload = () => {
   });
 
   useEffect(() => {
-    console.log("[image1]");
-    console.log(imageAsFile1);
-  }, [imageAsFile1]);
+    if (imageAsFile1.image !== null)
+      uploadToFirebase(imageAsFile1, setImageAsFile1);
+  }, [imageAsFile1.image]);
+
   useEffect(() => {
-    console.log("[image2]");
-    console.log(imageAsFile2);
-  }, [imageAsFile2]);
+    if (imageAsFile2.image !== null)
+      uploadToFirebase(imageAsFile2, setImageAsFile2);
+  }, [imageAsFile2.image]);
+
   useEffect(() => {
-    console.log("[image3]");
-    console.log(imageAsFile3);
-  }, [imageAsFile3]);
+    if (imageAsFile3.image !== null)
+      uploadToFirebase(imageAsFile3, setImageAsFile3);
+  }, [imageAsFile3.image]);
+
   useEffect(() => {
-    console.log("[image4]");
-    console.log(imageAsFile4);
-  }, [imageAsFile4]);
+    if (imageAsFile4.image !== null)
+      uploadToFirebase(imageAsFile4, setImageAsFile4);
+  }, [imageAsFile4.image]);
+
+  // useEffect(() => {
+  //   console.log("[image1]");
+  //   console.log(imageAsFile1);
+  // }, [imageAsFile1]);
+
+  // useEffect(() => {
+  //   console.log("[image2]");
+  //   console.log(imageAsFile2);
+  // }, [imageAsFile2]);
+
+  // useEffect(() => {
+  //   console.log("[image3]");
+  //   console.log(imageAsFile3);
+  // }, [imageAsFile3]);
+
+  // useEffect(() => {
+  //   console.log("[image4]");
+  //   console.log(imageAsFile4);
+  // }, [imageAsFile4]);
 
   const uploadToFirebase = (imageAsFile, setImageAsFile): void => {
     console.log("start of upload");
@@ -165,73 +254,97 @@ const PhotoUpload = () => {
     );
   };
 
-  const UploadAllToFirebase = async () => {
-    if (imageAsFile1.image !== null)
-      uploadToFirebase(imageAsFile1, setImageAsFile1);
-
-    if (imageAsFile2.image !== null)
-      uploadToFirebase(imageAsFile2, setImageAsFile2);
-
-    if (imageAsFile3.image !== null)
-      uploadToFirebase(imageAsFile3, setImageAsFile3);
-
-    if (imageAsFile4.image !== null)
-      uploadToFirebase(imageAsFile4, setImageAsFile4);
-  };
-
   return (
     <Container>
       <TitleWrapper>사진 업로드 (1/2)</TitleWrapper>
       <TopWrapper>
         <TopWrapperRow>
           <UploadBtnDiv>
-            {imageAsFile1 && imageAsFile1.image === null && (
-              <UploadButtonBox
-                imageAsFile={imageAsFile1}
-                setImageAsFile={setImageAsFile1}
-              />
+            {submitShown && imageAsFile1 && (
+              <ProgressContainer>
+                <ProgressBox>{imageAsFile1.progress} %</ProgressBox>
+              </ProgressContainer>
             )}
-            {/* {imageAsFile1 && imageAsFile1.image !== null && (
-              <UploadPreviewBox
-                imageAsFile={imageAsFile1}
-                setImageAsFile={setImageAsFile1}
-              />
-            )} */}
+            {submitShown && imageAsFile1 && imageAsFile1.image === null ? (
+              <UploadButtonBox setImageAsFile={setImageAsFile1} />
+            ) : null}
+            {submitShown &&
+              imageAsFile1 &&
+              imageAsFile1.image !== null &&
+              imageAsFile1.url !== "" && (
+                <UploadPreviewBox imageAsFile={imageAsFile1} />
+              )}
           </UploadBtnDiv>
           <UploadBtnDiv>
-            {imageAsFile1 &&
+            {submitShown &&
+              imageAsFile1 &&
+              imageAsFile1.image !== null &&
+              imageAsFile2 && (
+                <ProgressContainer>
+                  <ProgressBox>{imageAsFile2.progress} %</ProgressBox>
+                </ProgressContainer>
+              )}
+            {submitShown &&
+            imageAsFile1 &&
             imageAsFile2 &&
             imageAsFile1.image !== null &&
             imageAsFile2.image === null ? (
-              <UploadButtonBox
-                imageAsFile={imageAsFile2}
-                setImageAsFile={setImageAsFile2}
-              />
+              <UploadButtonBox setImageAsFile={setImageAsFile2} />
             ) : null}
+            {submitShown &&
+              imageAsFile2 &&
+              imageAsFile2.image !== null &&
+              imageAsFile2.url !== "" && (
+                <UploadPreviewBox imageAsFile={imageAsFile2} />
+              )}
           </UploadBtnDiv>
         </TopWrapperRow>
         <TopWrapperRow>
           <UploadBtnDiv>
-            {imageAsFile2 &&
+            {submitShown &&
+              imageAsFile2 &&
+              imageAsFile2.image !== null &&
+              imageAsFile3 && (
+                <ProgressContainer>
+                  <ProgressBox>{imageAsFile3.progress} %</ProgressBox>
+                </ProgressContainer>
+              )}
+            {submitShown &&
+            imageAsFile2 &&
             imageAsFile3 &&
             imageAsFile2.image !== null &&
             imageAsFile3.image === null ? (
-              <UploadButtonBox
-                imageAsFile={imageAsFile3}
-                setImageAsFile={setImageAsFile3}
-              />
+              <UploadButtonBox setImageAsFile={setImageAsFile3} />
             ) : null}
+            {submitShown &&
+              imageAsFile3 &&
+              imageAsFile3.image !== null &&
+              imageAsFile3.url !== "" && (
+                <UploadPreviewBox imageAsFile={imageAsFile3} />
+              )}
           </UploadBtnDiv>
           <UploadBtnDiv>
-            {imageAsFile3 &&
+            {submitShown &&
+              imageAsFile3 &&
+              imageAsFile3.image !== null &&
+              imageAsFile4 && (
+                <ProgressContainer>
+                  <ProgressBox>{imageAsFile4.progress} %</ProgressBox>
+                </ProgressContainer>
+              )}
+            {submitShown &&
+            imageAsFile3 &&
             imageAsFile4 &&
             imageAsFile3.image !== null &&
             imageAsFile4.image === null ? (
-              <UploadButtonBox
-                imageAsFile={imageAsFile4}
-                setImageAsFile={setImageAsFile4}
-              />
+              <UploadButtonBox setImageAsFile={setImageAsFile4} />
             ) : null}
+            {submitShown &&
+              imageAsFile4 &&
+              imageAsFile4.image !== null &&
+              imageAsFile4.url !== "" && (
+                <UploadPreviewBox imageAsFile={imageAsFile4} />
+              )}
           </UploadBtnDiv>
         </TopWrapperRow>
       </TopWrapper>
@@ -249,7 +362,12 @@ const PhotoUpload = () => {
               console.log(imageAsFile4);
             }}
           ></Button>
-          <Button btnText={"다음"} btnOnClick={UploadAllToFirebase}></Button>
+          <Button
+            btnText={"다음"}
+            btnOnClick={() => {
+              console.log("다음");
+            }}
+          ></Button>
         </ButtonDiv>
       </BottomWrapper>
     </Container>
