@@ -18,8 +18,8 @@ const Container = styled.div<DemensionProps>`
         ? 0
         : props.currentIndex + 1 === props.frameIndex ||
           props.currentIndex - props.maxIndex === props.frameIndex
-        ? props.windowWidth - 128
-        : (props.windowWidth - 128) * 2}px
+        ? props.windowWidth - 116
+        : (props.windowWidth - 116) * 2}px
   );
   z-index: ${(props) =>
     props.currentIndex === props.frameIndex
@@ -37,6 +37,8 @@ const Container = styled.div<DemensionProps>`
           : `0s`}
       cubic-bezier(0.45, 0.035, 0.045, 0.95),
     left 0.5s;
+  cursor: ${(props) =>
+    props.frameIndex === props.currentIndex ? "default" : "pointer"};
 `;
 
 const ImageFrame = styled.div`
@@ -50,10 +52,17 @@ const BgOpacityFrame = styled.div<DemensionProps>`
   width: 100%;
   height: 100%;
   background-color: ${color.black.default};
-  opacity: ${(props) => (props.frameIndex === props.currentIndex ? 0 : 0.7)};
-  cursor: ${(props) =>
-    props.frameIndex === props.currentIndex ? "default" : "pointer"};
+  opacity: ${(props) => (props.frameIndex === props.currentIndex ? 0.2 : 0.7)};
   transition: opacity 0.5s;
+`;
+
+const HomeTextFrame = styled.div`
+  position: absolute;
+  width: 100%;
+  height: 100%;
+  display: flex;
+  justify-content: flex-start;
+  align-items: flex-end;
 `;
 
 type DemensionProps = {

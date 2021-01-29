@@ -87,7 +87,6 @@ const HeaderRight = ({ routerPath }: HeaderProps) => {
           height="22"
           quality="100"
           objectFit="contain"
-          loading="eager"
         />
       </NoticeIcon>
     </Container>

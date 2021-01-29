@@ -29,6 +29,9 @@ const color = {
     default: "#FFD400",
     dark: "#EEC300",
   },
+  pink: {
+    default: "#e664a5",
+  },
   homeTag: {
     zero: "#FFFFFF",
     one: "#f5f5f5",
