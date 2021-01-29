@@ -24,4 +24,7 @@ a {
 
 .next_border_image {
   border-radius: 8px;
+  &.circle {
+    border-radius: 50%;
+  }
 }
