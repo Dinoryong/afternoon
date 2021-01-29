@@ -3,20 +3,19 @@ package com.a302.webcuration.domain.Post;
 import com.a302.webcuration.domain.Account.Account;
 import com.a302.webcuration.domain.Pin.Pin;
 import com.a302.webcuration.domain.Tag.Tag;
-import lombok.AllArgsConstructor;
-import lombok.Builder;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
+import com.fasterxml.jackson.annotation.JsonIgnore;
+import lombok.*;
 import org.hibernate.annotations.CreationTimestamp;
 import org.hibernate.annotations.UpdateTimestamp;
 
 import javax.persistence.*;
 import java.time.LocalDate;
 import java.util.ArrayList;
+import java.util.Iterator;
 import java.util.List;
 
 @Entity
-@Getter @NoArgsConstructor @AllArgsConstructor  @Builder
+@Getter @NoArgsConstructor @AllArgsConstructor  @Builder @Setter
 public class Posts {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
@@ -38,13 +37,22 @@ public class Posts {
     @Builder.Default
     @ManyToMany(mappedBy = "likePosts")
     private List<Account> likeAccounts=new ArrayList<>();
-    //작성자 (cascade = CascadeType.ALL) 안할시 오류(영속성 전이를 사용하면 부모 엔티티를 저장할 때 자식 엔티티도 함께 저장)
-    //post 검색시 작성자도 같이 알아야하므로 (fetch = FetchType.EAGER)
     @ManyToOne
     private Account postWriter;
+    //@JsonIgnore
     @Builder.Default
     @ManyToMany(mappedBy = "posts")
-    private List<Tag> tags=new ArrayList<>();
+    private List<Tag> postsTags =new ArrayList<>();
+
+    public void writePost(Account account){
+        this.postWriter=account;
+        account.getMyPosts().add(this);
+    }
+//    public void addPostsTags(Tag tag){
+//        this.postsTags.add(tag);
+//        tag.getPosts().add(this);
+//    }
+
 
 
 

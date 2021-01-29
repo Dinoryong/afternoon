@@ -17,6 +17,7 @@ public class TagController {
     private final TagRepository tagRepository;
     @GetMapping
     public ResponseEntity retrieveTagAll(){
+        // TODO: 2021-01-28 Tag entity 반환이 아니라 TagDto 반환해야함
         return new ResponseEntity(new BaseMessage(BaseStatus.OK, tagRepository.findAll()), HttpStatus.OK);
     }
 }

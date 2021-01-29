@@ -101,13 +101,24 @@ public class AccountController {
     }
 
     @PutMapping("/mytag")
-    public ResponseEntity selectTag(@RequestBody AccountDto.AccountTagRequest accountTagRequest, @RequestHeader(value = "Authorization") String token){
-        if(!accountTagRequest.getTags().isEmpty()){
-            logger.info("관심태그 지정");
-            accountService.selectTag(accountTagRequest,token);
-        }else{
-            logger.info("지정한 관심태그가 없습니다");
+    public ResponseEntity selectTag(@RequestBody @Valid AccountDto.AccountTagRequest accountTagRequest,Errors errors, @RequestHeader(value = "Authorization") String token) {
+        if (errors.hasErrors()) {
+            return new ResponseEntity(new BaseMessage(BaseStatus.BAD_REQUEST, errors), HttpStatus.BAD_REQUEST);
         }
-        return ResponseEntity.ok().build();
+        if(!accountTagRequest.getTagName().isEmpty()){
+            logger.info("지정한 관심태그 존재");
+            accountService.selectTag(accountTagRequest,token);
+        }else {
+            logger.info("지정한 관심태그 없음");
+        }
+//        if (!accountTagRequest.getTags().isEmpty()) {
+//            logger.info("지정한 관심태그 존재");
+//            accountService.selectTag(accountTagRequest, token);
+//        } else {
+//            logger.info("지정한 관심태그 없음");
+//        }
+
+            return ResponseEntity.ok().build();
     }
+
 }

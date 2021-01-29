@@ -6,6 +6,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.mail.SimpleMailMessage;
 import org.springframework.mail.javamail.JavaMailSender;
+import org.springframework.scheduling.annotation.Async;
 import org.springframework.stereotype.Service;
 
 @Service
@@ -17,6 +18,7 @@ public class EmailService {
 
     public static final Logger logger = LoggerFactory.getLogger(JwtService.class);
 
+    @Async
     public void sendMail(String email, String authCode) {
         SimpleMailMessage message = new SimpleMailMessage();
         message.setTo(email);

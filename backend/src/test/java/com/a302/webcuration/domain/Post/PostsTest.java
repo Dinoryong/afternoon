@@ -9,14 +9,11 @@ import org.springframework.beans.factory.annotation.Autowired;
 import java.util.ArrayList;
 import java.util.List;
 
-import static org.junit.Assert.*;
-
 public class PostsTest extends BaseDomainTest {
     @Autowired
     PostsRepository postsRepository;
     @Autowired
     AccountRepository accountRepository;
-
     @Test
     public void 게시글_생성()
     {
@@ -47,6 +44,10 @@ public class PostsTest extends BaseDomainTest {
                 .postWriter(postWriter)
                 .build();
         postsRepository.save(posts);
+    }
+    @Test
+    public void 게시물_전부삭제(){
+        postsRepository.deleteAll();
     }
 
 }

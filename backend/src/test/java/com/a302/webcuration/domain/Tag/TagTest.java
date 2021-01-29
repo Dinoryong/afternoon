@@ -43,7 +43,56 @@ public class TagTest extends BaseDomainTest {
                 .build();
         tag3.setParent(tag1);
         tagRepository.save(tag3);
+        //Given
+        //작업공간-디자이너
+        tagTitle = "디자이너";
+        tagDesc = "디자이너 작업공간입니다";
+        Tag tag4= Tag.builder()
+                .tagTitle(tagTitle)
+                .tagDesc(tagDesc)
+                .build();
+        tag4.setParent(tag1);
+        tagRepository.save(tag4);
 
+        //Given
+        //인테리어
+        tagTitle = "인테리어";
+        tagDesc = "인테리어입니다";
+        Tag tag5= Tag.builder()
+                .tagTitle(tagTitle)
+                .tagDesc(tagDesc)
+                .build();
+        tagRepository.save(tag5);
+        //Given
+        //인테리어-화장실
+        tagTitle = "화장실";
+        tagDesc = "화장실 인테리어입니다";
+        Tag tag6= Tag.builder()
+                .tagTitle(tagTitle)
+                .tagDesc(tagDesc)
+                .build();
+        tag6.setParent(tag5);
+        tagRepository.save(tag6);
+        //Given
+        //인테리어-서재
+        tagTitle = "서재";
+        tagDesc = "서재 인테리어입니다";
+        Tag tag7= Tag.builder()
+                .tagTitle(tagTitle)
+                .tagDesc(tagDesc)
+                .build();
+        tag7.setParent(tag5);
+        tagRepository.save(tag7);
+        //Given
+        //인테리어-테라스
+        tagTitle = "테라스";
+        tagDesc = "테라스 인테리어입니다";
+        Tag tag8= Tag.builder()
+                .tagTitle(tagTitle)
+                .tagDesc(tagDesc)
+                .build();
+        tag8.setParent(tag5);
+        tagRepository.save(tag8);
     }
     @Test
     @Transactional
