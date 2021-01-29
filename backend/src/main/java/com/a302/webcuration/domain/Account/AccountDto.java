@@ -141,4 +141,15 @@ public class AccountDto {
         //private List<Tag> tags=new ArrayList<>();
     }
 
+    @Data
+    public static class Accounts{
+        private Long accountId;
+        private String accountName;
+        private String accountNickname;
+        private String accountEmail;
+        private String accountDesc;
+        private String accountAuthKey;
+        private Role accountRole;
+    }
+
 }

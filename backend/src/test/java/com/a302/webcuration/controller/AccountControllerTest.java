@@ -44,7 +44,7 @@ public class AccountControllerTest extends BaseControllerTest {
         //When
         AccountDto.CreateAccountRequest createAccountRequest = AccountDto.CreateAccountRequest.builder()
                 .accountName("한우석")
-                .accountNickname("dntjrrf")
+                .accountNickname("dntjr")
                 .accountEmail("dntjr4772@naver.com")
                 .build();
 
@@ -223,7 +223,7 @@ public class AccountControllerTest extends BaseControllerTest {
 //        AccountDto.AccountTagRequest accountTagRequest=new AccountDto.AccountTagRequest();
 //        Tag tag=tagRepository.findByTagTitle("개발자");
 //        accountTagRequest.getTags().add(tag);
-        String token="eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJzdWIiOiLroZzqt7jsnbjthqDtgbAiLCJleHAiOjE2MTIwNzg5OTMsImFjY291bnRJZCI6MSwiYWNjb3VudEVtYWlsIjoiZG50anI0NzcyQG5hdmVyLmNvbSJ9.k29fcNEffXVLZ-R9tFDdGN0Cp4Z1EtDCPdlXp3smyV4";
+        String token="eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJzdWIiOiLroZzqt7jsnbjthqDtgbAiLCJleHAiOjE2MTIyNjI4NDgsImFjY291bnRJZCI6OSwiYWNjb3VudEVtYWlsIjoiZG50anI0NzcyQG5hdmVyLmNvbSJ9.XDt1L2hEIBPWsI4Gb-Fqj5YDQddznT231U9G8jz4yYw";
         mockMvc.perform(put("/api/accounts/mytag")
                 .header("Authorization","Bearer "+token)
                 .contentType(MediaType.APPLICATION_JSON)

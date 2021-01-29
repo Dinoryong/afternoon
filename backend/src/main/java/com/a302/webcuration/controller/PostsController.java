@@ -31,7 +31,13 @@ public class PostsController {
             return new ResponseEntity(new BaseMessage(BaseStatus.BAD_REQUEST,errors), HttpStatus.BAD_REQUEST);
         }
         // TODO: 2021-01-25  예외처리
-        Posts posts=postsService.createPosts(createAccountRequest,token);
-        return new ResponseEntity(new BaseMessage(BaseStatus.CREATED,posts),HttpStatus.CREATED);
+        PostsDto.CreateAccountRequest posts=postsService.createPosts(createAccountRequest,token);
+        if(posts!=null)
+            return new ResponseEntity(new BaseMessage(BaseStatus.CREATED,posts),HttpStatus.CREATED);
+        else
+            return new ResponseEntity(new BaseMessage(BaseStatus.BAD_REQUEST,errors), HttpStatus.BAD_REQUEST);
+
     }
+
+
 }

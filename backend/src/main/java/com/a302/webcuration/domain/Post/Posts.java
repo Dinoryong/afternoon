@@ -4,20 +4,18 @@ import com.a302.webcuration.domain.Account.Account;
 import com.a302.webcuration.domain.Pin.Pin;
 import com.a302.webcuration.domain.Tag.Tag;
 import com.fasterxml.jackson.annotation.JsonIgnore;
-import lombok.AllArgsConstructor;
-import lombok.Builder;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
+import lombok.*;
 import org.hibernate.annotations.CreationTimestamp;
 import org.hibernate.annotations.UpdateTimestamp;
 
 import javax.persistence.*;
 import java.time.LocalDate;
 import java.util.ArrayList;
+import java.util.Iterator;
 import java.util.List;
 
 @Entity
-@Getter @NoArgsConstructor @AllArgsConstructor  @Builder
+@Getter @NoArgsConstructor @AllArgsConstructor  @Builder @Setter
 public class Posts {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
@@ -45,5 +43,17 @@ public class Posts {
     @Builder.Default
     @ManyToMany(mappedBy = "posts")
     private List<Tag> postsTags =new ArrayList<>();
+
+    public void writePost(Account account){
+        this.postWriter=account;
+        account.getMyPosts().add(this);
+    }
+//    public void addPostsTags(Tag tag){
+//        this.postsTags.add(tag);
+//        tag.getPosts().add(this);
+//    }
+
+
+
 
 }
