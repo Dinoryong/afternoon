@@ -16,19 +16,47 @@ configurations {
 
 repositories {
     mavenCentral()
+    jcenter()
 }
 
 dependencies {
+    //JPA
     implementation 'org.springframework.boot:spring-boot-starter-data-jpa'
-    implementation 'org.springframework.boot:spring-boot-starter-validation'
-    implementation 'org.springframework.boot:spring-boot-starter-web'
-    compileOnly 'org.projectlombok:lombok'
-    runtimeOnly 'com.h2database:h2'
-    runtimeOnly 'org.mariadb.jdbc:mariadb-java-client'
-    annotationProcessor 'org.projectlombok:lombok'
-    testImplementation 'org.springframework.boot:spring-boot-starter-test'
-}
 
-test {
-    useJUnitPlatform()
+    //HATEOAS
+   // implementation 'org.springframework.boot:spring-boot-starter-hateoas'
+
+    //VALIDATION
+    implementation 'org.springframework.boot:spring-boot-starter-validation'
+
+    //WEB
+    implementation 'org.springframework.boot:spring-boot-starter-web'
+
+    compile('io.springfox:springfox-swagger2:2.9.2')
+    compile('io.springfox:springfox-swagger-ui:2.9.2')
+
+
+    //lombok
+    annotationProcessor 'org.projectlombok:lombok'
+    compileOnly 'org.projectlombok:lombok'
+
+    //Test DB
+    runtimeOnly 'com.h2database:h2'
+
+    //operation DB
+    implementation group: 'mysql', name: 'mysql-connector-java', version: '8.0.22'
+    runtimeOnly 'org.mariadb.jdbc:mariadb-java-client'
+
+    //Junit
+    testImplementation 'junit:junit:4.12'
+    testImplementation 'org.springframework.boot:spring-boot-starter-test'
+
+    //ModelMapper
+    implementation group: 'org.modelmapper', name: 'modelmapper', version: '2.3.8'
+
+    //JWT
+    implementation 'io.jsonwebtoken:jjwt:0.9.1'
+
+    //Mail
+    implementation 'org.springframework.boot:spring-boot-starter-mail'
 }
