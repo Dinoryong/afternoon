@@ -1,13 +1,11 @@
-import React from "react";
+import React, { useState } from "react";
 import styled from "@emotion/styled";
-import Button from "../../components/Button";
-import color from "../../styles/theme";
-import Image from "next/image";
 import PinTop from "./PinTop";
 import PinBottom from "./PinBottom";
 
 const Container = styled.div`
   width: max-content;
+  height: max-content;
   display: flex;
   justify-content: center;
   background-color: white;
@@ -21,12 +19,27 @@ const Wrapper = styled.div`
   margin: 12px 16px 8px 16px;
 `;
 
-const index = () => {
+const index = ({ pinData }) => {
+  const [expand, setExpand] = useState(false);
+  const {
+    pinTitle,
+    pinApi: { apiCategory, apiLink },
+    pinLink,
+    pinWriter,
+    pinComments,
+  } = pinData;
   return (
     <Container>
       <Wrapper>
-        <PinTop></PinTop>
-        <PinBottom></PinBottom>
+        <PinTop pinTitle={pinTitle} apiCategory={apiCategory}></PinTop>
+        <PinBottom
+          pinLink={pinLink}
+          pinWriter={pinWriter}
+          apiLink={apiLink}
+          pinComments={pinComments}
+          expand={expand}
+          setExpand={setExpand}
+        ></PinBottom>
       </Wrapper>
     </Container>
   );
