@@ -105,19 +105,12 @@ public class AccountController {
         if (errors.hasErrors()) {
             return new ResponseEntity(new BaseMessage(BaseStatus.BAD_REQUEST, errors), HttpStatus.BAD_REQUEST);
         }
-        if(!accountTagRequest.getTagName().isEmpty()){
+        if(!accountTagRequest.getTags().isEmpty()){
             logger.info("지정한 관심태그 존재");
             accountService.selectTag(accountTagRequest,token);
         }else {
             logger.info("지정한 관심태그 없음");
         }
-//        if (!accountTagRequest.getTags().isEmpty()) {
-//            logger.info("지정한 관심태그 존재");
-//            accountService.selectTag(accountTagRequest, token);
-//        } else {
-//            logger.info("지정한 관심태그 없음");
-//        }
-
             return ResponseEntity.ok().build();
     }
 

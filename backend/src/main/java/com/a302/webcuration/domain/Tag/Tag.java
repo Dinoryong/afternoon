@@ -34,6 +34,11 @@ public class Tag {
     private Set<Account> accounts=new HashSet<>();
 
     @ManyToMany
+    @JoinTable(
+            name = "POSTS_TAG",
+            joinColumns = @JoinColumn(name = "TAG_ID"),
+            inverseJoinColumns = @JoinColumn(name = "POSTS_ID")
+    )
     @Builder.Default
     private List<Posts> posts=new ArrayList<>();
 
@@ -41,7 +46,6 @@ public class Tag {
         this.parent = parent;
         parent.getChild().add(this);
     }
-    // TODO: 2021-01-28 tag는 이미 만들어져있으니 mappedBy 옮기고 이 메소드도 tag쪽으로 이동
     public void addPostsTags(Posts posts){
         this.posts.add(posts);
         posts.getPostsTags().add(this);
