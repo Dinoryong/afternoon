@@ -103,11 +103,14 @@ const index = () => {
   const [windowWidth, setWindowWidth] = useState<number>();
   const [windowHeight, setWindowHeight] = useState<number>();
 
+  useEffect(() => {}, [autoLogin]);
+
   useEffect(() => {
     autoLoginCheck();
 
     const doAutoLogin = async () => {
       const result = await AUTO_LOGIN();
+      console.log(result);
       if (result.status === 200) {
         loginStateTrue();
       } else {
@@ -115,8 +118,9 @@ const index = () => {
       }
     };
 
+    console.log(autoLogin, loginState);
     if (autoLogin) {
-      if (loginState) {
+      if (!loginState) {
         doAutoLogin();
       }
     }

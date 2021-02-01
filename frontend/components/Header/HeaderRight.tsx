@@ -41,9 +41,9 @@ const HeaderRight = ({ router, routerPath }: HeaderProps) => {
   };
 
   const requestLogout = async () => {
-    await loginStateFalse();
     await autoLoginFalse();
-    LOG_OUT();
+    await LOG_OUT();
+    await loginStateFalse();
     alert("로그아웃 되었습니다.");
     router.push("/");
   };
@@ -58,28 +58,58 @@ const HeaderRight = ({ router, routerPath }: HeaderProps) => {
 
   return (
     <Container>
-      <Button
-        btnText={loginState ? "로그아웃" : "로그인"}
-        btnWidth="60px"
-        btnHoverBorderColor="transparent"
-        btnMarginLeft="0px"
-        btnBorderColor="transparent"
-        btnBgColor={routerPath === "/" ? "transparent" : null}
-        btnTextColor={routerPath === "/" ? "white" : null}
-        btnOnClick={loginState ? requestLogout : toggleLogin}
-      />
-      <Button
-        btnText={loginState ? "프로필" : "회원가입"}
-        btnWidth="80px"
-        btnBorderColor={color.green.default}
-        btnBgColor={color.green.default}
-        btnTextColor={color.white.default}
-        btnHoverBgColor={color.green.dark}
-        btnHoverBorderColor={color.green.dark}
-        btnHoverTextColor={color.white.default}
-        btnMarginRight="0px"
-        btnOnClick={loginState ? moveProfile : moveSignup}
-      />
+      {loginState && (
+        <>
+          <Button
+            btnText={"로그아웃"}
+            btnWidth="60px"
+            btnHoverBorderColor="transparent"
+            btnMarginLeft="0px"
+            btnBorderColor="transparent"
+            btnBgColor={routerPath === "/" ? "transparent" : null}
+            btnTextColor={routerPath === "/" ? "white" : null}
+            btnOnClick={requestLogout}
+          />
+          <Button
+            btnText={"프로필"}
+            btnWidth="80px"
+            btnBorderColor={color.green.default}
+            btnBgColor={color.green.default}
+            btnTextColor={color.white.default}
+            btnHoverBgColor={color.green.dark}
+            btnHoverBorderColor={color.green.dark}
+            btnHoverTextColor={color.white.default}
+            btnMarginRight="0px"
+            btnOnClick={moveProfile}
+          />
+        </>
+      )}
+      {!loginState && (
+        <>
+          <Button
+            btnText={"로그인"}
+            btnWidth="60px"
+            btnHoverBorderColor="transparent"
+            btnMarginLeft="0px"
+            btnBorderColor="transparent"
+            btnBgColor={routerPath === "/" ? "transparent" : null}
+            btnTextColor={routerPath === "/" ? "white" : null}
+            btnOnClick={toggleLogin}
+          />
+          <Button
+            btnText={"회원가입"}
+            btnWidth="80px"
+            btnBorderColor={color.green.default}
+            btnBgColor={color.green.default}
+            btnTextColor={color.white.default}
+            btnHoverBgColor={color.green.dark}
+            btnHoverBorderColor={color.green.dark}
+            btnHoverTextColor={color.white.default}
+            btnMarginRight="0px"
+            btnOnClick={moveSignup}
+          />
+        </>
+      )}
     </Container>
   );
 };

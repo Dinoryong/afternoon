@@ -82,7 +82,10 @@ const useCounter = () => {
   const autoLoginCheck = async () => {
     await dispatch({ type: "AUTO_LOGIN_CHECK" });
   };
-  return { toggle, autoLoginCheck };
+  const loginStateTrue = async () => {
+    await dispatch({ type: "LOGIN_STATE_TRUE" });
+  };
+  return { toggle, autoLoginCheck, loginStateTrue };
 };
 
 const AuthMiddle = ({ currentEmail }) => {
@@ -90,7 +93,7 @@ const AuthMiddle = ({ currentEmail }) => {
 
   const router = useRouter();
 
-  const { toggle, autoLoginCheck } = useCounter();
+  const { toggle, autoLoginCheck, loginStateTrue } = useCounter();
 
   const requestCheckEmail = async () => {
     const checkProps = {
@@ -116,6 +119,7 @@ const AuthMiddle = ({ currentEmail }) => {
     };
 
     const result = await CONFIRM_LOGIN(checkProps);
+    console.log(result);
 
     if (result.status === 200) {
       alert("로그인 성공");
@@ -123,9 +127,9 @@ const AuthMiddle = ({ currentEmail }) => {
       const authToken = result.headers.authorization.slice(7);
 
       window.localStorage.setItem("accountEmail", result.data.accountEmail);
-      window.localStorage.setItem("accountId", `${result.data.accountId}`);
+      window.localStorage.setItem("accountId", result.data.accountId);
       window.localStorage.setItem("authToken", authToken);
-      autoLoginCheck();
+      loginStateTrue();
       toggle();
       router.push("/feed");
     } else {
