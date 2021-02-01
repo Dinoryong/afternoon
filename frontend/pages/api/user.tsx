@@ -89,7 +89,11 @@ export const CHECK_EMAIL = async (req) => {
 export const CONFIRM_LOGIN = async (req) => {
   if (!VIA_API_DEV) {
     try {
-      return { status: 200, data: {}, headers: {} };
+      return {
+        data: { accountEmail: "dngngn3045@gmail.com", accountId: 1 },
+        status: 200,
+        headers: { authorization: "Bearer dkanxhzmswlqdjsjgrl" },
+      };
     } catch (error) {
       console.log(error);
     }

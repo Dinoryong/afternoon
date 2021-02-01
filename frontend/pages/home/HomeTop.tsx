@@ -89,23 +89,22 @@ const HomeTop = () => {
   const [displayState, setDisplayState] = useState<boolean>(false);
 
   useEffect(function mount() {
-    setWindowHeight(window.innerHeight);
-    setWindowWidth(window.innerWidth);
-
-    setTimeout(() => {
-      setDisplayState(true);
-    }, 1);
-
     const resizeHandler = () => {
       setWindowHeight(window.innerHeight);
       setWindowWidth(window.innerWidth);
     };
 
+    resizeHandler();
+
+    setTimeout(() => {
+      setDisplayState(true);
+    }, 1);
+
+    window.addEventListener("resize", resizeHandler);
+
     const cleanup = () => {
       window.removeEventListener("resize", resizeHandler);
     };
-
-    window.addEventListener("resize", resizeHandler);
 
     return cleanup;
   });

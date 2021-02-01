@@ -114,10 +114,19 @@ const index = () => {
   const [windowHeight, setWindowHeight] = useState<number>();
 
   useEffect(function mount() {
-    setWindowHeight(window.innerHeight);
-    window.addEventListener("resize", function () {
+    const resizeHandler = () => {
       setWindowHeight(window.innerHeight);
-    });
+    };
+
+    resizeHandler();
+
+    window.addEventListener("resize", resizeHandler);
+
+    const cleanup = () => {
+      window.removeEventListener("resize", resizeHandler);
+    };
+
+    return cleanup;
   });
 
   return (
