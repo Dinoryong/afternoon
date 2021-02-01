@@ -48,12 +48,4 @@ public class Posts {
         this.postWriter=account;
         account.getMyPosts().add(this);
     }
-//    public void addPostsTags(Tag tag){
-//        this.postsTags.add(tag);
-//        tag.getPosts().add(this);
-//    }
-
-
-
-
 }

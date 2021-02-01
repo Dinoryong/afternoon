@@ -29,28 +29,6 @@ public class PostsService {
     private final ModelMapper modelMapper;
     public static final Logger logger = LoggerFactory.getLogger(PostsService.class);
 
-//    @Transactional
-//    public PostsDto.CreateAccountRequest createPosts(PostsDto.CreateAccountRequest createAccountRequest, String token){
-//        Long myId = jwtService.getAccountId(token);
-//        Account postWriter=accountRepository.findAccountByAccountId(myId);
-//        List<Tag> tags = createAccountRequest.getPostsTags().stream().map(tag ->
-//            tag.toEntity()
-//        ).collect(Collectors.toList());
-//        System.out.println("tags = " + tags.get(0));
-//        Posts posts=modelMapper.map(createAccountRequest,Posts.class);
-//        posts.setPostWriter(postWriter);
-//        System.out.println("postss = " + posts);
-//        posts.setPostsTags(tags);
-//        System.out.println("postss = " + posts);
-//        Posts writePost=null;
-//        if(posts!=null)
-//            writePost=postsRepository.save(posts);
-//        //게시글이 잘 만들어졌다면
-//        if(writePost!= null)
-//            return createAccountRequest;
-//        else
-//            return null;
-//    }
     @Transactional
     public PostsDto.CreateAccountRequest createPosts(PostsDto.CreateAccountRequest createAccountRequest, String token){
         Long myId = jwtService.getAccountId(token);

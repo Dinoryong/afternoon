@@ -55,9 +55,9 @@ public class PostsControllerTest extends BaseControllerTest {
     public void Posts_태그포함생성_성공() throws Exception{
         //When
         //Given
-        String postsTitle="내 작업공간 태그포함";
-        String postsContents="이런거 있어어";
-        String postsLocation="수원시 팔달구";
+        String postsTitle="내 작업공간 태그포함2";
+        String postsContents="이런거 있어어2";
+        String postsLocation="수원시 팔달구2";
         List<String> postsPhotos=new ArrayList<>();
         postsPhotos.add("https://lh3.googleusercontent.com/proxy/kr-1BRXpuhgwIVpc5pcfcVV-nEsUduJldGbOpvAUwxHeNK--u7fWsYXfb3PccxrDHvj-HyjDFEyVxUmjQ4oXKVMYGjoJS4wqfyS58JN-Vd6e");
         postsPhotos.add("https://news.samsungdisplay.com/wp-content/uploads/2018/08/8.jpg");
@@ -74,7 +74,7 @@ public class PostsControllerTest extends BaseControllerTest {
                 .postsLocation(postsLocation)
                 .postsTags(postsTags)
                 .build();
-        String token ="eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJzdWIiOiLroZzqt7jsnbjthqDtgbAiLCJleHAiOjE2MTIyNjI4NDgsImFjY291bnRJZCI6OSwiYWNjb3VudEVtYWlsIjoiZG50anI0NzcyQG5hdmVyLmNvbSJ9.XDt1L2hEIBPWsI4Gb-Fqj5YDQddznT231U9G8jz4yYw";
+        String token ="eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJzdWIiOiLroZzqt7jsnbjthqDtgbAiLCJleHAiOjE2MTI0NTE1MzcsImFjY291bnRJZCI6MSwiYWNjb3VudEVtYWlsIjoiZG50anI0NzcyQG5hdmVyLmNvbSJ9.MPlBQEI5Jksjy7qRVs9My9504ZtWRKAE3EiBU6oRH7A";
 
         mockMvc.perform(post("/api/posts")
                 .header("Authorization","Bearer "+token)
