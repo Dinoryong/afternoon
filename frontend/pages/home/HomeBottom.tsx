@@ -53,7 +53,7 @@ const HomeBottom = () => {
           <HomeTagBox
             boxFrameColor={color.homeTag.a}
             boxBgColor={color.homeTag.one}
-            boxCountText={88}
+            boxCountText={87}
             boxTitleText="개발자"
           />
         </BigBox>
