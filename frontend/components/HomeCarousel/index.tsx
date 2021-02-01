@@ -52,7 +52,7 @@ const BgOpacityFrame = styled.div<DemensionProps>`
   width: 100%;
   height: 100%;
   background-color: ${color.black.default};
-  opacity: ${(props) => (props.frameIndex === props.currentIndex ? 0.2 : 0.7)};
+  opacity: ${(props) => (props.frameIndex === props.currentIndex ? 0.4 : 0.7)};
   transition: opacity 0.5s;
 `;
 

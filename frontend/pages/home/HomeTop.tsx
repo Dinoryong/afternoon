@@ -27,36 +27,46 @@ const TextDiv = styled.div`
   font-size: 100px;
   /* font-weight: 700; */
   margin-left: 60px;
-  margin-bottom: 120px;
+  margin-bottom: 60px;
   z-index: 1;
   font-family: "Black Han Sans", sans-serif;
+  cursor: default;
+  transition: all 0.35s;
 `;
 
 const TextBox = styled.div`
-  margin-bottom: -20px;
   color: ${color.white.default};
+  transition: all 0.5s;
 `;
 
 const TextChangeFrame = styled.div`
+  margin: -20px 0px;
   position: relative;
   width: 900px;
   height: 120px;
 `;
 
 const TextBoxOpacity = styled.div`
+  margin-left: 40px;
   position: absolute;
   display: flex;
   color: ${color.white.default};
   opacity: 0;
   margin-top: 40px;
   transition: all 0.5s;
-  text-shadow: 0px 0 white, 3px 3px white, 3px 3px white, 0 0px white;
+  /* text-shadow: 0px 0 white, 3px 3px white, 3px 3px white, 0 0px white; */
 `;
+
+const TextKeyword = styled.div`
+  transition: all 0.5s;
+`;
+
+const TextEnd = styled.div``;
 
 const SwiperBox = styled.div`
   display: flex;
   align-items: center;
-  margin-top: 40px;
+  margin-top: 20px;
 `;
 
 const SwiperPoint = styled.div`
@@ -68,6 +78,7 @@ const SwiperPoint = styled.div`
   border-radius: 50%;
   border: 2px solid white;
   transition: all 0.5s;
+  cursor: pointer;
 `;
 
 const HomeTop = () => {
@@ -162,40 +173,90 @@ const HomeTop = () => {
             <TextBoxOpacity
               style={
                 currentIndex === 0
-                  ? { opacity: 1, color: color.yellow.default, marginTop: 0 }
+                  ? { opacity: 1, color: color.white.default, marginTop: 0 }
                   : null
               }
             >
-              작업공간을 공유하세요
+              <TextKeyword
+                style={
+                  overIndex === currentIndex + 1 ||
+                  (overIndex === 0 && currentIndex === maxIndex)
+                    ? { marginLeft: -40, color: color.yellow.default }
+                    : { color: color.yellow.default }
+                }
+              >
+                작업공간
+              </TextKeyword>
+              <TextEnd>을</TextEnd>
             </TextBoxOpacity>
             <TextBoxOpacity
               style={
                 currentIndex === 1
-                  ? { opacity: 1, color: color.red.light, marginTop: 0 }
+                  ? { opacity: 1, color: color.white.default, marginTop: 0 }
                   : null
               }
             >
-              인테리어를 공유하세요
+              <TextKeyword
+                style={
+                  overIndex === currentIndex + 1 ||
+                  (overIndex === 0 && currentIndex === maxIndex)
+                    ? { marginLeft: -40, color: color.pink.default }
+                    : { color: color.pink.default }
+                }
+              >
+                인테리어
+              </TextKeyword>
+              <TextEnd>를</TextEnd>
             </TextBoxOpacity>
             <TextBoxOpacity
               style={
                 currentIndex === 2
-                  ? { opacity: 1, color: color.blue.default, marginTop: 0 }
+                  ? { opacity: 1, color: color.white.default, marginTop: 0 }
                   : null
               }
             >
-              컬렉션을 공유하세요
+              <TextKeyword
+                style={
+                  overIndex === currentIndex + 1 ||
+                  (overIndex === 0 && currentIndex === maxIndex)
+                    ? { marginLeft: -40, color: color.blue.default }
+                    : { color: color.blue.default }
+                }
+              >
+                컬렉션
+              </TextKeyword>
+              <TextEnd>을</TextEnd>
             </TextBoxOpacity>
             <TextBoxOpacity
               style={
                 currentIndex === 3
-                  ? { opacity: 1, color: color.pink.default, marginTop: 0 }
+                  ? { opacity: 1, color: color.white.default, marginTop: 0 }
                   : null
               }
             >
-              취미를 공유하세요
+              <TextKeyword
+                style={
+                  overIndex === currentIndex + 1 ||
+                  (overIndex === 0 && currentIndex === maxIndex)
+                    ? { marginLeft: -40, color: color.green.dark }
+                    : { color: color.green.default }
+                }
+              >
+                취미
+              </TextKeyword>
+              <TextEnd>를</TextEnd>
             </TextBoxOpacity>
           </TextChangeFrame>
+          <TextBox
+            style={
+              overIndex === currentIndex + 1 ||
+              (overIndex === 0 && currentIndex === maxIndex)
+                ? { marginLeft: 0 }
+                : { marginLeft: 80 }
+            }
+          >
+            공유하세요
+          </TextBox>
           <SwiperBox>
             <SwiperPoint
               style={
@@ -203,13 +264,15 @@ const HomeTop = () => {
                   ? { opacity: 1, backgroundColor: color.yellow.default }
                   : null
               }
+              onClick={() => setCurrentIndex(0)}
             />
             <SwiperPoint
               style={
                 currentIndex === 1
-                  ? { opacity: 1, backgroundColor: color.red.light }
+                  ? { opacity: 1, backgroundColor: color.pink.default }
                   : null
               }
+              onClick={() => setCurrentIndex(1)}
             />
             <SwiperPoint
               style={
@@ -217,13 +280,15 @@ const HomeTop = () => {
                   ? { opacity: 2, backgroundColor: color.blue.default }
                   : null
               }
+              onClick={() => setCurrentIndex(2)}
             />
             <SwiperPoint
               style={
                 currentIndex === 3
-                  ? { opacity: 3, backgroundColor: color.pink.default }
+                  ? { opacity: 3, backgroundColor: color.green.dark }
                   : null
               }
+              onClick={() => setCurrentIndex(3)}
             />
           </SwiperBox>
         </TextDiv>
