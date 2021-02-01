@@ -4,8 +4,10 @@ import com.a302.webcuration.common.BaseControllerTest;
 import com.a302.webcuration.domain.Account.Account;
 import com.a302.webcuration.domain.Account.AccountDto;
 import com.a302.webcuration.domain.Tag.Tag;
+import com.a302.webcuration.domain.Tag.TagDto;
 import com.a302.webcuration.domain.Tag.TagRepository;
 import org.junit.Test;
+import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.MediaType;
 
@@ -19,6 +21,8 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 public class AccountControllerTest extends BaseControllerTest {
     @Autowired
     TagRepository tagRepository;
+    @Autowired
+    private ModelMapper modelMapper;
 
     @Test
     public void Account_profile_조회_성공() throws Exception {
@@ -215,15 +219,18 @@ public class AccountControllerTest extends BaseControllerTest {
         //작업공간
         AccountDto.AccountTagRequest accountTagRequest=new AccountDto.AccountTagRequest();
         String tagName="인테리어";
-        accountTagRequest.getTagName().add(tagName);
+        Tag tag=tagRepository.findByTagTitle(tagName);
+        accountTagRequest.getTags().add(modelMapper.map(tag, TagDto.Tag.class));
+
         tagName="서재";
-        accountTagRequest.getTagName().add(tagName);
+        tag=tagRepository.findByTagTitle(tagName);
+        accountTagRequest.getTags().add(modelMapper.map(tag, TagDto.Tag.class));
+
         tagName="테라스";
-        accountTagRequest.getTagName().add(tagName);
-//        AccountDto.AccountTagRequest accountTagRequest=new AccountDto.AccountTagRequest();
-//        Tag tag=tagRepository.findByTagTitle("개발자");
-//        accountTagRequest.getTags().add(tag);
-        String token="eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJzdWIiOiLroZzqt7jsnbjthqDtgbAiLCJleHAiOjE2MTIyNjI4NDgsImFjY291bnRJZCI6OSwiYWNjb3VudEVtYWlsIjoiZG50anI0NzcyQG5hdmVyLmNvbSJ9.XDt1L2hEIBPWsI4Gb-Fqj5YDQddznT231U9G8jz4yYw";
+        tag=tagRepository.findByTagTitle(tagName);
+        accountTagRequest.getTags().add(modelMapper.map(tag, TagDto.Tag.class));
+
+        String token ="eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJzdWIiOiLroZzqt7jsnbjthqDtgbAiLCJleHAiOjE2MTI0NTE1MzcsImFjY291bnRJZCI6MSwiYWNjb3VudEVtYWlsIjoiZG50anI0NzcyQG5hdmVyLmNvbSJ9.MPlBQEI5Jksjy7qRVs9My9504ZtWRKAE3EiBU6oRH7A";
         mockMvc.perform(put("/api/accounts/mytag")
                 .header("Authorization","Bearer "+token)
                 .contentType(MediaType.APPLICATION_JSON)

@@ -1,6 +1,7 @@
 package com.a302.webcuration.domain.Account;
 
 import com.a302.webcuration.domain.Tag.Tag;
+import com.a302.webcuration.domain.Tag.TagDto;
 import io.swagger.annotations.ApiModelProperty;
 import lombok.*;
 import org.hibernate.annotations.CreationTimestamp;
@@ -137,8 +138,8 @@ public class AccountDto {
     //태그 설정
     @Getter @Setter @RequiredArgsConstructor
     public static class AccountTagRequest{
-        private List<String> tagName=new ArrayList<>();
-        //private List<Tag> tags=new ArrayList<>();
+        //private List<String> tagName=new ArrayList<>();
+        private List<TagDto.Tag> tags=new ArrayList<>();
     }
 
     @Data

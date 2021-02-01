@@ -7,6 +7,7 @@ import com.a302.webcuration.domain.Account.AccountDto;
 import com.a302.webcuration.domain.Account.AccountRepository;
 import com.a302.webcuration.domain.Account.Role;
 import com.a302.webcuration.domain.Tag.Tag;
+import com.a302.webcuration.domain.Tag.TagDto;
 import com.a302.webcuration.domain.Tag.TagRepository;
 import io.jsonwebtoken.Claims;
 import io.jsonwebtoken.Jws;
@@ -123,8 +124,8 @@ public class AccountService {
         //findAll 전체 태그 list 와 선택한 관심태그 list 같은 것만 tagging
 
         try {
-            for(String tagName: accountTagRequest.getTagName()) {
-                Tag tag= tagRepository.findByTagTitle(tagName);
+            for(TagDto.Tag tagDto: accountTagRequest.getTags()) {
+                Tag tag= tagRepository.findByTagTitle(tagDto.getTagTitle());
                 account.tagging(tag);
             }
         }catch (Exception e){
