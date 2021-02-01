@@ -1,6 +1,7 @@
 package com.a302.webcuration.domain.Post;
 
 import com.a302.webcuration.domain.Account.Account;
+import com.a302.webcuration.domain.Comment.Comment;
 import com.a302.webcuration.domain.Pin.Pin;
 import com.a302.webcuration.domain.Tag.Tag;
 import com.fasterxml.jackson.annotation.JsonIgnore;
@@ -30,9 +31,8 @@ public class Posts {
     @UpdateTimestamp
     private LocalDate postsUpdateTime;
     @Builder.Default
-    @OneToMany
-    private List<Pin> pins=new ArrayList<>();
-    private String postsLocation;
+    @OneToMany(mappedBy = "posts", cascade = CascadeType.ALL)
+    private List<Pin> postsPins=new ArrayList<>();
     //좋아요한 유저
     @Builder.Default
     @ManyToMany(mappedBy = "likePosts")
@@ -43,6 +43,10 @@ public class Posts {
     @Builder.Default
     @ManyToMany(mappedBy = "posts")
     private List<Tag> postsTags =new ArrayList<>();
+
+    @Builder.Default
+    @OneToMany(mappedBy = "commentPosts")
+    private List<Comment> comments=new ArrayList<>();
 
     public void writePost(Account account){
         this.postWriter=account;

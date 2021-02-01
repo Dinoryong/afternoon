@@ -40,7 +40,6 @@ public class PostsTest extends BaseDomainTest {
                 .postsTitle(postsTitle)
                 .postsContents(postsContents)
                 .postsPhotos(postsPhotos)
-                .postsLocation(postsLocation)
                 .postWriter(postWriter)
                 .build();
         postsRepository.save(posts);
