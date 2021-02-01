@@ -2,6 +2,8 @@ package com.a302.webcuration.service;
 
 import com.a302.webcuration.domain.Account.Account;
 import com.a302.webcuration.domain.Account.AccountRepository;
+import com.a302.webcuration.domain.Pin.Pin;
+import com.a302.webcuration.domain.Pin.PinDto;
 import com.a302.webcuration.domain.Post.Posts;
 import com.a302.webcuration.domain.Post.PostsDto;
 import com.a302.webcuration.domain.Post.PostsRepository;
@@ -14,46 +16,79 @@ import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.Collectors;
 
 @Service
-@RequiredArgsConstructor
+@RequiredArgsConstructor @Transactional
 public class PostsService {
     private final PostsRepository postsRepository;
-    private final AccountService accountService;
-    private final LoginService2 loginService2;
     private final AccountRepository accountRepository;
     private final TagRepository tagRepository;
     private final JwtService jwtService;
     private final ModelMapper modelMapper;
     public static final Logger logger = LoggerFactory.getLogger(PostsService.class);
 
-    @Transactional
-    public PostsDto.CreateAccountRequest createPosts(PostsDto.CreateAccountRequest createAccountRequest, String token){
+    public PostsDto.CreatePostsRequest createPosts(PostsDto.CreatePostsRequest createAccountRequest, String token){
         Long myId = jwtService.getAccountId(token);
         Account postWriter=accountRepository.findAccountByAccountId(myId);
-        List<Tag> tags = createAccountRequest.getPostsTags().stream().map(tag ->
-                tagRepository.findByTagTitle(tag.getTagTitle())
-        ).collect(Collectors.toList());
-        //System.out.println("tags = " + tags.get(0));
-        Posts posts=modelMapper.map(createAccountRequest,Posts.class);
+        logger.info("postsssd : "+createAccountRequest.toString());
+        // TODO: 2021-02-01 modelmapper가 안되서 setter씀
+        //Posts posts=modelMapper.map(createAccountRequest,Posts.class);
+        Posts posts=new Posts();
+        posts.setPostsTitle(createAccountRequest.getPostsTitle());
+        posts.setPostsContents(createAccountRequest.getPostsContents());
+        posts.setPostsPhotos(createAccountRequest.getPostsPhotos());
         posts.writePost(postWriter);
-        //System.out.println("postss = " + posts);
-        // TODO: 2021-01-28  post_tag도 반영시켜야 함
-
+        logger.info("postsss : "+posts.toString());
+        //tag 지정
+        // TODO: 2021-02-01 게시물작성시 태그없을때 오류
+        List<Tag> tags = createAccountRequest.getPostsTags().stream().map(tag ->
+                tagRepository.findTagByTagId(tag.getTagId())
+        ).collect(Collectors.toList());
         for (Tag tag : tags){
             tag.addPostsTags(posts);
-            //.addPostsTags(tag);
         }
-        Posts writePost=null;
-        if(posts!=null)
-            writePost=postsRepository.save(posts);
+        //pin 지정
+        List<Pin> pins=new ArrayList<>();
+        for (PinDto.Pin pinDto : createAccountRequest.getPostsPins()){
+            System.out.println("pinn = " + pinDto);
+            pins.add(pinDto.toEntity());
 
+        }
+        //똑같음
+//        List<Pin> pins=createAccountRequest.getPostsPins().stream().map(pin ->
+//                pin.toEntity()
+//        ).collect(Collectors.toList());
+
+        for (Pin pin : pins){
+            System.out.println("pinsss = " + pin);
+            pin.saveWithCascadePosts(posts);
+            System.out.println("pinddd = " + pin);
+        }
+
+        Posts writePost=null;
+        if(posts!=null) {
+
+            writePost = postsRepository.save(posts);
+            logger.info("posts 생성"+writePost.getPostsTitle());
+        }
+        // TODO: 2021-02-01  createAccountRequest return 하는게 아니라 생성된거 responseDto로 담아서 보내기
         //게시글이 잘 만들어졌다면
         if(writePost!= null)
             return createAccountRequest;
         else
             return null;
+    }
+
+    public PostsDto.PostsResponse retrievePosts(Long postsid){
+        System.out.println("posts id : "+postsid);
+        Posts posts=postsRepository.findPostsByPostsId(postsid);
+        //System.out.println("postsss = " + posts.toString());
+        PostsDto.PostsResponse postsResponse = modelMapper.map(posts,PostsDto.PostsResponse.class);
+
+        System.out.println("postsResponse = " + postsResponse);
+        return postsResponse;
     }
 }

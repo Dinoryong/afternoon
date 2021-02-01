@@ -125,7 +125,7 @@ public class AccountService {
 
         try {
             for(TagDto.Tag tagDto: accountTagRequest.getTags()) {
-                Tag tag= tagRepository.findByTagTitle(tagDto.getTagTitle());
+                Tag tag= tagRepository.findTagByTagId(tagDto.getTagId());
                 account.tagging(tag);
             }
         }catch (Exception e){
