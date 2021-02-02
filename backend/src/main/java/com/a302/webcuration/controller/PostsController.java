@@ -27,16 +27,13 @@ public class PostsController {
     private final ModelMapper modelMapper;
 
     @PostMapping
-    public ResponseEntity createPosts(@RequestBody @Valid PostsDto.CreatePostsRequest createAccountRequest, @RequestHeader(value = "Authorization") String token, Errors errors){
-        if(errors.hasErrors()) {
-            return new ResponseEntity(new BaseMessage(BaseStatus.BAD_REQUEST,errors), HttpStatus.BAD_REQUEST);
-        }
+    public ResponseEntity createPosts(@RequestBody @Valid PostsDto.CreatePostsRequest createAccountRequest, @RequestHeader(value = "Authorization") String token){
         // TODO: 2021-01-25  예외처리
         PostsDto.CreatePostsRequest posts=postsService.createPosts(createAccountRequest,token);
         if(posts!=null)
             return new ResponseEntity(new BaseMessage(BaseStatus.CREATED,posts),HttpStatus.CREATED);
         else
-            return new ResponseEntity(new BaseMessage(BaseStatus.BAD_REQUEST,errors), HttpStatus.BAD_REQUEST);
+            return new ResponseEntity(HttpStatus.BAD_REQUEST);
 
     }
     // TODO: 2021-02-01 posts 조회기능
@@ -44,7 +41,6 @@ public class PostsController {
     public ResponseEntity retrievePosts(@PathVariable Long postsid){
         PostsDto.PostsResponse postsResponse=postsService.retrievePosts(postsid);
         return new ResponseEntity(new BaseMessage(BaseStatus.OK,postsResponse),HttpStatus.OK);
-
     }
 
 }

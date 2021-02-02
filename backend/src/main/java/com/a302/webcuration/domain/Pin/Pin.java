@@ -27,7 +27,7 @@ public class Pin {
     private Posts posts;
 
     @Builder.Default
-    @OneToMany(mappedBy = "pin")
+    @OneToMany(mappedBy = "commentPin")
     private List<Comment> comments=new ArrayList<>();
 
     public void saveWithCascadePosts(Posts post){

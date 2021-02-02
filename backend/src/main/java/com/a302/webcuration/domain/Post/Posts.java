@@ -30,6 +30,7 @@ public class Posts {
     private LocalDate postsWriteTime;
     @UpdateTimestamp
     private LocalDate postsUpdateTime;
+
     @Builder.Default
     @OneToMany(mappedBy = "posts", cascade = CascadeType.ALL)
     private List<Pin> postsPins=new ArrayList<>();

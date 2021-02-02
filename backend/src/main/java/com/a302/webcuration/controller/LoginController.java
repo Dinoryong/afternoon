@@ -36,11 +36,6 @@ public class LoginController {
     @PostMapping("/login")
     public ResponseEntity login(@RequestBody @Valid AccountDto.LoginRequest loginRequest, Errors errors) {
 
-        if(errors.hasErrors())
-        {
-            return new ResponseEntity(new BaseMessage(BaseStatus.BAD_REQUEST,errors), HttpStatus.BAD_REQUEST);
-        }
-
         loginService.loginValidator(loginRequest,errors);
 
         if(errors.hasErrors())
@@ -62,10 +57,6 @@ public class LoginController {
 
     @PostMapping("/auto-login")
     public ResponseEntity autoLogin(@RequestBody @Valid AccountDto.LoginRequest loginRequest,@RequestHeader(value = "Authorization") String token, Errors errors) {
-        if(errors.hasErrors())
-        {
-            return new ResponseEntity(new BaseMessage(BaseStatus.BAD_REQUEST,errors), HttpStatus.BAD_REQUEST);
-        }
 
         loginService.loginValidator(loginRequest,errors);
 

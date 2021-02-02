@@ -16,13 +16,37 @@ public class Comment {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     private Long commentId;
-    @ManyToOne
-    private Account commentWriter;
-    private String commentLink;
-    private String commentContent;
+
+    //accountId
+    private Long commentWriterId;
+
+    @Builder.Default
+    private String commentLink ="";
+    @Builder.Default
+    private String commentContent="";
+
+    public void addCommentWriterId(long id)
+    {
+        this.commentWriterId=id;
+    }
+
+    public void saveWithCascadePosts(Posts post){
+        System.out.println("!!!!!!!");
+
+        System.out.println(commentPosts.getComments().get(0).commentId);
+        //commentPosts.getComments().add(this);
+        System.out.println("@@@@@@@");
+        commentPosts=post;
+    }
+
+    public void saveWithCascadePin(Pin pin){
+        pin.getComments().add(this);
+        commentPin=pin;
+    }
+
 
     @ManyToOne
-    private Pin pin;
+    private Pin commentPin;
 
     @ManyToOne
     private Posts commentPosts;
