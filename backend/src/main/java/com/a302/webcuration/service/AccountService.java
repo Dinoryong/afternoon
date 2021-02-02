@@ -1,26 +1,20 @@
 package com.a302.webcuration.service;
 
 import com.a302.webcuration.common.BaseMessage;
-import com.a302.webcuration.common.BaseStatus;
 import com.a302.webcuration.domain.Account.Account;
 import com.a302.webcuration.domain.Account.AccountDto;
 import com.a302.webcuration.domain.Account.AccountRepository;
-import com.a302.webcuration.domain.Account.Role;
 import com.a302.webcuration.domain.Tag.Tag;
 import com.a302.webcuration.domain.Tag.TagDto;
 import com.a302.webcuration.domain.Tag.TagRepository;
-import io.jsonwebtoken.Claims;
-import io.jsonwebtoken.Jws;
-import io.jsonwebtoken.Jwts;
 import lombok.RequiredArgsConstructor;
 import org.modelmapper.ModelMapper;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Value;
-import org.springframework.mail.SimpleMailMessage;
+import org.springframework.http.HttpStatus;
 import org.springframework.mail.javamail.JavaMailSender;
 import org.springframework.stereotype.Service;
-import org.springframework.validation.Errors;
 
 import javax.transaction.Transactional;
 import java.util.*;
@@ -53,34 +47,37 @@ public class AccountService {
     }
 
     @Transactional
-    public AccountDto.AccountProfile findAccountById(Long id)
+    public BaseMessage findAccountById(Long id)
     {
-        Account account = accountRepository.findAccountByAccountId(id);
-        logger.info("account = "+account.getAccountName());
+        Map<String, Object> resultMap = new HashMap<>();
+        try {
+            Account account = accountRepository.findAccountByAccountId(id);
+            logger.info("account = " + account.getAccountName());
 
-        AccountDto.AccountProfile profile = modelMapper.map(account,AccountDto.AccountProfile.class);
+            AccountDto.AccountProfile profile = modelMapper.map(account, AccountDto.AccountProfile.class);
 
-        List<AccountDto.FollowingDto> following = new ArrayList<>();
-        List<AccountDto.FollowerDto> follower = new ArrayList<>();
-        int followingCnt = account.getFollowing().size();
-        int followerCnt = account.getFollower().size();
-        Iterator<Account> iterFollower = account.getFollower().iterator();
-        while(iterFollower.hasNext())
+            List<AccountDto.FollowingDto> following = new ArrayList<>();
+            List<AccountDto.FollowerDto> follower = new ArrayList<>();
+            int followingCnt = account.getFollowing().size();
+            int followerCnt = account.getFollower().size();
+            Iterator<Account> iterFollower = account.getFollower().iterator();
+            while (iterFollower.hasNext()) {
+                follower.add(modelMapper.map(iterFollower.next(), AccountDto.FollowerDto.class));
+            }
+            Iterator<Account> iterFollowing = account.getFollowing().iterator();
+            while (iterFollowing.hasNext()) {
+                following.add(modelMapper.map(iterFollowing.next(), AccountDto.FollowingDto.class));
+            }
+            profile.setProfileFollower(follower);
+            profile.setProfileFollowing(following);
+            profile.setFollowerCnt(followerCnt);
+            profile.setFollowingCnt(followingCnt);
+            return new BaseMessage(HttpStatus.OK,profile);
+        }catch (Exception e)
         {
-            follower.add(modelMapper.map(iterFollower.next(),AccountDto.FollowerDto.class));
+            resultMap.put("errors",e);
+            return new BaseMessage(HttpStatus.BAD_REQUEST,resultMap);
         }
-        Iterator<Account> iterFollowing = account.getFollowing().iterator();
-        while(iterFollowing.hasNext())
-        {
-            following.add(modelMapper.map(iterFollowing.next(),AccountDto.FollowingDto.class));
-        }
-
-        profile.setProfileFollower(follower);
-        profile.setProfileFollowing(following);
-        profile.setFollowerCnt(followerCnt);
-        profile.setFollowingCnt(followingCnt);
-
-        return profile;
     }
 
     @Transactional
@@ -101,18 +98,18 @@ public class AccountService {
         if(myId==yourId)
         {
             resultMap.put("message","자기 자신을 팔로우 할 수 없습니다.");
-            return new BaseMessage( BaseStatus.BAD_REQUEST,resultMap);
+            return new BaseMessage( HttpStatus.BAD_REQUEST,resultMap);
         }
         try {
             Account aAccount= accountRepository.findAccountByAccountId(myId);
             Account bAccount= accountRepository.findAccountByAccountId(yourId);
             aAccount.followAccount(bAccount);
             resultMap.put("message",myId+"가 "+yourId+" 를 팔로우하였습니다.");
-            return new BaseMessage(BaseStatus.OK,resultMap);
+            return new BaseMessage(HttpStatus.OK,resultMap);
         }catch (Exception e)
         {
             resultMap.put("message","객체가 존재하지 않습니다.");
-            return new BaseMessage( BaseStatus.BAD_REQUEST,resultMap);
+            return new BaseMessage( HttpStatus.BAD_REQUEST,resultMap);
         }
     }
 

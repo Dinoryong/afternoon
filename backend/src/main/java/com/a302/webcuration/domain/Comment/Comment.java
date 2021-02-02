@@ -31,11 +31,7 @@ public class Comment {
     }
 
     public void saveWithCascadePosts(Posts post){
-        System.out.println("!!!!!!!");
-
-        System.out.println(commentPosts.getComments().get(0).commentId);
-        //commentPosts.getComments().add(this);
-        System.out.println("@@@@@@@");
+        post.getComments().add(this);
         commentPosts=post;
     }
 
@@ -43,7 +39,6 @@ public class Comment {
         pin.getComments().add(this);
         commentPin=pin;
     }
-
 
     @ManyToOne
     private Pin commentPin;

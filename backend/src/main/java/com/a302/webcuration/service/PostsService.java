@@ -1,5 +1,6 @@
 package com.a302.webcuration.service;
 
+import com.a302.webcuration.common.BaseMessage;
 import com.a302.webcuration.domain.Account.Account;
 import com.a302.webcuration.domain.Account.AccountRepository;
 import com.a302.webcuration.domain.Pin.Pin;
@@ -13,15 +14,18 @@ import lombok.RequiredArgsConstructor;
 import org.modelmapper.ModelMapper;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 import java.util.stream.Collectors;
 
 @Service
-@RequiredArgsConstructor @Transactional
+@RequiredArgsConstructor
 public class PostsService {
     private final PostsRepository postsRepository;
     private final AccountRepository accountRepository;
@@ -30,58 +34,58 @@ public class PostsService {
     private final ModelMapper modelMapper;
     public static final Logger logger = LoggerFactory.getLogger(PostsService.class);
 
-    public PostsDto.CreatePostsRequest createPosts(PostsDto.CreatePostsRequest createAccountRequest, String token){
+    @Transactional
+    public BaseMessage createPosts(PostsDto.CreatePostsRequest createAccountRequest, String token){
         Long myId = jwtService.getAccountId(token);
-        Account postWriter=accountRepository.findAccountByAccountId(myId);
-        logger.info("postsssd : "+createAccountRequest.toString());
-        // TODO: 2021-02-01 modelmapper가 안되서 setter씀
-        //Posts posts=modelMapper.map(createAccountRequest,Posts.class);
-        Posts posts=new Posts();
-        posts.setPostsTitle(createAccountRequest.getPostsTitle());
-        posts.setPostsContents(createAccountRequest.getPostsContents());
-        posts.setPostsPhotos(createAccountRequest.getPostsPhotos());
-        posts.writePost(postWriter);
-        logger.info("postsss : "+posts.toString());
-        //tag 지정
-        // TODO: 2021-02-01 게시물작성시 태그없을때 오류
-        List<Tag> tags = createAccountRequest.getPostsTags().stream().map(tag ->
-                tagRepository.findTagByTagId(tag.getTagId())
-        ).collect(Collectors.toList());
-        for (Tag tag : tags){
-            tag.addPostsTags(posts);
-        }
-        //pin 지정
-        List<Pin> pins=new ArrayList<>();
-        for (PinDto.Pin pinDto : createAccountRequest.getPostsPins()){
-            System.out.println("pinn = " + pinDto);
-            pins.add(pinDto.toEntity());
+        Map<String, Object> resultMap = new HashMap<>();
 
-        }
-        //똑같음
+        try {
+            //여기서 아마 글 작성자가 존재하지 않으면 오류 발생할 것
+            Account postWriter = accountRepository.findAccountByAccountId(myId);
+            logger.info("postsssd : " + createAccountRequest.toString());
+            //posts에 저장
+            Posts posts = createAccountRequest.toEntity();
+            posts.writePost(postWriter);
+            logger.info("postsss : " + posts.toString());
+
+            //tag 지정
+            // TODO: 2021-02-01 게시물작성시 태그없을때 오류
+            List<Tag> tags = createAccountRequest.getPostsTags().stream().map(tag ->
+                    tagRepository.findTagByTagId(tag.getTagId())
+            ).collect(Collectors.toList());
+            for (Tag tag : tags) {
+                tag.addPostsTags(posts);
+            }
+            //pin 지정
+            List<Pin> pins = new ArrayList<>();
+            for (PinDto.Pin pinDto : createAccountRequest.getPostsPins()) {
+                System.out.println("pinn = " + pinDto);
+                pins.add(pinDto.toEntity());
+
+            }
+
+            //똑같음
 //        List<Pin> pins=createAccountRequest.getPostsPins().stream().map(pin ->
 //                pin.toEntity()
 //        ).collect(Collectors.toList());
 
-        for (Pin pin : pins){
-            System.out.println("pinsss = " + pin);
-            pin.saveWithCascadePosts(posts);
-            System.out.println("pinddd = " + pin);
-        }
+            for (Pin pin : pins) {
+                System.out.println("pinsss = " + pin);
+                pin.saveWithCascadePosts(posts);
+                System.out.println("pinddd = " + pin);
+            }
 
-        Posts writePost=null;
-        if(posts!=null) {
-
-            writePost = postsRepository.save(posts);
-            logger.info("posts 생성"+writePost.getPostsTitle());
+            postsRepository.save(posts);
+            return new BaseMessage(HttpStatus.CREATED,createAccountRequest);
         }
-        // TODO: 2021-02-01  createAccountRequest return 하는게 아니라 생성된거 responseDto로 담아서 보내기
-        //게시글이 잘 만들어졌다면
-        if(writePost!= null)
-            return createAccountRequest;
-        else
-            return null;
+        catch (Exception e)
+        {
+            resultMap.put("errors",e);
+            return new BaseMessage(HttpStatus.BAD_REQUEST,resultMap);
+        }
     }
 
+    @Transactional
     public PostsDto.PostsResponse retrievePosts(Long postsid){
         System.out.println("posts id : "+postsid);
         Posts posts=postsRepository.findPostsByPostsId(postsid);

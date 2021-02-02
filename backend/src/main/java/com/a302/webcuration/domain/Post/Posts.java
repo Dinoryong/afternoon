@@ -16,7 +16,7 @@ import java.util.Iterator;
 import java.util.List;
 
 @Entity
-@Getter @NoArgsConstructor @AllArgsConstructor  @Builder @Setter
+@Getter @NoArgsConstructor @AllArgsConstructor  @Builder
 public class Posts {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
@@ -53,4 +53,5 @@ public class Posts {
         this.postWriter=account;
         account.getMyPosts().add(this);
     }
+
 }

@@ -71,13 +71,13 @@ public class SampleController {
     public ResponseEntity retSample(@PathVariable Long id )
     {
         Optional<Sample> sample = sampleRepository.findById(id);
-        return new ResponseEntity(new BaseMessage(BaseStatus.OK,sample),HttpStatus.OK);
+        return new ResponseEntity(new BaseMessage(HttpStatus.OK,sample),HttpStatus.OK);
     }
 
     @GetMapping
     public ResponseEntity retSampleAll( )
     {
-        return new ResponseEntity(new BaseMessage(BaseStatus.OK,sampleRepository.findAll()),HttpStatus.OK);
+        return new ResponseEntity(new BaseMessage(HttpStatus.OK,sampleRepository.findAll()),HttpStatus.OK);
     }
 
 }

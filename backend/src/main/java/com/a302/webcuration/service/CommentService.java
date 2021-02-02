@@ -2,7 +2,6 @@ package com.a302.webcuration.service;
 
 import com.a302.webcuration.common.BaseMessage;
 import com.a302.webcuration.common.BaseStatus;
-import com.a302.webcuration.controller.AccountController;
 import com.a302.webcuration.controller.CommentController;
 import com.a302.webcuration.domain.Comment.Comment;
 import com.a302.webcuration.domain.Comment.CommentDto;
@@ -12,12 +11,16 @@ import com.a302.webcuration.domain.Pin.PinRepository;
 import com.a302.webcuration.domain.Post.Posts;
 import com.a302.webcuration.domain.Post.PostsRepository;
 import lombok.RequiredArgsConstructor;
+import org.modelmapper.ModelMapper;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
 
 import javax.transaction.Transactional;
+import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 @Service
@@ -27,9 +30,11 @@ public class CommentService {
     private final PostsRepository postsRepository;
     private final CommentRepository commentRepository;
     private final PinRepository pinRepository;
+    private final ModelMapper modelMapper;
 
     public static final Logger logger = LoggerFactory.getLogger(CommentController.class);
 
+    //TODO 일단 이런식으로 validation체크 해놓고 나중에 리팩토링
     public Boolean createCommentValidation(CommentDto.CreateCommentRequest request)
     {
         if (!request.getCommentLink().isEmpty())
@@ -46,42 +51,54 @@ public class CommentService {
     public BaseMessage createComment(long postsId, long accountId, CommentDto.CreateCommentRequest request)
     {
         //사용가능 여부 판별
-        logger.info("사용가능 여부: "+createCommentValidation(request).toString());
+        Boolean isValid = createCommentValidation(request);
         Map<String, Object> resultMap = new HashMap<>();
-        logger.info("link: "+ request.getCommentLink());
+        if(!isValid)
+        {
+            resultMap.put("error","유효하지 않은 요청입니다.");
+            return new BaseMessage(HttpStatus.BAD_REQUEST,resultMap);
+        }
         Comment comment = request.toEntity();
         comment.addCommentWriterId(accountId);
-        logger.info(comment.getCommentWriterId().toString());
-        //링크가 존재하는 경우
-        if(request.getCommentLink()!=null)
-        {
-            Posts post = postsRepository.findPostsByPostsId(postsId);
-            System.out.println("post.getPostsId() = " + post.getPostsId());
-            Pin pin = pinRepository.findPinByPinId(request.getPinId());
 
-            logger.info("999999999999999999999999999");
-            pin.getComments().add(comment);
-            logger.info("00000000000000000000000000");
-            post.getComments().add(comment);
-            System.out.println("post 의 댓글 개수 = " + post.getComments().size());
-            logger.info("111111111111111111111111111111");
-            comment.saveWithCascadePosts(post);
-            logger.info("2222222222222222222222222222222");
-            //comment.saveWithCascadePin(pin);
-            logger.info("3333333333333333333333333333333");
-            logger.info("pin의 댓글의 개수: "+pin.getComments().size());
-            for (Comment pinComment : pin.getComments()) {
-                System.out.println("pinComment.getCommentContent() = " + pinComment.getCommentContent());
+        try {
+            //링크가 존재하는 경우
+            if(request.getCommentLink()!=null)
+            {
+                Pin pin = pinRepository.findPinByPinId(request.getPinId());
+                comment.saveWithCascadePin(pin);
+                resultMap.put("hasLink","true");
             }
-            //post.addComment();
-            resultMap.put("hasLink","링크가 삽입되어있습니다.");
+            else resultMap.put("hasLink","false");
+            Posts post = postsRepository.findPostsByPostsId(postsId);
+            comment.saveWithCascadePosts(post);
+            commentRepository.save(comment);
+            resultMap.put("message","값 잘 받아오는 지 테스트 중입니다.");
+            return new BaseMessage(HttpStatus.OK,resultMap);
+        }catch (Exception e)
+        {
+            resultMap.put("error","게시물의 아이디가 존재하지않습니다.");
+            return new BaseMessage(HttpStatus.BAD_REQUEST,resultMap);
         }
-        commentRepository.save(comment);
-        logger.info("postId: "+postsId +" accountId: "+accountId);
-        logger.info("request Info: "+request.getCommentContent());
-        resultMap.put("message","값 잘 받아오는 지 테스트 중입니다.");
-        return new BaseMessage(BaseStatus.OK,resultMap);
     }
-
-
+    @Transactional
+    public BaseMessage retrieveComment(Long postid) {
+        logger.info(postid+"번 게시물 댓글 조회");
+        try {
+            List<CommentDto.CreateCommentResponse> commentResponses = new ArrayList<>();
+            Posts post = postsRepository.findPostsByPostsId(postid);
+            List<Comment> commentList = post.getComments();
+            String accountNickname = post.getPostWriter().getAccountNickname();
+            for (Comment comment : commentList) {
+                CommentDto.CreateCommentResponse commentResponse = modelMapper.map(comment,CommentDto.CreateCommentResponse.class);
+                commentResponse.setAccountNickname(accountNickname);
+                commentResponses.add(commentResponse);
+            }
+            return new BaseMessage(HttpStatus.OK,commentResponses);
+        }catch (Exception e)
+        {
+            //Todo 나중에 다시 처리해야됌
+            return new BaseMessage(HttpStatus.BAD_REQUEST,null);
+        }
+    }
 }

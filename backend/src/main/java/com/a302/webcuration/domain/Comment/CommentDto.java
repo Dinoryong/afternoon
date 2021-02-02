@@ -2,9 +2,11 @@ package com.a302.webcuration.domain.Comment;
 
 import lombok.Builder;
 import lombok.Getter;
+import lombok.RequiredArgsConstructor;
 import lombok.Setter;
 
 import javax.validation.constraints.NotEmpty;
+import javax.validation.constraints.NotNull;
 
 public class CommentDto {
     @Setter @Builder @Getter
@@ -25,7 +27,19 @@ public class CommentDto {
                     .commentLink(commentLink)
                     .build();
         }
-
     }
 
+    @Setter  @Getter @RequiredArgsConstructor
+    public static class CreateCommentResponse{
+        @NotEmpty
+        private String commentContent;
+        @NotNull
+        private String accountNickname;
+
+        private String commentLink;
+
+        private Long pinId;
+        private int pinNum;
+
+    }
 }
