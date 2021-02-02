@@ -22,7 +22,7 @@ public class CommentController {
 
     private final JwtService jwtService;
     private final CommentService commentService;
-    public static final Logger logger = LoggerFactory.getLogger(AccountController.class);
+    public static final Logger logger = LoggerFactory.getLogger(CommentController.class);
 
     @PostMapping("/{postsid}")
     public ResponseEntity createComment(@PathVariable Long postsid, @RequestBody  @Valid CommentDto.CreateCommentRequest request, @RequestHeader(value = "Authorization") String token)
