@@ -28,19 +28,15 @@ public class PostsController {
 
     @PostMapping
     public ResponseEntity createPosts(@RequestBody @Valid PostsDto.CreatePostsRequest createAccountRequest, @RequestHeader(value = "Authorization") String token){
-        // TODO: 2021-01-25  예외처리
-        PostsDto.CreatePostsRequest posts=postsService.createPosts(createAccountRequest,token);
-        if(posts!=null)
-            return new ResponseEntity(new BaseMessage(BaseStatus.CREATED,posts),HttpStatus.CREATED);
-        else
-            return new ResponseEntity(HttpStatus.BAD_REQUEST);
+       BaseMessage bm=postsService.createPosts(createAccountRequest,token);
+        return new ResponseEntity(bm,bm.getHttpStatus());
 
     }
     // TODO: 2021-02-01 posts 조회기능
     @GetMapping("/{postsid}")
     public ResponseEntity retrievePosts(@PathVariable Long postsid){
         PostsDto.PostsResponse postsResponse=postsService.retrievePosts(postsid);
-        return new ResponseEntity(new BaseMessage(BaseStatus.OK,postsResponse),HttpStatus.OK);
+        return new ResponseEntity(new BaseMessage(HttpStatus.OK,postsResponse),HttpStatus.OK);
     }
 
 }

@@ -1,4 +1,4 @@
-package com.a302.webcuration.controller.ExceptionHandler;
+package com.a302.webcuration.ExceptionHandler;
 
 import org.springframework.http.ResponseEntity;
 import org.springframework.validation.FieldError;
@@ -18,6 +18,14 @@ public class ApiControllerAdvice {
         Map<String, String> errors = new HashMap<>();
         e.getBindingResult().getAllErrors()
                 .forEach(c -> errors.put(((FieldError) c).getField(), c.getDefaultMessage()));
+        return ResponseEntity.badRequest().body(errors);
+    }
+
+    @ExceptionHandler(InvalidTokenException.class)
+    public ResponseEntity<Map<String,String>> TokenValidationExceptions(InvalidTokenException e)
+    {
+        Map<String, String> errors = new HashMap<>();
+        errors.put("error",e.getMessage());
         return ResponseEntity.badRequest().body(errors);
     }
 }

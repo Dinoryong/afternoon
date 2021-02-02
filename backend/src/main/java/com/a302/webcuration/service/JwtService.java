@@ -1,5 +1,6 @@
 package com.a302.webcuration.service;
 
+import com.a302.webcuration.ExceptionHandler.InvalidTokenException;
 import com.a302.webcuration.domain.Account.Account;
 import com.a302.webcuration.domain.Account.AccountDto;
 import io.jsonwebtoken.*;
@@ -75,8 +76,8 @@ public class JwtService {
 			claims = Jwts.parser().setSigningKey(signature.getBytes()).parseClaimsJws(token);
 			logger.info("AccountId :"+claims.getBody().get("accountId"));
 		} catch (final Exception e) {
-			logger.info("복호화 실패");
-			throw new RuntimeException();
+			logger.error(e.getMessage());
+			throw new InvalidTokenException("정상적인 토큰 값이 아닙니다.");
 		}
 		return  Long.parseLong(claims.getBody().get("accountId").toString());
 	}
@@ -90,8 +91,8 @@ public class JwtService {
 			claims = Jwts.parser().setSigningKey(signature.getBytes()).parseClaimsJws(token);
 			logger.info("accountEmail :"+claims.getBody().get("accountEmail"));
 		} catch (final Exception e) {
-			logger.info("복호화 실패");
-			throw new RuntimeException();
+			logger.error(e.getMessage());
+			throw new InvalidTokenException("정상적인 토큰 값이 아닙니다.");
 		}
 		return  claims.getBody().get("accountEmail").toString();
 	}
