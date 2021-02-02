@@ -47,9 +47,9 @@ public class AccountControllerTest extends BaseControllerTest {
     public void Account_생성_성공() throws Exception {
         //When
         AccountDto.CreateAccountRequest createAccountRequest = AccountDto.CreateAccountRequest.builder()
-                .accountName("한우석")
-                .accountNickname("dntjr")
-                .accountEmail("dntjr4772@naver.com")
+                .accountName("박동진")
+                .accountNickname("park")
+                .accountEmail("park1234@testtest.com")
                 .build();
 
         mockMvc.perform(post("/api/accounts")
@@ -65,7 +65,7 @@ public class AccountControllerTest extends BaseControllerTest {
         //When
         Account createAccountRequest = Account.builder()
                 .accountId(12L)
-                .accountEmail("tgi")
+                .accountEmail("tgi@na.com")
                 .accountName("5")
                 .accountNickname("TestNickname")
                 .build();
@@ -230,7 +230,7 @@ public class AccountControllerTest extends BaseControllerTest {
         tag=tagRepository.findByTagTitle(tagName);
         accountTagRequest.getTags().add(modelMapper.map(tag, TagDto.Tag.class));
 
-        String token ="eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJzdWIiOiLroZzqt7jsnbjthqDtgbAiLCJleHAiOjE2MTI1ODc2MDQsImFjY291bnRJZCI6MSwiYWNjb3VudEVtYWlsIjoiZG50anI0NzcyQG5hdmVyLmNvbSJ9.oWAg2RlsYfFigZZrNWRFctkXynFrmx_R4yMJIURs8qI";
+        String token ="eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJzdWIiOiLroZzqt7jsnbjthqDtgbAiLCJleHAiOjE2MTI2MzE3ODMsImFjY291bnRJZCI6MiwiYWNjb3VudEVtYWlsIjoiamFzb245NjdAbmF2ZXIuY29tIn0.ek9mnRJnWzg12jUN3494DLVqpsS9rxM-OkBQjeKL5JI";
         mockMvc.perform(put("/api/accounts/mytag")
                 .header("Authorization","Bearer "+token)
                 .contentType(MediaType.APPLICATION_JSON)

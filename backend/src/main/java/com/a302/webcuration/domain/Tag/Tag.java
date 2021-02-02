@@ -9,7 +9,7 @@ import javax.persistence.*;
 import java.util.*;
 
 @Entity
-@Getter @NoArgsConstructor @AllArgsConstructor @Builder @ToString
+@Getter @NoArgsConstructor @AllArgsConstructor @Builder
 public class Tag {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)

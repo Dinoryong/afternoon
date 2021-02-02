@@ -19,7 +19,7 @@ public class LoginControllerTest extends BaseControllerTest {
 
         AccountDto.LoginRequest account = new AccountDto.LoginRequest();
         account.setAct("login-request");
-        account.setAccountEmail("dntjr4772@naver.com");
+        account.setAccountEmail("jason967@naver.com");
 
         mockMvc.perform(post("/api/login")
                 .contentType(MediaType.APPLICATION_JSON)
@@ -94,11 +94,11 @@ public class LoginControllerTest extends BaseControllerTest {
     public void Login_AuthKey_On_성공() throws Exception {
 
 
-        String AuthKey = "erizabvc";
+        String AuthKey = "qwdsryh4";
 
         AccountDto.LoginRequest  account = new AccountDto.LoginRequest();
         account.setAct("check-authKey-on");
-        account.setAccountEmail("dntjr4772@naver.com");
+        account.setAccountEmail("jason967@naver.com");
         account.setAccountAuthKey(AuthKey);
 
         mockMvc.perform(post("/api/login")

@@ -86,7 +86,7 @@ public class AccountDto {
         private String accountNickname;
 
         @NotNull
-        @Email
+        @Email(message = "알맞은 이메일 형식으로 입력해주세요.")
         private String accountEmail;
 
         public Account toEntity()

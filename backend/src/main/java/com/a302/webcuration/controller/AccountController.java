@@ -43,16 +43,10 @@ public class AccountController {
     //---------------------------------- 회원 생성 ------------------------------------------------
 
     @PostMapping
-    public ResponseEntity createAccount(@RequestBody @Valid AccountDto.CreateAccountRequest createAccountRequest, Errors errors)
+    public ResponseEntity createAccount(@RequestBody @Valid AccountDto.CreateAccountRequest createAccountRequest)
     {
-        if(errors.hasErrors())
-        {
-            return new ResponseEntity(new BaseMessage(BaseStatus.BAD_REQUEST,errors), HttpStatus.BAD_REQUEST);
-        }
-
         Account account = createAccountRequest.toEntity();
         accountRepository.save(account);
-
         return new ResponseEntity(new BaseMessage(BaseStatus.CREATED,createAccountRequest),HttpStatus.CREATED);
     }
 
@@ -101,10 +95,7 @@ public class AccountController {
     }
 
     @PutMapping("/mytag")
-    public ResponseEntity selectTag(@RequestBody @Valid AccountDto.AccountTagRequest accountTagRequest,Errors errors, @RequestHeader(value = "Authorization") String token) {
-        if (errors.hasErrors()) {
-            return new ResponseEntity(new BaseMessage(BaseStatus.BAD_REQUEST, errors), HttpStatus.BAD_REQUEST);
-        }
+    public ResponseEntity selectTag(@RequestBody @Valid AccountDto.AccountTagRequest accountTagRequest, @RequestHeader(value = "Authorization") String token) {
         if(!accountTagRequest.getTags().isEmpty()){
             logger.info("지정한 관심태그 존재");
             accountService.selectTag(accountTagRequest,token);
@@ -113,5 +104,4 @@ public class AccountController {
         }
             return ResponseEntity.ok().build();
     }
-
 }
