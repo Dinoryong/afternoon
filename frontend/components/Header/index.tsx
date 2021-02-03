@@ -143,9 +143,8 @@ const index = () => {
   });
 
   useEffect(() => {
-    document.body.style.overflow =
-      isShown || toggleSubmit ? "hidden" : "scroll";
-  }, [isShown, toggleSubmit]);
+    document.body.style.overflow = isShown || submitShown ? "hidden" : "scroll";
+  }, [isShown, submitShown]);
 
   const containerStyle = {
     display: routerPath === "/signup" ? "none" : "flex",
