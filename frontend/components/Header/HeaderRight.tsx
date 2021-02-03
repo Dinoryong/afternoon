@@ -67,8 +67,10 @@ const HeaderRight = ({ router, routerPath }: HeaderProps) => {
             btnMarginLeft="0px"
             btnBorderColor="transparent"
             btnBgColor={routerPath === "/" ? "transparent" : null}
-            btnTextColor={routerPath === "/" ? "white" : null}
             btnOnClick={requestLogout}
+            btnTextColor={routerPath === "/" ? "white" : color.black.default}
+            btnUseOpacity={routerPath === "/" ? false : true}
+            btnSetOpacity={"0.4"}
           />
           <Button
             btnText={"프로필"}

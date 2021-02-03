@@ -135,8 +135,10 @@ const HeaderLeft = ({ router, routerPath }: HeaderProps) => {
         btnMarginRight="20px"
         btnHoverBorderColor={routerPath === "/" ? "transparent" : null}
         btnBgColor={routerPath === "/" ? "transparent" : null}
-        btnTextColor={routerPath === "/" ? "white" : null}
-        btnBorderColor={routerPath === "/" ? "white" : null}
+        btnTextColor={routerPath === "/" ? "white" : color.black.default}
+        btnBorderColor={routerPath === "/" ? "white" : color.black.default}
+        btnUseOpacity={routerPath === "/" ? false : true}
+        btnSetOpacity={"0.4"}
         btnOnClick={(): void => {
           router.push("/feed");
         }}
