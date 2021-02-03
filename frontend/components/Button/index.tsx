@@ -41,6 +41,8 @@ type ButtonProps = {
   btnHoverBgColor?: string;
   btnRouterPush?: string;
   btnOnClick?: Function;
+  btnUseOpacity?: boolean;
+  btnSetOpacity?: string;
 };
 
 const index = ({
@@ -61,10 +63,13 @@ const index = ({
   btnOnClick = () => {
     console.log("onClick : 기능없음");
   },
+  btnUseOpacity,
+  btnSetOpacity,
 }: ButtonProps) => {
   const [bgColor, setBgColor] = useState<string>(btnBgColor);
   const [borderColor, setBorderColor] = useState<string>(btnBorderColor);
   const [textColor, setTextColor] = useState<string>(btnTextColor);
+  const [opacity, setOpacity] = useState<string>(btnSetOpacity);
 
   useEffect(() => {
     setBgColor(btnBgColor);
@@ -73,15 +78,23 @@ const index = ({
   }, [btnBgColor, btnBorderColor, btnTextColor]);
 
   const onMouseOver = (): void => {
-    setBgColor(btnHoverBgColor);
-    setBorderColor(btnHoverBorderColor);
-    setTextColor(btnHoverTextColor);
+    if (!btnUseOpacity) {
+      setBgColor(btnHoverBgColor);
+      setBorderColor(btnHoverBorderColor);
+      setTextColor(btnHoverTextColor);
+    } else {
+      setOpacity("1");
+    }
   };
 
   const onMouseLeave = (): void => {
-    setBgColor(btnBgColor);
-    setBorderColor(btnBorderColor);
-    setTextColor(btnTextColor);
+    if (!btnUseOpacity) {
+      setBgColor(btnBgColor);
+      setBorderColor(btnBorderColor);
+      setTextColor(btnTextColor);
+    } else {
+      setOpacity(btnSetOpacity);
+    }
   };
 
   const onClick = (): void => {
@@ -102,6 +115,7 @@ const index = ({
         marginRight: btnMarginRight,
         fontWeight: btnFontWeight,
         fontSize: btnFontSize,
+        opacity: btnUseOpacity ? opacity : 1,
       }}
       onMouseOver={onMouseOver}
       onMouseLeave={onMouseLeave}
