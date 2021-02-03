@@ -1,5 +1,5 @@
 import styled from "@emotion/styled";
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import ConfirmUpload from "./ConfirmUpload";
 import PhotoUpload from "./PhotoUpload";
 
