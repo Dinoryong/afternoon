@@ -158,6 +158,7 @@ const PhotoUpload = ({
   imageAsFile4,
   setImageAsFile4,
   setUploadState,
+  uploadState,
 }) => {
   const storage = firebase.storage();
 
@@ -247,7 +248,7 @@ const PhotoUpload = ({
   };
 
   return (
-    <Container>
+    <Container style={uploadState != 0 ? { display: "none" } : {}}>
       <TitleWrapper>사진 업로드</TitleWrapper>
       <TopWrapper>
         <TopWrapperRow>
