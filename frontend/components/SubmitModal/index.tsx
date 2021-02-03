@@ -48,32 +48,30 @@ const index = ({ windowWidth, windowHeight }) => {
       }}
     >
       <Wrapper>
-        {uploadState === 0 && (
-          <PhotoUpload
-            {...{
-              imageAsFile1,
-              setImageAsFile1,
-              imageAsFile2,
-              setImageAsFile2,
-              imageAsFile3,
-              setImageAsFile3,
-              imageAsFile4,
-              setImageAsFile4,
-              setUploadState,
-            }}
-          ></PhotoUpload>
-        )}
-        {uploadState === 1 && (
-          <ConfirmUpload
-            {...{
-              imageAsFile1,
-              imageAsFile2,
-              imageAsFile3,
-              imageAsFile4,
-              setUploadState,
-            }}
-          ></ConfirmUpload>
-        )}
+        <PhotoUpload
+          {...{
+            imageAsFile1,
+            setImageAsFile1,
+            imageAsFile2,
+            setImageAsFile2,
+            imageAsFile3,
+            setImageAsFile3,
+            imageAsFile4,
+            setImageAsFile4,
+            setUploadState,
+            uploadState,
+          }}
+        ></PhotoUpload>
+        <ConfirmUpload
+          {...{
+            imageAsFile1,
+            imageAsFile2,
+            imageAsFile3,
+            imageAsFile4,
+            setUploadState,
+            uploadState,
+          }}
+        ></ConfirmUpload>
       </Wrapper>
     </Container>
   );

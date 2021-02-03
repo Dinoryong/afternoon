@@ -4,8 +4,10 @@ import Image from "next/image";
 import Button from "../Button";
 import color from "../../styles/theme";
 import { SUBMIT_POST } from "../../pages/api/post";
+import PinIcon from "../PinIcon";
 
 const Container = styled.div`
+  position: relative;
   display: flex;
   width: 100%;
   height: 100%;
@@ -15,11 +17,11 @@ const Container = styled.div`
 
 const ImageDiv = styled.div`
   position: relative;
-  width: 100%;
-  height: 100%;
   display: flex;
   justify-content: center;
   align-items: center;
+  width: 100%;
+  height: 100%;
 `;
 
 const ImageBox = styled("img")`
@@ -191,23 +193,6 @@ const PinTagBox = styled.div`
   align-items: center;
 `;
 
-const PinIcon = styled.div`
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  width: 20px;
-  height: 20px;
-  border-radius: 50%;
-  border: 2px solid ${color.black.default};
-`;
-
-const PinMini = styled.div`
-  width: 12px;
-  height: 12px;
-  border-radius: 50%;
-  background-color: ${color.black.default};
-`;
-
 const PinTag = styled.div`
   font-weight: 700;
   margin-left: 4px;
@@ -246,14 +231,40 @@ const DisalbedFrame = styled.div`
     zoom-out;
 `;
 
-const PinClickFrame = styled.div`
+const PinClickFrame = styled.div<StateProps>`
   z-index: 3;
   position: absolute;
-  background-color: ${color.white.default};
-  opacity: 0.2;
+  opacity: 1;
+  background-color: ${(props) =>
+    props.addState ? "rgba(255, 255, 255, 0.2)" : "rgba(255,255,255,0}"};
   cursor: url("/_next/image?url=%2Fassets%2Ficons%2Fpin_add.png&w=32&q=75") 4 4,
     crosshair;
 `;
+
+const NewPinIcon = styled.div`
+  z-index: 5;
+  position: absolute;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: 20px;
+  height: 20px;
+  border-radius: 50%;
+  border: 2px solid ${color.white.default};
+  top: 50%;
+  left: 50%;
+`;
+
+const NewPinMini = styled.div`
+  width: 12px;
+  height: 12px;
+  border-radius: 50%;
+  background-color: ${color.white.default};
+`;
+
+type StateProps = {
+  addState?: boolean;
+};
 
 const ConfirmUpload = ({
   imageAsFile1,
@@ -261,6 +272,7 @@ const ConfirmUpload = ({
   imageAsFile3,
   imageAsFile4,
   setUploadState,
+  uploadState,
 }) => {
   const [currentImg, setCurrentImg] = useState(0);
   const [addState, setAddState] = useState(false);
@@ -293,30 +305,46 @@ const ConfirmUpload = ({
   };
 
   const onClickAddPin = () => {
-    let pinImage = document.getElementById("pinImage");
+    let pinImage = document.getElementById(`pinImage${currentImg}`);
     setAddState(true);
     let { offsetWidth, offsetHeight } = pinImage;
     setImgDim({ offsetWidth, offsetHeight });
   };
 
   useEffect(function mount() {
-    window.addEventListener("resize", onClickAddPin);
+    const offsetHandler = () => {
+      let pinImage = document.getElementById(`pinImage${currentImg}`);
+      let { offsetWidth, offsetHeight } = pinImage;
+      setImgDim({ offsetWidth, offsetHeight });
+    };
+
+    const resizeHandler = () => {
+      offsetHandler();
+    };
+
+    window.addEventListener("resize", resizeHandler);
 
     const cleanup = () => {
-      window.removeEventListener("resize", onClickAddPin);
+      window.removeEventListener("resize", resizeHandler);
     };
 
     return cleanup;
   });
 
+  useEffect(() => {
+    let pinImage = document.getElementById(`pinImage${currentImg}`);
+    let { offsetWidth, offsetHeight } = pinImage;
+    setImgDim({ offsetWidth, offsetHeight });
+  }, [currentImg]);
+
   const onClickPinFrame = (e) => {
     setInputPinPosX([
       ...inputPinPosX,
-      e.nativeEvent.offsetX / imgDim.offsetWidth,
+      (e.nativeEvent.offsetX / imgDim.offsetWidth) * 100,
     ]);
     setInputPinPosY([
       ...inputPinPosY,
-      e.nativeEvent.offsetY / imgDim.offsetHeight,
+      (e.nativeEvent.offsetY / imgDim.offsetHeight) * 100,
     ]);
     setInputPinName([...inputPinName, ""]);
     setInputPinLink([...inputPinLink, ""]);
@@ -330,8 +358,25 @@ const ConfirmUpload = ({
     setAddState(false);
   };
 
+  const props = {
+    addState,
+  };
+
+  const onClickMoveBefore = () => {
+    // if (
+    //   confirm(
+    //     "PINSET : 사진 업로드 화면으로 가시겠습니까?\n확인을 누르시면 현재까지 작업이 사라집니다."
+    //   )
+    // ) {
+    //   setUploadState(0);
+    // } else {
+    //   return;
+    // }
+    setUploadState(0);
+  };
+
   return (
-    <Container>
+    <Container style={uploadState != 1 ? { display: "none" } : {}}>
       {addState && (
         <DisalbedFrame onClick={() => setAddState(false)}>
           <Image
@@ -342,21 +387,83 @@ const ConfirmUpload = ({
         </DisalbedFrame>
       )}
       <ImageDiv>
-        {addState && (
-          <PinClickFrame
-            onClick={onClickPinFrame}
-            style={{ width: imgDim.offsetWidth, height: imgDim.offsetHeight }}
-          >
-            <Image
-              src={"/assets/icons/pin_add.png"}
-              width={0}
-              height={0}
-            ></Image>
-          </PinClickFrame>
-        )}
-        {imageAsFile && imageAsFile.length > 0 && (
-          <ImageBox id={"pinImage"} src={imageAsFile[currentImg]}></ImageBox>
-        )}
+        <PinClickFrame
+          style={{ width: imgDim.offsetWidth, height: imgDim.offsetHeight }}
+          onClick={onClickPinFrame}
+          {...props}
+        >
+          <Image src={"/assets/icons/pin_add.png"} width={0} height={0}></Image>
+          {currentImg === 0 &&
+            img1HasPin &&
+            img1HasPin.map((p, index) => {
+              return (
+                <NewPinIcon
+                  style={{
+                    top: `${inputPinPosY[p] - 1000 / imgDim.offsetHeight}%`,
+                    left: `${inputPinPosX[p] - 1000 / imgDim.offsetWidth}%`,
+                  }}
+                  key={index}
+                >
+                  <NewPinMini></NewPinMini>
+                </NewPinIcon>
+              );
+            })}
+          {currentImg === 1 &&
+            img2HasPin &&
+            img2HasPin.map((p, index) => {
+              return (
+                <NewPinIcon
+                  style={{
+                    top: `${inputPinPosY[p] - 1000 / imgDim.offsetHeight}%`,
+                    left: `${inputPinPosX[p] - 1000 / imgDim.offsetWidth}%`,
+                  }}
+                  key={index}
+                >
+                  <NewPinMini></NewPinMini>
+                </NewPinIcon>
+              );
+            })}
+          {currentImg === 2 &&
+            img3HasPin &&
+            img3HasPin.map((p, index) => {
+              return (
+                <NewPinIcon
+                  style={{
+                    top: `${inputPinPosY[p] - 1000 / imgDim.offsetHeight}%`,
+                    left: `${inputPinPosX[p] - 1000 / imgDim.offsetWidth}%`,
+                  }}
+                  key={index}
+                >
+                  <NewPinMini></NewPinMini>
+                </NewPinIcon>
+              );
+            })}
+          {currentImg === 3 &&
+            img4HasPin &&
+            img4HasPin.map((p, index) => {
+              return (
+                <NewPinIcon
+                  style={{
+                    top: `${inputPinPosY[p] - 1000 / imgDim.offsetHeight}%`,
+                    left: `${inputPinPosX[p] - 1000 / imgDim.offsetWidth}%`,
+                  }}
+                  key={index}
+                >
+                  <NewPinMini></NewPinMini>
+                </NewPinIcon>
+              );
+            })}
+        </PinClickFrame>
+        {imageAsFile &&
+          imageAsFile.length > 0 &&
+          imageAsFile.map((img, index) => (
+            <ImageBox
+              key={index}
+              style={currentImg === index ? {} : { display: "none" }}
+              id={`pinImage${index}`}
+              src={img}
+            ></ImageBox>
+          ))}
       </ImageDiv>
       <InfoWrapper>
         <InfoDiv>
@@ -465,9 +572,7 @@ const ConfirmUpload = ({
                       </PinLinkBox>
                       <PinNavBox>
                         <PinTagBox>
-                          <PinIcon>
-                            <PinMini />
-                          </PinIcon>
+                          <PinIcon />
                           <PinTag>핀 {String.fromCharCode(65 + index)}</PinTag>
                         </PinTagBox>
                         <PinButtonBox>
@@ -544,9 +649,7 @@ const ConfirmUpload = ({
                       </PinLinkBox>
                       <PinNavBox>
                         <PinTagBox>
-                          <PinIcon>
-                            <PinMini />
-                          </PinIcon>
+                          <PinIcon />
                           <PinTag>핀 {String.fromCharCode(65 + index)}</PinTag>
                         </PinTagBox>
                         <PinButtonBox>
@@ -623,9 +726,7 @@ const ConfirmUpload = ({
                       </PinLinkBox>
                       <PinNavBox>
                         <PinTagBox>
-                          <PinIcon>
-                            <PinMini />
-                          </PinIcon>
+                          <PinIcon />
                           <PinTag>핀 {String.fromCharCode(65 + index)}</PinTag>
                         </PinTagBox>
                         <PinButtonBox>
@@ -702,9 +803,7 @@ const ConfirmUpload = ({
                       </PinLinkBox>
                       <PinNavBox>
                         <PinTagBox>
-                          <PinIcon>
-                            <PinMini />
-                          </PinIcon>
+                          <PinIcon />
                           <PinTag>핀 {String.fromCharCode(65 + index)}</PinTag>
                         </PinTagBox>
                         <PinButtonBox>
@@ -780,9 +879,7 @@ const ConfirmUpload = ({
             <BoxLine />
             <InfoButtonBox>
               <Button
-                btnOnClick={() => {
-                  setUploadState(0);
-                }}
+                btnOnClick={onClickMoveBefore}
                 btnText={"이전"}
                 btnMarginLeft="0"
                 btnMarginRight="0"
