@@ -11,10 +11,15 @@ const MyLikes = styled.div`
   width: 200px;
 `;
 
-// const MyCollections = styled.div`
-// `;
+const MyCollections = styled.div`
+  width: 200px;
+`;
 
-const MenuBar = () => {
+const MenuBar = ({ profileMyposts, profileLikes, profileCollections }) => {
+  const postString = "게시물 " + profileMyposts;
+  const likesString = "좋아요 " + profileLikes;
+  const collectionsString = "컬렉션 " + profileCollections;
+
   return (
     <>
       <MyPost>
@@ -22,17 +27,12 @@ const MenuBar = () => {
           btnWidth="190px"
           btnHeight="70px"
           btnBgColor="transparent"
-          btnText="게시글"
-          btnTextColor="${color.gray.light}"
+          btnText={postString}
+          btnTextColor={color.gray.default}
           btnFontSize="20px"
           btnBorderColor="transparent"
           btnHoverBorderColor="transparent"
           btnHoverTextColor="black"
-          // btnHoverBorderColor={routerPath === "/" ? "transparent" : null}
-          // btnBgColor={routerPath === "/" ? "transparent" : null}
-          // btnTextColor={routerPath === "/" ? "white" : null}
-          // btnBorderColor={routerPath === "/" ? "white" : null}
-          // btnOnClick={toggleSubmit}
         />
       </MyPost>
       <MyLikes>
@@ -40,19 +40,27 @@ const MenuBar = () => {
           btnWidth="190px"
           btnHeight="70px"
           btnBgColor="transparent"
-          btnText="좋아요"
-          btnTextColor="${color.gray.light}"
+          btnText={likesString}
+          btnTextColor={color.gray.default}
           btnFontSize="20px"
           btnBorderColor="transparent"
           btnHoverBorderColor="transparent"
           btnHoverTextColor="black"
-          // btnHoverBorderColor={routerPath === "/" ? "transparent" : null}
-          // btnBgColor={routerPath === "/" ? "transparent" : null}
-          // btnTextColor={routerPath === "/" ? "white" : null}
-          // btnBorderColor={routerPath === "/" ? "white" : null}
-          // btnOnClick={toggleSubmit}
         />
       </MyLikes>
+      <MyCollections>
+        <Button
+          btnWidth="190px"
+          btnHeight="70px"
+          btnBgColor="transparent"
+          btnText={collectionsString}
+          btnTextColor={color.gray.default}
+          btnFontSize="20px"
+          btnBorderColor="transparent"
+          btnHoverBorderColor="transparent"
+          btnHoverTextColor="black"
+        />
+      </MyCollections>
     </>
   );
 };
