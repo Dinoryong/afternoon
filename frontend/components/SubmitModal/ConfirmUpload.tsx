@@ -321,12 +321,6 @@ const ConfirmUpload = ({
   if (imageAsFile3.url !== "") imageAsFile.push(imageAsFile3.url);
   if (imageAsFile4.url !== "") imageAsFile.push(imageAsFile4.url);
 
-  const submitPostRequest = {
-    postsTitle: "프론트제목",
-    postsContents: "프론트내용",
-    postsTags: [{ tagTitle: "개발자" }, { tagTitle: "요리사" }],
-  };
-
   const onClickAddPin = () => {
     let pinImage = document.getElementById(`pinImage${currentImg}`);
     setAddState(true);
@@ -349,6 +343,65 @@ const ConfirmUpload = ({
 
     return cleanup;
   });
+
+  const setPostRequest = () => {
+    let reqTagList = [];
+    let reqPinList = [];
+
+    selectTagList.map((t) => {
+      reqTagList.push({ tagId: parseInt(t) });
+    });
+
+    img1HasPin.map((i) => {
+      reqPinList.push({
+        pinName: inputPinName[i],
+        pinLink: inputPinLink[i],
+        pinNum: 1,
+        pinLocX: inputPinPosX[i],
+        pinLocY: inputPinPosY[i],
+      });
+    });
+
+    img2HasPin.map((i) => {
+      reqPinList.push({
+        pinName: inputPinName[i],
+        pinLink: inputPinLink[i],
+        pinNum: 2,
+        pinLocX: inputPinPosX[i],
+        pinLocY: inputPinPosY[i],
+      });
+    });
+
+    img3HasPin.map((i) => {
+      reqPinList.push({
+        pinName: inputPinName[i],
+        pinLink: inputPinLink[i],
+        pinNum: 3,
+        pinLocX: inputPinPosX[i],
+        pinLocY: inputPinPosY[i],
+      });
+    });
+
+    img4HasPin.map((i) => {
+      reqPinList.push({
+        pinName: inputPinName[i],
+        pinLink: inputPinLink[i],
+        pinNum: 4,
+        pinLocX: inputPinPosX[i],
+        pinLocY: inputPinPosY[i],
+      });
+    });
+
+    const postRequest = {
+      postsTitle: inputTitle,
+      postsContents: inputContent,
+      postsPhotos: imageAsFile,
+      postsTags: reqTagList,
+      postsPins: reqPinList,
+    };
+
+    return postRequest;
+  };
 
   useEffect(() => {
     let pinImage = document.getElementById(`pinImage${currentImg}`);
@@ -941,6 +994,15 @@ const ConfirmUpload = ({
                       inputPinPosX,
                       inputPinPosY,
                     });
+
+                    let reqTagList = [];
+
+                    selectTagList.map((t) => {
+                      reqTagList.push({ tagId: t });
+                    });
+                    console.log(reqTagList);
+
+                    console.log(setPostRequest());
                   }}
                   btnText={"취소"}
                   btnHoverBgColor={color.red.default}
@@ -952,7 +1014,7 @@ const ConfirmUpload = ({
                 />
                 <Button
                   btnOnClick={() => {
-                    const result = SUBMIT_POST(submitPostRequest);
+                    const result = SUBMIT_POST(setPostRequest());
                     console.log(result);
                   }}
                   btnBgColor={color.black.default}

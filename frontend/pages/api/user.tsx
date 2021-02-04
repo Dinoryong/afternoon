@@ -14,13 +14,13 @@ export const SIGN_UP = async (req) => {
     return { status: false };
   } else {
     // API 요청 시 실행
-    let data = {};
+    let data = { data: { accountEmail: "" } };
     let status = 0;
 
     try {
       await axios.post(`${API_ROOT_URI}/api/accounts`, req).then((res) => {
         console.log(res);
-        data = res.data;
+        data = res.data.data;
         status = res.status;
       });
       return { status, data };
