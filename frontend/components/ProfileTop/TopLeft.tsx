@@ -17,8 +17,8 @@ const Container = styled.div`
 const ImgBox = styled.div`
   display: flex;
   position: absolute;
-  width: 200px;
-  height: 200px;
+  width: 180px;
+  height: 180px;
   margin-top: 17px;
 `;
 

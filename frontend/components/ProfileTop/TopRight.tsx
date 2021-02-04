@@ -28,7 +28,7 @@ const FollowBox = styled.div`
 
 const ProfileFollowing = styled.div`
   /* width: 100%; */
-  font-size: 17px;
+  font-size: 15px;
   font-weight: 100px;
   color: ${color.black.default};
   /* margin-bottom: 4px; */
@@ -36,7 +36,7 @@ const ProfileFollowing = styled.div`
 
 const ProfileFollower = styled.div`
   /* width: 100%; */
-  font-size: 17px;
+  font-size: 15px;
   font-weight: 100px;
   color: ${color.black.default};
   /* margin-bottom: 4px; */
@@ -44,7 +44,7 @@ const ProfileFollower = styled.div`
 
 const ProfilePost = styled.div`
   /* width: 100%; */
-  font-size: 17px;
+  font-size: 15px;
   font-weight: 100px;
   color: ${color.black.default};
   /* margin-bottom: 4px; */
@@ -64,19 +64,19 @@ const TextBox = styled.div`
 
 const ProfileText = styled.div`
   width: 100%;
-  font-size: 17px;
+  font-size: 15px;
   font-weight: 100px;
 `;
 
 const TagBox = styled.div`
   width: 100%;
-  margin-bottom: 100px;
+  margin-bottom: 70px;
 `;
 
 const TagTitle = styled.div`
   width: 100%;
   /* height: 40px; */
-  font-size: 17px;
+  font-size: 15px;
   font-weight: "600";
   margin-bottom: 10px;
 `;
