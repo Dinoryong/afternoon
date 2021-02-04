@@ -19,7 +19,7 @@ public class LoginControllerTest extends BaseControllerTest {
 
         AccountDto.LoginRequest account = new AccountDto.LoginRequest();
         account.setAct("login-request");
-        account.setAccountEmail("jason967@naver.com");
+        account.setAccountEmail("dntjr4772@naver.com");
 
         mockMvc.perform(post("/api/login")
                 .contentType(MediaType.APPLICATION_JSON)
@@ -59,11 +59,11 @@ public class LoginControllerTest extends BaseControllerTest {
     @Test
     public void Login_AuthKey_Off_성공() throws Exception {
 
-        String AuthKey = "fbirccsj";
+        String AuthKey = "k222kd48";
 
         AccountDto.LoginRequest  account = new AccountDto.LoginRequest();
         account.setAct("check-authKey-off");
-        account.setAccountEmail("jason967@naver.com");
+        account.setAccountEmail("dntjr4772@naver.com");
         account.setAccountAuthKey(AuthKey);
 
         mockMvc.perform(post("/api/login")
@@ -80,7 +80,7 @@ public class LoginControllerTest extends BaseControllerTest {
 
         AccountDto.LoginRequest  account = new AccountDto.LoginRequest();
         account.setAct("check-authKey-off");
-        account.setAccountEmail("jason967@naver.com");
+        account.setAccountEmail("dntjr4772@naver.com");
         account.setAccountAuthKey(AuthKey);
 
         mockMvc.perform(post("/api/login")
@@ -93,12 +93,11 @@ public class LoginControllerTest extends BaseControllerTest {
     @Test
     public void Login_AuthKey_On_성공() throws Exception {
 
-
-        String AuthKey = "fbirccsj";
+        String AuthKey = "k222kd48";
 
         AccountDto.LoginRequest  account = new AccountDto.LoginRequest();
         account.setAct("check-authKey-on");
-        account.setAccountEmail("jason967@naver.com");
+        account.setAccountEmail("dntjr4772@naver.com");
         account.setAccountAuthKey(AuthKey);
 
         mockMvc.perform(post("/api/login")
@@ -111,9 +110,9 @@ public class LoginControllerTest extends BaseControllerTest {
     @Test
     public void auto_login_성공() throws Exception {
 
-        String AuthKey = "fbirccsj";
+        String AuthKey = "erizabvc";
         Long id = 2L;
-        String email = "jason967@naver.com";
+        String email = "dntjr4772@naver.com";
         AccountDto.LoginRequest  account = new AccountDto.LoginRequest();
         account.setAccountEmail(email);
         account.setAccountId(id);

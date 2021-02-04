@@ -25,6 +25,7 @@ import java.util.Map;
 import java.util.stream.Collectors;
 
 @Service
+@Transactional
 @RequiredArgsConstructor
 public class PostsService {
     private final PostsRepository postsRepository;
@@ -34,7 +35,6 @@ public class PostsService {
     private final ModelMapper modelMapper;
     public static final Logger logger = LoggerFactory.getLogger(PostsService.class);
 
-    @Transactional
     public BaseMessage createPosts(PostsDto.CreatePostsRequest createAccountRequest, String token){
         Long myId = jwtService.getAccountId(token);
         Map<String, Object> resultMap = new HashMap<>();
@@ -59,24 +59,14 @@ public class PostsService {
             //pin 지정
             List<Pin> pins = new ArrayList<>();
             for (PinDto.Pin pinDto : createAccountRequest.getPostsPins()) {
-                System.out.println("pinn = " + pinDto);
                 pins.add(pinDto.toEntity());
-
             }
-
-            //똑같음
-//        List<Pin> pins=createAccountRequest.getPostsPins().stream().map(pin ->
-//                pin.toEntity()
-//        ).collect(Collectors.toList());
-
             for (Pin pin : pins) {
-                System.out.println("pinsss = " + pin);
                 pin.saveWithCascadePosts(posts);
-                System.out.println("pinddd = " + pin);
             }
-
-            postsRepository.save(posts);
-            return new BaseMessage(HttpStatus.CREATED,createAccountRequest);
+            Posts createdPosts=postsRepository.save(posts);
+            PostsDto.PostsResponse postsResponse = modelMapper.map(createdPosts,PostsDto.PostsResponse.class);
+            return new BaseMessage(HttpStatus.CREATED,postsResponse);
         }
         catch (Exception e)
         {
@@ -85,14 +75,17 @@ public class PostsService {
         }
     }
 
-    @Transactional
+    // TODO: 2021-02-04 tag,pin,comment정보 추가
     public PostsDto.PostsResponse retrievePosts(Long postsid){
         System.out.println("posts id : "+postsid);
         Posts posts=postsRepository.findPostsByPostsId(postsid);
-        //System.out.println("postsss = " + posts.toString());
+
+        System.out.println("postsss = " + posts);
         PostsDto.PostsResponse postsResponse = modelMapper.map(posts,PostsDto.PostsResponse.class);
 
         System.out.println("postsResponse = " + postsResponse);
         return postsResponse;
     }
+
+
 }

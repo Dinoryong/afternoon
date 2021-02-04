@@ -20,6 +20,8 @@ import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
 
+//http://localhost:8080/swagger-ui.html
+
 @RestController
 @RequestMapping(value = "/api/accounts")
 @RequiredArgsConstructor
@@ -94,4 +96,5 @@ public class AccountController {
         }
             return ResponseEntity.ok().build();
     }
+
 }

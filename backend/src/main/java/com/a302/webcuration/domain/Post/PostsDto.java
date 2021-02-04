@@ -2,6 +2,7 @@ package com.a302.webcuration.domain.Post;
 
 import com.a302.webcuration.domain.Account.Account;
 import com.a302.webcuration.domain.Account.AccountDto;
+import com.a302.webcuration.domain.Comment.CommentDto;
 import com.a302.webcuration.domain.Pin.PinDto;
 import com.a302.webcuration.domain.Tag.Tag;
 import com.a302.webcuration.domain.Tag.TagDto;
@@ -39,15 +40,19 @@ public class PostsDto {
         }
     }
 
-    @Getter @Setter @RequiredArgsConstructor
+    // TODO: 2021-02-04 tag,pin,comment정보 추가
+    @Data @RequiredArgsConstructor
     public static class PostsResponse{
         @NotNull
         private String postsTitle;
         @NotNull
         private String postsContents;
         private List<String> postsPhotos;
-        //private String postsLocation;
-        //tag
+        private List<TagDto.Tag> tags;
+        private List<PinDto.Pin> pins;
+        private List<CommentDto.CreateCommentResponse> comments;
     }
+
+
 
 }
