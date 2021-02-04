@@ -313,7 +313,7 @@ const ConfirmUpload = ({
 
   useEffect(function mount() {
     const resizeHandler = () => {
-      let pinImage = document.getElementById("pinImage");
+      let pinImage = document.getElementById(`pinImage${currentImg}`);
       let { offsetWidth, offsetHeight } = pinImage;
       setImgDim({ offsetWidth, offsetHeight });
     };
