@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from "react";
 import styled from "@emotion/styled";
 import color from "../../styles/theme";
-import { useRouter } from "next/router";
+import Image from "next/image";
 
 const Container = styled.div`
   display: flex;
@@ -24,6 +24,19 @@ const Container = styled.div`
   font-weight: 400;
 `;
 
+const IconBox = styled.div`
+  position: relative;
+  width: 10px;
+  height: 10px;
+  margin: 4px;
+`;
+
+const TextBox = styled.div`
+  display: flex;
+  justify-content: center;
+  width: 100%;
+`;
+
 type ButtonProps = {
   btnText?: string;
   btnBgColor?: string;
@@ -43,6 +56,11 @@ type ButtonProps = {
   btnOnClick?: Function;
   btnUseOpacity?: boolean;
   btnSetOpacity?: string;
+  btnUseIcon?: boolean;
+  btnIconSrc?: string;
+  btnIconWidth?: string;
+  btnIconHeight?: string;
+  btnIconMargin?: string;
 };
 
 const index = ({
@@ -65,6 +83,11 @@ const index = ({
   },
   btnUseOpacity,
   btnSetOpacity,
+  btnUseIcon,
+  btnIconSrc,
+  btnIconWidth,
+  btnIconHeight,
+  btnIconMargin,
 }: ButtonProps) => {
   const [bgColor, setBgColor] = useState<string>(btnBgColor);
   const [borderColor, setBorderColor] = useState<string>(btnBorderColor);
@@ -121,7 +144,20 @@ const index = ({
       onMouseLeave={onMouseLeave}
       onClick={onClick}
     >
-      {btnText}
+      {btnUseIcon && (
+        <IconBox
+          style={{
+            width: btnIconWidth,
+            minWidth: btnIconWidth,
+            height: btnIconHeight,
+            minHeight: btnIconHeight,
+            margin: btnIconMargin,
+          }}
+        >
+          <Image src={btnIconSrc} layout="fill"></Image>
+        </IconBox>
+      )}
+      <TextBox>{btnText}</TextBox>
     </Container>
   );
 };
