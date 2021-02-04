@@ -66,7 +66,10 @@ const pattern = new RegExp(
 );
 
 const LoginMiddle = ({ setAuthState, setCurrentEmail }) => {
-  const [inputEmail, setInputEmail] = useState("");
+  const autoEmail = window.localStorage.getItem("accountEmail");
+  const [inputEmail, setInputEmail] = useState(
+    autoEmail !== undefined ? autoEmail : ""
+  );
   const [emailValid, setEmailValid] = useState(false);
 
   useEffect(() => {
