@@ -4,10 +4,10 @@ import color from "../../styles/theme";
 
 const Container = styled.div`
   display: flex;
-  /* width: 450px; */
+  width: 100%;
   flex-direction: column;
   justify-content: space-between;
-  margin: 0px 60px;
+  margin-right: 60px;
 `;
 
 const TextBox = styled.div`
