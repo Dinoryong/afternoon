@@ -5,21 +5,17 @@ import TagLeft from "./TagLeft";
 import TagRight from "./TagRight";
 
 const Container = styled.div`
-  /* width: 1280px; */
-  width: 1000px;
-  height: 300px;
+  width: 100%;
+  max-width: 1000px;
+  height: 280px;
   display: flex;
   justify-content: center;
-  /* background-color: gray; */
 `;
 
-const Wrapper = styled.div`
-  display: flex;
-  margin: 10px 0px;
-  /* justify-content: space-between; */
-  /* align-content: space-between; */
-  /* background-color: skyblue; */
-`;
+// const Wrapper = styled.div`
+//   display: flex;
+//   margin: 10px 0px;
+// `;
 
 const index = ({ tagData }) => {
   // const [expand, setExpand] = useState(false);
@@ -34,16 +30,16 @@ const index = ({ tagData }) => {
   } = tagData;
   return (
     <Container>
-      <Wrapper>
-        <TagLeft tagTitle={tagTitle} tagText={tagText}></TagLeft>
-        <TagRight
-          tagContributions={tagContributions}
-          tagUsers={tagUsers}
-          tagTopUser={tagTopUser}
-          tagTopPost={tagTopPost}
-          tagTopContributer={tagTopContributer}
-        ></TagRight>
-      </Wrapper>
+      {/* <Wrapper> */}
+      <TagLeft tagTitle={tagTitle} tagText={tagText}></TagLeft>
+      <TagRight
+        tagContributions={tagContributions}
+        tagUsers={tagUsers}
+        tagTopUser={tagTopUser}
+        tagTopPost={tagTopPost}
+        tagTopContributer={tagTopContributer}
+      ></TagRight>
+      {/* </Wrapper> */}
     </Container>
   );
 };
