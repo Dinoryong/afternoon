@@ -24,41 +24,47 @@ const MenuBar = ({ profileMyposts, profileLikes, profileCollections }) => {
     <>
       <MyPost>
         <Button
+          btnUseOpacity={true}
+          btnSetOpacity="0.4"
           btnWidth="190px"
           btnHeight="70px"
           btnBgColor="transparent"
           btnText={postString}
-          btnTextColor={color.gray.default}
+          btnTextColor={color.black.default}
           btnFontSize="20px"
           btnBorderColor="transparent"
-          btnHoverBorderColor="transparent"
-          btnHoverTextColor="black"
+          // btnHoverBorderColor="transparent"
+          // btnHoverTextColor="black"
         />
       </MyPost>
       <MyLikes>
         <Button
+          btnUseOpacity={true}
+          btnSetOpacity="0.4"
           btnWidth="190px"
           btnHeight="70px"
           btnBgColor="transparent"
           btnText={likesString}
-          btnTextColor={color.gray.default}
+          btnTextColor={color.black.default}
           btnFontSize="20px"
           btnBorderColor="transparent"
-          btnHoverBorderColor="transparent"
-          btnHoverTextColor="black"
+          // btnHoverBorderColor="transparent"
+          // btnHoverTextColor="black"
         />
       </MyLikes>
       <MyCollections>
         <Button
+          btnUseOpacity={true}
+          btnSetOpacity="0.4"
           btnWidth="190px"
           btnHeight="70px"
           btnBgColor="transparent"
           btnText={collectionsString}
-          btnTextColor={color.gray.default}
+          btnTextColor={color.black.default}
           btnFontSize="20px"
           btnBorderColor="transparent"
-          btnHoverBorderColor="transparent"
-          btnHoverTextColor="black"
+          // btnHoverBorderColor="transparent"
+          // btnHoverTextColor="black"
         />
       </MyCollections>
     </>

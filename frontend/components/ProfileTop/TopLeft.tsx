@@ -11,7 +11,7 @@ const Container = styled.div`
   min-width: 230px;
   /* height: 430px; */
   margin-left: auto;
-  margin-right: 10px;
+  margin-right: 20px;
 `;
 
 const ImgBox = styled.div`
@@ -19,6 +19,7 @@ const ImgBox = styled.div`
   position: absolute;
   width: 200px;
   height: 200px;
+  margin-top: 17px;
 `;
 
 const TopLeft = ({ profileImg }) => {

@@ -9,12 +9,45 @@ const TitleBox = styled.div`
   width: 100%;
   /* height: 60px; */
   align-items: center;
-  margin-bottom: 10px;
+  /* margin-bottom: 5px; */
+  margin-top: 10px;
 `;
 
 const ProfileTitle = styled.div`
   font-size: 45px;
   font-weight: bold;
+`;
+
+const FollowBox = styled.div`
+  width: 50%;
+  /* height: 90px; */
+  display: flex;
+  margin-bottom: 35px;
+  justify-content: space-between;
+`;
+
+const ProfileFollowing = styled.div`
+  /* width: 100%; */
+  font-size: 17px;
+  font-weight: 100px;
+  color: ${color.black.default};
+  /* margin-bottom: 4px; */
+`;
+
+const ProfileFollower = styled.div`
+  /* width: 100%; */
+  font-size: 17px;
+  font-weight: 100px;
+  color: ${color.black.default};
+  /* margin-bottom: 4px; */
+`;
+
+const ProfilePost = styled.div`
+  /* width: 100%; */
+  font-size: 17px;
+  font-weight: 100px;
+  color: ${color.black.default};
+  /* margin-bottom: 4px; */
 `;
 
 const EditBox = styled.div`
@@ -26,44 +59,13 @@ const EditBox = styled.div`
 const TextBox = styled.div`
   width: 100%;
   /* height: 50px; */
-  margin-bottom: 30px;
+  margin-bottom: 50px;
 `;
 
 const ProfileText = styled.div`
   width: 100%;
   font-size: 17px;
   font-weight: 100px;
-`;
-
-const FollowBox = styled.div`
-  width: 100%;
-  /* height: 90px; */
-  display: flex;
-  margin-bottom: 30px;
-`;
-
-const ProfileFollower = styled.div`
-  width: 100%;
-  font-size: 17px;
-  font-weight: 100px;
-  color: ${color.gray.dark};
-  margin-bottom: 4px;
-`;
-
-const ProfileFollowing = styled.div`
-  width: 100%;
-  font-size: 17px;
-  font-weight: 100px;
-  color: ${color.gray.dark};
-  margin-bottom: 4px;
-`;
-
-const ProfilePost = styled.div`
-  width: 100%;
-  font-size: 17px;
-  font-weight: 100px;
-  color: ${color.gray.dark};
-  margin-bottom: 4px;
 `;
 
 const TagBox = styled.div`
@@ -83,7 +85,7 @@ const TagList = styled.div`
   display: flex;
   width: 100%;
   /* height: 40px; */
-  margin: 3px 0px;
+  /* margin: 3px 0px; */
 `;
 
 const TopRight = ({
@@ -106,24 +108,24 @@ const TopRight = ({
           ></Image> */}
         </EditBox>
       </TitleBox>
+      <FollowBox>
+        <ProfileFollowing>팔로잉 { profileFollowing }</ProfileFollowing>
+        <ProfileFollower>팔로워 { profileFollower }</ProfileFollower>
+        <ProfilePost>게시물 { profileMyposts }</ProfilePost>
+      </FollowBox>
       <TextBox>
         <ProfileText>
           { profileBox }
         </ProfileText>
       </TextBox>
-      <FollowBox>
-        <ProfileFollowing>팔로잉  { profileFollowing }</ProfileFollowing>
-        <ProfileFollower>팔로워  { profileFollower }</ProfileFollower>
-        <ProfilePost>게시물  { profileMyposts }</ProfilePost>
-      </FollowBox>
       <TagBox>
-        <TagTitle>관심태그</TagTitle>
+        <TagTitle>관심 태그</TagTitle>
         <TagList>
           { profileTags }
           <Button
             btnText="클라이밍"
             btnWidth="100px"
-            btnMarginRight="5px"
+            // btnMarginRight="5px"
             btnBgColor="${color.gray.light}"
             btnTextColor="${color.gray.semidark}"
             btnFontSize="20px"
@@ -133,7 +135,7 @@ const TopRight = ({
           <Button
             btnText="엔지니어"
             btnWidth="100px"
-            btnMarginRight="5px"
+            // btnMarginRight="5px"
             btnBgColor="${color.gray.light}"
             btnTextColor="${color.gray.semidark}"
             btnFontSize="20px"
