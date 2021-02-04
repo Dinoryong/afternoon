@@ -40,7 +40,7 @@ public class Posts {
     private List<Account> likeAccounts=new ArrayList<>();
     @ManyToOne
     private Account postWriter;
-    //@JsonIgnore
+
     @Builder.Default
     @ManyToMany(mappedBy = "posts")
     private List<Tag> postsTags =new ArrayList<>();

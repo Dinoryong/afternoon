@@ -14,13 +14,16 @@ public class Pin {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     private Long pinId;
+    // TODO: 2021-02-04 pinName추가
+    private String pinName;
     private Double pinLocY;
     private Double pinLocX;
     // 작성자
     private String pinLink;
     // 네이버 API가 설정한 URL
 
-    private String pinContents;
+    // 네이버 API 통한 분류 소분류
+    private String pinClass;
     //해당하는 사진의 순서를 위한 핀넘버링
     private Integer pinNum;
     @ManyToOne
@@ -34,4 +37,16 @@ public class Pin {
         post.getPostsPins().add(this);
         posts=post;
     }
+
+//    @Override
+//    public String toString() {
+//        return "Pin{" +
+//                "pinId=" + pinId +
+//                ", pinLocY=" + pinLocY +
+//                ", pinLocX=" + pinLocX +
+//                ", pinLink='" + pinLink + '\'' +
+//                ", pinContents='" + pinContents + '\'' +
+//                ", pinNum=" + pinNum +
+//                '}';
+//    }
 }

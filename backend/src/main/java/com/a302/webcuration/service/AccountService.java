@@ -4,6 +4,9 @@ import com.a302.webcuration.common.BaseMessage;
 import com.a302.webcuration.domain.Account.Account;
 import com.a302.webcuration.domain.Account.AccountDto;
 import com.a302.webcuration.domain.Account.AccountRepository;
+import com.a302.webcuration.domain.Post.Posts;
+import com.a302.webcuration.domain.Post.PostsDto;
+import com.a302.webcuration.domain.Post.PostsRepository;
 import com.a302.webcuration.domain.Tag.Tag;
 import com.a302.webcuration.domain.Tag.TagDto;
 import com.a302.webcuration.domain.Tag.TagRepository;
@@ -20,6 +23,7 @@ import javax.transaction.Transactional;
 import java.util.*;
 
 @Service
+@Transactional
 @RequiredArgsConstructor
 public class AccountService {
 
@@ -32,11 +36,11 @@ public class AccountService {
     private final LoginService2 accountService;
     private final JavaMailSender mailSender;
     private final TagRepository tagRepository;
+    private final PostsRepository postsRepository;
 
     private final JwtService jwtService;
 
 
-    @Transactional
     public List<AccountDto.CreateAccountResponse> findAll()
     {
         List<AccountDto.CreateAccountResponse> accounts = new ArrayList<>();
@@ -46,7 +50,6 @@ public class AccountService {
         return accounts;
     }
 
-    @Transactional
     public BaseMessage findAccountById(Long id)
     {
         Map<String, Object> resultMap = new HashMap<>();
@@ -80,7 +83,7 @@ public class AccountService {
         }
     }
 
-    @Transactional
+
     public void updateAccount(Long id,AccountDto.UpdateRequest request) {
         try {
             Account account = accountRepository.findAccountByAccountId(id);
@@ -92,7 +95,7 @@ public class AccountService {
         }
     }
 
-    @Transactional
+
     public BaseMessage follow(Long myId, Long yourId){
         Map<String, Object> resultMap = new HashMap<>();
         if(myId==yourId)
@@ -113,7 +116,7 @@ public class AccountService {
         }
     }
 
-    @Transactional
+
     public void selectTag(AccountDto.AccountTagRequest accountTagRequest, String token){
         Long myId = jwtService.getAccountId(token);
         Account account=accountRepository.findAccountByAccountId(myId);

@@ -20,14 +20,6 @@ public class Tag {
 
     private String tagDesc;
 
-    @Builder.Default
-    @ManyToOne
-    private Tag parent=null;
-
-    @JsonIgnore
-    @OneToMany(mappedBy = "parent")
-    @Builder.Default
-    private List<Tag> child=new ArrayList<>();
     //Hibernate MultipleBagFetchException 때문에 List-> Set으로 https://perfectacle.github.io/2019/05/01/hibernate-multiple-bag-fetch-exception/
     @ManyToMany
     @Builder.Default
@@ -42,12 +34,17 @@ public class Tag {
     @Builder.Default
     private List<Posts> posts=new ArrayList<>();
 
-    public void setParent(Tag parent) {
-        this.parent = parent;
-        parent.getChild().add(this);
-    }
     public void addPostsTags(Posts posts){
         this.posts.add(posts);
         posts.getPostsTags().add(this);
     }
+
+//    @Override
+//    public String toString() {
+//        return "Tag{" +
+//                "tagId=" + tagId +
+//                ", tagTitle='" + tagTitle + '\'' +
+//                ", tagDesc='" + tagDesc + '\'' +
+//                '}';
+//    }
 }

@@ -42,10 +42,10 @@ public class PostsControllerTest extends BaseControllerTest {
         //pin
         List<PinDto.Pin> pins=new ArrayList<>();
         PinDto.Pin pin1=PinDto.Pin.builder()
+                .pinName("핀이름")
                 .pinLocY(10.1)
                 .pinLocX(10.1)
                 .pinLink("https://smartstore.naver.com/ntseller/products/5281314437")
-                .pinContents("여기가 최저가!!!!!!!!!!!!")
                 .pinNum(1)
                 .build();
         pins.add(pin1);
@@ -57,7 +57,47 @@ public class PostsControllerTest extends BaseControllerTest {
                 .postsTags(postsTags)
                 .postsPins(pins)
                 .build();
-        String token = "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJzdWIiOiLroZzqt7jsnbjthqDtgbAiLCJleHAiOjE2MTI2ODEwOTEsImFjY291bnRJZCI6MiwiYWNjb3VudEVtYWlsIjoiamFzb245NjdAbmF2ZXIuY29tIn0.QjDFiYA35WZy7sH_pOld3KeL99fAKLaNbalmrA_AWng";
+        String token = "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJzdWIiOiLroZzqt7jsnbjthqDtgbAiLCJleHAiOjE2MTI4NTA3ODEsImFjY291bnRJZCI6MjAsImFjY291bnRFbWFpbCI6ImRudGpyNDc3MkBuYXZlci5jb20ifQ.2GdyblKPOqCBXnCQoxMYCan3bAkVTE4QY216KjexqEI";
+
+        mockMvc.perform(post("/api/posts")
+                .header("Authorization","Bearer "+token)
+                .contentType(MediaType.APPLICATION_JSON)
+                .content(objectMapper.writeValueAsString(createAccountRequest)))
+                .andExpect(status().isCreated())
+                .andDo(print());
+    }
+
+    @Test
+    public void Posts_태그포함생성2_성공() throws Exception{
+        //When
+        //Given
+        String postsTitle="재웅쓰 스키 관련글";
+        String postsContents="재웅쓰 글 내용 ";
+        List<String> postsPhotos=new ArrayList<>();
+        postsPhotos.add("https://lh3.googleusercontent.com/proxy/kr-1BRXpuhgwIVpc5pcfcVV-nEsUduJldGbOpvAUwxHeNK--u7fWsYXfb3PccxrDHvj-HyjDFEyVxUmjQ4oXKVMYGjoJS4wqfyS58JN-Vd6e");
+        postsPhotos.add("https://news.samsungdisplay.com/wp-content/uploads/2018/08/8.jpg");
+        List<TagDto.Tag> postsTags=new ArrayList<>();
+        Tag tag1=tagRepository.findByTagTitle("스키");
+        postsTags.add(modelMapper.map(tag1,TagDto.Tag.class));
+        //pin
+        List<PinDto.Pin> pins=new ArrayList<>();
+        PinDto.Pin pin1=PinDto.Pin.builder()
+                .pinName("폴대")
+                .pinLocY(10.1)
+                .pinLocX(10.1)
+                .pinLink("https://smartstore.naver.com/ntseller/products/5281314437")
+                .pinNum(1)
+                .build();
+        pins.add(pin1);
+
+        PostsDto.CreatePostsRequest createAccountRequest= PostsDto.CreatePostsRequest.builder()
+                .postsTitle(postsTitle)
+                .postsContents(postsContents)
+                .postsPhotos(postsPhotos)
+                .postsTags(postsTags)
+                .postsPins(pins)
+                .build();
+        String token = "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJzdWIiOiLroZzqt7jsnbjthqDtgbAiLCJleHAiOjE2MTI4NTA2MDgsImFjY291bnRJZCI6MTcsImFjY291bnRFbWFpbCI6ImRudGpyNDc3MkBuYXRlLmNvbSJ9.X34mYV_LQ2nfPP8brZE-LOYMwWU6CkvXIkCNNqE0MSM";
 
         mockMvc.perform(post("/api/posts")
                 .header("Authorization","Bearer "+token)
@@ -87,7 +127,6 @@ public class PostsControllerTest extends BaseControllerTest {
                 .pinLocY(10.1)
                 .pinLocX(10.1)
                 .pinLink("https://smartstore.naver.com/ntseller/products/5281314437")
-                .pinContents("여기가 최저가!!!!!!!!!!!!")
                 .pinNum(1)
                 .build();
         pins.add(pin1);
@@ -99,7 +138,7 @@ public class PostsControllerTest extends BaseControllerTest {
                 .postsTags(postsTags)
                 .postsPins(pins)
                 .build();
-        String token = "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJzdWIiOiLroZzqt7jsnbjthqDtgbAiLCJleHAiOjE2MTI2NzcyODEsImFjY291bnRJZCI6MiwiYWNjb3VudEVtYWlsIjoiamFzb245NjdAbmF2ZXIuY29tIn0.2LJZlzsu2fkXOqyOa4szyBKy-iW-wFBOPnZZQpD008E";
+        String token = "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJzdWIiOiLroZzqt7jsnbjthqDtgbAiLCJleHAiOjE2MTI3ODcwNjIsImFjY291bnRJZCI6MSwiYWNjb3VudEVtYWlsIjoiZG50anI0NzcyQG5hdmVyLmNvbSJ9.tiZPXCzeB0uHo6BQmXwxDJdsEwXFe-HFImn5lMA5JTs";
 
         mockMvc.perform(post("/api/posts")
                 .header("Authorization","Bearer "+token)
@@ -128,7 +167,6 @@ public class PostsControllerTest extends BaseControllerTest {
                 .pinLocY(10.1)
                 .pinLocX(10.1)
                 .pinLink("https://smartstore.naver.com/ntseller/products/5281314437")
-                .pinContents("여기가 최저가!!!!!!!!!!!!")
                 .pinNum(1)
                 .build();
         pins.add(pin1);
@@ -140,7 +178,7 @@ public class PostsControllerTest extends BaseControllerTest {
                 //.postsTags(postsTags)
                 .postsPins(pins)
                 .build();
-        String token = "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJzdWIiOiLroZzqt7jsnbjthqDtgbAiLCJleHAiOjE2MTI2NzcyODEsImFjY291bnRJZCI6MiwiYWNjb3VudEVtYWlsIjoiamFzb245NjdAbmF2ZXIuY29tIn0.2LJZlzsu2fkXOqyOa4szyBKy-iW-wFBOPnZZQpD008E";
+        String token = "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJzdWIiOiLroZzqt7jsnbjthqDtgbAiLCJleHAiOjE2MTI3ODcwNjIsImFjY291bnRJZCI6MSwiYWNjb3VudEVtYWlsIjoiZG50anI0NzcyQG5hdmVyLmNvbSJ9.tiZPXCzeB0uHo6BQmXwxDJdsEwXFe-HFImn5lMA5JTs";
 
         mockMvc.perform(post("/api/posts")
                 .header("Authorization","Bearer "+token)
@@ -152,7 +190,7 @@ public class PostsControllerTest extends BaseControllerTest {
 
     @Test
     public void Posts_조회_성공() throws Exception{
-        Long id=10L;
+        Long id=44L;
         mockMvc.perform(get("/api/posts/"+Long.toString(id))
                 .contentType(MediaType.APPLICATION_JSON))
                 .andExpect(status().isOk())
