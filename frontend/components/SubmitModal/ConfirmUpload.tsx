@@ -5,6 +5,7 @@ import Button from "../Button";
 import color from "../../styles/theme";
 import { SUBMIT_POST } from "../../pages/api/post";
 import PinIcon from "../PinIcon";
+import TagBox from "../TagBox";
 
 const Container = styled.div`
   position: relative;
@@ -262,6 +263,27 @@ const NewPinMini = styled.div`
   background-color: ${color.white.default};
 `;
 
+const AddTagDiv = styled.div`
+  display: flex;
+  margin-top: 12px;
+`;
+
+const AddTagBox = styled.div`
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  padding: 4px 8px;
+  font-size: 14px;
+  color: ${color.black.default};
+  background-color: ${color.white.default};
+  border: 1px dashed ${color.black.default};
+  font-weight: 500;
+  border-radius: 4px;
+  width: 80px;
+  margin: 0px 6px;
+  cursor: pointer;
+`;
+
 type StateProps = {
   addState?: boolean;
 };
@@ -280,6 +302,7 @@ const ConfirmUpload = ({
 
   const [inputTitle, setInputTitle] = useState("");
   const [inputContent, setInputContent] = useState("");
+  const [selectTagList, setSelectTagList] = useState([]);
 
   const [img1HasPin, setImg1HasPin] = useState([]);
   const [img2HasPin, setImg2HasPin] = useState([]);
@@ -313,7 +336,7 @@ const ConfirmUpload = ({
 
   useEffect(function mount() {
     const resizeHandler = () => {
-      let pinImage = document.getElementById("pinImage");
+      let pinImage = document.getElementById(`pinImage${currentImg}`);
       let { offsetWidth, offsetHeight } = pinImage;
       setImgDim({ offsetWidth, offsetHeight });
     };
@@ -334,23 +357,25 @@ const ConfirmUpload = ({
   }, [currentImg]);
 
   const onClickPinFrame = (e) => {
-    setInputPinPosX([
-      ...inputPinPosX,
-      (e.nativeEvent.offsetX / imgDim.offsetWidth) * 100,
-    ]);
-    setInputPinPosY([
-      ...inputPinPosY,
-      (e.nativeEvent.offsetY / imgDim.offsetHeight) * 100,
-    ]);
-    setInputPinName([...inputPinName, ""]);
-    setInputPinLink([...inputPinLink, ""]);
-    if (currentImg === 0) setImg1HasPin([...img1HasPin, inputPinPosX.length]);
-    else if (currentImg === 1)
-      setImg2HasPin([...img2HasPin, inputPinPosX.length]);
-    else if (currentImg === 2)
-      setImg3HasPin([...img3HasPin, inputPinPosX.length]);
-    else if (currentImg === 3)
-      setImg4HasPin([...img4HasPin, inputPinPosX.length]);
+    if (addState) {
+      setInputPinPosX([
+        ...inputPinPosX,
+        (e.nativeEvent.offsetX / imgDim.offsetWidth) * 100,
+      ]);
+      setInputPinPosY([
+        ...inputPinPosY,
+        (e.nativeEvent.offsetY / imgDim.offsetHeight) * 100,
+      ]);
+      setInputPinName([...inputPinName, ""]);
+      setInputPinLink([...inputPinLink, ""]);
+      if (currentImg === 0) setImg1HasPin([...img1HasPin, inputPinPosX.length]);
+      else if (currentImg === 1)
+        setImg2HasPin([...img2HasPin, inputPinPosX.length]);
+      else if (currentImg === 2)
+        setImg3HasPin([...img3HasPin, inputPinPosX.length]);
+      else if (currentImg === 3)
+        setImg4HasPin([...img4HasPin, inputPinPosX.length]);
+    }
     setAddState(false);
   };
 
@@ -359,16 +384,19 @@ const ConfirmUpload = ({
   };
 
   const onClickMoveBefore = () => {
-    // if (
-    //   confirm(
-    //     "PINSET : 사진 업로드 화면으로 가시겠습니까?\n확인을 누르시면 현재까지 작업이 사라집니다."
-    //   )
-    // ) {
-    //   setUploadState(0);
-    // } else {
-    //   return;
-    // }
     setUploadState(0);
+  };
+
+  const onClickAddTag = () => {
+    let tagId = window.prompt("태그ID 입럭", "");
+    if (tagId === null || tagId === "") {
+      return;
+    } else if (parseInt(tagId) > 23 || parseInt(tagId) < 1) {
+      window.alert("1 ~ 23 사이의 숫자를 입력해주세요.");
+      onClickAddTag();
+    } else {
+      setSelectTagList([...selectTagList, tagId]);
+    }
   };
 
   return (
@@ -465,6 +493,22 @@ const ConfirmUpload = ({
         <InfoDiv>
           <InfoTop>
             <BoxLabel style={{ fontWeight: 700 }}>태그 선택 (필수)</BoxLabel>
+            <AddTagDiv>
+              {selectTagList &&
+                selectTagList.map((t, index) => (
+                  <TagBox
+                    key={index}
+                    tagId={t}
+                    tagMargin={"0px 6px"}
+                    tagOnClick={() => {
+                      setSelectTagList(selectTagList.filter((tl) => tl != t));
+                    }}
+                  ></TagBox>
+                ))}
+              {selectTagList && selectTagList.length < 4 && (
+                <AddTagBox onClick={onClickAddTag}>+</AddTagBox>
+              )}
+            </AddTagDiv>
             <BoxLine />
             <BoxLabel>제목 작성 (선택)</BoxLabel>
             <InputTitle
@@ -884,10 +928,13 @@ const ConfirmUpload = ({
               <RightButtonBox>
                 <Button
                   btnOnClick={() => {
-                    console.log(img1HasPin);
-                    console.log(img2HasPin);
-                    console.log(img3HasPin);
-                    console.log(img4HasPin);
+                    console.log("태그 : " + selectTagList);
+                    console.log("제목 : " + inputTitle);
+                    console.log("내용 : " + inputContent);
+                    console.log("사진1 : " + img1HasPin);
+                    console.log("사진2 : " + img2HasPin);
+                    console.log("사진3 : " + img3HasPin);
+                    console.log("사진4 : " + img4HasPin);
                     console.log({
                       inputPinName,
                       inputPinLink,

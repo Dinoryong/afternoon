@@ -21,10 +21,8 @@ import javax.validation.Valid;
 @RequiredArgsConstructor
 public class PostsController {
     private final PostsService postsService;
-    private final PostsRepository postsRepository;
     public static final Logger logger = LoggerFactory.getLogger(PostsController.class);
 
-    private final ModelMapper modelMapper;
 
     @PostMapping
     public ResponseEntity createPosts(@RequestBody @Valid PostsDto.CreatePostsRequest createAccountRequest, @RequestHeader(value = "Authorization") String token){
@@ -32,7 +30,8 @@ public class PostsController {
         return new ResponseEntity(bm,bm.getHttpStatus());
 
     }
-    // TODO: 2021-02-01 posts 조회기능
+
+    // TODO: 2021-02-04 bm으로 바꾸기 
     @GetMapping("/{postsid}")
     public ResponseEntity retrievePosts(@PathVariable Long postsid){
         PostsDto.PostsResponse postsResponse=postsService.retrievePosts(postsid);
