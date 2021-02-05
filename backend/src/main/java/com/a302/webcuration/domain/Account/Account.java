@@ -36,7 +36,7 @@ public class Account {
     private LocalDate accountCreateDate;
     @UpdateTimestamp
     private LocalDateTime accountUpdateDate;
-
+    // TODO: 2021-02-04 Bio
     @Builder.Default
     private String accountDesc="";
 
@@ -94,18 +94,18 @@ public class Account {
             tag.getAccounts().add(this);
     }
 
-    @Override
-    public String toString() {
-        return "Account{" +
-                "accountId=" + accountId +
-                ", accountName='" + accountName + '\'' +
-                ", accountNickname='" + accountNickname + '\'' +
-                ", accountEmail='" + accountEmail + '\'' +
-                ", accountCreateDate=" + accountCreateDate +
-                ", accountUpdateDate=" + accountUpdateDate +
-                ", accountDesc='" + accountDesc + '\'' +
-                ", accountAuthKey='" + accountAuthKey + '\'' +
-                ", accountRole=" + accountRole +
-                '}';
-    }
+//    @Override
+//    public String toString() {
+//        return "Account{" +
+//                "accountId=" + accountId +
+//                ", accountName='" + accountName + '\'' +
+//                ", accountNickname='" + accountNickname + '\'' +
+//                ", accountEmail='" + accountEmail + '\'' +
+//                ", accountCreateDate=" + accountCreateDate +
+//                ", accountUpdateDate=" + accountUpdateDate +
+//                ", accountDesc='" + accountDesc + '\'' +
+//                ", accountAuthKey='" + accountAuthKey + '\'' +
+//                ", accountRole=" + accountRole +
+//                '}';
+//    }
 }

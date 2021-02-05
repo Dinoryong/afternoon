@@ -63,17 +63,18 @@ public class CommentService {
 
         try {
             //링크가 존재하는 경우
-            if(request.getCommentLink()!=null)
+            Pin pin = pinRepository.findPinByPinId(request.getPinId());
+            if(pin!=null)
             {
-                Pin pin = pinRepository.findPinByPinId(request.getPinId());
                 comment.saveWithCascadePin(pin);
-                resultMap.put("hasLink","true");
+                resultMap.put("message","핀을 가지고 있습니다.");
             }
-            else resultMap.put("hasLink","false");
+            else resultMap.put("message","핀을가지고 있지 않습니다.");
+
             Posts post = postsRepository.findPostsByPostsId(postsId);
             comment.saveWithCascadePosts(post);
             commentRepository.save(comment);
-            resultMap.put("message","값 잘 받아오는 지 테스트 중입니다.");
+            resultMap.put("message","게시물에 댓글이 등록되었습니다.");
             return new BaseMessage(HttpStatus.OK,resultMap);
         }catch (Exception e)
         {

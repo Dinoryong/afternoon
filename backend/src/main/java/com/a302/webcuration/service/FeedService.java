@@ -45,10 +45,7 @@ public class FeedService {
             Collections.sort(posts, new Comparator<Posts>() {
                 @Override
                 public int compare(Posts o1, Posts o2) {
-                    if(o1.getPostsWriteTime().isBefore(o2.getPostsWriteTime()))
-                        return 1;
-                    else
-                        return -1;
+                    return (int)(o2.getPostsId()- o1.getPostsId());
                 }
             });
             //PostsResponseDTO 형식으로 바꿈

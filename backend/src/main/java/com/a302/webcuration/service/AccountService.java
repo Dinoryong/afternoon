@@ -4,9 +4,6 @@ import com.a302.webcuration.common.BaseMessage;
 import com.a302.webcuration.domain.Account.Account;
 import com.a302.webcuration.domain.Account.AccountDto;
 import com.a302.webcuration.domain.Account.AccountRepository;
-import com.a302.webcuration.domain.Post.Posts;
-import com.a302.webcuration.domain.Post.PostsDto;
-import com.a302.webcuration.domain.Post.PostsRepository;
 import com.a302.webcuration.domain.Tag.Tag;
 import com.a302.webcuration.domain.Tag.TagDto;
 import com.a302.webcuration.domain.Tag.TagRepository;
@@ -14,9 +11,7 @@ import lombok.RequiredArgsConstructor;
 import org.modelmapper.ModelMapper;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import org.springframework.beans.factory.annotation.Value;
 import org.springframework.http.HttpStatus;
-import org.springframework.mail.javamail.JavaMailSender;
 import org.springframework.stereotype.Service;
 
 import javax.transaction.Transactional;
@@ -27,16 +22,11 @@ import java.util.*;
 @RequiredArgsConstructor
 public class AccountService {
 
-    @Value("${token.signiturekey}")
-    private String signature ;
     public static final Logger logger = LoggerFactory.getLogger(AccountService.class);
 
     private final AccountRepository accountRepository;
     private final ModelMapper modelMapper;
-    private final LoginService2 accountService;
-    private final JavaMailSender mailSender;
     private final TagRepository tagRepository;
-    private final PostsRepository postsRepository;
 
     private final JwtService jwtService;
 
@@ -71,10 +61,10 @@ public class AccountService {
             while (iterFollowing.hasNext()) {
                 following.add(modelMapper.map(iterFollowing.next(), AccountDto.FollowingDto.class));
             }
-            profile.setProfileFollower(follower);
-            profile.setProfileFollowing(following);
-            profile.setFollowerCnt(followerCnt);
-            profile.setFollowingCnt(followingCnt);
+            profile.setFollower(follower);
+            profile.setFollowing(following);
+            profile.setAccountFollowerCnt(followerCnt);
+            profile.setAccountFollowingCnt(followingCnt);
             return new BaseMessage(HttpStatus.OK,profile);
         }catch (Exception e)
         {
