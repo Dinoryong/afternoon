@@ -1,6 +1,7 @@
 package com.a302.webcuration.domain.Post;
 
 import com.a302.webcuration.domain.Account.Account;
+import com.a302.webcuration.domain.Comment.Comment;
 import com.a302.webcuration.domain.Pin.Pin;
 import com.a302.webcuration.domain.Tag.Tag;
 import com.fasterxml.jackson.annotation.JsonIgnore;
@@ -15,7 +16,7 @@ import java.util.Iterator;
 import java.util.List;
 
 @Entity
-@Getter @NoArgsConstructor @AllArgsConstructor  @Builder @Setter
+@Getter @NoArgsConstructor @AllArgsConstructor  @Builder
 public class Posts {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
@@ -29,23 +30,28 @@ public class Posts {
     private LocalDate postsWriteTime;
     @UpdateTimestamp
     private LocalDate postsUpdateTime;
+
     @Builder.Default
-    @OneToMany
-    private List<Pin> pins=new ArrayList<>();
-    private String postsLocation;
+    @OneToMany(mappedBy = "posts", cascade = CascadeType.ALL)
+    private List<Pin> postsPins=new ArrayList<>();
     //좋아요한 유저
     @Builder.Default
     @ManyToMany(mappedBy = "likePosts")
     private List<Account> likeAccounts=new ArrayList<>();
     @ManyToOne
     private Account postWriter;
-    //@JsonIgnore
+
     @Builder.Default
     @ManyToMany(mappedBy = "posts")
     private List<Tag> postsTags =new ArrayList<>();
+
+    @Builder.Default
+    @OneToMany(mappedBy = "commentPosts")
+    private List<Comment> comments=new ArrayList<>();
 
     public void writePost(Account account){
         this.postWriter=account;
         account.getMyPosts().add(this);
     }
+
 }

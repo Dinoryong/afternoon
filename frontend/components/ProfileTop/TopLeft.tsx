@@ -4,25 +4,36 @@ import Button from "../Button";
 import color from "../../styles/theme";
 import Image from "next/image";
 
+const Container = styled.div`
+  display: flex;
+  justify-items: flex-end;
+  width: 230px;
+  min-width: 230px;
+  /* height: 430px; */
+  margin-left: auto;
+  margin-right: 20px;
+`;
+
 const ImgBox = styled.div`
   display: flex;
   position: absolute;
-  width: 200px;
-  height: 200px;
+  width: 180px;
+  height: 180px;
+  margin-top: 17px;
 `;
 
-const TopLeft = () => {
+const TopLeft = ({ profileImg }) => {
   return (
-    <>
+    <Container>
       <ImgBox>
         <Image
           className="next_border_image circle"
-          src="/assets/images/sample_profile.png"
+          src={profileImg}
           layout="fill"
           objectFit="cover"
         ></Image>
       </ImgBox>
-    </>
+    </Container>
   );
 };
 

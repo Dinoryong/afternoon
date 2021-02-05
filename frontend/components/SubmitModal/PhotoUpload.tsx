@@ -56,7 +56,7 @@ const BottomWrapper = styled.div`
   align-items: center;
   justify-content: flex-end;
   width: 100%;
-  min-height: 60px;
+  min-height: 40px;
   /* border-top: 1px solid ${color.gray.default}; */
 `;
 
@@ -148,73 +148,66 @@ const useCounter = () => {
   };
 };
 
-const PhotoUpload = () => {
+const PhotoUpload = ({
+  imageAsFile1,
+  setImageAsFile1,
+  imageAsFile2,
+  setImageAsFile2,
+  imageAsFile3,
+  setImageAsFile3,
+  imageAsFile4,
+  setImageAsFile4,
+  setUploadState,
+  uploadState,
+}) => {
   const storage = firebase.storage();
 
   const { submitShown } = useCounter();
-
-  const [imageAsFile1, setImageAsFile1] = useState({
-    image: null,
-    url: "",
-    progress: 0,
-  });
-  const [imageAsFile2, setImageAsFile2] = useState({
-    image: null,
-    url: "",
-    progress: 0,
-  });
-  const [imageAsFile3, setImageAsFile3] = useState({
-    image: null,
-    url: "",
-    progress: 0,
-  });
-  const [imageAsFile4, setImageAsFile4] = useState({
-    image: null,
-    url: "",
-    progress: 0,
-  });
+  const [blockNext, setBlockNext] = useState(
+    imageAsFile1.url === "" ? true : false
+  );
 
   useEffect(() => {
-    if (imageAsFile1.image !== null)
+    if (imageAsFile1.image !== null && imageAsFile1.url === "")
       uploadToFirebase(imageAsFile1, setImageAsFile1);
   }, [imageAsFile1.image]);
 
   useEffect(() => {
-    if (imageAsFile2.image !== null)
+    if (imageAsFile2.image !== null && imageAsFile2.url === "")
       uploadToFirebase(imageAsFile2, setImageAsFile2);
   }, [imageAsFile2.image]);
 
   useEffect(() => {
-    if (imageAsFile3.image !== null)
+    if (imageAsFile3.image !== null && imageAsFile3.url === "")
       uploadToFirebase(imageAsFile3, setImageAsFile3);
   }, [imageAsFile3.image]);
 
   useEffect(() => {
-    if (imageAsFile4.image !== null)
+    if (imageAsFile4.image !== null && imageAsFile4.url === "")
       uploadToFirebase(imageAsFile4, setImageAsFile4);
   }, [imageAsFile4.image]);
 
-  // useEffect(() => {
-  //   console.log("[image1]");
-  //   console.log(imageAsFile1);
-  // }, [imageAsFile1]);
+  useEffect(() => {
+    if (
+      imageAsFile1.url !== "" &&
+      (imageAsFile1.progress === 0 || imageAsFile1.progress === 100) &&
+      (imageAsFile2.progress === 0 || imageAsFile2.progress === 100) &&
+      (imageAsFile3.progress === 0 || imageAsFile3.progress === 100) &&
+      (imageAsFile4.progress === 0 || imageAsFile4.progress === 100)
+    ) {
+      setBlockNext(false);
+    } else {
+      setBlockNext(true);
+    }
+  }, [
+    imageAsFile1.url,
+    imageAsFile1.progress,
+    imageAsFile2.progress,
+    imageAsFile3.progress,
+    imageAsFile4.progress,
+  ]);
 
-  // useEffect(() => {
-  //   console.log("[image2]");
-  //   console.log(imageAsFile2);
-  // }, [imageAsFile2]);
-
-  // useEffect(() => {
-  //   console.log("[image3]");
-  //   console.log(imageAsFile3);
-  // }, [imageAsFile3]);
-
-  // useEffect(() => {
-  //   console.log("[image4]");
-  //   console.log(imageAsFile4);
-  // }, [imageAsFile4]);
-
-  const uploadToFirebase = (imageAsFile, setImageAsFile): void => {
+  const uploadToFirebase = (imageAsFile, setImageAsFile) => {
     console.log("start of upload");
     // async magic goes here...
     const { image } = imageAsFile;
@@ -255,8 +248,8 @@ const PhotoUpload = () => {
   };
 
   return (
-    <Container>
-      <TitleWrapper>사진 업로드 (1/2)</TitleWrapper>
+    <Container style={uploadState != 0 ? { display: "none" } : {}}>
+      <TitleWrapper>사진 업로드</TitleWrapper>
       <TopWrapper>
         <TopWrapperRow>
           <UploadBtnDiv>
@@ -365,7 +358,7 @@ const PhotoUpload = () => {
           <Button
             btnText={"다음"}
             btnOnClick={() => {
-              console.log("다음");
+              if (!blockNext) setUploadState(1);
             }}
           ></Button>
         </ButtonDiv>

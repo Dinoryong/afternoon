@@ -14,7 +14,7 @@ public class AccountTest extends BaseDomainTest {
         //Given
         //우석
         String accountName = "우석";
-        String accountNickname = "dntjr";
+        String accountNickname = "우석짱!";
         String accountEmail = "dntjr11@naver.com";
 
         Account account = Account.builder()
@@ -27,7 +27,7 @@ public class AccountTest extends BaseDomainTest {
         //재웅
         //Given
         accountName = "재웅";
-        accountNickname = "wodnddd";
+        accountNickname = "테스트용닉네임";
         accountEmail = "jason967@naver.com";
 
         Account account2 = Account.builder()
@@ -40,7 +40,7 @@ public class AccountTest extends BaseDomainTest {
         //재욱
         //Given
         accountName = "재욱";
-        accountNickname = "wodnrrr";
+        accountNickname = "재욱이짱!";
         accountEmail = "wodnrrr@naver.com";
 
         Account account3 = Account.builder()

@@ -2,6 +2,7 @@ import React, { useEffect, useState } from "react";
 import styled from "@emotion/styled";
 import Image from "next/image";
 import dynamic from "next/dynamic";
+import { GET_LOGIN_POST } from "../api/post";
 
 const Container = styled.div`
   display: flex;
@@ -28,6 +29,11 @@ const DynamicComponentWithNoSSR = dynamic(
 );
 
 const index = () => {
+  useEffect(function mount() {
+    console.log("피드진입");
+    GET_LOGIN_POST();
+  });
+
   return (
     <Container>
       <Wrapper>

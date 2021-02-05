@@ -48,7 +48,7 @@ public class AccountControllerTest extends BaseControllerTest {
         //When
         AccountDto.CreateAccountRequest createAccountRequest = AccountDto.CreateAccountRequest.builder()
                 .accountName("한우석")
-                .accountNickname("dntjr")
+                .accountNickname("vvs우석")
                 .accountEmail("dntjr4772@naver.com")
                 .build();
 
@@ -65,7 +65,7 @@ public class AccountControllerTest extends BaseControllerTest {
         //When
         Account createAccountRequest = Account.builder()
                 .accountId(12L)
-                .accountEmail("tgi")
+                .accountEmail("tgi@na.com")
                 .accountName("5")
                 .accountNickname("TestNickname")
                 .build();
@@ -143,13 +143,13 @@ public class AccountControllerTest extends BaseControllerTest {
     @Test
     public void follow_성공() throws Exception {
 
-        Long yourId = 11L;
+        Long yourId = 24L;
 
         AccountDto.FollowRequest request =new  AccountDto.FollowRequest();
         request.setYourId(yourId);
 
 
-        String token = "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJzdWIiOiLroZzqt7jsnbjthqDtgbAiLCJleHAiOjE2MTIwODUwMjAsImFjY291bnRJZCI6OSwiYWNjb3VudEVtYWlsIjoiZG50anIxMUBuYXZlci5jb20ifQ.CarkzmADg9ppKFpb0H6FznJa4uyTUMFcHPVhD_xsJ8Q";
+        String token = "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJzdWIiOiLroZzqt7jsnbjthqDtgbAiLCJleHAiOjE2MTI4NzI0NDEsImFjY291bnRJZCI6NDYsImFjY291bnRFbWFpbCI6ImRudGpyNDc3MkBuYXZlci5jb20ifQ.Pl-viia-cG_7qa1G2opwqPZobtYPyfVZJxZ6YqHtShQ";
         mockMvc.perform(put("/api/accounts/my-following")
                 .header("Authorization","Bearer "+token)
                 .contentType(MediaType.APPLICATION_JSON)
@@ -161,13 +161,13 @@ public class AccountControllerTest extends BaseControllerTest {
     @Test
     public void follow_실패_셀프팔로우() throws Exception {
 
-        Long yourId = 9L;
+        Long yourId = 2L;
 
         AccountDto.FollowRequest request =new  AccountDto.FollowRequest();
         request.setYourId(yourId);
 
 
-        String token = "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJzdWIiOiLroZzqt7jsnbjthqDtgbAiLCJleHAiOjE2MTIwODUwMjAsImFjY291bnRJZCI6OSwiYWNjb3VudEVtYWlsIjoiZG50anIxMUBuYXZlci5jb20ifQ.CarkzmADg9ppKFpb0H6FznJa4uyTUMFcHPVhD_xsJ8Q";
+        String token = "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJzdWIiOiLroZzqt7jsnbjthqDtgbAiLCJleHAiOjE2MTI2NzcyODEsImFjY291bnRJZCI6MiwiYWNjb3VudEVtYWlsIjoiamFzb245NjdAbmF2ZXIuY29tIn0.2LJZlzsu2fkXOqyOa4szyBKy-iW-wFBOPnZZQpD008E";
         mockMvc.perform(put("/api/accounts/my-following")
                 .header("Authorization","Bearer "+token)
                 .contentType(MediaType.APPLICATION_JSON)
@@ -179,13 +179,13 @@ public class AccountControllerTest extends BaseControllerTest {
     @Test
     public void follow_실패_없는사람() throws Exception {
 
-        Long yourId = 2L;
+        Long yourId = 11L;
 
         AccountDto.FollowRequest request =new  AccountDto.FollowRequest();
         request.setYourId(yourId);
 
 
-        String token = "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJzdWIiOiLroZzqt7jsnbjthqDtgbAiLCJleHAiOjE2MTIwODUwMjAsImFjY291bnRJZCI6OSwiYWNjb3VudEVtYWlsIjoiZG50anIxMUBuYXZlci5jb20ifQ.CarkzmADg9ppKFpb0H6FznJa4uyTUMFcHPVhD_xsJ8Q";
+        String token = "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJzdWIiOiLroZzqt7jsnbjthqDtgbAiLCJleHAiOjE2MTI2NzcyODEsImFjY291bnRJZCI6MiwiYWNjb3VudEVtYWlsIjoiamFzb245NjdAbmF2ZXIuY29tIn0.2LJZlzsu2fkXOqyOa4szyBKy-iW-wFBOPnZZQpD008E";
         mockMvc.perform(put("/api/accounts/my-following")
                 .header("Authorization","Bearer "+token)
                 .contentType(MediaType.APPLICATION_JSON)
@@ -203,7 +203,7 @@ public class AccountControllerTest extends BaseControllerTest {
         request.setYourId(yourId);
 
 
-        String token = "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJzdWIiOiLroZzqt7jsnbjthqDtgbAiLCJleHAiOjE2MTIwODUwMjAsImFjY291bnRJZCI6OSwiYWNjb3VudEVtYWlsIjoiZG50anIxMUBuYXZlci5jb20ifQ.CarkzmADg9ppKFpb0H6FznJa4uyTUMFcHPVhD_xsJ8Q";
+        String token = "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJzdWIiOiLroZzqt7jsnbjthqDtgbAiLCJleHAiOjE2MTI2NzcyODEsImFjY291bnRJZCI6MiwiYWNjb3VudEVtYWlsIjoiamFzb245NjdAbmF2ZXIuY29tIn0.2LJZlzsu2fkXOqyOa4szyBKy-iW-wFBOPnZZQpD008E";
         mockMvc.perform(put("/api/accounts/my-following")
                 .header("Authorization","Bearer "+token)
                 .contentType(MediaType.APPLICATION_JSON)
@@ -222,15 +222,11 @@ public class AccountControllerTest extends BaseControllerTest {
         Tag tag=tagRepository.findByTagTitle(tagName);
         accountTagRequest.getTags().add(modelMapper.map(tag, TagDto.Tag.class));
 
-        tagName="서재";
+        tagName="스키";
         tag=tagRepository.findByTagTitle(tagName);
         accountTagRequest.getTags().add(modelMapper.map(tag, TagDto.Tag.class));
 
-        tagName="테라스";
-        tag=tagRepository.findByTagTitle(tagName);
-        accountTagRequest.getTags().add(modelMapper.map(tag, TagDto.Tag.class));
-
-        String token ="eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJzdWIiOiLroZzqt7jsnbjthqDtgbAiLCJleHAiOjE2MTI0NTE1MzcsImFjY291bnRJZCI6MSwiYWNjb3VudEVtYWlsIjoiZG50anI0NzcyQG5hdmVyLmNvbSJ9.MPlBQEI5Jksjy7qRVs9My9504ZtWRKAE3EiBU6oRH7A";
+        String token = "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJzdWIiOiLroZzqt7jsnbjthqDtgbAiLCJleHAiOjE2MTI4NTA3ODEsImFjY291bnRJZCI6MjAsImFjY291bnRFbWFpbCI6ImRudGpyNDc3MkBuYXZlci5jb20ifQ.2GdyblKPOqCBXnCQoxMYCan3bAkVTE4QY216KjexqEI";
         mockMvc.perform(put("/api/accounts/mytag")
                 .header("Authorization","Bearer "+token)
                 .contentType(MediaType.APPLICATION_JSON)
@@ -238,5 +234,23 @@ public class AccountControllerTest extends BaseControllerTest {
                 .andExpect(status().isOk())
                 .andDo(print());
     }
+    //--------------------------------------태그 기준 피드------------------------------------------------------
+    @Test
+    public void 태그기준피드_성공() throws Exception{
+        String Id = "1";
+        mockMvc.perform(get("/api/accounts/feed/"+Id)
+                .contentType(MediaType.APPLICATION_JSON))
+                .andExpect(status().isOk())
+                .andDo(print());
+    }
 
+    //--------------------------------------팔로잉 기준 피드------------------------------------------------------
+    @Test
+    public void 팔로잉기준피드_성공() throws Exception{
+        String Id = "1";
+        mockMvc.perform(get("/api/accounts/feed/follow/"+Id)
+                .contentType(MediaType.APPLICATION_JSON))
+                .andExpect(status().isOk())
+                .andDo(print());
+    }
 }

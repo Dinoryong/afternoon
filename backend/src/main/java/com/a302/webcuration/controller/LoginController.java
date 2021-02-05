@@ -19,6 +19,7 @@ import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
 
+//http://localhost:8080/swagger-ui.html
 
 @RestController
 @RequestMapping(value = "/api")
@@ -34,52 +35,15 @@ public class LoginController {
     public static final Logger logger = LoggerFactory.getLogger(AccountController.class);
 
     @PostMapping("/login")
-    public ResponseEntity login(@RequestBody @Valid AccountDto.LoginRequest loginRequest, Errors errors) {
-
-        if(errors.hasErrors())
-        {
-            return new ResponseEntity(new BaseMessage(BaseStatus.BAD_REQUEST,errors), HttpStatus.BAD_REQUEST);
-        }
-
-        loginService.loginValidator(loginRequest,errors);
-
-        if(errors.hasErrors())
-        {
-            return new ResponseEntity(new BaseMessage(BaseStatus.BAD_REQUEST,errors), HttpStatus.BAD_REQUEST);
-        }
-        BaseMessage bs = loginService.login(loginRequest);
-        //TODO 오류 발견
-        HttpHeaders httpHeaders = new HttpHeaders();
-        //수정 해야됌-------------------------------------
-        httpHeaders.add("test","temp");
-        if(bs.getHeaders()!=null)
-        {
-         httpHeaders.add("Authorization",bs.getHeaders().toString());
-        }
-        //----------------------------------------------------------------------
-        return new ResponseEntity(bs.getInfo(),httpHeaders,HttpStatus.OK);
+    public ResponseEntity login(@RequestBody @Valid AccountDto.LoginRequest loginRequest) {
+        BaseMessage bm = loginService.login(loginRequest);
+        return new ResponseEntity(bm.getData(),bm.getHeaders(),bm.getHttpStatus());
     }
 
     @PostMapping("/auto-login")
-    public ResponseEntity autoLogin(@RequestBody @Valid AccountDto.LoginRequest loginRequest,@RequestHeader(value = "Authorization") String token, Errors errors) {
-        if(errors.hasErrors())
-        {
-            return new ResponseEntity(new BaseMessage(BaseStatus.BAD_REQUEST,errors), HttpStatus.BAD_REQUEST);
-        }
-
-        loginService.loginValidator(loginRequest,errors);
-
-        if(errors.hasErrors())
-        {
-            return new ResponseEntity(new BaseMessage(BaseStatus.BAD_REQUEST,errors), HttpStatus.BAD_REQUEST);
-        }
+    public ResponseEntity autoLogin(@RequestBody @Valid AccountDto.LoginRequest loginRequest,@RequestHeader(value = "Authorization") String token) {
 
         BaseMessage bm = loginService.autoLogin(loginRequest,token);
-        HttpStatus httpStatus = HttpStatus.OK;
-        if(bm.getStatus().equals(BaseStatus.BAD_REQUEST))
-        {
-            httpStatus=HttpStatus.BAD_REQUEST;
-        }
-        return new ResponseEntity(bm.getInfo(), httpStatus);
+        return new ResponseEntity(bm.getData(),bm.getHeaders(), bm.getHttpStatus());
     }
 }

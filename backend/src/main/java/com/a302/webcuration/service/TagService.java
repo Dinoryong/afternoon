@@ -1,10 +1,13 @@
 package com.a302.webcuration.service;
 
+import com.a302.webcuration.common.BaseMessage;
 import com.a302.webcuration.domain.Tag.Tag;
 import com.a302.webcuration.domain.Tag.TagDto;
 import com.a302.webcuration.domain.Tag.TagRepository;
 import lombok.RequiredArgsConstructor;
 import org.modelmapper.ModelMapper;
+import org.springframework.http.HttpHeaders;
+import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -17,9 +20,9 @@ public class TagService {
     private final TagRepository tagRepository;
     private final ModelMapper modelMapper;
     @Transactional
-    public List<TagDto.Tag> retrieveTagAll(){
+    public BaseMessage retrieveTagAll(){
         List<Tag> tags=tagRepository.findAll();
         List<TagDto.Tag> tagList=tags.stream().map(tag->modelMapper.map(tag,TagDto.Tag.class)).collect(Collectors.toList());
-        return tagList;
+        return new BaseMessage(HttpStatus.OK,tagList);
     }
 }

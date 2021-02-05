@@ -3,56 +3,79 @@ import styled from "@emotion/styled";
 import Button from "../Button";
 import color from "../../styles/theme";
 
-const MyPost = styled.div`
-  width: 200px;
-`;
+const MyPost = styled.div``;
 
-const MyLikes = styled.div`
-  width: 200px;
-`;
+const MyLikes = styled.div``;
 
-// const MyCollections = styled.div`
-// `;
+const MyCollections = styled.div``;
 
-const MenuBar = () => {
+const MenuBar = ({ profileMyposts, profileLikes, profileCollections }) => {
+  const postString = "게시물 " + profileMyposts;
+  const likesString = "좋아요 " + profileLikes;
+  const collectionsString = "컬렉션 " + profileCollections;
+
   return (
     <>
       <MyPost>
         <Button
-          btnWidth="190px"
+          btnWidth="auto"
           btnHeight="70px"
           btnBgColor="transparent"
-          btnText="게시글"
-          btnTextColor="${color.gray.light}"
+          btnText={postString}
+          btnTextColor={color.black.default}
           btnFontSize="20px"
           btnBorderColor="transparent"
-          btnHoverBorderColor="transparent"
-          btnHoverTextColor="black"
-          // btnHoverBorderColor={routerPath === "/" ? "transparent" : null}
-          // btnBgColor={routerPath === "/" ? "transparent" : null}
-          // btnTextColor={routerPath === "/" ? "white" : null}
-          // btnBorderColor={routerPath === "/" ? "white" : null}
-          // btnOnClick={toggleSubmit}
+          btnUseOpacity={true}
+          btnSetOpacity={"0.4"}
+          btnUseIcon={true}
+          btnIconSrc={"/assets/icons/search_black.png"}
+          btnIconHeight={"18px"}
+          btnIconWidth={"18px"}
+          btnIconMargin={"4px 12px 0px 0px"}
+          btnMarginLeft={"20px"}
+          btnMarginRight={"20px"}
         />
       </MyPost>
       <MyLikes>
         <Button
-          btnWidth="190px"
+          btnWidth="auto"
           btnHeight="70px"
           btnBgColor="transparent"
-          btnText="좋아요"
-          btnTextColor="${color.gray.light}"
+          btnText={likesString}
+          btnTextColor={color.black.default}
           btnFontSize="20px"
           btnBorderColor="transparent"
-          btnHoverBorderColor="transparent"
-          btnHoverTextColor="black"
-          // btnHoverBorderColor={routerPath === "/" ? "transparent" : null}
-          // btnBgColor={routerPath === "/" ? "transparent" : null}
-          // btnTextColor={routerPath === "/" ? "white" : null}
-          // btnBorderColor={routerPath === "/" ? "white" : null}
-          // btnOnClick={toggleSubmit}
+          btnUseOpacity={true}
+          btnSetOpacity={"0.4"}
+          btnUseIcon={true}
+          btnIconSrc={"/assets/icons/search_black.png"}
+          btnIconHeight={"18px"}
+          btnIconWidth={"18px"}
+          btnIconMargin={"4px 12px 0px 0px"}
+          btnMarginLeft={"20px"}
+          btnMarginRight={"20px"}
         />
       </MyLikes>
+      <MyCollections>
+        <Button
+          btnWidth="auto"
+          btnHeight="70px"
+          btnBgColor="transparent"
+          btnText={collectionsString}
+          btnTextColor={color.black.default}
+          btnFontSize="20px"
+          btnBorderColor="transparent"
+          btnUseOpacity={true}
+          btnSetOpacity={"0.4"}
+          btnUseIcon={true}
+          btnIconSrc={"/assets/icons/search_black.png"}
+          btnIconHeight={"18px"}
+          btnIconWidth={"18px"}
+          btnIconMargin={"4px 12px 0px 0px"}
+          btnMarginLeft={"20px"}
+          btnMarginRight={"20px"}
+        />
+      </MyCollections>
     </>
   );
 };

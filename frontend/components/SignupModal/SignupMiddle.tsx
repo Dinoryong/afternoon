@@ -95,7 +95,8 @@ const SignupMiddle = () => {
 
     const result = await SIGN_UP(signupProps);
 
-    if (result.status) {
+    if (result.status === 201) {
+      window.localStorage.setItem("accountEmail", result.data.accountEmail);
       alert("회원가입에 성공했습니다.");
       router.push("/");
     } else {

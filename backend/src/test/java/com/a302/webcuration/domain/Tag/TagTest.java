@@ -17,98 +17,147 @@ public class TagTest extends BaseDomainTest {
         //Given
         //작업공간
         String tagTitle = "작업공간";
-        String tagDesc = "작업공간입니다";
-        Tag tag1= Tag.builder()
+        Tag tag= Tag.builder()
                 .tagTitle(tagTitle)
-                .tagDesc(tagDesc)
                 .build();
-        tagRepository.save(tag1);
-        //Given
-        //작업공간-개발자
+        tagRepository.save(tag);
+        //개발자
         tagTitle = "개발자";
-        tagDesc = "개발자 작업공간입니다";
-        Tag tag2= Tag.builder()
+        tag= Tag.builder()
                 .tagTitle(tagTitle)
-                .tagDesc(tagDesc)
                 .build();
-        tag2.setParent(tag1);
-        tagRepository.save(tag2);
-        //Given
-        //작업공간-요리사
-        tagTitle = "요리사";
-        tagDesc = "요리사 작업공간입니다";
-        Tag tag3= Tag.builder()
-                .tagTitle(tagTitle)
-                .tagDesc(tagDesc)
-                .build();
-        tag3.setParent(tag1);
-        tagRepository.save(tag3);
-        //Given
-        //작업공간-디자이너
+        tagRepository.save(tag);
+        //디자이너
         tagTitle = "디자이너";
-        tagDesc = "디자이너 작업공간입니다";
-        Tag tag4= Tag.builder()
+        tag= Tag.builder()
                 .tagTitle(tagTitle)
-                .tagDesc(tagDesc)
                 .build();
-        tag4.setParent(tag1);
-        tagRepository.save(tag4);
+        tagRepository.save(tag);
+        //요리사
+        tagTitle = "요리사";
+        tag= Tag.builder()
+                .tagTitle(tagTitle)
+                .build();
+        tagRepository.save(tag);
+        //밴드
+        tagTitle = "밴드";
+        tag= Tag.builder()
+                .tagTitle(tagTitle)
+                .build();
+        tagRepository.save(tag);
 
         //Given
         //인테리어
         tagTitle = "인테리어";
-        tagDesc = "인테리어입니다";
-        Tag tag5= Tag.builder()
+        tag= Tag.builder()
                 .tagTitle(tagTitle)
-                .tagDesc(tagDesc)
                 .build();
-        tagRepository.save(tag5);
-        //Given
-        //인테리어-화장실
-        tagTitle = "화장실";
-        tagDesc = "화장실 인테리어입니다";
-        Tag tag6= Tag.builder()
+        tagRepository.save(tag);
+        //드레스룸
+        tagTitle = "드레스룸";
+        tag= Tag.builder()
                 .tagTitle(tagTitle)
-                .tagDesc(tagDesc)
                 .build();
-        tag6.setParent(tag5);
-        tagRepository.save(tag6);
-        //Given
-        //인테리어-서재
+        tagRepository.save(tag);
+        //서재
         tagTitle = "서재";
-        tagDesc = "서재 인테리어입니다";
-        Tag tag7= Tag.builder()
+        tag= Tag.builder()
                 .tagTitle(tagTitle)
-                .tagDesc(tagDesc)
                 .build();
-        tag7.setParent(tag5);
-        tagRepository.save(tag7);
+        tagRepository.save(tag);
+        //와인룸
+        tagTitle = "와인룸";
+        tag= Tag.builder()
+                .tagTitle(tagTitle)
+                .build();
+        tagRepository.save(tag);
+        //아기방
+        tagTitle = "아기방";
+        tag= Tag.builder()
+                .tagTitle(tagTitle)
+                .build();
+        tagRepository.save(tag);
+        //고양이방
+        tagTitle = "고양이방";
+        tag= Tag.builder()
+                .tagTitle(tagTitle)
+                .build();
+        tagRepository.save(tag);
+        //컬렉션
+        tagTitle = "컬렉션";
+        tag= Tag.builder()
+                .tagTitle(tagTitle)
+                .build();
+        tagRepository.save(tag);
+        //피규어
+        tagTitle = "피규어";
+        tag= Tag.builder()
+                .tagTitle(tagTitle)
+                .build();
+        tagRepository.save(tag);
+        //레고
+        tagTitle = "레고";
+        tag= Tag.builder()
+                .tagTitle(tagTitle)
+                .build();
+        tagRepository.save(tag);
+        //신발
+        tagTitle = "신발";
+        tag= Tag.builder()
+                .tagTitle(tagTitle)
+                .build();
+        tagRepository.save(tag);
+
+        //굿즈
+        tagTitle = "굿즈";
+        tag= Tag.builder()
+                .tagTitle(tagTitle)
+                .build();
+        tagRepository.save(tag);
+
         //Given
-        //인테리어-테라스
-        tagTitle = "테라스";
-        tagDesc = "테라스 인테리어입니다";
-        Tag tag8= Tag.builder()
+        //레져스포츠
+        tagTitle = "레져스포츠";
+        tag= Tag.builder()
                 .tagTitle(tagTitle)
-                .tagDesc(tagDesc)
                 .build();
-        tag8.setParent(tag5);
-        tagRepository.save(tag8);
-    }
-    @Test
-    @Transactional
-    public void 부모태그_조회(){
-        String tagTitle = "작업공간";
-        Tag tag1 = tagRepository.findByTagTitle(tagTitle);
-        System.out.println("tag1 = " + tag1.getTagDesc());
-        //에러뜬거 Transactional 어노테이션으로 해결
-        // (영속성 컨텍스트가 종료되어 지연 로딩을 할 수 없어서 발생하는 오류)
-        System.out.println("size = "+tag1.getChild().size());
-        // TODO: 2021-01-25  상위태그 조회시 하위태그까지 전부 찾기
-        //부모태그면 자식태그까지 다 조회
-        if(!tag1.getChild().isEmpty()){
-            for(Tag childTag : tag1.getChild()){
-                System.out.println("childTag = " + childTag.getTagTitle());
-            }
-        }
+        tagRepository.save(tag);
+        //테니스
+        tagTitle = "테니스";
+        tag= Tag.builder()
+                .tagTitle(tagTitle)
+                .build();
+        tagRepository.save(tag);
+        //스킨스쿠버
+        tagTitle = "스킨스쿠버";
+        tag= Tag.builder()
+                .tagTitle(tagTitle)
+                .build();
+        tagRepository.save(tag);
+        //캠핑
+        tagTitle = "캠핑";
+        tag= Tag.builder()
+                .tagTitle(tagTitle)
+                .build();
+        tagRepository.save(tag);
+        //클라이밍
+        tagTitle = "클라이밍";
+        tag= Tag.builder()
+                .tagTitle(tagTitle)
+                .build();
+        tagRepository.save(tag);
+        //헬스
+        tagTitle = "헬스";
+        tag= Tag.builder()
+                .tagTitle(tagTitle)
+                .build();
+        tagRepository.save(tag);
+        //필라테스
+        tagTitle = "필라테스";
+        tag= Tag.builder()
+                .tagTitle(tagTitle)
+                .build();
+        tagRepository.save(tag);
+
     }
 }

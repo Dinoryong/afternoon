@@ -47,23 +47,23 @@ public class AccountDto {
     @Getter @Setter @RequiredArgsConstructor
     public static class AccountProfile{
 
-        private String name;
+        private String accountName;
 
-        private String nickname;
+        private String accountNickname;
 
-        private String email;
+        private String accountEmail;
 
         private LocalDate accountCreateDate;
 
         private String accountDesc;
 
-        private List<AccountDto.FollowingDto> profileFollowing;
+        private List<AccountDto.FollowingDto> following;
 
-        private List<AccountDto.FollowerDto> profileFollower;
+        private List<AccountDto.FollowerDto> follower;
 
-        private int followingCnt;
+        private int accountFollowingCnt;
 
-        private int followerCnt;
+        private int accountFollowerCnt;
 
     }
 
@@ -86,7 +86,7 @@ public class AccountDto {
         private String accountNickname;
 
         @NotNull
-        @Email
+        @Email(message = "알맞은 이메일 형식으로 입력해주세요.")
         private String accountEmail;
 
         public Account toEntity()
@@ -140,17 +140,6 @@ public class AccountDto {
     public static class AccountTagRequest{
         //private List<String> tagName=new ArrayList<>();
         private List<TagDto.Tag> tags=new ArrayList<>();
-    }
-
-    @Data
-    public static class Accounts{
-        private Long accountId;
-        private String accountName;
-        private String accountNickname;
-        private String accountEmail;
-        private String accountDesc;
-        private String accountAuthKey;
-        private Role accountRole;
     }
 
 }

@@ -103,11 +103,14 @@ const index = () => {
   const [windowWidth, setWindowWidth] = useState<number>();
   const [windowHeight, setWindowHeight] = useState<number>();
 
+  useEffect(() => {}, [autoLogin]);
+
   useEffect(() => {
     autoLoginCheck();
 
     const doAutoLogin = async () => {
       const result = await AUTO_LOGIN();
+      console.log(result);
       if (result.status === 200) {
         loginStateTrue();
       } else {
@@ -115,8 +118,9 @@ const index = () => {
       }
     };
 
+    console.log(autoLogin, loginState);
     if (autoLogin) {
-      if (loginState) {
+      if (!loginState) {
         doAutoLogin();
       }
     }
@@ -139,8 +143,8 @@ const index = () => {
   });
 
   useEffect(() => {
-    document.body.style.overflow = isShown ? "hidden" : "scroll";
-  }, [isShown]);
+    document.body.style.overflow = isShown || submitShown ? "hidden" : "scroll";
+  }, [isShown, submitShown]);
 
   const containerStyle = {
     display: routerPath === "/signup" ? "none" : "flex",
@@ -149,6 +153,18 @@ const index = () => {
         ? "none"
         : "0px 4px 12px rgba(0, 0, 0, 0.08), 0px 0px 1px rgba(1, 0, 0, 0.1)",
     backgroundColor: routerPath === "/" ? "transparent" : "white",
+  };
+
+  const onClickSubmitBg = () => {
+    if (
+      confirm(
+        "PINSET : 사진 등록을 취소하시겠습니까?\n확인을 누르시면 현재까지 작업이 사라집니다."
+      )
+    ) {
+      toggleSubmit();
+    } else {
+      return;
+    }
   };
 
   return (
@@ -164,7 +180,7 @@ const index = () => {
       {submitShown && (
         <>
           <ModalFrame style={{ height: windowHeight }}>
-            <CloseBg onClick={toggleSubmit}></CloseBg>
+            <CloseBg onClick={onClickSubmitBg}></CloseBg>
             <SubmitModal
               windowWidth={windowWidth}
               windowHeight={windowHeight}

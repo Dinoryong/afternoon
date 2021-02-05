@@ -59,7 +59,7 @@ public class LoginControllerTest extends BaseControllerTest {
     @Test
     public void Login_AuthKey_Off_성공() throws Exception {
 
-        String AuthKey = "erizabvc";
+        String AuthKey = "cgqspygy";
 
         AccountDto.LoginRequest  account = new AccountDto.LoginRequest();
         account.setAct("check-authKey-off");
@@ -76,25 +76,24 @@ public class LoginControllerTest extends BaseControllerTest {
     @Test
     public void Login_AuthKey_Off_실패() throws Exception {
 
-        String AuthKey = "gzyiru";
+        String AuthKey = "qqvyne13!";
 
         AccountDto.LoginRequest  account = new AccountDto.LoginRequest();
         account.setAct("check-authKey-off");
-        account.setAccountEmail("jason967@naver.com");
+        account.setAccountEmail("dntjr4772@naver.com");
         account.setAccountAuthKey(AuthKey);
 
         mockMvc.perform(post("/api/login")
                 .contentType(MediaType.APPLICATION_JSON)
                 .content(objectMapper.writeValueAsString(account)))
-                .andExpect(status().isOk())
+                .andExpect(status().isBadRequest())
                 .andDo(print());
     }
 
     @Test
     public void Login_AuthKey_On_성공() throws Exception {
 
-
-        String AuthKey = "erizabvc";
+        String AuthKey = "cgqspygy";
 
         AccountDto.LoginRequest  account = new AccountDto.LoginRequest();
         account.setAct("check-authKey-on");
@@ -111,14 +110,14 @@ public class LoginControllerTest extends BaseControllerTest {
     @Test
     public void auto_login_성공() throws Exception {
 
-        String AuthKey = "kgp8fyiv";
-        Long id = 8L;
-        String email = "dntjr11@naver.com";
+        String AuthKey = "erizabvc";
+        Long id = 2L;
+        String email = "dntjr4772@naver.com";
         AccountDto.LoginRequest  account = new AccountDto.LoginRequest();
         account.setAccountEmail(email);
         account.setAccountId(id);
 
-        String token = "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJzdWIiOiLroZzqt7jsnbjthqDtgbAiLCJleHAiOjE2MTIwODUwMjAsImFjY291bnRJZCI6OSwiYWNjb3VudEVtYWlsIjoiZG50anIxMUBuYXZlci5jb20ifQ.CarkzmADg9ppKFpb0H6FznJa4uyTUMFcHPVhD_xsJ8Q";
+        String token = "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJzdWIiOiLroZzqt7jsnbjthqDtgbAiLCJleHAiOjE2MTI2ODEwOTEsImFjY291bnRJZCI6MiwiYWNjb3VudEVtYWlsIjoiamFzb245NjdAbmF2ZXIuY29tIn0.QjDFiYA35WZy7sH_pOld3KeL99fAKLaNbalmrA_AWng";
         mockMvc.perform(post("/api/auto-login")
                 .contentType(MediaType.APPLICATION_JSON)
                 .header("Authorization","Bearer "+token)

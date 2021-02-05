@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from "react";
 import styled from "@emotion/styled";
 import color from "../../styles/theme";
-import { useRouter } from "next/router";
+import Image from "next/image";
 
 const Container = styled.div`
   display: flex;
@@ -24,6 +24,19 @@ const Container = styled.div`
   font-weight: 400;
 `;
 
+const IconBox = styled.div`
+  position: relative;
+  width: 10px;
+  height: 10px;
+  margin: 4px;
+`;
+
+const TextBox = styled.div`
+  display: flex;
+  justify-content: center;
+  width: 100%;
+`;
+
 type ButtonProps = {
   btnText?: string;
   btnBgColor?: string;
@@ -41,6 +54,13 @@ type ButtonProps = {
   btnHoverBgColor?: string;
   btnRouterPush?: string;
   btnOnClick?: Function;
+  btnUseOpacity?: boolean;
+  btnSetOpacity?: string;
+  btnUseIcon?: boolean;
+  btnIconSrc?: string;
+  btnIconWidth?: string;
+  btnIconHeight?: string;
+  btnIconMargin?: string;
 };
 
 const index = ({
@@ -61,10 +81,18 @@ const index = ({
   btnOnClick = () => {
     console.log("onClick : 기능없음");
   },
+  btnUseOpacity,
+  btnSetOpacity,
+  btnUseIcon,
+  btnIconSrc,
+  btnIconWidth,
+  btnIconHeight,
+  btnIconMargin,
 }: ButtonProps) => {
   const [bgColor, setBgColor] = useState<string>(btnBgColor);
   const [borderColor, setBorderColor] = useState<string>(btnBorderColor);
   const [textColor, setTextColor] = useState<string>(btnTextColor);
+  const [opacity, setOpacity] = useState<string>(btnSetOpacity);
 
   useEffect(() => {
     setBgColor(btnBgColor);
@@ -73,15 +101,23 @@ const index = ({
   }, [btnBgColor, btnBorderColor, btnTextColor]);
 
   const onMouseOver = (): void => {
-    setBgColor(btnHoverBgColor);
-    setBorderColor(btnHoverBorderColor);
-    setTextColor(btnHoverTextColor);
+    if (!btnUseOpacity) {
+      setBgColor(btnHoverBgColor);
+      setBorderColor(btnHoverBorderColor);
+      setTextColor(btnHoverTextColor);
+    } else {
+      setOpacity("1");
+    }
   };
 
   const onMouseLeave = (): void => {
-    setBgColor(btnBgColor);
-    setBorderColor(btnBorderColor);
-    setTextColor(btnTextColor);
+    if (!btnUseOpacity) {
+      setBgColor(btnBgColor);
+      setBorderColor(btnBorderColor);
+      setTextColor(btnTextColor);
+    } else {
+      setOpacity(btnSetOpacity);
+    }
   };
 
   const onClick = (): void => {
@@ -102,12 +138,26 @@ const index = ({
         marginRight: btnMarginRight,
         fontWeight: btnFontWeight,
         fontSize: btnFontSize,
+        opacity: btnUseOpacity ? opacity : 1,
       }}
       onMouseOver={onMouseOver}
       onMouseLeave={onMouseLeave}
       onClick={onClick}
     >
-      {btnText}
+      {btnUseIcon && (
+        <IconBox
+          style={{
+            width: btnIconWidth,
+            minWidth: btnIconWidth,
+            height: btnIconHeight,
+            minHeight: btnIconHeight,
+            margin: btnIconMargin,
+          }}
+        >
+          <Image src={btnIconSrc} layout="fill"></Image>
+        </IconBox>
+      )}
+      <TextBox>{btnText}</TextBox>
     </Container>
   );
 };
