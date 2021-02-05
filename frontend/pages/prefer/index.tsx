@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 import styled from "@emotion/styled";
 import Button from "../../components/Button";
 import color from "../../styles/theme";
@@ -11,16 +11,14 @@ const Container = styled.div`
   justify-content: center;
   align-items: center;
   padding-top: 62px;
-  /* padding-left: 80px;
-  padding-right: 80px; */
   width: 100%;
-  height: 1200px;
+  min-height: 600px;
 `;
 
 const Wrapper = styled.div`
   display: flex;
-  width: 1280px;
-  height: 1200px;
+  width: 1000px;
+  height: 100%;
   flex-direction: column;
   justify-content: space-between;
   align-items: center;
@@ -31,8 +29,8 @@ const TopBox = styled.div`
   flex-direction: column;
   width: 100%;
   align-items: center;
-  padding: 50px;
-  margin-bottom: 50px;
+  margin-top: 60px;
+  margin-bottom: 20px;
 `;
 
 const InnerBox1 = styled.div`
@@ -40,7 +38,7 @@ const InnerBox1 = styled.div`
   flex-direction: column;
   margin-bottom: 13px;
   width: 100%;
-  font-size: 40px;
+  font-size: 24px;
   font-weight: bold;
   justify-content: center;
   align-items: center;
@@ -50,7 +48,7 @@ const InnerBox2 = styled.div`
   display: flex;
   flex-direction: column;
   width: 100%;
-  font-size: 20px;
+  font-size: 15px;
   justify-content: center;
   align-items: center;
 `;
@@ -59,23 +57,41 @@ const MiddleBox = styled.div`
   display: flex;
   flex-direction: column;
   width: 100%;
-  height: 700px;
   justify-content: space-between;
-  margin-bottom: 30px;
+  height: 100%;
+  overflow-y: scroll;
 `;
 
 const BottomBox = styled.div`
   display: flex;
   width: 100%;
-  height: 50px;
   justify-content: flex-end;
   align-items: center;
-  padding: 1px;
+  margin-bottom: 60px;
+  margin-top: 20px;
 `;
 
 const index = () => {
+  const [windowHeight, setWindowHeight] = useState<number>();
+
+  useEffect(function mount() {
+    const resizeHandler = () => {
+      setWindowHeight(window.innerHeight);
+    };
+
+    resizeHandler();
+
+    window.addEventListener("resize", resizeHandler);
+
+    const cleanup = () => {
+      window.removeEventListener("resize", resizeHandler);
+    };
+
+    return cleanup;
+  });
+
   return (
-    <Container>
+    <Container style={{ height: windowHeight }}>
       <Wrapper>
         <TopBox>
           <InnerBox1>이런..! 난재님의 피드에 표시할 내용이 없어요.</InnerBox1>
@@ -94,11 +110,11 @@ const index = () => {
             btnText="관심태그 0개 선택"
             btnTextColor={color.white.default}
             btnHeight="40px"
-            btnFontSize="18px"
+            btnFontSize="15px"
             btnFontWeight={700}
             btnBorderColor="transparent"
             btnHoverBorderColor="transparent"
-            btnHoverBgColor={color.gray.semidark}
+            btnHoverBgColor={color.red.default}
             btnHoverTextColor={color.white.default}
           />
         </BottomBox>
