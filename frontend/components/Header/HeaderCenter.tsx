@@ -29,6 +29,12 @@ const NoticeIcon = styled.div<HeaderProps>`
   transition: all 0.2s;
 `;
 
+const IconBox = styled.div`
+  position: relative;
+  width: 20px;
+  height: 20px;
+`;
+
 type HeaderProps = {
   routerPath?: String;
 };
@@ -83,13 +89,14 @@ const HeaderRight = ({ routerPath }: HeaderProps) => {
         btnOnClick={toggleSubmit}
       />
       <NoticeIcon {...props} style={noticeIconStyle}>
-        <Image
-          src={noticeImg}
-          width="22"
-          height="22"
-          quality="100"
-          objectFit="contain"
-        />
+        <IconBox>
+          <Image
+            src={noticeImg}
+            layout="fill"
+            quality="100"
+            objectFit="contain"
+          />
+        </IconBox>
       </NoticeIcon>
     </Container>
   );

@@ -1,6 +1,6 @@
 import styled from "@emotion/styled";
 import React, { useState } from "react";
-import TagList from "../../data/tagList";
+import TagList from "../../data/TagList";
 import color from "../../styles/theme";
 
 const Container = styled.div`
