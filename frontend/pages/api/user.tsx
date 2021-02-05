@@ -20,7 +20,7 @@ export const SIGN_UP = async (req) => {
     try {
       await axios.post(`${API_ROOT_URI}/api/accounts`, req).then((res) => {
         console.log(res);
-        data = res.data.data;
+        data = res.data;
         status = res.status;
       });
       return { status, data };
@@ -128,7 +128,8 @@ export const CONFIRM_LOGIN = async (req) => {
 export const LOG_OUT = async () => {
   window.localStorage.removeItem("authToken");
   window.localStorage.removeItem("accountId");
-  window.localStorage.removeItem("accountEmail");
+  window.localStorage.setItem("accountEmail", "");
+  window.localStorage.removeItem("accountNickname");
 };
 
 export const AUTO_LOGIN = async () => {

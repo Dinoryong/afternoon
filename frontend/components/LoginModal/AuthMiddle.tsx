@@ -128,6 +128,10 @@ const AuthMiddle = ({ currentEmail }) => {
 
       window.localStorage.setItem("accountEmail", result.data.accountEmail);
       window.localStorage.setItem("accountId", result.data.accountId);
+      window.localStorage.setItem(
+        "accountNickname",
+        result.data.accountNickname
+      );
       window.localStorage.setItem("authToken", authToken);
       loginStateTrue();
       toggle();

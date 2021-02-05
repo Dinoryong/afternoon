@@ -103,8 +103,6 @@ const index = () => {
   const [windowWidth, setWindowWidth] = useState<number>();
   const [windowHeight, setWindowHeight] = useState<number>();
 
-  useEffect(() => {}, [autoLogin]);
-
   useEffect(() => {
     autoLoginCheck();
 

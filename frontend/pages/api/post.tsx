@@ -38,18 +38,23 @@ export const SUBMIT_POST = async (req) => {
   }
 };
 
-export const GET_LOGIN_POST = async () => {
+import FeedRes from "../../data/FeedRes";
+
+export const GET_FEED = async () => {
   if (!VIA_API_DEV) {
     try {
-      return { status: 200, data: {} };
+      return {
+        status: 200,
+        data: FeedRes,
+      };
     } catch (error) {
       console.log(error);
     }
     return { status: false };
   } else {
     // API 요청 시 실행
-    let data = {};
-    let status = 0;
+    let data;
+    let status;
 
     try {
       await axios

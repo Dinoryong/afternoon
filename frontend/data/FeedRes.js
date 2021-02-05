@@ -1,4 +1,4 @@
-const feedRes = {
+const FeedRes = {
   httpStatus: "OK",
   headers: null,
   data: [
@@ -172,3 +172,12 @@ const feedRes = {
     },
   ],
 };
+
+const FeedResNull = {
+  httpStatus: "OK",
+  headers: null,
+  data: [],
+};
+
+export default FeedRes;
+// export default FeedResNull;
