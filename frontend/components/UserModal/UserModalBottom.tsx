@@ -76,7 +76,7 @@ const UserModalBottom = ({
           btnHoverBgColor={color.blue.dark}
           btnHoverTextColor={color.white.default}
           btnUseIcon={true}
-          btnIconSrc={"/assets/icons/search_white.png"}
+          btnIconSrc={"/assets/icons/facebook_icon.png"}
           btnIconHeight={"18px"}
           btnIconWidth={"18px"}
           btnIconMargin={"0px 0px 0px 20px"}
@@ -95,7 +95,7 @@ const UserModalBottom = ({
           btnHoverBgColor={color.yellow.dark}
           btnHoverTextColor={color.black.default}
           btnUseIcon={true}
-          btnIconSrc={"/assets/icons/search_white.png"}
+          btnIconSrc={"/assets/icons/kakao_icon.png"}
           btnIconHeight={"18px"}
           btnIconWidth={"18px"}
           btnIconMargin={"0px 0px 0px 20px"}
@@ -114,10 +114,10 @@ const UserModalBottom = ({
           btnHoverBgColor={color.gray.semidark}
           btnHoverTextColor={color.black.default}
           btnUseIcon={true}
-          btnIconSrc={"/assets/icons/search_white.png"}
-          btnIconHeight={"18px"}
-          btnIconWidth={"18px"}
-          btnIconMargin={"0px 0px 0px 20px"}
+          btnIconSrc={"/assets/icons/google_icon.png"}
+          btnIconHeight={"16px"}
+          btnIconWidth={"16px"}
+          btnIconMargin={"0px 1px 0px 21px"}
         />
       </SnsButton3>
     </Container>
