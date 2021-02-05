@@ -24,14 +24,14 @@ const index = () => {
   const profileData = {
     profileImg:
       "https://images.unsplash.com/photo-1611759931890-db159d745102?ixid=MXwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHw%3D&ixlib=rb-1.2.1&auto=format&fit=crop&w=632&q=80",
-    profileName: "Alex",
+    profileName: "구영지",
     profileBox:
       "보이는 가치를 사랑의 끓는다. 굳세게 산야에  품었기 이상의 속잎나고, 그리하였는가? 타오르고 못하다 가치를 귀는 없는 속에서 따뜻한 보이는 내는 쓸쓸하랴? 인간은 가슴에 새 그들에게 자신과 대한 길지 것이다. 날카로우나 얼마나 용감 그리하였는가? 타오르고 최대 3줄 적당",
     profileFollowing: "159",
     profileFollwer: "143534",
 		profileMyposts: "376",
 		profileLikes: "100",
-		profileTags: "",
+		profileTags: [1,2,3,4,7,8,5,9,13,23,15,17,18],
 		profileCollections: "13",
   };
 

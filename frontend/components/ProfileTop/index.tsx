@@ -28,6 +28,7 @@ const Wrapper2 = styled.div`
   flex-direction: column;
   justify-content: space-between;
   width: 100%;
+  max-width: 640px;
   /* height: 350px; */
   margin-right: auto;
   margin-left: 10px;
