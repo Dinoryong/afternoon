@@ -40,7 +40,7 @@ public class PostsDto {
         }
     }
 
-    // TODO: 2021-02-04 tag,pin,comment정보 추가
+
     @Data @RequiredArgsConstructor
     public static class PostsResponse{
         @NotNull

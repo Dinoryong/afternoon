@@ -47,23 +47,23 @@ public class AccountDto {
     @Getter @Setter @RequiredArgsConstructor
     public static class AccountProfile{
 
-        private String name;
+        private String accountName;
 
-        private String nickname;
+        private String accountNickname;
 
-        private String email;
+        private String accountEmail;
 
         private LocalDate accountCreateDate;
 
         private String accountDesc;
 
-        private List<AccountDto.FollowingDto> profileFollowing;
+        private List<AccountDto.FollowingDto> following;
 
-        private List<AccountDto.FollowerDto> profileFollower;
+        private List<AccountDto.FollowerDto> follower;
 
-        private int followingCnt;
+        private int accountFollowingCnt;
 
-        private int followerCnt;
+        private int accountFollowerCnt;
 
     }
 

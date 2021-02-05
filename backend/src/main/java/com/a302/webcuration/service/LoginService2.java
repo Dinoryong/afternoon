@@ -30,6 +30,8 @@ public class LoginService2 {
 
     private final ModelMapper modelMapper;
     private final AccountRepository accountRepository;
+    private final AccountService accountService;
+
     private final JavaMailSender mailSender;
     private final JwtService jwtService;
     private final EmailService emailService;
@@ -176,7 +178,7 @@ public class LoginService2 {
         if(request.getAccountId()==id && request.getAccountEmail().equals(email))
         {
             resultMap.put("message","인증키가 일치합니다.");
-            return new BaseMessage(HttpStatus.OK,accountRepository.findAccountByAccountId(id));
+            return new BaseMessage(HttpStatus.OK,accountService.findAccountById(id));
         }
         else
         {
