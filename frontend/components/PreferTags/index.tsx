@@ -18,7 +18,6 @@ const TagBox = styled.div`
   width: 180px;
   min-width: 180px;
   min-height: 100px;
-  background-color: gray;
   justify-content: center;
   align-items: center;
   border-radius: 8px;
@@ -28,7 +27,6 @@ const TagBox = styled.div`
   font-size: 18px;
   :hover {
     font-size: 24px;
-    /* color: ${(props) => props.col}; */
   }
   transition: all 0.2s;
 `;
@@ -57,15 +55,15 @@ const BgOpacityFrame = styled.div`
   width: 100%;
   height: 100%;
   background-color: black;
-  opacity: 0.2;
+  /* opacity: 0.2; */
   border-radius: 8px;
   :hover {
-    opacity: 0.7;
+    /* opacity: 0.7; */
   }
   transition: all 0.3s;
 `;
 
-const PreferTags = () => {
+const PreferTags = ({ selectTags, setSelectTags }) => {
   const MAX_COL = TagList.length / 5;
   const MAX_ROW = 5;
   let tagRows = 1;
@@ -84,7 +82,14 @@ const PreferTags = () => {
           <TagRow key={index}>
             {tg &&
               tg.map((t, index) => (
-                <TagBox col={t.tagColor} key={index}>
+                <TagBox
+                  onClick={() => {
+                    if (selectTags.findIndex((x) => x === t.tagId) < 0)
+                      setSelectTags([...selectTags, t.tagId]);
+                    else setSelectTags(selectTags.filter((x) => x !== t.tagId));
+                  }}
+                  key={index}
+                >
                   <TagImg>
                     <Image
                       className="next_border_image"
@@ -93,7 +98,13 @@ const PreferTags = () => {
                       objectFit="cover"
                     ></Image>
                   </TagImg>
-                  <BgOpacityFrame></BgOpacityFrame>
+                  <BgOpacityFrame
+                    style={
+                      selectTags.findIndex((x) => x === t.tagId) >= 0
+                        ? { backgroundColor: "rgba(0,0,0,0.7)" }
+                        : { backgroundColor: "rgba(0,0,0,0.2)" }
+                    }
+                  ></BgOpacityFrame>
                   <TagTitle>{t.tagTitle}</TagTitle>
                 </TagBox>
               ))}
