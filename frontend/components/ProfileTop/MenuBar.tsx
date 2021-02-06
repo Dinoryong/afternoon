@@ -28,7 +28,7 @@ const MenuBar = ({ profileMyposts, profileLikes, profileCollections }) => {
           btnUseOpacity={true}
           btnSetOpacity={"0.4"}
           btnUseIcon={true}
-          btnIconSrc={"/assets/icons/search_black.png"}
+          btnIconSrc={"/assets/icons/photo.png"}
           btnIconHeight={"18px"}
           btnIconWidth={"18px"}
           btnIconMargin={"4px 12px 0px 0px"}
@@ -48,7 +48,7 @@ const MenuBar = ({ profileMyposts, profileLikes, profileCollections }) => {
           btnUseOpacity={true}
           btnSetOpacity={"0.4"}
           btnUseIcon={true}
-          btnIconSrc={"/assets/icons/search_black.png"}
+          btnIconSrc={"/assets/icons/likes.png"}
           btnIconHeight={"18px"}
           btnIconWidth={"18px"}
           btnIconMargin={"4px 12px 0px 0px"}
@@ -68,7 +68,7 @@ const MenuBar = ({ profileMyposts, profileLikes, profileCollections }) => {
           btnUseOpacity={true}
           btnSetOpacity={"0.4"}
           btnUseIcon={true}
-          btnIconSrc={"/assets/icons/search_black.png"}
+          btnIconSrc={"/assets/icons/collection.png"}
           btnIconHeight={"18px"}
           btnIconWidth={"18px"}
           btnIconMargin={"4px 12px 0px 0px"}
