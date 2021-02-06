@@ -53,7 +53,7 @@ const BgOpacityFrame = styled.div<DemensionProps>`
   height: 100%;
   background-color: ${color.black.default};
   opacity: ${(props) => (props.frameIndex === props.currentIndex ? 0.4 : 0.7)};
-  transition: opacity 0.5s;
+  transition: opacity 0.3s;
 `;
 
 const HomeTextFrame = styled.div`

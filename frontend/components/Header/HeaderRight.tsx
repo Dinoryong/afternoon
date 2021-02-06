@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, { Dispatch, SetStateAction, useEffect, useState } from "react";
 import styled from "@emotion/styled";
 import Button from "../Button";
 import color from "../../styles/theme";
@@ -16,6 +16,8 @@ const Container = styled.div`
 type HeaderProps = {
   routerPath?: String;
   router?: NextRouter;
+  inputFocus?: boolean;
+  setInputFocus?: Dispatch<SetStateAction<boolean>>;
 };
 
 const useCounter = () => {
@@ -33,10 +35,16 @@ const useCounter = () => {
   return { loginState, loginStateFalse, toggle, autoLoginFalse };
 };
 
-const HeaderRight = ({ router, routerPath }: HeaderProps) => {
+const HeaderRight = ({
+  router,
+  routerPath,
+  inputFocus,
+  setInputFocus,
+}: HeaderProps) => {
   const { loginState, loginStateFalse, toggle, autoLoginFalse } = useCounter();
 
   const toggleLogin = (): void => {
+    setInputFocus(false);
     toggle();
   };
 
@@ -66,10 +74,18 @@ const HeaderRight = ({ router, routerPath }: HeaderProps) => {
             btnHoverBorderColor="transparent"
             btnMarginLeft="0px"
             btnBorderColor="transparent"
-            btnBgColor={routerPath === "/" ? "transparent" : null}
+            btnBgColor={"transparent"}
             btnOnClick={requestLogout}
-            btnTextColor={routerPath === "/" ? "white" : color.black.default}
-            btnUseOpacity={routerPath === "/" ? false : true}
+            btnTextColor={
+              (routerPath === "/" || routerPath === "/home") && !inputFocus
+                ? "white"
+                : color.black.default
+            }
+            btnUseOpacity={
+              (routerPath === "/" || routerPath === "/home") && !inputFocus
+                ? false
+                : true
+            }
             btnSetOpacity={"0.4"}
           />
           <Button
@@ -94,8 +110,12 @@ const HeaderRight = ({ router, routerPath }: HeaderProps) => {
             btnHoverBorderColor="transparent"
             btnMarginLeft="0px"
             btnBorderColor="transparent"
-            btnBgColor={routerPath === "/" ? "transparent" : null}
-            btnTextColor={routerPath === "/" ? "white" : null}
+            btnBgColor={"transparent"}
+            btnTextColor={
+              (routerPath === "/" || routerPath === "/home") && !inputFocus
+                ? "white"
+                : null
+            }
             btnOnClick={toggleLogin}
           />
           <Button

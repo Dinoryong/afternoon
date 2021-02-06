@@ -19,6 +19,7 @@ const Container = styled.div`
   font-size: 14px;
   background-color: white;
   box-shadow: 0px 4px 12px rgba(0, 0, 0, 0.08), 0px 0px 1px rgba(1, 0, 0, 0.1);
+  transition: all 0.3s;
 `;
 
 const Wrapper = styled.div`
@@ -37,8 +38,8 @@ const ModalFrame = styled.div`
   justify-content: center;
   align-items: center;
   width: 100%;
-  background-color: rgba(0, 0, 0, 0.5);
-  z-index: 1;
+  background-color: rgba(0, 0, 0, 0.7);
+  z-index: 3;
 `;
 
 const CloseBg = styled.div`
@@ -87,6 +88,8 @@ const useCounter = () => {
 const index = () => {
   const router = useRouter();
   const routerPath = router.pathname;
+  const [inputFocus, setInputFocus] = useState(false);
+  const [searchTerm, setSearchTerm] = useState("");
 
   const {
     autoLoginCheck,
@@ -116,7 +119,7 @@ const index = () => {
       }
     };
 
-    console.log(autoLogin, loginState);
+    // console.log(autoLogin, loginState);
     if (autoLogin) {
       if (!loginState) {
         doAutoLogin();
@@ -141,16 +144,20 @@ const index = () => {
   });
 
   useEffect(() => {
-    document.body.style.overflow = isShown || submitShown ? "hidden" : "scroll";
-  }, [isShown, submitShown]);
+    document.body.style.overflow =
+      isShown || submitShown || inputFocus ? "hidden" : "scroll";
+  }, [isShown, submitShown, inputFocus]);
 
   const containerStyle = {
     display: routerPath === "/signup" ? "none" : "flex",
     boxShadow:
-      routerPath === "/"
+      (routerPath === "/" || routerPath === "/home") && !inputFocus
         ? "none"
         : "0px 4px 12px rgba(0, 0, 0, 0.08), 0px 0px 1px rgba(1, 0, 0, 0.1)",
-    backgroundColor: routerPath === "/" ? "transparent" : "white",
+    backgroundColor:
+      (routerPath === "/" || routerPath === "/home") && !inputFocus
+        ? "rgba(255,255,255,0)"
+        : "rgba(255,255,255,1)",
   };
 
   const onClickSubmitBg = () => {
@@ -166,32 +173,58 @@ const index = () => {
   };
 
   return (
-    <Container style={containerStyle}>
-      {isShown && (
-        <>
-          <ModalFrame style={{ height: windowHeight }}>
-            <CloseBg onClick={toggle}></CloseBg>
-            <LoginModal></LoginModal>
-          </ModalFrame>
-        </>
+    <>
+      {inputFocus && (
+        <ModalFrame
+          onClick={() => {
+            setInputFocus(false);
+          }}
+          style={{ position: "fixed", height: windowHeight }}
+        ></ModalFrame>
       )}
-      {submitShown && (
-        <>
-          <ModalFrame style={{ height: windowHeight }}>
-            <CloseBg onClick={onClickSubmitBg}></CloseBg>
-            <SubmitModal
-              windowWidth={windowWidth}
-              windowHeight={windowHeight}
-            ></SubmitModal>
-          </ModalFrame>
-        </>
-      )}
-      <Wrapper>
-        <HeaderLeft router={router} routerPath={routerPath} />
-        <HeaderCenter routerPath={routerPath} />
-        <HeaderRight router={router} routerPath={routerPath} />
-      </Wrapper>
-    </Container>
+      <Container style={containerStyle}>
+        {isShown && (
+          <>
+            <ModalFrame style={{ height: windowHeight }}>
+              <CloseBg onClick={toggle}></CloseBg>
+              <LoginModal></LoginModal>
+            </ModalFrame>
+          </>
+        )}
+        {submitShown && (
+          <>
+            <ModalFrame style={{ height: windowHeight }}>
+              <CloseBg onClick={onClickSubmitBg}></CloseBg>
+              <SubmitModal
+                windowWidth={windowWidth}
+                windowHeight={windowHeight}
+              ></SubmitModal>
+            </ModalFrame>
+          </>
+        )}
+        <Wrapper>
+          <HeaderLeft
+            router={router}
+            routerPath={routerPath}
+            setInputFocus={setInputFocus}
+            inputFocus={inputFocus}
+            searchTerm={searchTerm}
+            setSearchTerm={setSearchTerm}
+          />
+          <HeaderCenter
+            routerPath={routerPath}
+            inputFocus={inputFocus}
+            setInputFocus={setInputFocus}
+          />
+          <HeaderRight
+            router={router}
+            routerPath={routerPath}
+            inputFocus={inputFocus}
+            setInputFocus={setInputFocus}
+          />
+        </Wrapper>
+      </Container>
+    </>
   );
 };
 

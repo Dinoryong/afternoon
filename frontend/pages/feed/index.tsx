@@ -41,7 +41,7 @@ const index = () => {
 
       if (result.status === 200) {
         // data.data 로 날아오는거 체크해보기
-        console.log(result.data);
+        // console.log(result.data);
         if (result.data.data.length > 0) {
           console.log("피드내용 있음");
           setFeedApiState(true);

@@ -1,10 +1,11 @@
-import React from "react";
+import React, { Dispatch, SetStateAction, useState } from "react";
 import styled from "@emotion/styled";
 import Image from "next/image";
 import Link from "next/link";
 import Button from "../Button";
 import color from "../../styles/theme";
 import { NextRouter } from "next/router";
+import AutoSuggest from "../AutoSuggest";
 
 const Container = styled.div`
   display: flex;
@@ -44,11 +45,22 @@ const SloganText = styled.a`
 
 const SearchBox = styled.div`
   display: flex;
+  position: relative;
   align-items: center;
-  border-radius: 24px;
-  border: 1px solid transparent;
   height: 38px;
   width: 100%;
+  /* max-width: 700px; */
+  transition: all 0.3s;
+`;
+
+const SearchInner = styled.div<HeaderProps>`
+  display: flex;
+  position: relative;
+  align-items: center;
+  border: 1px solid transparent;
+  height: 100%;
+  width: 100%;
+  border-radius: 24px;
   /* max-width: 700px; */
   background-color: ${color.gray.light};
   :not(:focus-within) {
@@ -59,6 +71,10 @@ const SearchBox = styled.div`
   :focus-within {
     background-color: white;
     border-color: ${color.gray.default};
+    border-bottom: ${(props) =>
+      props.inputFocus
+        ? "0px solid transparent"
+        : `1px solid ${color.gray.default}`};
   }
   transition: all 0.3s;
 `;
@@ -83,38 +99,69 @@ const SearchInput = styled("input")<HeaderProps>`
   }
   ::placeholder {
     color: ${(props) =>
-      props.routerPath === "/" ? color.white.default : color.gray.dark};
+      (props.routerPath === "/" || props.routerPath === "/home") &&
+      !props.inputFocus
+        ? color.white.default
+        : color.gray.dark};
   }
 `;
 
 type HeaderProps = {
   routerPath?: String;
   router?: NextRouter;
+  setInputFocus?: Dispatch<SetStateAction<boolean>>;
+  inputFocus?: boolean;
+  searchTerm?: string;
+  setSearchTerm?: Dispatch<SetStateAction<String>>;
 };
 
-const HeaderLeft = ({ router, routerPath }: HeaderProps) => {
-  const props = { routerPath };
+const HeaderLeft = ({
+  router,
+  routerPath,
+  setInputFocus,
+  inputFocus,
+  searchTerm,
+  setSearchTerm,
+}: HeaderProps) => {
+  const props = { routerPath, inputFocus };
 
   const titleBoxStyle = {
-    color: routerPath === "/" ? color.white.default : color.black.default,
+    color:
+      (routerPath === "/" || routerPath === "/home") && !inputFocus
+        ? color.white.default
+        : color.black.default,
   };
 
   const searchBoxStyle = {
-    backgroundColor: routerPath === "/" ? "transparent" : color.gray.light,
+    backgroundColor:
+      (routerPath === "/" || routerPath === "/home") && !inputFocus
+        ? "transparent"
+        : null,
+    borderRadius: inputFocus ? "8px" : "24px",
+    borderBottomLeftRadius: inputFocus ? "0px" : "24px",
+    borderBottomRightRadius: inputFocus ? "0px" : "24px",
+    // borderBottomColor: inputFocus ? color.white.default : "transparent",
   };
 
   const searchInputStyle = {
-    color: routerPath === "/" ? color.white.default : null,
+    color:
+      (routerPath === "/" || routerPath === "/home") && !inputFocus
+        ? color.white.default
+        : null,
   };
 
   return (
     <Container>
       <Link href="/">
-        <LogoBox>
+        <LogoBox
+          onClick={() => {
+            setInputFocus(false);
+          }}
+        >
           <LogoImage>
             <Image
               src={
-                routerPath === "/"
+                (routerPath === "/" || routerPath === "/home") && !inputFocus
                   ? "/assets/logos/pinset_logo_white.png"
                   : "/assets/logos/pinset_logo_black.png"
               }
@@ -133,34 +180,78 @@ const HeaderLeft = ({ router, routerPath }: HeaderProps) => {
         btnWidth="80px"
         btnMarginLeft="16px"
         btnMarginRight="20px"
-        btnHoverBorderColor={routerPath === "/" ? "transparent" : null}
-        btnBgColor={routerPath === "/" ? "transparent" : null}
-        btnTextColor={routerPath === "/" ? "white" : color.black.default}
-        btnBorderColor={routerPath === "/" ? "white" : color.black.default}
-        btnUseOpacity={routerPath === "/" ? false : true}
+        btnHoverBorderColor={
+          (routerPath === "/" || routerPath === "/home") && !inputFocus
+            ? "transparent"
+            : null
+        }
+        btnBgColor={
+          (routerPath === "/" || routerPath === "/home") && !inputFocus
+            ? "transparent"
+            : null
+        }
+        btnTextColor={
+          (routerPath === "/" || routerPath === "/home") && !inputFocus
+            ? "white"
+            : color.black.default
+        }
+        btnBorderColor={
+          (routerPath === "/" || routerPath === "/home") && !inputFocus
+            ? "white"
+            : color.black.default
+        }
+        btnUseOpacity={
+          (routerPath === "/" || routerPath === "/home") && !inputFocus
+            ? false
+            : true
+        }
         btnSetOpacity={"0.4"}
         btnOnClick={(): void => {
+          setInputFocus(false);
           router.push("/feed");
         }}
       />
-      <SearchBox style={searchBoxStyle}>
-        <SearchIcon>
-          <Image
-            src={
-              routerPath === "/"
-                ? "/assets/icons/search_white.png"
-                : "/assets/icons/search_black_light.png"
-            }
-            layout="fill"
-            objectFit="contain"
-            quality="100"
+      <SearchBox>
+        {inputFocus && (
+          <AutoSuggest setInputFocus={setInputFocus}></AutoSuggest>
+        )}
+        <SearchInner
+          style={searchBoxStyle}
+          onFocus={() => {
+            setInputFocus(true);
+          }}
+          inputFocus={inputFocus}
+        >
+          <SearchIcon
+            onClick={() => {
+              setInputFocus(false);
+              console.log("서치");
+            }}
+          >
+            <Image
+              src={
+                (routerPath === "/" || routerPath === "/home") && !inputFocus
+                  ? "/assets/icons/search_white.png"
+                  : "/assets/icons/search_black_light.png"
+              }
+              layout="fill"
+              objectFit="contain"
+              quality="100"
+            />
+          </SearchIcon>
+          <SearchInput
+            {...props}
+            style={searchInputStyle}
+            placeholder="태그 또는 사용자를 검색해보세요!"
+            value={searchTerm}
+            onChange={(e) => {
+              setSearchTerm(e.target.value);
+            }}
+            onKeyDown={(e) => {
+              if (e.key === "Enter") router.push(`/search/${searchTerm}`);
+            }}
           />
-        </SearchIcon>
-        <SearchInput
-          {...props}
-          style={searchInputStyle}
-          placeholder="태그 또는 사용자를 검색해보세요!"
-        />
+        </SearchInner>
       </SearchBox>
     </Container>
   );
