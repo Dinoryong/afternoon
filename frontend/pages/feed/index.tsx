@@ -22,18 +22,18 @@ const Wrapper = styled.div`
   /* width: 100%; */
 `;
 
-const DynamicComponentWithNoSSR = dynamic(
-  () => import("../../components/Egjs"),
-  {
-    ssr: false,
-  }
-);
-
 const index = () => {
   const router = useRouter();
 
-  const [feedData, setFeedData] = useState([]);
+  const [postData, setPostData] = useState([]);
   const [feedApiState, setFeedApiState] = useState(false);
+
+  const DynamicComponentWithNoSSR = dynamic(
+    () => import("../../components/Egjs"),
+    {
+      ssr: false,
+    }
+  );
 
   useEffect(function mount() {
     const getFeedRequest = async () => {
@@ -45,7 +45,7 @@ const index = () => {
         if (result.data.data.length > 0) {
           console.log("피드내용 있음");
           setFeedApiState(true);
-          setFeedData(result.data.data);
+          setPostData(result.data.data);
         } else {
           router.push("/prefer");
           console.log("피드내용 없음");
@@ -61,8 +61,10 @@ const index = () => {
   return (
     <Container>
       <Wrapper>
-        {feedData && feedData.length > 0 && (
-          <DynamicComponentWithNoSSR></DynamicComponentWithNoSSR>
+        {postData && postData.length > 0 && (
+          <DynamicComponentWithNoSSR
+            postData={postData}
+          ></DynamicComponentWithNoSSR>
         )}
       </Wrapper>
     </Container>
