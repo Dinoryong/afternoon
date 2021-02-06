@@ -1,15 +1,26 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 import styled from "@emotion/styled";
 import ProfileTop from "../../components/ProfileTop";
 import Button from "../../components/Button";
 import color from "../../styles/theme";
 import Image from "next/image";
+import EditModal from "../../components/ProfileTop/EditModal";
+
+const ModalFrame = styled.div`
+  position: absolute;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: 100%;
+  background-color: rgba(0, 0, 0, 0.5);
+  z-index: 11;
+`;
 
 const Container1 = styled.div`
   display: flex;
   flex-direction: column;
   align-items: center;
-	justify-content: center;
+  justify-content: center;
   width: 100%;
   /* height: 800px; */
 `;
@@ -29,16 +40,54 @@ const index = () => {
       "보이는 가치를 사랑의 끓는다. 굳세게 산야에  품었기 이상의 속잎나고, 그리하였는가? 타오르고 못하다 가치를 귀는 없는 속에서 따뜻한 보이는 내는 쓸쓸하랴? 인간은 가슴에 새 그들에게 자신과 대한 길지 것이다. 날카로우나 얼마나 용감 그리하였는가? 타오르고 최대 3줄 적당",
     profileFollowing: "159",
     profileFollwer: "143534",
-		profileMyposts: "376",
-		profileLikes: "100",
-		profileTags: [1,2,3,4,7,8,5,9,13,23,15,17,18],
-		profileCollections: "13",
+    profileMyposts: "376",
+    profileLikes: "100",
+    profileTags: [1, 2, 3, 4, 7, 8, 5, 9, 13, 23, 15, 17, 18],
+    profileCollections: "13",
   };
+
+  const [editState, setEditState] = useState(false);
+
+  const [windowHeight, setWindowHeight] = useState<number>();
+
+  useEffect(() => {
+    document.body.style.overflow = editState ? "hidden" : "scroll";
+  }, [editState]);
+
+  useEffect(function mount() {
+    const resizeHandler = () => {
+      setWindowHeight(window.innerHeight);
+    };
+
+    resizeHandler();
+
+    window.addEventListener("resize", resizeHandler);
+
+    const cleanup = () => {
+      window.removeEventListener("resize", resizeHandler);
+    };
+
+    return cleanup;
+  });
 
   return (
     <>
+      {editState && (
+        <ModalFrame
+          style={{ position: "fixed", height: windowHeight }}
+          onClick={() => {
+            setEditState(false);
+          }}
+        >
+          <EditModal setEditState={setEditState}></EditModal>
+        </ModalFrame>
+      )}
       <Container1>
-        <ProfileTop profileData={profileData}></ProfileTop>
+        <ProfileTop
+          profileData={profileData}
+          setEditState={setEditState}
+          windowHeight={windowHeight}
+        ></ProfileTop>
       </Container1>
       <Container2>{/* <ProfileBottom></ProfileBottom> */}</Container2>
     </>
