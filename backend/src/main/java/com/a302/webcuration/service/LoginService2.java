@@ -46,7 +46,6 @@ public class LoginService2 {
     }
 
     @Transactional
-    //TODO 디폴트 만들기
     public BaseMessage login(AccountDto.LoginRequest loginRequest)
     {
         Map<String, Object> resultMap = new HashMap<>();
@@ -162,7 +161,6 @@ public class LoginService2 {
         }
     }
 
-
     @Transactional
     public BaseMessage autoLogin(AccountDto.LoginRequest request,String token)
     {
@@ -179,11 +177,19 @@ public class LoginService2 {
         if(request.getAccountId()==id && request.getAccountEmail().equals(email))
         {
             resultMap.put("message","인증키가 일치합니다.");
-            return new BaseMessage(HttpStatus.OK,accountService.findAccountById(id));
+            Account account=accountRepository.findByAccountEmail(request.getAccountEmail());
+            String nickname= account.getAccountNickname();
+            resultMap = loginInfo(id,email,nickname);
+            HttpHeaders httpHeaders = new HttpHeaders();
+            String reToken = "Bearer "+jwtService.create(id,email);
+            httpHeaders.add("Authorization",reToken);
+            return new BaseMessage(HttpStatus.OK,httpHeaders,resultMap);
         }
         else
         {
             resultMap.put("error", "토큰에 저장된 내용과 계정의 정보가 일치하지 않습니다.");
+            logger.error("request.getAccountId() "+request.getAccountId()+", id "+id);
+            logger.error("request.getAccountEmail() "+request.getAccountEmail()+", email "+email);
             return new BaseMessage(HttpStatus.BAD_REQUEST,resultMap);
         }
     }
