@@ -184,424 +184,494 @@ const FeedResDummy = {
   headers: null,
   data: [
     {
-      postId: 1,
-      postsPhotos: [
+      postsId: 1,
+      postsPhotos:
         "https://images.unsplash.com/photo-1557898979-252a87810b77?ixid=MXwxMjA3fDB8MHx0b3BpYy1mZWVkfDF8YWV1NnJMLWo2ZXd8fGVufDB8fHw%3D&ixlib=rb-1.2.1&auto=format&q=60",
-      ],
+      postsWriter: "난재",
+      postsTitle: "제목없음",
     },
     {
-      postId: 2,
-      postsPhotos: [
+      postsId: 2,
+      postsPhotos:
         "https://images.unsplash.com/photo-1599843533756-8d3aac8ff16b?ixid=MXwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHw%3D&ixlib=rb-1.2.1&auto=format&q=60",
-      ],
+      postsWriter: "난재",
+      postsTitle: "제목없음",
     },
     {
-      postId: 3,
-      postsPhotos: [
+      postsId: 3,
+      postsPhotos:
         "https://images.unsplash.com/photo-1600128726020-d6dded32281b?ixid=MXwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHw%3D&ixlib=rb-1.2.1&auto=format&q=60",
-      ],
+      postsWriter: "난재",
+      postsTitle: "제목없음",
     },
     {
-      postId: 4,
-      postsPhotos: [
+      postsId: 4,
+      postsPhotos:
         "https://images.unsplash.com/photo-1600791575280-1f7ca48b9a57?ixid=MXwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHw%3D&ixlib=rb-1.2.1&auto=format&q=60",
-      ],
+      postsWriter: "난재",
+      postsTitle: "제목없음",
     },
     {
-      postId: 5,
-      postsPhotos: [
+      postsId: 5,
+      postsPhotos:
         "https://images.unsplash.com/photo-1600785381373-703ca5953d42?ixid=MXwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHw%3D&ixlib=rb-1.2.1&auto=format&q=60",
-      ],
+      postsWriter: "난재",
+      postsTitle: "제목없음",
     },
     {
-      postId: 6,
-      postsPhotos: [
+      postsId: 6,
+      postsPhotos:
         "https://images.unsplash.com/photo-1600275668999-f423597ec2a8?ixid=MXwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHw%3D&ixlib=rb-1.2.1&auto=format&q=60",
-      ],
+      postsWriter: "난재",
+      postsTitle: "제목없음",
     },
     {
-      postId: 7,
-      postsPhotos: [
+      postsId: 7,
+      postsPhotos:
         "https://images.unsplash.com/photo-1601814838249-d1756026b4cc?ixid=MXwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHw%3D&ixlib=rb-1.2.1&auto=format&q=60",
-      ],
+      postsWriter: "난재",
+      postsTitle: "제목없음",
     },
     {
-      postId: 8,
-      postsPhotos: [
+      postsId: 8,
+      postsPhotos:
         "https://images.unsplash.com/photo-1604933762021-54a5858c9832?ixid=MXwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHw%3D&ixlib=rb-1.2.1&auto=format&q=60",
-      ],
+      postsWriter: "난재",
+      postsTitle: "제목없음",
     },
     {
-      postId: 9,
-      postsPhotos: [
+      postsId: 9,
+      postsPhotos:
         "https://images.unsplash.com/photo-1606245896262-c64704c83cbb?ixid=MXwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHw%3D&ixlib=rb-1.2.1&auto=format&q=60",
-      ],
+      postsWriter: "난재",
+      postsTitle: "제목없음",
     },
     {
-      postId: 10,
-      postsPhotos: [
+      postsId: 10,
+      postsPhotos:
         "https://images.unsplash.com/photo-1610050732079-0ced7dc94587?ixid=MXwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHw%3D&ixlib=rb-1.2.1&auto=format&q=60",
-      ],
+      postsWriter: "난재",
+      postsTitle: "제목없음",
     },
     {
-      postId: 11,
-      postsPhotos: [
+      postsId: 11,
+      postsPhotos:
         "https://images.unsplash.com/photo-1610413233393-aa9a3a7f0a2c?ixid=MXwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHw%3D&ixlib=rb-1.2.1&auto=format&q=60",
-      ],
+      postsWriter: "난재",
+      postsTitle: "제목없음",
     },
     {
-      postId: 12,
-      postsPhotos: [
+      postsId: 12,
+      postsPhotos:
         "https://images.unsplash.com/photo-1612305868373-1aba0b3cf57b?ixid=MXwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHw%3D&ixlib=rb-1.2.1&auto=format&q=60",
-      ],
+      postsWriter: "난재",
+      postsTitle: "제목없음",
     },
     {
-      postId: 13,
-      postsPhotos: [
+      postsId: 13,
+      postsPhotos:
         "https://images.unsplash.com/photo-1612267246349-80a942f0504f?ixid=MXwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHw%3D&ixlib=rb-1.2.1&auto=format&q=60",
-      ],
+      postsWriter: "난재",
+      postsTitle: "제목없음",
     },
     {
-      postId: 14,
-      postsPhotos: [
+      postsId: 14,
+      postsPhotos:
         "https://images.unsplash.com/photo-1612093991429-acd0fc7b1804?ixid=MXwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHw%3D&ixlib=rb-1.2.1&auto=format&q=60",
-      ],
+      postsWriter: "난재",
+      postsTitle: "제목없음",
     },
     {
-      postId: 15,
-      postsPhotos: [
+      postsId: 15,
+      postsPhotos:
         "https://images.unsplash.com/photo-1608048608477-30389696fdc1?ixid=MXwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHw%3D&ixlib=rb-1.2.1&auto=format&q=60",
-      ],
+      postsWriter: "난재",
+      postsTitle: "제목없음",
     },
     {
-      postId: 16,
-      postsPhotos: [
+      postsId: 16,
+      postsPhotos:
         "https://images.unsplash.com/photo-1612430195260-2883ba8763c5?ixid=MXwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHw%3D&ixlib=rb-1.2.1&auto=format&q=60",
-      ],
+      postsWriter: "난재",
+      postsTitle: "제목없음",
     },
     {
-      postId: 17,
-      postsPhotos: [
+      postsId: 17,
+      postsPhotos:
         "https://images.unsplash.com/photo-1612405199545-e3b82ac2bd35?ixlib=rb-1.2.1&ixid=MXwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHw%3D&auto=format&q=60",
-      ],
+      postsWriter: "난재",
+      postsTitle: "제목없음",
     },
     {
-      postId: 18,
-      postsPhotos: [
+      postsId: 18,
+      postsPhotos:
         "https://images.unsplash.com/photo-1612405199607-8c94fc6b5132?ixid=MXwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHw%3D&ixlib=rb-1.2.1&auto=format&q=60",
-      ],
+      postsWriter: "난재",
+      postsTitle: "제목없음",
     },
     {
-      postId: 19,
-      postsPhotos: [
+      postsId: 19,
+      postsPhotos:
         "https://images.unsplash.com/photo-1612367289874-0fba3b4a07dd?ixid=MXwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHw%3D&ixlib=rb-1.2.1&auto=format&q=60",
-      ],
+      postsWriter: "난재",
+      postsTitle: "제목없음",
     },
     {
-      postId: 20,
-      postsPhotos: [
+      postsId: 20,
+      postsPhotos:
         "https://images.unsplash.com/photo-1572989166914-0558951cdb8c?ixid=MXwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHw%3D&ixlib=rb-1.2.1&auto=format&q=60",
-      ],
+      postsWriter: "난재",
+      postsTitle: "제목없음",
     },
     {
-      postId: 21,
-      postsPhotos: [
+      postsId: 21,
+      postsPhotos:
         "https://images.unsplash.com/photo-1605918321371-584f5deab0a2?ixid=MXwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHw%3D&ixlib=rb-1.2.1&auto=format&q=60",
-      ],
+      postsWriter: "난재",
+      postsTitle: "제목없음",
     },
     {
-      postId: 22,
-      postsPhotos: [
+      postsId: 22,
+      postsPhotos:
         "https://images.unsplash.com/photo-1574790398664-0cb03682ed1c?ixid=MXwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHw%3D&ixlib=rb-1.2.1&auto=format&q=60",
-      ],
+      postsWriter: "난재",
+      postsTitle: "제목없음",
     },
     {
-      postId: 23,
-      postsPhotos: [
+      postsId: 23,
+      postsPhotos:
         "https://images.unsplash.com/photo-1612296727716-d6c69d2a2cbb?ixid=MXwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHw%3D&ixlib=rb-1.2.1&auto=format&q=60",
-      ],
+      postsWriter: "난재",
+      postsTitle: "제목없음",
     },
     {
-      postId: 24,
-      postsPhotos: [
+      postsId: 24,
+      postsPhotos:
         "https://images.unsplash.com/photo-1612311370838-96f8e048cd29?ixid=MXwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHw%3D&ixlib=rb-1.2.1&auto=format&q=60",
-      ],
+      postsWriter: "난재",
+      postsTitle: "제목없음",
     },
     {
-      postId: 25,
-      postsPhotos: [
+      postsId: 25,
+      postsPhotos:
         "https://images.unsplash.com/photo-1612358545190-a4dcea215b89?ixid=MXwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHw%3D&ixlib=rb-1.2.1&auto=format&q=60",
-      ],
+      postsWriter: "난재",
+      postsTitle: "제목없음",
     },
     {
-      postId: 26,
-      postsPhotos: [
+      postsId: 26,
+      postsPhotos:
         "https://images.unsplash.com/photo-1590065672897-8cd8dc54a530?ixid=MXwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHw%3D&ixlib=rb-1.2.1&auto=format&q=60",
-      ],
+      postsWriter: "난재",
+      postsTitle: "제목없음",
     },
     {
-      postId: 27,
-      postsPhotos: [
+      postsId: 27,
+      postsPhotos:
         "https://images.unsplash.com/photo-1599999904375-417412f2813c?ixid=MXwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHw%3D&ixlib=rb-1.2.1&auto=format&q=60",
-      ],
+      postsWriter: "난재",
+      postsTitle: "제목없음",
     },
     {
-      postId: 28,
-      postsPhotos: [
+      postsId: 28,
+      postsPhotos:
         "https://images.unsplash.com/photo-1610034534785-4706b86dd6a5?ixid=MXwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHw%3D&ixlib=rb-1.2.1&auto=format&q=60",
-      ],
+      postsWriter: "난재",
+      postsTitle: "제목없음",
     },
     {
-      postId: 29,
-      postsPhotos: [
+      postsId: 29,
+      postsPhotos:
         "https://images.unsplash.com/photo-1565665681743-6ff01c5181e3?ixid=MXwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHw%3D&ixlib=rb-1.2.1&auto=format&q=60",
-      ],
+      postsWriter: "난재",
+      postsTitle: "제목없음",
     },
     {
-      postId: 30,
-      postsPhotos: [
+      postsId: 30,
+      postsPhotos:
         "https://images.unsplash.com/photo-1596906586134-a120f615810d?ixid=MXwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHw%3D&ixlib=rb-1.2.1&auto=format&q=60",
-      ],
+      postsWriter: "난재",
+      postsTitle: "제목없음",
     },
     {
-      postId: 31,
-      postsPhotos: [
+      postsId: 31,
+      postsPhotos:
         "https://images.unsplash.com/photo-1557898979-252a87810b77?ixid=MXwxMjA3fDB8MHx0b3BpYy1mZWVkfDF8YWV1NnJMLWo2ZXd8fGVufDB8fHw%3D&ixlib=rb-1.2.1&auto=format&q=60",
-      ],
+      postsWriter: "난재",
+      postsTitle: "제목없음",
     },
     {
-      postId: 32,
-      postsPhotos: [
+      postsId: 32,
+      postsPhotos:
         "https://images.unsplash.com/photo-1599843533756-8d3aac8ff16b?ixid=MXwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHw%3D&ixlib=rb-1.2.1&auto=format&q=60",
-      ],
+      postsWriter: "난재",
+      postsTitle: "제목없음",
     },
     {
-      postId: 33,
-      postsPhotos: [
+      postsId: 33,
+      postsPhotos:
         "https://images.unsplash.com/photo-1600128726020-d6dded32281b?ixid=MXwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHw%3D&ixlib=rb-1.2.1&auto=format&q=60",
-      ],
+      postsWriter: "난재",
+      postsTitle: "제목없음",
     },
     {
-      postId: 34,
-      postsPhotos: [
+      postsId: 34,
+      postsPhotos:
         "https://images.unsplash.com/photo-1600791575280-1f7ca48b9a57?ixid=MXwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHw%3D&ixlib=rb-1.2.1&auto=format&q=60",
-      ],
+      postsWriter: "난재",
+      postsTitle: "제목없음",
     },
     {
-      postId: 35,
-      postsPhotos: [
+      postsId: 35,
+      postsPhotos:
         "https://images.unsplash.com/photo-1600785381373-703ca5953d42?ixid=MXwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHw%3D&ixlib=rb-1.2.1&auto=format&q=60",
-      ],
+      postsWriter: "난재",
+      postsTitle: "제목없음",
     },
     {
-      postId: 36,
-      postsPhotos: [
+      postsId: 36,
+      postsPhotos:
         "https://images.unsplash.com/photo-1600275668999-f423597ec2a8?ixid=MXwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHw%3D&ixlib=rb-1.2.1&auto=format&q=60",
-      ],
+      postsWriter: "난재",
+      postsTitle: "제목없음",
     },
     {
-      postId: 37,
-      postsPhotos: [
+      postsId: 37,
+      postsPhotos:
         "https://images.unsplash.com/photo-1601814838249-d1756026b4cc?ixid=MXwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHw%3D&ixlib=rb-1.2.1&auto=format&q=60",
-      ],
+      postsWriter: "난재",
+      postsTitle: "제목없음",
     },
     {
-      postId: 38,
-      postsPhotos: [
+      postsId: 38,
+      postsPhotos:
         "https://images.unsplash.com/photo-1604933762021-54a5858c9832?ixid=MXwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHw%3D&ixlib=rb-1.2.1&auto=format&q=60",
-      ],
+      postsWriter: "난재",
+      postsTitle: "제목없음",
     },
     {
-      postId: 39,
-      postsPhotos: [
+      postsId: 39,
+      postsPhotos:
         "https://images.unsplash.com/photo-1606245896262-c64704c83cbb?ixid=MXwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHw%3D&ixlib=rb-1.2.1&auto=format&q=60",
-      ],
+      postsWriter: "난재",
+      postsTitle: "제목없음",
     },
     {
-      postId: 40,
-      postsPhotos: [
+      postsId: 40,
+      postsPhotos:
         "https://images.unsplash.com/photo-1610050732079-0ced7dc94587?ixid=MXwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHw%3D&ixlib=rb-1.2.1&auto=format&q=60",
-      ],
+      postsWriter: "난재",
+      postsTitle: "제목없음",
     },
     {
-      postId: 41,
-      postsPhotos: [
+      postsId: 41,
+      postsPhotos:
         "https://images.unsplash.com/photo-1610413233393-aa9a3a7f0a2c?ixid=MXwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHw%3D&ixlib=rb-1.2.1&auto=format&q=60",
-      ],
+      postsWriter: "난재",
+      postsTitle: "제목없음",
     },
     {
-      postId: 42,
-      postsPhotos: [
+      postsId: 42,
+      postsPhotos:
         "https://images.unsplash.com/photo-1612305868373-1aba0b3cf57b?ixid=MXwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHw%3D&ixlib=rb-1.2.1&auto=format&q=60",
-      ],
+      postsWriter: "난재",
+      postsTitle: "제목없음",
     },
     {
-      postId: 43,
-      postsPhotos: [
+      postsId: 43,
+      postsPhotos:
         "https://images.unsplash.com/photo-1612267246349-80a942f0504f?ixid=MXwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHw%3D&ixlib=rb-1.2.1&auto=format&q=60",
-      ],
+      postsWriter: "난재",
+      postsTitle: "제목없음",
     },
     {
-      postId: 44,
-      postsPhotos: [
+      postsId: 44,
+      postsPhotos:
         "https://images.unsplash.com/photo-1612093991429-acd0fc7b1804?ixid=MXwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHw%3D&ixlib=rb-1.2.1&auto=format&q=60",
-      ],
+      postsWriter: "난재",
+      postsTitle: "제목없음",
     },
     {
-      postId: 45,
-      postsPhotos: [
+      postsId: 45,
+      postsPhotos:
         "https://images.unsplash.com/photo-1608048608477-30389696fdc1?ixid=MXwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHw%3D&ixlib=rb-1.2.1&auto=format&q=60",
-      ],
+      postsWriter: "난재",
+      postsTitle: "제목없음",
     },
     {
-      postId: 46,
-      postsPhotos: [
+      postsId: 46,
+      postsPhotos:
         "https://images.unsplash.com/photo-1612430195260-2883ba8763c5?ixid=MXwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHw%3D&ixlib=rb-1.2.1&auto=format&q=60",
-      ],
+      postsWriter: "난재",
+      postsTitle: "제목없음",
     },
     {
-      postId: 47,
-      postsPhotos: [
+      postsId: 47,
+      postsPhotos:
         "https://images.unsplash.com/photo-1612405199545-e3b82ac2bd35?ixlib=rb-1.2.1&ixid=MXwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHw%3D&auto=format&q=60",
-      ],
+      postsWriter: "난재",
+      postsTitle: "제목없음",
     },
     {
-      postId: 48,
-      postsPhotos: [
+      postsId: 48,
+      postsPhotos:
         "https://images.unsplash.com/photo-1612405199607-8c94fc6b5132?ixid=MXwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHw%3D&ixlib=rb-1.2.1&auto=format&q=60",
-      ],
+      postsWriter: "난재",
+      postsTitle: "제목없음",
     },
     {
-      postId: 49,
-      postsPhotos: [
+      postsId: 49,
+      postsPhotos:
         "https://images.unsplash.com/photo-1612367289874-0fba3b4a07dd?ixid=MXwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHw%3D&ixlib=rb-1.2.1&auto=format&q=60",
-      ],
+      postsWriter: "난재",
+      postsTitle: "제목없음",
     },
     {
-      postId: 50,
-      postsPhotos: [
+      postsId: 50,
+      postsPhotos:
         "https://images.unsplash.com/photo-1572989166914-0558951cdb8c?ixid=MXwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHw%3D&ixlib=rb-1.2.1&auto=format&q=60",
-      ],
+      postsWriter: "난재",
+      postsTitle: "제목없음",
     },
     {
-      postId: 51,
-      postsPhotos: [
+      postsId: 51,
+      postsPhotos:
         "https://images.unsplash.com/photo-1605918321371-584f5deab0a2?ixid=MXwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHw%3D&ixlib=rb-1.2.1&auto=format&q=60",
-      ],
+      postsWriter: "난재",
+      postsTitle: "제목없음",
     },
     {
-      postId: 52,
-      postsPhotos: [
+      postsId: 52,
+      postsPhotos:
         "https://images.unsplash.com/photo-1574790398664-0cb03682ed1c?ixid=MXwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHw%3D&ixlib=rb-1.2.1&auto=format&q=60",
-      ],
+      postsWriter: "난재",
+      postsTitle: "제목없음",
     },
     {
-      postId: 53,
-      postsPhotos: [
+      postsId: 53,
+      postsPhotos:
         "https://images.unsplash.com/photo-1612296727716-d6c69d2a2cbb?ixid=MXwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHw%3D&ixlib=rb-1.2.1&auto=format&q=60",
-      ],
+      postsWriter: "난재",
+      postsTitle: "제목없음",
     },
     {
-      postId: 54,
-      postsPhotos: [
+      postsId: 54,
+      postsPhotos:
         "https://images.unsplash.com/photo-1612311370838-96f8e048cd29?ixid=MXwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHw%3D&ixlib=rb-1.2.1&auto=format&q=60",
-      ],
+      postsWriter: "난재",
+      postsTitle: "제목없음",
     },
     {
-      postId: 55,
-      postsPhotos: [
+      postsId: 55,
+      postsPhotos:
         "https://images.unsplash.com/photo-1612358545190-a4dcea215b89?ixid=MXwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHw%3D&ixlib=rb-1.2.1&auto=format&q=60",
-      ],
+      postsWriter: "난재",
+      postsTitle: "제목없음",
     },
     {
-      postId: 56,
-      postsPhotos: [
+      postsId: 56,
+      postsPhotos:
         "https://images.unsplash.com/photo-1590065672897-8cd8dc54a530?ixid=MXwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHw%3D&ixlib=rb-1.2.1&auto=format&q=60",
-      ],
+      postsWriter: "난재",
+      postsTitle: "제목없음",
     },
     {
-      postId: 57,
-      postsPhotos: [
+      postsId: 57,
+      postsPhotos:
         "https://images.unsplash.com/photo-1599999904375-417412f2813c?ixid=MXwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHw%3D&ixlib=rb-1.2.1&auto=format&q=60",
-      ],
+      postsWriter: "난재",
+      postsTitle: "제목없음",
     },
     {
-      postId: 58,
-      postsPhotos: [
+      postsId: 58,
+      postsPhotos:
         "https://images.unsplash.com/photo-1610034534785-4706b86dd6a5?ixid=MXwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHw%3D&ixlib=rb-1.2.1&auto=format&q=60",
-      ],
+      postsWriter: "난재",
+      postsTitle: "제목없음",
     },
     {
-      postId: 59,
-      postsPhotos: [
+      postsId: 59,
+      postsPhotos:
         "https://images.unsplash.com/photo-1565665681743-6ff01c5181e3?ixid=MXwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHw%3D&ixlib=rb-1.2.1&auto=format&q=60",
-      ],
+      postsWriter: "난재",
+      postsTitle: "제목없음",
     },
     {
-      postId: 60,
-      postsPhotos: [
+      postsId: 60,
+      postsPhotos:
         "https://images.unsplash.com/photo-1596906586134-a120f615810d?ixid=MXwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHw%3D&ixlib=rb-1.2.1&auto=format&q=60",
-      ],
+      postsWriter: "난재",
+      postsTitle: "제목없음",
     },
     {
-      postId: 61,
-      postsPhotos: [
+      postsId: 61,
+      postsPhotos:
         "https://images.unsplash.com/photo-1557898979-252a87810b77?ixid=MXwxMjA3fDB8MHx0b3BpYy1mZWVkfDF8YWV1NnJMLWo2ZXd8fGVufDB8fHw%3D&ixlib=rb-1.2.1&auto=format&q=60",
-      ],
+      postsWriter: "난재",
+      postsTitle: "제목없음",
     },
     {
-      postId: 62,
-      postsPhotos: [
+      postsId: 62,
+      postsPhotos:
         "https://images.unsplash.com/photo-1599843533756-8d3aac8ff16b?ixid=MXwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHw%3D&ixlib=rb-1.2.1&auto=format&q=60",
-      ],
+      postsWriter: "난재",
+      postsTitle: "제목없음",
     },
     {
-      postId: 63,
-      postsPhotos: [
+      postsId: 63,
+      postsPhotos:
         "https://images.unsplash.com/photo-1600128726020-d6dded32281b?ixid=MXwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHw%3D&ixlib=rb-1.2.1&auto=format&q=60",
-      ],
+      postsWriter: "난재",
+      postsTitle: "제목없음",
     },
     {
-      postId: 64,
-      postsPhotos: [
+      postsId: 64,
+      postsPhotos:
         "https://images.unsplash.com/photo-1600791575280-1f7ca48b9a57?ixid=MXwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHw%3D&ixlib=rb-1.2.1&auto=format&q=60",
-      ],
+      postsWriter: "난재",
+      postsTitle: "제목없음",
     },
     {
-      postId: 65,
-      postsPhotos: [
+      postsId: 65,
+      postsPhotos:
         "https://images.unsplash.com/photo-1600785381373-703ca5953d42?ixid=MXwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHw%3D&ixlib=rb-1.2.1&auto=format&q=60",
-      ],
+      postsWriter: "난재",
+      postsTitle: "제목없음",
     },
     {
-      postId: 66,
-      postsPhotos: [
+      postsId: 66,
+      postsPhotos:
         "https://images.unsplash.com/photo-1600275668999-f423597ec2a8?ixid=MXwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHw%3D&ixlib=rb-1.2.1&auto=format&q=60",
-      ],
+      postsWriter: "난재",
+      postsTitle: "제목없음",
     },
     {
-      postId: 67,
-      postsPhotos: [
+      postsId: 67,
+      postsPhotos:
         "https://images.unsplash.com/photo-1601814838249-d1756026b4cc?ixid=MXwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHw%3D&ixlib=rb-1.2.1&auto=format&q=60",
-      ],
+      postsWriter: "난재",
+      postsTitle: "제목없음",
     },
     {
-      postId: 68,
-      postsPhotos: [
+      postsId: 68,
+      postsPhotos:
         "https://images.unsplash.com/photo-1604933762021-54a5858c9832?ixid=MXwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHw%3D&ixlib=rb-1.2.1&auto=format&q=60",
-      ],
+      postsWriter: "난재",
+      postsTitle: "제목없음",
     },
     {
-      postId: 69,
-      postsPhotos: [
+      postsId: 69,
+      postsPhotos:
         "https://images.unsplash.com/photo-1606245896262-c64704c83cbb?ixid=MXwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHw%3D&ixlib=rb-1.2.1&auto=format&q=60",
-      ],
+      postsWriter: "난재",
+      postsTitle: "제목없음",
     },
     {
-      postId: 70,
-      postsPhotos: [
+      postsId: 70,
+      postsPhotos:
         "https://images.unsplash.com/photo-1610050732079-0ced7dc94587?ixid=MXwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHw%3D&ixlib=rb-1.2.1&auto=format&q=60",
-      ],
+      postsWriter: "난재",
+      postsTitle: "제목없음",
     },
   ],
 };
@@ -611,34 +681,39 @@ const FeedResDummySmall = {
   headers: null,
   data: [
     {
-      postId: 1,
-      postsPhotos: [
+      postsId: 1,
+      postsPhotos:
         "https://images.unsplash.com/photo-1557898979-252a87810b77?ixid=MXwxMjA3fDB8MHx0b3BpYy1mZWVkfDF8YWV1NnJMLWo2ZXd8fGVufDB8fHw%3D&ixlib=rb-1.2.1&auto=format&q=60",
-      ],
+      postsWriter: "난재",
+      postsTitle: "제목없음",
     },
     {
-      postId: 2,
-      postsPhotos: [
+      postsId: 2,
+      postsPhotos:
         "https://images.unsplash.com/photo-1599843533756-8d3aac8ff16b?ixid=MXwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHw%3D&ixlib=rb-1.2.1&auto=format&q=60",
-      ],
+      postsWriter: "난재",
+      postsTitle: "제목없음",
     },
     {
-      postId: 3,
-      postsPhotos: [
+      postsId: 3,
+      postsPhotos:
         "https://images.unsplash.com/photo-1600128726020-d6dded32281b?ixid=MXwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHw%3D&ixlib=rb-1.2.1&auto=format&q=60",
-      ],
+      postsWriter: "난재",
+      postsTitle: "제목없음",
     },
     {
-      postId: 4,
-      postsPhotos: [
+      postsId: 4,
+      postsPhotos:
         "https://images.unsplash.com/photo-1600791575280-1f7ca48b9a57?ixid=MXwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHw%3D&ixlib=rb-1.2.1&auto=format&q=60",
-      ],
+      postsWriter: "난재",
+      postsTitle: "제목없음",
     },
     {
-      postId: 5,
-      postsPhotos: [
+      postsId: 5,
+      postsPhotos:
         "https://images.unsplash.com/photo-1600785381373-703ca5953d42?ixid=MXwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHw%3D&ixlib=rb-1.2.1&auto=format&q=60",
-      ],
+      postsWriter: "난재",
+      postsTitle: "제목없음",
     },
   ],
 };
