@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 import styled from "@emotion/styled";
 import Button from "../Button";
 import color from "../../styles/theme";
@@ -6,6 +6,7 @@ import Image from "next/image";
 import TopLeft from "../../components/ProfileTop/TopLeft";
 import TopRight from "../../components/ProfileTop/TopRight";
 import MenuBar from "../../components/ProfileTop/MenuBar";
+
 
 const Container1 = styled.div`
   display: flex;
@@ -34,7 +35,7 @@ const Wrapper2 = styled.div`
   margin-left: 10px;
 `;
 
-const index = ({ profileData }) => {
+const index = ({ profileData, setEditState, windowHeight }) => {
   const {
     profileImg,
     profileName,
@@ -46,6 +47,9 @@ const index = ({ profileData }) => {
     profileTags,
     profileCollections,
   } = profileData;
+
+  
+
   return (
     <>
       <Container1>
@@ -58,6 +62,8 @@ const index = ({ profileData }) => {
             profileFollower={profileFollwer}
             profileMyposts={profileMyposts}
             profileTags={profileTags}
+            setEditState={setEditState}
+            windowHeight={windowHeight}
           ></TopRight>
         </Wrapper2>
       </Container1>

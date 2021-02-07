@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState } from "react";
 import styled from "@emotion/styled";
 import Button from "../Button";
 import color from "../../styles/theme";
@@ -107,8 +107,12 @@ const TopRight = ({
   profileFollower,
   profileMyposts,
   profileTags,
+  windowHeight,
+  setEditState,
 }) => {
-  const editProfile = () => {};
+  const editProfile = () => {
+    setEditState(true);
+  };
 
   return (
     <>
@@ -147,35 +151,16 @@ const TopRight = ({
       <TagDiv>
         {profileTags &&
           profileTags.map((t, index) => {
-            return <ProfileTagBox key={index} tagId={t} tagMargin="0px 8px 8px 0px" tagUseDelete={false} />;
+            return (
+              <ProfileTagBox
+                key={index}
+                tagId={t}
+                tagMargin="0px 8px 8px 0px"
+                tagUseDelete={false}
+              />
+            );
           })}
       </TagDiv>
-      {/* <TagDiv>
-        <TagTitle>관심 태그</TagTitle>
-        <TagList>
-          {profileTags}
-          <Button
-            btnText="클라이밍"
-            btnWidth="100px"
-            // btnMarginRight="5px"
-            btnBgColor="${color.gray.light}"
-            btnTextColor="${color.gray.semidark}"
-            btnFontSize="20px"
-            btnFontWeight={500}
-            btnHoverTextColor="${color.gray.dark}"
-          />
-          <Button
-            btnText="엔지니어"
-            btnWidth="100px"
-            // btnMarginRight="5px"
-            btnBgColor="${color.gray.light}"
-            btnTextColor="${color.gray.semidark}"
-            btnFontSize="20px"
-            btnFontWeight={500}
-            btnHoverTextColor="${color.gray.dark}"
-          />
-        </TagList>
-      </TagDiv> */}
     </>
   );
 };
