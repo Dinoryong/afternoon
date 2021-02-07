@@ -75,3 +75,66 @@ export const GET_FEED = async () => {
     return { status, data };
   }
 };
+
+export const ADD_FOLLOW_USERS = async (req) => {
+  const authToken = window.localStorage.getItem("authToken");
+  if (!VIA_API_DEV) {
+    try {
+      console.log(req);
+      console.log(authToken);
+
+      return { status: 200, data: {} };
+    } catch (error) {
+      console.log(error);
+    }
+    return { status: false };
+  } else {
+
+    let status;
+    let data;
+
+    try {
+      await axios
+        .put(API_ROOT_URI + "/api/", req, {
+          headers: { Authorization: `Bearer ${authToken}` },
+        })
+        .then((res) => {
+          console.log(res);
+          status = res.status;
+          data = res.data;
+        });
+      return { status, data };
+    } catch (error) {
+      console.log(error);
+    }
+    return { status: false };
+  }
+};
+
+export const DELETE_FOLLOW_USERS = async (req) => {
+  const authToken = window.localStorage.getItem("authToken");
+  if (!VIA_API_DEV) {
+    try {
+      console.log(req);
+      console.log(authToken);
+
+      return { status: 200, data: {} };
+    } catch (error) {
+      console.log(error);
+    }
+    return { status: false };
+  } else {
+    try {
+      await axios
+        .put(API_ROOT_URI + "/api/", req, {
+          headers: { Authorization: `Bearer ${authToken}` },
+        })
+        .then((res) => {
+          console.log(res);
+        });
+    } catch (error) {
+      console.log(error);
+    }
+  }
+};
+

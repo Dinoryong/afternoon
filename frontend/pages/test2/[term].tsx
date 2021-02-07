@@ -1,11 +1,12 @@
 import React, { useEffect, useState } from "react";
 import styled from "@emotion/styled";
 import UserCurating from "../../components/UserCurating"
+import { useRouter } from "next/router";
 
 const Container = styled.div`
   position: relative;
   height: 100%;
-  background-color: gray;
+  /* background-color: gray; */
   display: flex;
   flex-direction: column;
   justify-content: center;
@@ -13,6 +14,11 @@ const Container = styled.div`
 `;
 
 const index = () => {
+
+  const router = useRouter();
+  const routerQuery = router.query.term;
+
+
   const userData = {
     userImg:
       "https://images.unsplash.com/photo-1611759931890-db159d745102?ixid=MXwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHw%3D&ixlib=rb-1.2.1&auto=format&fit=crop&w=632&q=80",
@@ -57,7 +63,7 @@ const index = () => {
         <UserCurating
           userData={userData}
           // setEditState={setEditState}
-          windowHeight={windowHeight}
+          routerQuery={routerQuery}
         ></UserCurating>
       </Container>
     </>

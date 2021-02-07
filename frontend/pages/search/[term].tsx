@@ -37,6 +37,7 @@ const DynamicDiv = styled.div`
 const index = () => {
   const router = useRouter();
   const routerQuery = router.query.term;
+  
 
   const [postData, setPostData] = useState([]);
   const [isTag, setIsTag] = useState(0);
