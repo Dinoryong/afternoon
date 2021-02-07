@@ -72,12 +72,5 @@ public class PostsDto {
 
     }
 
-    @AllArgsConstructor @Data
-    public static class LikePosts{
-        private Long postsId;
-        private String postsTitle;
-        private String postsPhoto;
-    }
-
 
 }
