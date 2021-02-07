@@ -1,7 +1,8 @@
-import React from "react";
+import React, { useState } from "react";
 import styled from "@emotion/styled";
 import color from "../../styles/theme";
 import Button from "../Button";
+import { ADD_TAGS, DELETE_TAGS } from "../../pages/api/profile";
 
 const Container = styled.div`
   display: flex;
@@ -113,7 +114,22 @@ const TagRight = ({
   tagTopUser,
   tagTopPost,
   tagTopContributer,
+  routerQuery,
 }) => {
+  const [tagState, setTagState] = useState(false);
+
+  const tagRequest = { tags: [routerQuery] };
+
+  const addTagOnClick = () => {
+    setTagState(true);
+    ADD_TAGS(tagRequest);
+  };
+
+  const deleteTagOnClick = () => {
+    setTagState(false);
+    DELETE_TAGS(tagRequest);
+  };
+
   return (
     <Container>
       <TopBox>
@@ -142,7 +158,7 @@ const TagRight = ({
             btnWidth="100%"
             btnMarginLeft="0px"
             btnMarginRight="0px"
-            btnText="관심태그로 설정하기"
+            btnText={tagState ? "관심태그에서 삭제하기" : "관심태그로 설정하기"}
             btnFontSize="15px"
             btnTextColor={color.white.default}
             btnHeight="40px"
@@ -151,7 +167,7 @@ const TagRight = ({
             btnHoverBorderColor="transparent"
             btnHoverBgColor={color.gray.dark}
             btnHoverTextColor={color.white.default}
-            // btnOnClick={requestSignup}
+            btnOnClick={tagState ? deleteTagOnClick : addTagOnClick}
           />
         </LikeTag>
       </BottomBox>
