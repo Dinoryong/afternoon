@@ -6,10 +6,10 @@ import Button from "../Button";
 const Container = styled.div`
   display: flex;
   width: 450px;
-  min-width: 350px;
+  min-width: 400px;
   flex-direction: column;
-  justify-content: space-between;
-  margin-left: 60px;
+  justify-content: flex-start;
+  margin-left: 80px;
 `;
 
 const TopBox = styled.div`
@@ -102,6 +102,7 @@ const LikeTag = styled.div`
   display: flex;
   justify-content: center;
   width: 100%;
+  margin-top: 20px;
   /* min-width: 450px; */
   /* background-color: white; */
 `;
@@ -132,7 +133,6 @@ const TagRight = ({
         <TopcontributorBox>
           <InsideTopcontributor1>기여 만땅러</InsideTopcontributor1>
           <InsideTopcontributor2>{tagTopContributer}</InsideTopcontributor2>
-        
         </TopcontributorBox>
       </TopBox>
       <BottomBox>
