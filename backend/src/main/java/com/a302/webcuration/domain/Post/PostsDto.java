@@ -63,7 +63,21 @@ public class PostsDto {
         private String postsWriter;
     }
 
+    @AllArgsConstructor @Data @Builder
+    public static class PostsWithOnePhoto {
+        private Long postsId;
+        private String postsWriter;
+        private String postsTitle;
+        private String postsPhoto;
 
+    }
+
+    @AllArgsConstructor @Data
+    public static class LikePosts{
+        private Long postsId;
+        private String postsTitle;
+        private String postsPhoto;
+    }
 
 
 }

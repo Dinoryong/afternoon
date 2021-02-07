@@ -81,7 +81,8 @@ public class Account {
     public void updateAccount(AccountDto.UpdateRequest request)
     {
         this.accountNickname=request.getAccountNickname();
-        this.accountBio =request.getAccountDesc();
+        this.accountBio =request.getAccountBio();
+        this.accountPhoto=request.getAccountPhoto();
     }
 
     public void changeAuthKey(String accountAuthKey){
@@ -101,24 +102,25 @@ public class Account {
             this.getTags().add(tag);
             tag.getAccounts().add(this);
     }
-    public void refreshTag(){
+
+    //관심태그 삭제
+    public void deleteTag(){
         for (Tag tag : tags){
             tag.getAccounts().remove(this);
         }
         tags.clear();
     }
-//    @Override
-//    public String toString() {
-//        return "Account{" +
-//                "accountId=" + accountId +
-//                ", accountName='" + accountName + '\'' +
-//                ", accountNickname='" + accountNickname + '\'' +
-//                ", accountEmail='" + accountEmail + '\'' +
-//                ", accountCreateDate=" + accountCreateDate +
-//                ", accountUpdateDate=" + accountUpdateDate +
-//                ", accountDesc='" + accountDesc + '\'' +
-//                ", accountAuthKey='" + accountAuthKey + '\'' +
-//                ", accountRole=" + accountRole +
-//                '}';
-//    }
+
+    @Override
+    public String toString() {
+        return "Account{" +
+                "accountId=" + accountId +
+                ", accountName='" + accountName + '\'' +
+                ", accountNickname='" + accountNickname + '\'' +
+                ", accountEmail='" + accountEmail + '\'' +
+                ", accountCreateDate=" + accountCreateDate +
+                ", accountBio='" + accountBio + '\'' +
+                ", myPosts=" + myPosts +
+                '}';
+    }
 }

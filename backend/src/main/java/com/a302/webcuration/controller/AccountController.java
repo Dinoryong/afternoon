@@ -60,20 +60,13 @@ public class AccountController {
 
     }
 
-    //---------------------조회--------------------
-    @GetMapping("/{id}")
-    public ResponseEntity retrieveAccountById(@PathVariable Long id)
+    //---------------------내 정보 조회--------------------
+    @GetMapping
+    public ResponseEntity retrieveAccountById(@RequestHeader(value = "Authorization") String token)
     {
-        BaseMessage bm = accountService.findAccountById(id);
+        BaseMessage bm = accountService.findAccountById(token);
         return new ResponseEntity(bm,bm.getHttpStatus());
     }
-
-    @GetMapping
-    public ResponseEntity retrieveAccountAll()
-    {
-        return new ResponseEntity(accountService.findAll(),HttpStatus.OK);
-    }
-
     //--------------------------------------팔로잉------------------------------------------------------
 
     @PutMapping("/my-following")

@@ -1,19 +1,13 @@
 package com.a302.webcuration.domain.Account;
 
-import com.a302.webcuration.domain.Tag.Tag;
+import com.a302.webcuration.domain.Post.PostsDto;
 import com.a302.webcuration.domain.Tag.TagDto;
-import io.swagger.annotations.ApiModelProperty;
 import lombok.*;
-import org.hibernate.annotations.CreationTimestamp;
-import org.hibernate.annotations.UpdateTimestamp;
-import org.modelmapper.ModelMapper;
 
-import javax.persistence.Column;
 import javax.validation.constraints.Email;
 import javax.validation.constraints.NotNull;
 import java.time.LocalDate;
 import java.util.ArrayList;
-import java.util.LinkedList;
 import java.util.List;
 
 public class AccountDto {
@@ -44,9 +38,11 @@ public class AccountDto {
         private String nickname;
     }
 
-    // TODO: 2021-02-06 accountId,Desc->Bio 프로필 사진(엔티티까지 수정), 내 모든 posts, 내가 좋아요한 게시물, 내 관심태그, 좋아요한 게시물 수, 게시물 수
+    // TODO: 2021-02-06  내 모든 posts, 내가 좋아요한 게시물, 내 관심태그, 좋아요한 게시물 수, 게시물 수
     @Getter @Setter @RequiredArgsConstructor
     public static class AccountProfile{
+
+        private Long accountId;
 
         private String accountName;
 
@@ -56,7 +52,9 @@ public class AccountDto {
 
         private LocalDate accountCreateDate;
 
-        private String accountDesc;
+        private String accountBio;
+
+        private String accountPhoto;
 
         private List<AccountDto.FollowingDto> following;
 
@@ -66,14 +64,22 @@ public class AccountDto {
 
         private int accountFollowerCnt;
 
+        private List<PostsDto.PostsWithOnePhoto> writtenPosts;
+
+        private int writtenPostsCnt;
+
+        private List<PostsDto.LikePosts> likePosts;
+
+        private List<TagDto.Tag> tags;
+
     }
 
     @Getter @Setter @RequiredArgsConstructor
     public static class UpdateRequest
     {
-        private String accountDesc;
-        //닉네임도 수정할 지 말지 생각
+        private String accountBio;
         private String accountNickname;
+        private String accountPhoto;
     }
 
     @Getter @Setter @Builder
@@ -113,7 +119,7 @@ public class AccountDto {
         private LocalDate accountUpdateDate;
 
         private Role accountRole;
-        private String accountDesc;
+        private String accountBio;
 
     }
     @Getter @Setter @RequiredArgsConstructor
