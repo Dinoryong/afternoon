@@ -5,6 +5,7 @@ import Button from "../../components/Button";
 import color from "../../styles/theme";
 import Image from "next/image";
 import EditModal from "../../components/ProfileTop/EditModal";
+import { GET_MY_INFO } from "../api/profile";
 
 const ModalFrame = styled.div`
   position: absolute;
@@ -47,6 +48,7 @@ const index = () => {
   };
 
   const [editState, setEditState] = useState(false);
+  const [infoState, setInfoState] = useState(false);
 
   const [windowHeight, setWindowHeight] = useState<number>();
 
@@ -55,6 +57,17 @@ const index = () => {
   }, [editState]);
 
   useEffect(function mount() {
+    const getMyInfo = async () => {
+      const result = await GET_MY_INFO();
+      if (result.status === 200) {
+        setInfoState(true);
+      }
+    };
+
+    if (!infoState) {
+      getMyInfo();
+    }
+
     const resizeHandler = () => {
       setWindowHeight(window.innerHeight);
     };

@@ -89,7 +89,6 @@ export const ADD_FOLLOW_USERS = async (req) => {
     }
     return { status: false };
   } else {
-
     let status;
     let data;
 
@@ -137,4 +136,3 @@ export const DELETE_FOLLOW_USERS = async (req) => {
     }
   }
 };
-
