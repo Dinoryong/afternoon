@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, { Dispatch, SetStateAction, useEffect, useState } from "react";
 import styled from "@emotion/styled";
 import Button from "../Button";
 import Image from "next/image";
@@ -24,9 +24,12 @@ const NoticeIcon = styled.div<HeaderProps>`
   border-radius: 50%;
   :hover {
     border-color: ${(props) =>
-      props.routerPath === "/" ? color.white.default : color.gray.darker};
+      (props.routerPath === "/" || props.routerPath === "/home") &&
+      !props.inputFocus
+        ? color.white.default
+        : color.gray.darker};
   }
-  transition: all 0.2s;
+  transition: all 0.3s;
 `;
 
 const IconBox = styled.div`
@@ -37,6 +40,8 @@ const IconBox = styled.div`
 
 type HeaderProps = {
   routerPath?: String;
+  inputFocus?: boolean;
+  setInputFocus?: Dispatch<SetStateAction<boolean>>;
 };
 
 const useCounter = () => {
@@ -50,24 +55,28 @@ const useCounter = () => {
   };
 };
 
-const HeaderRight = ({ routerPath }: HeaderProps) => {
+const HeaderRight = ({
+  routerPath,
+  inputFocus,
+  setInputFocus,
+}: HeaderProps) => {
   const { toggleSubmit } = useCounter();
 
   const [noticeImg, setNoticeImg] = useState<string>(
-    routerPath === "/"
+    (routerPath === "/" || routerPath === "/home") && !inputFocus
       ? "/assets/icons/bell_white.png"
       : "/assets/icons/bell_black_light.png"
   );
 
   useEffect(() => {
     setNoticeImg(
-      routerPath === "/"
+      (routerPath === "/" || routerPath === "/home") && !inputFocus
         ? "/assets/icons/bell_white.png"
         : "/assets/icons/bell_black_light.png"
     );
-  }, [routerPath]);
+  }, [routerPath, inputFocus]);
 
-  const props = { routerPath };
+  const props = { routerPath, inputFocus };
 
   const noticeIconStyle = {
     borderRadius: "50%",
@@ -80,16 +89,43 @@ const HeaderRight = ({ routerPath }: HeaderProps) => {
         btnWidth="80px"
         btnMarginLeft="20px"
         btnMarginRight="20px"
-        btnHoverBorderColor={routerPath === "/" ? "transparent" : null}
-        btnBgColor={routerPath === "/" ? "transparent" : null}
-        btnTextColor={routerPath === "/" ? "white" : color.black.default}
-        btnBorderColor={routerPath === "/" ? "white" : color.black.default}
-        btnUseOpacity={routerPath === "/" ? false : true}
+        btnHoverBorderColor={
+          (routerPath === "/" || routerPath === "/home") && !inputFocus
+            ? "transparent"
+            : null
+        }
+        btnBgColor={
+          (routerPath === "/" || routerPath === "/home") && !inputFocus
+            ? "transparent"
+            : null
+        }
+        btnTextColor={
+          (routerPath === "/" || routerPath === "/home") && !inputFocus
+            ? "white"
+            : color.black.default
+        }
+        btnBorderColor={
+          (routerPath === "/" || routerPath === "/home") && !inputFocus
+            ? "white"
+            : color.black.default
+        }
+        btnUseOpacity={
+          (routerPath === "/" || routerPath === "/home") && !inputFocus
+            ? false
+            : true
+        }
         btnSetOpacity={"0.4"}
-        btnOnClick={toggleSubmit}
+        btnOnClick={() => {
+          setInputFocus(false);
+          toggleSubmit();
+        }}
       />
       <NoticeIcon {...props} style={noticeIconStyle}>
-        <IconBox>
+        <IconBox
+          onClick={() => {
+            setInputFocus(false);
+          }}
+        >
           <Image
             src={noticeImg}
             layout="fill"

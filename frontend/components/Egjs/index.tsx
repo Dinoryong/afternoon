@@ -6,13 +6,18 @@ import { start } from "repl";
 
 const Item = styled.div`
   width: 355px;
-  opacity: 1;
-  transition: all 0.35s;
+  opacity: 0.8;
   cursor: zoom-in;
+  background-color: transparent;
+  :hover {
+    opacity: 1;
+  }
+  /* transition: opacity 0.3s; */
 `;
 
 const Thumbnail = styled.div`
   max-height: 1000px;
+  background-color: transparent;
   overflow: hidden;
   border-radius: 8px;
   height: max-content;
@@ -21,6 +26,7 @@ const Thumbnail = styled.div`
 const Img = styled.img`
   width: 100%;
   border-radius: 8px;
+  background-color: transparent;
   -webkit-user-drag: none;
 `;
 
@@ -42,17 +48,20 @@ const index = ({ postData }) => {
   const [isEnd, setIsEnd] = useState(false);
   const [appendAble, setAppendAble] = useState(true);
 
-  const DIVIDE_COUNT = 20;
+  const DIVIDE_COUNT = 5;
 
   return (
     <GridLayout
       tag="div"
       threshold={100}
-      options={{ horizontal: false, transitionDuration: 0.3 }}
+      options={{
+        horizontal: false,
+        //  transitionDuration: 0.3
+      }}
       layoutOptions={{ margin: 20, align: "center" }}
       onAppend={({ startLoading }) => {
         startLoading();
-        if (!isEnd && appendList.length <= postData.length) {
+        if (!isEnd && appendAble && appendList.length <= postData.length) {
           if (startIndex + DIVIDE_COUNT < postData.length) {
             const cur = postData.slice(startIndex, startIndex + DIVIDE_COUNT);
             setAppendList(appendList.concat(cur));
@@ -62,7 +71,7 @@ const index = ({ postData }) => {
             const cur = postData.slice(startIndex);
             setAppendList(appendList.concat(cur));
           }
-          console.log(appendList);
+          // console.log(appendList);
         } else {
           if (appendAble) {
             setAppendAble(false);
