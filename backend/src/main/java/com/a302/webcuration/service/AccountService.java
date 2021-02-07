@@ -4,6 +4,8 @@ import com.a302.webcuration.common.BaseMessage;
 import com.a302.webcuration.domain.Account.Account;
 import com.a302.webcuration.domain.Account.AccountDto;
 import com.a302.webcuration.domain.Account.AccountRepository;
+import com.a302.webcuration.domain.Post.Posts;
+import com.a302.webcuration.domain.Post.PostsDto;
 import com.a302.webcuration.domain.Tag.Tag;
 import com.a302.webcuration.domain.Tag.TagDto;
 import com.a302.webcuration.domain.Tag.TagRepository;
@@ -30,25 +32,30 @@ public class AccountService {
 
     private final JwtService jwtService;
 
-
-    public List<AccountDto.CreateAccountResponse> findAll()
-    {
-        List<AccountDto.CreateAccountResponse> accounts = new ArrayList<>();
-        for (Account account : accountRepository.findAll()) {
-            accounts.add(modelMapper.map(account,AccountDto.CreateAccountResponse.class));
-        }
-        return accounts;
-    }
-
-    public BaseMessage findAccountById(Long id)
+    //내정보
+    public BaseMessage findAccountById(String token)
     {
         Map<String, Object> resultMap = new HashMap<>();
         try {
-            Account account = accountRepository.findAccountByAccountId(id);
+            Long myId = jwtService.getAccountId(token);
+            Account account = accountRepository.findAccountByAccountId(myId);
             logger.info("account = " + account.getAccountName());
+            return profileMapping(account);
+            /////////
 
+            //좋아요한 게시물
+        }catch (Exception e)
+        {
+            resultMap.put("errors",e);
+            return new BaseMessage(HttpStatus.BAD_REQUEST,resultMap);
+        }
+    }
+
+    BaseMessage profileMapping(Account account) throws Exception{
+        try {
             AccountDto.AccountProfile profile = modelMapper.map(account, AccountDto.AccountProfile.class);
 
+            //팔로잉, 팔로워
             List<AccountDto.FollowingDto> following = new ArrayList<>();
             List<AccountDto.FollowerDto> follower = new ArrayList<>();
             int followingCnt = account.getFollowing().size();
@@ -65,11 +72,27 @@ public class AccountService {
             profile.setFollowing(following);
             profile.setAccountFollowerCnt(followerCnt);
             profile.setAccountFollowingCnt(followingCnt);
-            return new BaseMessage(HttpStatus.OK,profile);
-        }catch (Exception e)
-        {
-            resultMap.put("errors",e);
-            return new BaseMessage(HttpStatus.BAD_REQUEST,resultMap);
+            logger.info("account = " + account);
+            //내가 쓴 게시물, 게시물 수
+            List<PostsDto.PostsWithOnePhoto> writtenPosts=new ArrayList<>();
+            int writtenPostsCnt=account.getMyPosts().size();
+            for (int idx=0;idx<writtenPostsCnt;idx++){
+                Posts posts=account.getMyPosts().get(idx);
+                PostsDto.PostsWithOnePhoto writtenPost= PostsDto.PostsWithOnePhoto.builder()
+                        .postsId(posts.getPostsId())
+                        .postsWriter(posts.getPostWriter().getAccountName())
+                        .postsTitle(posts.getPostsTitle())
+                        .postsPhoto(posts.getPostsPhotos().get(0))
+                        .build();
+                writtenPosts.add(writtenPost);
+            }
+            profile.setWrittenPosts(writtenPosts);
+            profile.setWrittenPostsCnt(writtenPostsCnt);
+
+            return new BaseMessage(HttpStatus.OK, profile);
+        }catch (Exception e){
+            logger.error("e.getMessage() "+ e.getMessage());
+            throw e;
         }
     }
 
@@ -112,8 +135,6 @@ public class AccountService {
         Account account=accountRepository.findAccountByAccountId(myId);
 
         try {
-            //기존 관심태그 삭제하고 이번에 들어온 관심태그로만 설정
-            account.refreshTag();
             for(TagDto.Tag tagDto: accountTagRequest.getTags()) {
                 Tag tag= tagRepository.findTagByTagId(tagDto.getTagId());
                 account.tagging(tag);
@@ -121,8 +142,8 @@ public class AccountService {
         }catch (Exception e){
             logger.error(e.getMessage());
         }
-
-
     }
+
+    // TODO: 2021-02-08 관심태그 취소 
 
 }

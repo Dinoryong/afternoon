@@ -6,6 +6,7 @@ import io.swagger.annotations.Api;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
@@ -14,12 +15,12 @@ import org.springframework.web.bind.annotation.RestController;
 @RequiredArgsConstructor
 @Api
 public class SearchController {
-    //private final SearchService searchService;
+    private final SearchService searchService;
     //유저는 닉네임 태그 태그이름
-    // TODO: 2021-02-04 로그인안해도 가능 , 사람 기준 검색 일단 posts에 있는거 다주기 + 사람(기본정보,팔로잉 팔로워 수,게시물 수, 관심태그설정한 것) // 태그 기준 검색 태그에 등록된 게시물 수
-//    @GetMapping
-//    public ResponseEntity search(){
-//        BaseMessage bm =feedServsearchServiceice.
-//        return new ResponseEntity(bm,bm.getHttpStatus());
-//    }
+    // TODO: 2021-02-04 태그 기준 검색 태그에 등록된 게시물 수
+    @GetMapping("/{name}")
+    public ResponseEntity search(@PathVariable String name){
+        BaseMessage bm =searchService.search(name);
+        return new ResponseEntity(bm,bm.getHttpStatus());
+    }
 }

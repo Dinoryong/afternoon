@@ -38,11 +38,12 @@ public class Tag {
         posts.getPostsTags().add(this);
     }
 
-//    @Override
-//    public String toString() {
-//        return "Tag{" +
-//                "tagId=" + tagId +
-//                ", tagTitle='" + tagTitle + '\'' +
-//                '}';
-//    }
+    @Override
+    public String toString() {
+        return "Tag{" +
+                "tagId=" + tagId +
+                ", tagTitle='" + tagTitle + '\'' +
+                ", posts=" + posts +
+                '}';
+    }
 }

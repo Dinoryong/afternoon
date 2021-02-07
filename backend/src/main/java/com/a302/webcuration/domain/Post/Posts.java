@@ -54,4 +54,14 @@ public class Posts {
         account.getMyPosts().add(this);
     }
 
+    @Override
+    public String toString() {
+        return "Posts{" +
+                "postsId=" + postsId +
+                ", postsTitle='" + postsTitle + '\'' +
+                ", postsContents='" + postsContents + '\'' +
+                ", postsPhotos=" + postsPhotos +
+                ", postsWriteTime=" + postsWriteTime +
+                '}';
+    }
 }

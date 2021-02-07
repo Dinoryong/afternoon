@@ -181,8 +181,7 @@ public class LoginService2 {
             String nickname= account.getAccountNickname();
             resultMap = loginInfo(id,email,nickname);
             HttpHeaders httpHeaders = new HttpHeaders();
-            String reToken = "Bearer "+jwtService.create(id,email);
-            httpHeaders.add("Authorization",reToken);
+            httpHeaders.add("Authorization",token);
             return new BaseMessage(HttpStatus.OK,httpHeaders,resultMap);
         }
         else
