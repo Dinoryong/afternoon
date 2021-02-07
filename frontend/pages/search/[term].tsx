@@ -116,15 +116,16 @@ const index = () => {
     userLikes: "100",
     userTags: [1, 2, 3, 4, 7, 8, 5, 9, 13, 23, 15, 17, 18],
     userCollections: "13",
+    accountsId: 24,
   };
 
   return (
     <Container>
       {isExist && (
         <Wrapper>
-          {isTag && isTag == 1 && <TagCurating tagData={tagData}></TagCurating>}
+          {isTag && isTag == 1 && <TagCurating tagData={tagData} routerQuery={routerQuery}></TagCurating>}
           {isTag && isTag == 2 && (
-            <UserCurating userData={userData}></UserCurating>
+            <UserCurating userData={userData} routerQuery={routerQuery}></UserCurating>
           )}
           <DynamicDiv>
             {postData && postData.length > 0 && (

@@ -41,6 +41,7 @@ const index = ({ userData, routerQuery }) => {
     userLikes,
     userTags,
     userCollections,
+    accountsId,
   } = userData;
 
   return (
@@ -56,6 +57,7 @@ const index = ({ userData, routerQuery }) => {
             userPosts={userPosts}
             userTags={userTags}
             routerQuery={routerQuery}
+            accountsId={accountsId}
           ></TopRight>
         </Wrapper2>
       </Container>
