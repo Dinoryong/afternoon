@@ -16,7 +16,7 @@ const Container = styled.div`
 //   margin: 10px 0px;
 // `;
 
-const index = ({ tagData, routerQuery }) => {
+const index = ({ tagData }) => {
   // const [expand, setExpand] = useState(false);
   const {
     tagTitle,
@@ -27,7 +27,6 @@ const index = ({ tagData, routerQuery }) => {
     tagTopPost,
     tagTopContributer,
   } = tagData;
-
   return (
     <Container>
       {/* <Wrapper> */}
@@ -38,7 +37,6 @@ const index = ({ tagData, routerQuery }) => {
         tagTopUser={tagTopUser}
         tagTopPost={tagTopPost}
         tagTopContributer={tagTopContributer}
-        routerQuery={routerQuery}
       ></TagRight>
       {/* </Wrapper> */}
     </Container>
