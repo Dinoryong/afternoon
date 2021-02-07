@@ -1,9 +1,10 @@
-import React from "react";
+import React, { useState } from "react";
 import styled from "@emotion/styled";
 import Button from "../Button";
 import color from "../../styles/theme";
 import Image from "next/image";
 import ProfileTagBox from "../ProfileTagBox";
+import { ADD_FOLLOW_USERS, DELETE_FOLLOW_USERS } from "../../pages/api/post"
 
 const TitleBox = styled.div`
   display: flex;
@@ -17,7 +18,7 @@ const UserTitle = styled.div`
   font-weight: bold;
 `;
 
-const EditBox =styled.div`  
+const EditBox = styled.div`
   display: flex;
   width: 40px;
   height: 40px;
@@ -93,36 +94,50 @@ const TopRight = ({
   userFollower,
   userPosts,
   userTags,
+  routerQuery,
 }) => {
-  const editProfile = () => {};
+  // const editProfile = () => {};
+
+  const [followState, setFollowState] = useState(false);
+
+  const followRequest = { follows: [routerQuery] };
+
+  const addFollowOnClick = () => {
+    setFollowState(true);
+    ADD_FOLLOW_USERS(followRequest);
+  };
+
+  const deleteFollowOnClick = () => {
+    setFollowState(false);
+    DELETE_FOLLOW_USERS(followRequest);
+  };
 
   return (
     <>
       <TitleBox>
         <UserTitle>{userName}</UserTitle>
-      
-      <EditBox>
+        <EditBox>
           <Button
             btnBgColor="transparent"
             btnWidth="120px"
             btnHeight="32px"
-            btnText="팔로우하기"
+            btnText={followState ? "팔로우 끊기" : "팔로우하기"}
             btnFontSize="15px"
             btnTextColor={color.black.default}
             btnBorderColor={color.black.default}
             // btnHoverBorderColor={"transparent"}
             btnHoverBgColor="transparent"
             btnUseIcon={true}
-            btnIconSrc={"/assets/icons/follow.png"}
+            btnIconSrc={followState ? "/assets/icons/follow_check.png" : "/assets/icons/follow_plus.png"}
             btnIconHeight={"15px"}
             btnIconWidth={"15px"}
             btnIconMargin={"2px 0px 0px 12px"}
             btnUseOpacity={true}
             btnSetOpacity={"0.4"}
-            btnOnClick={editProfile}
+            btnOnClick={followState ? deleteFollowOnClick : addFollowOnClick}
           />
         </EditBox>
-        </TitleBox>
+      </TitleBox>
       <FollowBox>
         <UserFollowing>팔로잉 {userFollowing}</UserFollowing>
         <UserFollower>팔로워 {userFollower}</UserFollower>
@@ -134,7 +149,14 @@ const TopRight = ({
       <TagDiv>
         {userTags &&
           userTags.map((t, index) => {
-            return <ProfileTagBox key={index} tagId={t} tagMargin="0px 8px 8px 0px" tagUseDelete={false} />;
+            return (
+              <ProfileTagBox
+                key={index}
+                tagId={t}
+                tagMargin="0px 8px 8px 0px"
+                tagUseDelete={false}
+              />
+            );
           })}
       </TagDiv>
     </>

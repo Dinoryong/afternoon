@@ -30,7 +30,7 @@ const Wrapper2 = styled.div`
   margin-left: 10px;
 `;
 
-const index = ({ userData }) => {
+const index = ({ userData, routerQuery }) => {
   const {
     userImg,
     userName,
@@ -42,6 +42,7 @@ const index = ({ userData }) => {
     userTags,
     userCollections,
   } = userData;
+
   return (
     <>
       <Container>
@@ -54,6 +55,7 @@ const index = ({ userData }) => {
             userFollower={userFollower}
             userPosts={userPosts}
             userTags={userTags}
+            routerQuery={routerQuery}
           ></TopRight>
         </Wrapper2>
       </Container>
