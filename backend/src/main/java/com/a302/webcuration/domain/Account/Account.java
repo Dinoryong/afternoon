@@ -36,9 +36,12 @@ public class Account {
     private LocalDate accountCreateDate;
     @UpdateTimestamp
     private LocalDateTime accountUpdateDate;
-    // TODO: 2021-02-04 Bio
+    //유저 소개글
     @Builder.Default
-    private String accountDesc="";
+    private String accountBio ="";
+    //프로필 사진
+    @Builder.Default
+    private String accountPhoto ="";
 
     //인증
     @Builder.Default
@@ -58,8 +61,13 @@ public class Account {
     private Set<Account> follower=new HashSet<>();
     //관심 태그
     @Builder.Default
-    @ManyToMany(mappedBy = "accounts")
-    private List<Tag> tags=new ArrayList<>();
+    @ManyToMany
+    @JoinTable(
+            name = "ACCOUNT_TAGS",
+            joinColumns = @JoinColumn(name = "ACCOUNT_ID"),
+            inverseJoinColumns = @JoinColumn(name = "TAG_ID")
+    )
+    private Set<Tag> tags=new HashSet<>();
     //좋아요한 게시글
     @Builder.Default
     @ManyToMany
@@ -73,7 +81,7 @@ public class Account {
     public void updateAccount(AccountDto.UpdateRequest request)
     {
         this.accountNickname=request.getAccountNickname();
-        this.accountDesc=request.getAccountDesc();
+        this.accountBio =request.getAccountDesc();
     }
 
     public void changeAuthKey(String accountAuthKey){
@@ -88,13 +96,17 @@ public class Account {
         this.getFollowing().add(account);
         account.getFollower().add(this);
     }
-
     // TODO: 2021-02-06 관심태그  
     public void tagging(Tag tag){
             this.getTags().add(tag);
             tag.getAccounts().add(this);
     }
-
+    public void refreshTag(){
+        for (Tag tag : tags){
+            tag.getAccounts().remove(this);
+        }
+        tags.clear();
+    }
 //    @Override
 //    public String toString() {
 //        return "Account{" +

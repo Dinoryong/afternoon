@@ -47,9 +47,9 @@ public class AccountControllerTest extends BaseControllerTest {
     public void Account_생성_성공() throws Exception {
         //When
         AccountDto.CreateAccountRequest createAccountRequest = AccountDto.CreateAccountRequest.builder()
-                .accountName("한우석")
-                .accountNickname("vvs우석")
-                .accountEmail("dntjr4772@naver.com")
+                .accountName("최재웅")
+                .accountNickname("GS재웅")
+                .accountEmail("dntjr4772@nate.com")
                 .build();
 
         mockMvc.perform(post("/api/accounts")
@@ -214,19 +214,16 @@ public class AccountControllerTest extends BaseControllerTest {
 
     @Test
     public void 관심태그지정_성공() throws Exception{
-
-        //When
-        //작업공간
         AccountDto.AccountTagRequest accountTagRequest=new AccountDto.AccountTagRequest();
-        String tagName="인테리어";
+        String tagName="아기방";
         Tag tag=tagRepository.findByTagTitle(tagName);
         accountTagRequest.getTags().add(modelMapper.map(tag, TagDto.Tag.class));
 
-        tagName="캠핑";
+        tagName="와인룸";
         tag=tagRepository.findByTagTitle(tagName);
         accountTagRequest.getTags().add(modelMapper.map(tag, TagDto.Tag.class));
 
-        String token = "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJzdWIiOiLroZzqt7jsnbjthqDtgbAiLCJleHAiOjE2MTI4NTA3ODEsImFjY291bnRJZCI6MjAsImFjY291bnRFbWFpbCI6ImRudGpyNDc3MkBuYXZlci5jb20ifQ.2GdyblKPOqCBXnCQoxMYCan3bAkVTE4QY216KjexqEI";
+        String token = "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJzdWIiOiLroZzqt7jsnbjthqDtgbAiLCJleHAiOjE2MTMxMjA0NzgsImFjY291bnRJZCI6MjQsImFjY291bnRFbWFpbCI6ImRudGpyNDc3MkBuYXRlLmNvbSJ9.aGZxP4OaAXOSKF008vy7IXod6vdFkmvCFHzGR3btOgU";
         mockMvc.perform(put("/api/accounts/mytag")
                 .header("Authorization","Bearer "+token)
                 .contentType(MediaType.APPLICATION_JSON)

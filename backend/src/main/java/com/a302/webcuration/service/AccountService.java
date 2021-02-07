@@ -110,10 +110,10 @@ public class AccountService {
     public void selectTag(AccountDto.AccountTagRequest accountTagRequest, String token){
         Long myId = jwtService.getAccountId(token);
         Account account=accountRepository.findAccountByAccountId(myId);
-        //작업공간, 요리사, 개발자
-        //findAll 전체 태그 list 와 선택한 관심태그 list 같은 것만 tagging
 
         try {
+            //기존 관심태그 삭제하고 이번에 들어온 관심태그로만 설정
+            account.refreshTag();
             for(TagDto.Tag tagDto: accountTagRequest.getTags()) {
                 Tag tag= tagRepository.findTagByTagId(tagDto.getTagId());
                 account.tagging(tag);
