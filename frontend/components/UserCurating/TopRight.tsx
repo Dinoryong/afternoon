@@ -4,7 +4,7 @@ import Button from "../Button";
 import color from "../../styles/theme";
 import Image from "next/image";
 import ProfileTagBox from "../ProfileTagBox";
-import { ADD_FOLLOW_USERS, DELETE_FOLLOW_USERS } from "../../pages/api/post"
+import { ADD_FOLLOW_USERS, DELETE_FOLLOW_USERS } from "../../pages/api/profile";
 
 const TitleBox = styled.div`
   display: flex;
@@ -95,12 +95,15 @@ const TopRight = ({
   userPosts,
   userTags,
   routerQuery,
+  accountsId,
 }) => {
   // const editProfile = () => {};
 
   const [followState, setFollowState] = useState(false);
 
-  const followRequest = { follows: [routerQuery] };
+  const followRequest = { yourId: accountsId };
+
+  console.log(routerQuery);
 
   const addFollowOnClick = () => {
     setFollowState(true);
@@ -128,7 +131,11 @@ const TopRight = ({
             // btnHoverBorderColor={"transparent"}
             btnHoverBgColor="transparent"
             btnUseIcon={true}
-            btnIconSrc={followState ? "/assets/icons/follow_check.png" : "/assets/icons/follow_plus.png"}
+            btnIconSrc={
+              followState
+                ? "/assets/icons/follow_check.png"
+                : "/assets/icons/follow_plus.png"
+            }
             btnIconHeight={"15px"}
             btnIconWidth={"15px"}
             btnIconMargin={"2px 0px 0px 12px"}
