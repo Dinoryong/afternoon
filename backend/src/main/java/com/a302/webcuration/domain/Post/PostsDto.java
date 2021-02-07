@@ -53,6 +53,17 @@ public class PostsDto {
         private List<CommentDto.CreateCommentResponse> comments;
     }
 
+    @AllArgsConstructor @Data
+    public static class Feed {
+        private Long postsId;
+
+        private String postsTitle;
+        private String postsPhoto;
+        //작성자
+        private String postsWriter;
+    }
+
+
 
 
 }

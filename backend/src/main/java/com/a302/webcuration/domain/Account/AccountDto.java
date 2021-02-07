@@ -44,6 +44,7 @@ public class AccountDto {
         private String nickname;
     }
 
+    // TODO: 2021-02-06 accountId,Desc->Bio 프로필 사진(엔티티까지 수정), 내 모든 posts, 내가 좋아요한 게시물, 내 관심태그, 좋아요한 게시물 수, 게시물 수
     @Getter @Setter @RequiredArgsConstructor
     public static class AccountProfile{
 

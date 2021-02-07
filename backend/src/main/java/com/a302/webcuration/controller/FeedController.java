@@ -22,12 +22,5 @@ public class FeedController {
         BaseMessage bm =feedService.findByMyTagAndFollowing(token);
         return new ResponseEntity(bm,bm.getHttpStatus());
     }
-    // TODO: 2021-02-04 로그인안해도 가능 , 사람 기준 검색 일단 posts에 있는거 다주기 + 사람(기본정보,팔로잉 팔로워 수,게시물 수, 관심태그설정한 것) // 태그 기준 검색 태그에 등록된 게시물 수
 
-    // /search
-//@GetMapping("/feed")
-//public ResponseEntity search(){
-//    BaseMessage bm =feedService.
-//    return new ResponseEntity(bm,bm.getHttpStatus());
-//}
 }

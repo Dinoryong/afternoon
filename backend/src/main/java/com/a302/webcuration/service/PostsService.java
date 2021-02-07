@@ -35,22 +35,22 @@ public class PostsService {
     private final ModelMapper modelMapper;
     public static final Logger logger = LoggerFactory.getLogger(PostsService.class);
 
-    public BaseMessage createPosts(PostsDto.CreatePostsRequest createAccountRequest, String token){
+    public BaseMessage createPosts(PostsDto.CreatePostsRequest createPostsRequest, String token){
         Long myId = jwtService.getAccountId(token);
         Map<String, Object> resultMap = new HashMap<>();
 
         try {
             //여기서 아마 글 작성자가 존재하지 않으면 오류 발생할 것
             Account postWriter = accountRepository.findAccountByAccountId(myId);
-            logger.info("postsssd : " + createAccountRequest.toString());
+            logger.info("postsssd : " + createPostsRequest.toString());
             //posts에 저장
-            Posts posts = createAccountRequest.toEntity();
+            Posts posts = createPostsRequest.toEntity();
             posts.writePost(postWriter);
             logger.info("postsss : " + posts.toString());
 
             //tag 지정
             // TODO: 2021-02-01 게시물작성시 태그없을때 오류
-            List<Tag> tags = createAccountRequest.getPostsTags().stream().map(tag ->
+            List<Tag> tags = createPostsRequest.getPostsTags().stream().map(tag ->
                     tagRepository.findTagByTagId(tag.getTagId())
             ).collect(Collectors.toList());
             for (Tag tag : tags) {
@@ -58,7 +58,7 @@ public class PostsService {
             }
             //pin 지정
             List<Pin> pins = new ArrayList<>();
-            for (PinDto.Pin pinDto : createAccountRequest.getPostsPins()) {
+            for (PinDto.Pin pinDto : createPostsRequest.getPostsPins()) {
                 pins.add(pinDto.toEntity());
             }
             for (Pin pin : pins) {
@@ -88,4 +88,7 @@ public class PostsService {
     }
 
 
+    public void deletePosts(Long postsid) {
+
+    }
 }

@@ -143,7 +143,8 @@ public class LoginService2 {
 
             String email = account.getAccountEmail();
             Long id = account.getAccountId();
-            resultMap = loginInfo(id,email);
+            String nickname= account.getAccountNickname();
+            resultMap = loginInfo(id,email,nickname);
 
             String token = "Bearer "+jwtService.create(id,email);
             httpHeaders.add("Authorization",token);
@@ -187,10 +188,11 @@ public class LoginService2 {
         }
     }
 
-    private Map loginInfo(Long id, String email){
+    private Map loginInfo(Long id, String email,String nickname){
         Map<String, Object> resultMap = new HashMap<>();
         resultMap.put("accountId", id);
         resultMap.put("accountEmail", email);
+        resultMap.put("accountNickname", nickname);
         return resultMap;
     }
 
