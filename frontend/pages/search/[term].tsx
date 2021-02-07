@@ -35,6 +35,7 @@ const DynamicDiv = styled.div`
 const index = () => {
   const router = useRouter();
   const routerQuery = router.query.term;
+  
 
   const [postData, setPostData] = useState([]);
   const [feedApiState, setFeedApiState] = useState(false);
@@ -84,7 +85,7 @@ const index = () => {
     <Container>
       {/* <div>{routerQuery}</div> */}
       <Wrapper>
-        <TagsCurating tagData={tagData}></TagsCurating>
+        <TagsCurating tagData={tagData} routerQuery={routerQuery}></TagsCurating>
         <DynamicDiv>
           {postData && postData.length > 0 && (
             <DynamicComponentWithNoSSR
