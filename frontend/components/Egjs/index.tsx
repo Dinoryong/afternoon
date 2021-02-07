@@ -2,25 +2,22 @@ import React, { useState } from "react";
 import styled from "@emotion/styled";
 // import { GridLayout } from "@egjs/react-layout";
 import { GridLayout } from "@egjs/react-infinitegrid";
-import { start } from "repl";
+import color from "../../styles/theme";
 
 const Item = styled.div`
   width: 355px;
-  opacity: 0.8;
   cursor: zoom-in;
   background-color: transparent;
-  :hover {
-    opacity: 1;
-  }
-  /* transition: opacity 0.3s; */
 `;
 
 const Thumbnail = styled.div`
+  position: relative;
+  display: flex;
   max-height: 1000px;
   background-color: transparent;
   overflow: hidden;
   border-radius: 8px;
-  height: max-content;
+  align-items: flex-end;
 `;
 
 const Img = styled.img`
@@ -30,13 +27,55 @@ const Img = styled.img`
   -webkit-user-drag: none;
 `;
 
-const ItemEl = ({ id, src }) => (
+const OpacityFrame = styled.div`
+  position: absolute;
+  display: flex;
+  z-index: 1;
+  width: 100%;
+  height: 100%;
+  background-color: rgba(0, 0, 0, 0);
+  overflow: hidden;
+  border-radius: 8px;
+  opacity: 0;
+  :hover {
+    opacity: 1;
+    background-color: rgba(0, 0, 0, 0.4);
+  }
+  color: white;
+  align-items: flex-end;
+`;
+
+const Info = styled.div`
+  display: flex;
+  flex-direction: column;
+  margin: 16px;
+`;
+
+const Title = styled.div`
+  color: ${color.gray.default};
+  font-size: 15px;
+  font-weight: 300;
+`;
+
+const Writer = styled.div`
+  color: ${color.gray.light};
+  font-size: 18px;
+  font-weight: 500;
+`;
+
+const ItemEl = ({ id, src, writer, title }) => (
   <Item
     onClick={() => {
       console.log(id);
     }}
   >
     <Thumbnail>
+      <OpacityFrame>
+        <Info>
+          <Writer>{writer}</Writer>
+          {title && title !== "" && <Title>{title}</Title>}
+        </Info>
+      </OpacityFrame>
       <Img src={src}></Img>
     </Thumbnail>
   </Item>
@@ -47,6 +86,8 @@ const index = ({ postData }) => {
   const [startIndex, setStartIndex] = useState(0);
   const [isEnd, setIsEnd] = useState(false);
   const [appendAble, setAppendAble] = useState(true);
+
+  // console.log(postData);
 
   const DIVIDE_COUNT = 5;
 
@@ -71,7 +112,6 @@ const index = ({ postData }) => {
             const cur = postData.slice(startIndex);
             setAppendList(appendList.concat(cur));
           }
-          // console.log(appendList);
         } else {
           if (appendAble) {
             setAppendAble(false);
@@ -83,7 +123,15 @@ const index = ({ postData }) => {
     >
       {appendList &&
         appendList.map((f, index) => {
-          return <ItemEl key={index} id={f.postId} src={f.postsPhotos[0]} />;
+          return (
+            <ItemEl
+              key={index}
+              id={f.postsId}
+              src={f.postsPhoto}
+              writer={f.postsWriter}
+              title={f.postsTitle}
+            />
+          );
         })}
     </GridLayout>
   );
