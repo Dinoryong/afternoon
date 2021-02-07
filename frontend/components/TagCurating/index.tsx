@@ -7,7 +7,6 @@ import TagRight from "./TagRight";
 const Container = styled.div`
   width: 100%;
   max-width: 1000px;
-  height: 280px;
   display: flex;
   justify-content: center;
 `;

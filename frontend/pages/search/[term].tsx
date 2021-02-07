@@ -1,21 +1,73 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 import styled from "@emotion/styled";
 import TagsCurating from "../../components/TagCurating";
 import { useRouter } from "next/router";
+import dynamic from "next/dynamic";
+import { GET_FEED } from "../api/post";
 
 const Container = styled.div`
   display: flex;
-  flex-direction: column;
   justify-content: center;
-  align-items: center;
   padding-top: 62px;
   width: 100%;
-  height: 1000px;
+  /* height: 1000px; */
+`;
+
+const Wrapper = styled.div`
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-start;
+  align-items: center;
+  width: 1280px;
+  margin-top: 60px;
+`;
+
+const DynamicDiv = styled.div`
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  width: 1280px;
+  margin-top: 60px;
+  /* width: 100%; */
 `;
 
 const index = () => {
   const router = useRouter();
   const routerQuery = router.query.term;
+
+  const [postData, setPostData] = useState([]);
+  const [feedApiState, setFeedApiState] = useState(false);
+
+  const DynamicComponentWithNoSSR = dynamic(
+    () => import("../../components/Egjs"),
+    {
+      ssr: false,
+    }
+  );
+
+  useEffect(function mount() {
+    const getFeedRequest = async () => {
+      const result = await GET_FEED();
+
+      if (result.status === 200) {
+        // data.data 로 날아오는거 체크해보기
+        // console.log(result.data);
+        if (result.data.data.length > 0) {
+          console.log("피드내용 있음");
+          setFeedApiState(true);
+          setPostData(result.data.data);
+        } else {
+          router.push("/prefer");
+          console.log("피드내용 없음");
+        }
+      }
+    };
+
+    if (!feedApiState) {
+      getFeedRequest();
+    }
+  });
 
   const tagData = {
     tagTitle: "고양이방",
@@ -30,8 +82,17 @@ const index = () => {
 
   return (
     <Container>
-      <div>{routerQuery}</div>
-      <TagsCurating tagData={tagData}></TagsCurating>
+      {/* <div>{routerQuery}</div> */}
+      <Wrapper>
+        <TagsCurating tagData={tagData}></TagsCurating>
+        <DynamicDiv>
+          {postData && postData.length > 0 && (
+            <DynamicComponentWithNoSSR
+              postData={postData}
+            ></DynamicComponentWithNoSSR>
+          )}
+        </DynamicDiv>
+      </Wrapper>
     </Container>
   );
 };
