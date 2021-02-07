@@ -143,13 +143,13 @@ public class AccountControllerTest extends BaseControllerTest {
     @Test
     public void follow_성공() throws Exception {
 
-        Long yourId = 24L;
+        Long yourId = 47L;
 
         AccountDto.FollowRequest request =new  AccountDto.FollowRequest();
         request.setYourId(yourId);
 
 
-        String token = "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJzdWIiOiLroZzqt7jsnbjthqDtgbAiLCJleHAiOjE2MTI4NzI0NDEsImFjY291bnRJZCI6NDYsImFjY291bnRFbWFpbCI6ImRudGpyNDc3MkBuYXZlci5jb20ifQ.Pl-viia-cG_7qa1G2opwqPZobtYPyfVZJxZ6YqHtShQ";
+        String token = "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJzdWIiOiLroZzqt7jsnbjthqDtgbAiLCJleHAiOjE2MTI5NzM2NTQsImFjY291bnRJZCI6MjQsImFjY291bnRFbWFpbCI6ImRuZ25nbjMwNDVAZ21haWwuY29tIn0._YW2dOJTevv6KWvYRkM5ao96txD553Ua9cKZvOVmz30";
         mockMvc.perform(put("/api/accounts/my-following")
                 .header("Authorization","Bearer "+token)
                 .contentType(MediaType.APPLICATION_JSON)
@@ -222,7 +222,7 @@ public class AccountControllerTest extends BaseControllerTest {
         Tag tag=tagRepository.findByTagTitle(tagName);
         accountTagRequest.getTags().add(modelMapper.map(tag, TagDto.Tag.class));
 
-        tagName="스키";
+        tagName="캠핑";
         tag=tagRepository.findByTagTitle(tagName);
         accountTagRequest.getTags().add(modelMapper.map(tag, TagDto.Tag.class));
 

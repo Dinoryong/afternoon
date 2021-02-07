@@ -89,6 +89,7 @@ public class Account {
         account.getFollower().add(this);
     }
 
+    // TODO: 2021-02-06 관심태그  
     public void tagging(Tag tag){
             this.getTags().add(tag);
             tag.getAccounts().add(this);

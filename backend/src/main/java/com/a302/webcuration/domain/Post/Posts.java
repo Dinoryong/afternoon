@@ -46,7 +46,7 @@ public class Posts {
     private List<Tag> postsTags =new ArrayList<>();
 
     @Builder.Default
-    @OneToMany(mappedBy = "commentPosts")
+    @OneToMany(mappedBy = "commentPosts", cascade = CascadeType.REMOVE)
     private List<Comment> comments=new ArrayList<>();
 
     public void writePost(Account account){

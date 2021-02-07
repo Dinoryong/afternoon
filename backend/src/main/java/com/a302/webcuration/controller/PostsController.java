@@ -38,4 +38,8 @@ public class PostsController {
         return new ResponseEntity(new BaseMessage(HttpStatus.OK,postsResponse),HttpStatus.OK);
     }
 
+//    @DeleteMapping("{postsid}")
+//    public ResponseEntity deletePosts(@PathVariable Long postsid){
+//        postsService.deletePosts(postsid);
+//    }
 }
