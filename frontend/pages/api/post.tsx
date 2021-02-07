@@ -1,5 +1,6 @@
 import axios from "axios";
 import secrets from "../../secrets";
+import FeedRes from "../../data/FeedRes";
 
 const API_ROOT_URI = secrets.API_ROOT_URI;
 const VIA_API_DEV = secrets.VIA_API_DEV;
@@ -38,14 +39,12 @@ export const SUBMIT_POST = async (req) => {
   }
 };
 
-import FeedRes from "../../data/FeedRes";
-
 export const GET_FEED = async () => {
   if (!VIA_API_DEV) {
     try {
       return {
         status: 200,
-        data: FeedRes,
+        data: FeedRes.FeedResDummy.data,
       };
     } catch (error) {
       console.log(error);

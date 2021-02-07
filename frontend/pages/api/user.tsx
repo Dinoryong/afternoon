@@ -7,20 +7,20 @@ const VIA_API_DEV = secrets.VIA_API_DEV;
 export const SIGN_UP = async (req) => {
   if (!VIA_API_DEV) {
     try {
-      return { status: 200, data: {} };
+      return { status: 200, data: { accountEmail: "" } };
     } catch (error) {
       console.log(error);
     }
     return { status: false };
   } else {
     // API 요청 시 실행
-    let data = { data: { accountEmail: "" } };
+    let data = {};
     let status = 0;
 
     try {
       await axios.post(`${API_ROOT_URI}/api/accounts`, req).then((res) => {
         console.log(res);
-        data = res.data;
+        data = res.data.data;
         status = res.status;
       });
       return { status, data };
@@ -48,7 +48,7 @@ export const REQUEST_LOGIN = async (req) => {
     try {
       await axios.post(API_ROOT_URI + "/api/login", req).then((res) => {
         console.log(res);
-        data = res.data;
+        data = res.data.data;
         status = res.status;
       });
       return { status, data };
@@ -75,7 +75,7 @@ export const CHECK_EMAIL = async (req) => {
     try {
       await axios.post(API_ROOT_URI + "/api/login", req).then((res) => {
         console.log(res);
-        data = res.data;
+        data = res.data.data;
         status = res.status;
       });
       return { status, data };
@@ -107,7 +107,7 @@ export const CONFIRM_LOGIN = async (req) => {
     try {
       await axios.post(API_ROOT_URI + "/api/login", req).then((res) => {
         console.log(res);
-        data = res.data;
+        data = res.data.data;
         status = res.status;
         headers = res.headers;
       });
@@ -160,7 +160,7 @@ export const AUTO_LOGIN = async () => {
         .then((res) => {
           console.log(res);
           status = res.status;
-          data = res.data;
+          data = res.data.data;
         });
       return { status, data };
     } catch (error) {
