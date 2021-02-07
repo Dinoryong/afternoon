@@ -4,7 +4,7 @@ import styled from "@emotion/styled";
 import color from "../../styles/theme";
 import { CHECK_EMAIL, CONFIRM_LOGIN } from "../../pages/api/user";
 import { useRouter } from "next/router";
-import { useSelector, useDispatch } from "react-redux";
+import { useDispatch } from "react-redux";
 
 const Container = styled.div`
   display: flex;

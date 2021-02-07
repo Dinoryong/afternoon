@@ -3,7 +3,7 @@ import styled from "@emotion/styled";
 import Button from "../Button";
 import Image from "next/image";
 import color from "../../styles/theme";
-import { useDispatch } from "react-redux";
+import { useSelector, useDispatch } from "react-redux";
 
 const Container = styled.div`
   display: flex;
@@ -45,13 +45,20 @@ type HeaderProps = {
 };
 
 const useCounter = () => {
+  const loginState = useSelector((state) => state.login.loginState);
+
   const dispatch = useDispatch();
   const toggleSubmit = async () => {
     await dispatch({ type: "TOGGLE_SUBMIT" });
   };
+  const toggle = async () => {
+    await dispatch({ type: "TOGGLE" });
+  };
 
   return {
     toggleSubmit,
+    loginState,
+    toggle,
   };
 };
 
@@ -60,7 +67,7 @@ const HeaderRight = ({
   inputFocus,
   setInputFocus,
 }: HeaderProps) => {
-  const { toggleSubmit } = useCounter();
+  const { toggleSubmit, loginState, toggle } = useCounter();
 
   const [noticeImg, setNoticeImg] = useState<string>(
     (routerPath === "/" || routerPath === "/home") && !inputFocus
@@ -116,8 +123,12 @@ const HeaderRight = ({
         }
         btnSetOpacity={"0.4"}
         btnOnClick={() => {
-          setInputFocus(false);
-          toggleSubmit();
+          if (loginState) {
+            setInputFocus(false);
+            toggleSubmit();
+          } else {
+            toggle();
+          }
         }}
       />
       <NoticeIcon {...props} style={noticeIconStyle}>

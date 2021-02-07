@@ -1,4 +1,4 @@
-import React, { Dispatch, SetStateAction, useState } from "react";
+import React, { Dispatch, SetStateAction } from "react";
 import styled from "@emotion/styled";
 import Image from "next/image";
 import Link from "next/link";
@@ -6,6 +6,7 @@ import Button from "../Button";
 import color from "../../styles/theme";
 import { NextRouter } from "next/router";
 import AutoSuggest from "../AutoSuggest";
+import { useSelector, useDispatch } from "react-redux";
 
 const Container = styled.div`
   display: flex;
@@ -115,6 +116,20 @@ type HeaderProps = {
   setSearchTerm?: Dispatch<SetStateAction<String>>;
 };
 
+const useCounter = () => {
+  const loginState = useSelector((state) => state.login.loginState);
+
+  const dispatch = useDispatch();
+  const toggle = async () => {
+    await dispatch({ type: "TOGGLE" });
+  };
+
+  return {
+    loginState,
+    toggle,
+  };
+};
+
 const HeaderLeft = ({
   router,
   routerPath,
@@ -124,6 +139,8 @@ const HeaderLeft = ({
   setSearchTerm,
 }: HeaderProps) => {
   const props = { routerPath, inputFocus };
+
+  const { loginState, toggle } = useCounter();
 
   const titleBoxStyle = {
     color:
@@ -207,8 +224,12 @@ const HeaderLeft = ({
         }
         btnSetOpacity={"0.4"}
         btnOnClick={(): void => {
-          setInputFocus(false);
-          router.push("/feed");
+          if (loginState) {
+            setInputFocus(false);
+            router.push("/feed");
+          } else {
+            toggle();
+          }
         }}
       />
       <SearchBox>
