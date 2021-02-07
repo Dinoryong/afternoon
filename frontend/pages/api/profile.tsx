@@ -16,6 +16,8 @@ export const ADD_TAGS = async (req) => {
   if (!VIA_API_DEV) {
     try {
       console.log(req);
+      console.log(authToken);
+
       return { status: 200, data: {} };
     } catch (error) {
       console.log(error);
@@ -41,5 +43,32 @@ export const ADD_TAGS = async (req) => {
       console.log(error);
     }
     return { status: false };
+  }
+};
+
+export const DELETE_TAGS = async (req) => {
+  const authToken = window.localStorage.getItem("authToken");
+  if (!VIA_API_DEV) {
+    try {
+      console.log(req);
+      console.log(authToken);
+
+      return { status: 200, data: {} };
+    } catch (error) {
+      console.log(error);
+    }
+    return { status: false };
+  } else {
+    try {
+      await axios
+        .put(API_ROOT_URI + "/api", req, {
+          headers: { Authorization: `Bearer ${authToken}` },
+        })
+        .then((res) => {
+          console.log(res);
+        });
+    } catch (error) {
+      console.log(error);
+    }
   }
 };
