@@ -167,7 +167,7 @@ public class AccountService {
         }
     }
 
-
+    // TODO: 2021-02-08  return 주기
     public void selectTag(AccountDto.AccountTagRequest accountTagRequest, String token){
         Long myId = jwtService.getAccountId(token);
         Account account=accountRepository.findAccountByAccountId(myId);

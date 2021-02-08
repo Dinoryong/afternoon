@@ -32,6 +32,10 @@ public class FeedService {
             List<PostsDto.Feed> feeds=new ArrayList<>();
             addFeed(postsByTag, feeds);
             addFeed(postsByFollowing, feeds);
+            //중복제거
+            Set<PostsDto.Feed> feedSet=new HashSet<>(feeds);
+            feeds.clear();
+            feeds.addAll(feedSet);
             logger.info("feeds.size = "+feeds.size());
             //정렬
             Collections.sort(feeds, new Comparator<PostsDto.Feed>() {
