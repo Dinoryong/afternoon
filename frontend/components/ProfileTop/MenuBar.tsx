@@ -9,7 +9,13 @@ const MyLikes = styled.div``;
 
 const MyCollections = styled.div``;
 
-const MenuBar = ({ profileMyposts, profileLikes, profileCollections }) => {
+const MenuBar = ({
+  profileMyposts,
+  profileLikes,
+  profileCollections,
+  setTabState,
+  tabState,
+}) => {
   const postString = "게시물 " + profileMyposts;
   const likesString = "좋아요 " + profileLikes;
   const collectionsString = "컬렉션 " + profileCollections;
@@ -23,9 +29,11 @@ const MenuBar = ({ profileMyposts, profileLikes, profileCollections }) => {
           btnBgColor="transparent"
           btnText={postString}
           btnTextColor={color.black.default}
-          btnFontSize="20px"
+          btnFontSize="15px"
           btnBorderColor="transparent"
-          btnUseOpacity={true}
+          btnHoverBgColor="transparent"
+          btnHoverBorderColor="transparent"
+          btnUseOpacity={tabState === 0 ? false : true}
           btnSetOpacity={"0.4"}
           btnUseIcon={true}
           btnIconSrc={"/assets/icons/photo.png"}
@@ -34,6 +42,9 @@ const MenuBar = ({ profileMyposts, profileLikes, profileCollections }) => {
           btnIconMargin={"4px 12px 0px 0px"}
           btnMarginLeft={"20px"}
           btnMarginRight={"20px"}
+          btnOnClick={() => {
+            setTabState(0);
+          }}
         />
       </MyPost>
       <MyLikes>
@@ -43,9 +54,11 @@ const MenuBar = ({ profileMyposts, profileLikes, profileCollections }) => {
           btnBgColor="transparent"
           btnText={likesString}
           btnTextColor={color.black.default}
-          btnFontSize="20px"
+          btnFontSize="15px"
           btnBorderColor="transparent"
-          btnUseOpacity={true}
+          btnHoverBgColor="transparent"
+          btnHoverBorderColor="transparent"
+          btnUseOpacity={tabState === 1 ? false : true}
           btnSetOpacity={"0.4"}
           btnUseIcon={true}
           btnIconSrc={"/assets/icons/likes.png"}
@@ -54,6 +67,9 @@ const MenuBar = ({ profileMyposts, profileLikes, profileCollections }) => {
           btnIconMargin={"4px 12px 0px 0px"}
           btnMarginLeft={"20px"}
           btnMarginRight={"20px"}
+          btnOnClick={() => {
+            setTabState(1);
+          }}
         />
       </MyLikes>
       <MyCollections>
@@ -63,9 +79,11 @@ const MenuBar = ({ profileMyposts, profileLikes, profileCollections }) => {
           btnBgColor="transparent"
           btnText={collectionsString}
           btnTextColor={color.black.default}
-          btnFontSize="20px"
+          btnFontSize="15px"
           btnBorderColor="transparent"
-          btnUseOpacity={true}
+          btnHoverBgColor="transparent"
+          btnHoverBorderColor="transparent"
+          btnUseOpacity={tabState === 2 ? false : true}
           btnSetOpacity={"0.4"}
           btnUseIcon={true}
           btnIconSrc={"/assets/icons/collection.png"}
@@ -74,6 +92,9 @@ const MenuBar = ({ profileMyposts, profileLikes, profileCollections }) => {
           btnIconMargin={"4px 12px 0px 0px"}
           btnMarginLeft={"20px"}
           btnMarginRight={"20px"}
+          btnOnClick={() => {
+            setTabState(2);
+          }}
         />
       </MyCollections>
     </>

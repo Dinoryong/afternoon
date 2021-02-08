@@ -121,6 +121,7 @@ const index = ({
   };
 
   const onClick = (): void => {
+    setOpacity("0.4");
     btnOnClick();
   };
 
