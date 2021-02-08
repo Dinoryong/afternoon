@@ -3,6 +3,7 @@ import styled from "@emotion/styled";
 import Button from "../Button";
 import color from "../../styles/theme";
 import ProfileTagBox from "../../components/ProfileTagBox";
+import FollowingList from "../../components/ProfileTop/FollowingList"
 
 const TitleBox = styled.div`
   display: flex;
@@ -27,7 +28,7 @@ const EditBox = styled.div`
 const FollowBox = styled.div`
   width: 50%;
   display: flex;
-  margin-top: 15px;
+  /* margin-top: 15px; */
   margin-bottom: 35px;
   justify-content: space-between;
 `;
@@ -94,10 +95,20 @@ const TopRight = ({
   profileTags,
   windowHeight,
   setEditState,
+  setFollowingState,
+  // setFollowerState,
 }) => {
   const editProfile = () => {
     setEditState(true);
   };
+
+  const viewFollowing = () => {
+    setFollowingState(true)
+  };
+
+  // const viewFollower = () => {
+  //   setFollowerState(true)
+  // };
 
   return (
     <>
@@ -125,9 +136,48 @@ const TopRight = ({
         </EditBox>
       </TitleBox>
       <FollowBox>
-        <ProfileFollowing>팔로잉 {profileFollowing}</ProfileFollowing>
-        <ProfileFollower>팔로워 {profileFollower}</ProfileFollower>
-        <ProfilePost>게시물 {profileMyposts}</ProfilePost>
+        <ProfileFollowing>
+          <Button
+            btnBgColor="transparent"
+            btnWidth="70px"
+            btnHeight="20px"
+            btnText={profileFollowing}
+            btnFontSize="15px"
+            btnTextColor={color.black.default}
+            btnBorderColor="transparent"
+            // btnUseIcon={true}
+            // btnIconSrc={"/assets/icons/edit.png"}
+            // btnIconHeight={"15px"}
+            // btnIconWidth={"15px"}
+            // btnIconMargin={"0px"}
+            btnUseOpacity={true}
+            btnSetOpacity={"0.4"}
+            btnOnClick={viewFollowing}
+          />
+        </ProfileFollowing>
+        <ProfileFollower>
+          <Button
+            btnBgColor="transparent"
+            btnWidth="70px"
+            btnHeight="20px"
+            btnText= {profileFollower}
+            btnFontSize="15px"
+            btnTextColor={color.black.default}
+            btnBorderColor="transparent"
+            // btnHoverBorderColor={"transparent"}
+            // btnUseIcon={true}
+            // btnIconSrc={"/assets/icons/edit.png"}
+            // btnIconHeight={"15px"}
+            // btnIconWidth={"15px"}
+            // btnIconMargin={"2px 0px 0px 12px"}
+            btnUseOpacity={true}
+            btnSetOpacity={"0.4"}
+            // btnOnClick={viewFollower}
+          />
+        </ProfileFollower>
+        <ProfilePost>
+          게시물 {profileMyposts}
+        </ProfilePost>
       </FollowBox>
       <TextBox>
         <ProfileText>{profileBox}</ProfileText>

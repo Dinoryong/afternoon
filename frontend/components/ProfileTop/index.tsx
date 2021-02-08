@@ -31,6 +31,9 @@ const Wrapper2 = styled.div`
 const index = ({
   profileData,
   setEditState,
+  followingData,
+  setFollowingState,
+  // setFollowerState,
   windowHeight,
   setTabState,
   tabState,
@@ -47,6 +50,13 @@ const index = ({
     profileCollections,
   } = profileData;
 
+  const {
+    followingImg,
+    followingName,
+    followingNickname,
+    followingPosts,
+  } = followingData;
+
   return (
     <>
       <Container1>
@@ -60,6 +70,12 @@ const index = ({
             profileMyposts={profileMyposts}
             profileTags={profileTags}
             setEditState={setEditState}
+            followingImg={followingImg}
+            followingName={followingName}
+            followingNickname={followingNickname}
+            followingPosts={followingPosts}
+            setFollowingState={setFollowingState}
+            // setFollowerState={setFollowerState}
             windowHeight={windowHeight}
           ></TopRight>
         </Wrapper2>
