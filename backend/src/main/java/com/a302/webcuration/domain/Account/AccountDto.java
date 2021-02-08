@@ -68,7 +68,7 @@ public class AccountDto {
 
         private int writtenPostsCnt;
 
-        private List<PostsDto.LikePosts> likePosts;
+        private List<PostsDto.PostsWithOnePhoto> likePosts;
 
         private List<TagDto.Tag> tags;
 

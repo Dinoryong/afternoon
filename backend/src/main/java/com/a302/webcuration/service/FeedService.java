@@ -50,12 +50,7 @@ public class FeedService {
     private void addFeed(List<Object[]> postsByFollowing, List<PostsDto.Feed> feeds) {
         for (Object[] postTmp:postsByFollowing) {
             logger.info("postsTitle " + postTmp[0] + " " + postTmp[1]+ " " + postTmp[2]);
-            PostsDto.Feed curFeed=new PostsDto.Feed((Long)postTmp[0],(String)postTmp[1],(String)postTmp[2],(String)postTmp[3]);
-            if(feeds.stream().filter(feed -> curFeed.getPostsId()==feed.getPostsId())
-                    .findAny()
-                    .orElse(null)==null){
-                feeds.add(curFeed);
-            }
+            feeds.add(new PostsDto.Feed((Long)postTmp[0],(String)postTmp[1],(String)postTmp[2],(String)postTmp[3]));
         }
     }
 }

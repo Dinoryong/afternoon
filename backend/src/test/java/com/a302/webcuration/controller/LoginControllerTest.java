@@ -59,7 +59,7 @@ public class LoginControllerTest extends BaseControllerTest {
     @Test
     public void Login_AuthKey_Off_성공() throws Exception {
 
-        String AuthKey = "vziaofm5";
+        String AuthKey = "vs6axsbx";
 
         AccountDto.LoginRequest  account = new AccountDto.LoginRequest();
         account.setAct("check-authKey-off");
@@ -93,7 +93,7 @@ public class LoginControllerTest extends BaseControllerTest {
     @Test
     public void Login_AuthKey_On_성공() throws Exception {
 
-        String AuthKey = "vziaofm5";
+        String AuthKey = "vs6axsbx";
 
         AccountDto.LoginRequest  account = new AccountDto.LoginRequest();
         account.setAct("check-authKey-on");

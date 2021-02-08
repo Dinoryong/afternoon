@@ -36,6 +36,7 @@ public class PostsDto {
                     .postsTitle(this.postsTitle)
                     .postsContents(this.postsContents)
                     .postsPhotos(this.postsPhotos)
+                    .postsFirstPhoto(this.postsPhotos.get(0))
                     .build();
         }
     }

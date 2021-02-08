@@ -82,7 +82,7 @@ public class PostsControllerTest extends BaseControllerTest {
         //pin
         List<PinDto.Pin> pins=new ArrayList<>();
         PinDto.Pin pin1=PinDto.Pin.builder()
-                .pinName("폴대")
+                .pinName("숯")
                 .pinLocY(10.1)
                 .pinLocX(10.1)
                 .pinLink("https://smartstore.naver.com/ntseller/products/5281314437")
@@ -97,7 +97,7 @@ public class PostsControllerTest extends BaseControllerTest {
                 .postsTags(postsTags)
                 .postsPins(pins)
                 .build();
-        String token = "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJzdWIiOiLroZzqt7jsnbjthqDtgbAiLCJleHAiOjE2MTMxMjA0NzgsImFjY291bnRJZCI6MjQsImFjY291bnRFbWFpbCI6ImRudGpyNDc3MkBuYXRlLmNvbSJ9.aGZxP4OaAXOSKF008vy7IXod6vdFkmvCFHzGR3btOgU";
+        String token = "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJzdWIiOiLroZzqt7jsnbjthqDtgbAiLCJleHAiOjE2MTMxODkyMzQsImFjY291bnRJZCI6MjQsImFjY291bnRFbWFpbCI6ImRudGpyNDc3MkBuYXRlLmNvbSJ9.QU_FxH4hw6qHQEU2mYmbe4729DXqkmeD0k0lop-_3EY";
 
         mockMvc.perform(post("/api/posts")
                 .header("Authorization","Bearer "+token)

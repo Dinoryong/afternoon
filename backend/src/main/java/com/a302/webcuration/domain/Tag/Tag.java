@@ -20,7 +20,6 @@ public class Tag {
 
     //Hibernate MultipleBagFetchException 때문에 List-> Set으로 https://perfectacle.github.io/2019/05/01/hibernate-multiple-bag-fetch-exception/
     @ManyToMany(mappedBy = "tags")
-
     @Builder.Default
     private List<Account> accounts=new ArrayList<>();
 

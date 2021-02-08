@@ -50,13 +50,12 @@ public class AccountController {
     }
 
     //-------------------------------수정--------------------------
-    @PutMapping("/{id}")
-    public ResponseEntity updateAccount(@PathVariable Long id , @RequestBody @Valid AccountDto.UpdateRequest request)
+    @PutMapping
+    public ResponseEntity updateAccount(@RequestBody @Valid AccountDto.UpdateRequest request, @RequestHeader(value = "Authorization") String token)
     {
-        accountService.updateAccount(id,request);
-        //TODO 예외처리
-        //일단 오류 체킹 안하고 accepted받기
-        return new ResponseEntity(HttpStatus.ACCEPTED);
+        BaseMessage bm = accountService.updateAccount(request,token);
+
+        return new ResponseEntity(bm,bm.getHttpStatus());
 
     }
 
@@ -69,7 +68,7 @@ public class AccountController {
     }
     //--------------------------------------팔로잉------------------------------------------------------
 
-    @PutMapping("/my-following")
+    @PutMapping("/myfollowing")
     public ResponseEntity follow(@RequestBody AccountDto.FollowRequest request, @RequestHeader(value = "Authorization") String token){
 
         Long myId = jwtService.getAccountId(token);
@@ -90,4 +89,9 @@ public class AccountController {
             return ResponseEntity.ok().build();
     }
 
+    // TODO: 2021-02-08 delete 태그
+//    @DeleteMapping("/mytag/{id}")
+//    public ResponseEntity deleteTag(@PathVariable Long id, @RequestHeader(value = "Authorization") String token){
+//
+//    }
 }

@@ -97,20 +97,36 @@ public class AccountService {
     }
 
 
-    public void updateAccount(Long id,AccountDto.UpdateRequest request) {
+    public BaseMessage updateAccount(AccountDto.UpdateRequest request,String token) {
+        Map<String, Object> resultMap = new HashMap<>();
         try {
-            Account account = accountRepository.findAccountByAccountId(id);
-            account.updateAccount(request);
+            Long myId = jwtService.getAccountId(token);
+            Account account = accountRepository.findAccountByAccountId(myId);
+            Account duplicateCheck=accountRepository.findAccountByAccountNickname(request.getAccountNickname());
+            if(duplicateCheck==null){
+                account.updateAccount(request);
+                resultMap.put("message",account.getAccountName()+"님의 정보가 변경되었습니다.");
+                return new BaseMessage( HttpStatus.OK,resultMap);
+            }else if(duplicateCheck.getAccountId()==myId) {
+                account.updateAccount(request);
+                resultMap.put("message","기존과 동일한 닉네임입니다.");
+                return new BaseMessage( HttpStatus.OK,resultMap);
+            }else{
+                resultMap.put("message","닉네임 중복입니다.");
+                return new BaseMessage( HttpStatus.BAD_REQUEST,resultMap);
+            }
         }catch (Exception e)
         {
-            //TODO exception 구체화하기
             logger.error(e.getMessage());
+            resultMap.put("message","잘못된 값입니다.");
+            return new BaseMessage( HttpStatus.BAD_REQUEST,resultMap);
         }
     }
 
 
     public BaseMessage follow(Long myId, Long yourId){
         Map<String, Object> resultMap = new HashMap<>();
+        logger.info("yourId : "+yourId);
         if(myId==yourId)
         {
             resultMap.put("message","자기 자신을 팔로우 할 수 없습니다.");

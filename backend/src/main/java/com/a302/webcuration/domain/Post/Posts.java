@@ -26,6 +26,7 @@ public class Posts {
     //@ElementCollection - List<String> 사용 가능 참조 링크 - (https://antoniogoncalves.org/2009/11/01/mapping-and-querying-a-list-of-primitive-types-with-jpa-2-0/)
     @ElementCollection
     private List<String> postsPhotos;
+    private String postsFirstPhoto;
     @CreationTimestamp
     private LocalDate postsWriteTime;
     @UpdateTimestamp

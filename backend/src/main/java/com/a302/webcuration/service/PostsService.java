@@ -49,7 +49,6 @@ public class PostsService {
             logger.info("postsss : " + posts.toString());
 
             //tag 지정
-            // TODO: 2021-02-01 게시물작성시 태그없을때 오류
             List<Tag> tags = createPostsRequest.getPostsTags().stream().map(tag ->
                     tagRepository.findTagByTagId(tag.getTagId())
             ).collect(Collectors.toList());
@@ -75,7 +74,7 @@ public class PostsService {
         }
     }
 
-    // TODO: 2021-02-04 tag,pin,comment정보 추가
+    // TODO: 2021-02-04 tag,pin,comment 정보 추가
     public PostsDto.PostsResponse retrievePosts(Long postsid){
         System.out.println("posts id : "+postsid);
         Posts posts=postsRepository.findPostsByPostsId(postsid);
