@@ -3,6 +3,7 @@ import styled from "@emotion/styled";
 // import { GridLayout } from "@egjs/react-layout";
 import { GridLayout } from "@egjs/react-infinitegrid";
 import color from "../../styles/theme";
+import { useSelector, useDispatch } from "react-redux";
 
 const Item = styled.div`
   width: 355px;
@@ -81,15 +82,26 @@ const ItemEl = ({ id, src, writer, title }) => (
   </Item>
 );
 
+const useCounter = () => {
+  const loginState = useSelector((state) => state.login.loginState);
+
+  const dispatch = useDispatch();
+
+  const toggle = async () => {
+    await dispatch({ type: "TOGGLE" });
+  };
+
+  return { loginState, toggle };
+};
+
 const index = ({ postData }) => {
   const [appendList, setAppendList] = useState([]);
   const [startIndex, setStartIndex] = useState(0);
   const [isEnd, setIsEnd] = useState(false);
   const [appendAble, setAppendAble] = useState(true);
 
-  // console.log(postData);
-
-  const DIVIDE_COUNT = 5;
+  const { loginState, toggle } = useCounter();
+  const DIVIDE_COUNT = 10;
 
   return (
     <GridLayout
@@ -97,11 +109,9 @@ const index = ({ postData }) => {
       threshold={100}
       options={{
         horizontal: false,
-        //  transitionDuration: 0.3
       }}
       layoutOptions={{ margin: 20, align: "center" }}
-      onAppend={({ startLoading }) => {
-        startLoading();
+      onAppend={() => {
         if (!isEnd && appendAble && appendList.length <= postData.length) {
           if (startIndex + DIVIDE_COUNT < postData.length) {
             const cur = postData.slice(startIndex, startIndex + DIVIDE_COUNT);
@@ -118,8 +128,11 @@ const index = ({ postData }) => {
           }
         }
       }}
-      // onLayoutComplete={(e) => console.log("layoutComplete")}
-      // onImageError={(e) => console.log("imageError")}
+      onLayoutComplete={(e) => {
+        if (!loginState && isEnd) {
+          toggle();
+        }
+      }}
     >
       {appendList &&
         appendList.map((f, index) => {

@@ -6,6 +6,8 @@ import color from "../../styles/theme";
 import { SUBMIT_POST } from "../../pages/api/post";
 import PinIcon from "../PinIcon";
 import TagBox from "../TagBox";
+import { useRouter } from "next/router";
+import { useDispatch } from "react-redux";
 
 const Container = styled.div`
   position: relative;
@@ -288,6 +290,18 @@ type StateProps = {
   addState?: boolean;
 };
 
+const useCounter = () => {
+  const dispatch = useDispatch();
+
+  const toggleSubmit = async () => {
+    await dispatch({ type: "TOGGLE_SUBMIT" });
+  };
+
+  return {
+    toggleSubmit,
+  };
+};
+
 const ConfirmUpload = ({
   imageAsFile1,
   imageAsFile2,
@@ -296,6 +310,9 @@ const ConfirmUpload = ({
   setUploadState,
   uploadState,
 }) => {
+  const router = useRouter();
+  const { toggleSubmit } = useCounter();
+
   const [currentImg, setCurrentImg] = useState(0);
   const [addState, setAddState] = useState(false);
   const [imgDim, setImgDim] = useState({ offsetWidth: 0, offsetHeight: 0 });
@@ -1013,9 +1030,16 @@ const ConfirmUpload = ({
                   btnWidth="80px"
                 />
                 <Button
-                  btnOnClick={() => {
-                    const result = SUBMIT_POST(setPostRequest());
+                  btnOnClick={async () => {
+                    const result = await SUBMIT_POST(setPostRequest());
                     console.log(result);
+                    if (result.status === 201) {
+                      alert("게시물 등록 성공");
+                      toggleSubmit();
+                      router.push("/profile");
+                    } else {
+                      alert("게시물 등록 실패");
+                    }
                   }}
                   btnBgColor={color.black.default}
                   btnBorderColor={color.black.default}
