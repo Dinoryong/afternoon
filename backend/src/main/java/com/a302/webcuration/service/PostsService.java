@@ -74,16 +74,18 @@ public class PostsService {
         }
     }
 
-    // TODO: 2021-02-04 tag,pin,comment 정보 추가
-    public PostsDto.PostsResponse retrievePosts(Long postsid){
-        System.out.println("posts id : "+postsid);
+    public BaseMessage retrievePosts(Long postsid){
+        Map<String, Object> resultMap = new HashMap<>();
         Posts posts=postsRepository.findPostsByPostsId(postsid);
-
-        System.out.println("postsss = " + posts);
+        if(posts==null){
+            resultMap.put("message","존재하지 않는 게시물입니다.");
+            return new BaseMessage( HttpStatus.BAD_REQUEST,resultMap);
+        }
+        logger.info("posts = " + posts);
         PostsDto.PostsResponse postsResponse = modelMapper.map(posts,PostsDto.PostsResponse.class);
+        logger.info("postsResponse = " + postsResponse);
+        return new BaseMessage(HttpStatus.OK,postsResponse);
 
-        System.out.println("postsResponse = " + postsResponse);
-        return postsResponse;
     }
 
 

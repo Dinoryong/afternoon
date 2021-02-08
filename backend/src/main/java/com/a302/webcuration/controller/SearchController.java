@@ -13,10 +13,16 @@ import org.springframework.web.bind.annotation.*;
 @Api
 public class SearchController {
     private final SearchService searchService;
-    //유저는 닉네임 태그 태그이름
-    @GetMapping("/{name}")
-    public ResponseEntity search(@PathVariable String name, @RequestHeader(value = "Authorization") String token){
-        BaseMessage bm =searchService.search(name);
+    //비로그인 상태
+    @GetMapping("/logout/{name}")
+    public ResponseEntity search(@PathVariable String name){
+        BaseMessage bm =searchService.search(name,null);
+        return new ResponseEntity(bm,bm.getHttpStatus());
+    }
+    //로그인 상태
+    @GetMapping("/login/{name}")
+    public ResponseEntity searchLoggedIn(@PathVariable String name,@RequestHeader(value = "Authorization") String token){
+        BaseMessage bm =searchService.search(name,token);
         return new ResponseEntity(bm,bm.getHttpStatus());
     }
 }

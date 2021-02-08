@@ -70,7 +70,6 @@ public class PostsDto {
         private String postsWriter;
         private String postsTitle;
         private String postsPhoto;
-
     }
 
 

@@ -11,9 +11,38 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 
 public class SearchControllerTest extends BaseControllerTest {
     @Test
-    public void Account_검색_성공() throws Exception {
-        String nickname="GS재웅";
-        mockMvc.perform(get("/api/search/" +nickname)
+    public void 비로그인_Account_검색_성공() throws Exception {
+        String nickname="GS재웅님";
+        mockMvc.perform(get("/api/search/logout/" +nickname)
+                .contentType(MediaType.APPLICATION_JSON))
+                .andExpect(status().isOk())
+                .andDo(print());
+    }
+    @Test
+    public void 로그인_Account_검색_성공() throws Exception {
+        String nickname="VVS우석";
+        String token = "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJzdWIiOiLroZzqt7jsnbjthqDtgbAiLCJleHAiOjE2MTMxODkyMzQsImFjY291bnRJZCI6MjQsImFjY291bnRFbWFpbCI6ImRudGpyNDc3MkBuYXRlLmNvbSJ9.QU_FxH4hw6qHQEU2mYmbe4729DXqkmeD0k0lop-_3EY";
+        mockMvc.perform(get("/api/search/login/" +nickname)
+                .header("Authorization","Bearer "+token)
+                .contentType(MediaType.APPLICATION_JSON))
+                .andExpect(status().isOk())
+                .andDo(print());
+    }
+
+    @Test
+    public void 비로그인_Tag_검색_성공() throws Exception {
+        String name="캠핑";
+        mockMvc.perform(get("/api/search/logout/" +name)
+                .contentType(MediaType.APPLICATION_JSON))
+                .andExpect(status().isOk())
+                .andDo(print());
+    }
+    @Test
+    public void 로그인_Tag_검색_성공() throws Exception {
+        String name="캠핑";
+        String token = "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJzdWIiOiLroZzqt7jsnbjthqDtgbAiLCJleHAiOjE2MTMxODkyMzQsImFjY291bnRJZCI6MjQsImFjY291bnRFbWFpbCI6ImRudGpyNDc3MkBuYXRlLmNvbSJ9.QU_FxH4hw6qHQEU2mYmbe4729DXqkmeD0k0lop-_3EY";
+        mockMvc.perform(get("/api/search/login/" +name)
+                .header("Authorization","Bearer "+token)
                 .contentType(MediaType.APPLICATION_JSON))
                 .andExpect(status().isOk())
                 .andDo(print());

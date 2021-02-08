@@ -39,9 +39,9 @@ public class AccountControllerTest extends BaseControllerTest {
     public void Account_생성_성공() throws Exception {
         //When
         AccountDto.CreateAccountRequest createAccountRequest = AccountDto.CreateAccountRequest.builder()
-                .accountName("최재웅")
-                .accountNickname("GS재웅")
-                .accountEmail("dntjr4772@nate.com")
+                .accountName("한우석")
+                .accountNickname("VVS우석")
+                .accountEmail("dntjr4772@naver.com")
                 .build();
 
         mockMvc.perform(post("/api/accounts")
@@ -135,14 +135,14 @@ public class AccountControllerTest extends BaseControllerTest {
     @Test
     public void follow_성공() throws Exception {
 
-        Long yourId = 47L;
+        Long yourId = 27L;
 
         AccountDto.FollowRequest request =new  AccountDto.FollowRequest();
         request.setYourId(yourId);
 
 
-        String token = "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJzdWIiOiLroZzqt7jsnbjthqDtgbAiLCJleHAiOjE2MTI5NzM2NTQsImFjY291bnRJZCI6MjQsImFjY291bnRFbWFpbCI6ImRuZ25nbjMwNDVAZ21haWwuY29tIn0._YW2dOJTevv6KWvYRkM5ao96txD553Ua9cKZvOVmz30";
-        mockMvc.perform(put("/api/accounts/my-following")
+        String token = "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJzdWIiOiLroZzqt7jsnbjthqDtgbAiLCJleHAiOjE2MTMxODkyMzQsImFjY291bnRJZCI6MjQsImFjY291bnRFbWFpbCI6ImRudGpyNDc3MkBuYXRlLmNvbSJ9.QU_FxH4hw6qHQEU2mYmbe4729DXqkmeD0k0lop-_3EY";
+        mockMvc.perform(put("/api/accounts/myfollowing")
                 .header("Authorization","Bearer "+token)
                 .contentType(MediaType.APPLICATION_JSON)
                 .content(objectMapper.writeValueAsString(request)))

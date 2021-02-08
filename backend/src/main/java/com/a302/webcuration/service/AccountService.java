@@ -40,10 +40,12 @@ public class AccountService {
             Long myId = jwtService.getAccountId(token);
             Account account = accountRepository.findAccountByAccountId(myId);
             logger.info("account = " + account.getAccountName());
-            return profileMapping(account);
-            /////////
+            AccountDto.MyAccountProfile profile=profileMapping(account);
+            //좋아요한 게시물 profile.set
 
-            //좋아요한 게시물
+            return  new BaseMessage(HttpStatus.OK, profile);
+
+
         }catch (Exception e)
         {
             resultMap.put("errors",e);
@@ -51,9 +53,9 @@ public class AccountService {
         }
     }
 
-    BaseMessage profileMapping(Account account) throws Exception{
+    AccountDto.MyAccountProfile profileMapping(Account account) throws Exception{
         try {
-            AccountDto.AccountProfile profile = modelMapper.map(account, AccountDto.AccountProfile.class);
+            AccountDto.MyAccountProfile profile = modelMapper.map(account, AccountDto.MyAccountProfile.class);
 
             //팔로잉, 팔로워
             List<AccountDto.FollowingDto> following = new ArrayList<>();
@@ -89,7 +91,7 @@ public class AccountService {
             profile.setWrittenPosts(writtenPosts);
             profile.setWrittenPostsCnt(writtenPostsCnt);
 
-            return new BaseMessage(HttpStatus.OK, profile);
+            return profile;
         }catch (Exception e){
             logger.error("e.getMessage() "+ e.getMessage());
             throw e;

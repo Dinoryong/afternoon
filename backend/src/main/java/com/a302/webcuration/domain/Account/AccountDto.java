@@ -38,9 +38,9 @@ public class AccountDto {
         private String nickname;
     }
 
-    // TODO: 2021-02-06  내 모든 posts, 내가 좋아요한 게시물, 내 관심태그, 좋아요한 게시물 수, 게시물 수
+    // TODO: 2021-02-06  내가 좋아요한 게시물
     @Getter @Setter @RequiredArgsConstructor
-    public static class AccountProfile{
+    public static class MyAccountProfile {
 
         private Long accountId;
 
@@ -71,6 +71,42 @@ public class AccountDto {
         private List<PostsDto.PostsWithOnePhoto> likePosts;
 
         private List<TagDto.Tag> tags;
+
+    }
+    @Data
+    public static class AccountProfile {
+
+        private Long accountId;
+
+        private String accountName;
+
+        private String accountNickname;
+
+        private String accountEmail;
+
+        private LocalDate accountCreateDate;
+
+        private String accountBio;
+
+        private String accountPhoto;
+
+        private List<AccountDto.FollowingDto> following;
+
+        private List<AccountDto.FollowerDto> follower;
+
+        private int accountFollowingCnt;
+
+        private int accountFollowerCnt;
+
+        private List<PostsDto.PostsWithOnePhoto> writtenPosts;
+
+        private int writtenPostsCnt;
+
+        private List<PostsDto.PostsWithOnePhoto> likePosts;
+
+        private List<TagDto.Tag> tags;
+
+        private Boolean followState;
 
     }
 

@@ -1,7 +1,6 @@
 package com.a302.webcuration.controller;
 
 import com.a302.webcuration.common.BaseMessage;
-import com.a302.webcuration.common.BaseStatus;
 import com.a302.webcuration.domain.Account.Account;
 import com.a302.webcuration.domain.Account.AccountDto;
 import com.a302.webcuration.domain.Account.AccountRepository;
@@ -46,7 +45,7 @@ public class AccountController {
     {
         Account account = createAccountRequest.toEntity();
         accountRepository.save(account);
-        return new ResponseEntity(new BaseMessage(HttpStatus.CREATED,modelMapper.map(account,AccountDto.AccountProfile.class)),HttpStatus.CREATED);
+        return new ResponseEntity(new BaseMessage(HttpStatus.CREATED,modelMapper.map(account, AccountDto.MyAccountProfile.class)),HttpStatus.CREATED);
     }
 
     //-------------------------------수정--------------------------
