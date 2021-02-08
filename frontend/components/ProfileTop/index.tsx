@@ -1,26 +1,20 @@
-import React, { useEffect, useState } from "react";
+import React from "react";
 import styled from "@emotion/styled";
-import Button from "../Button";
 import color from "../../styles/theme";
-import Image from "next/image";
 import TopLeft from "../../components/ProfileTop/TopLeft";
 import TopRight from "../../components/ProfileTop/TopRight";
 import MenuBar from "../../components/ProfileTop/MenuBar";
-
 
 const Container1 = styled.div`
   display: flex;
   width: 100%;
   max-width: 930px;
-  /* height: 430px; */
-  margin-top: 152px;
   margin-bottom: 10px;
 `;
 
 const Container2 = styled.div`
   display: flex;
   width: 1280px;
-  /* height: 72px; */
   border-bottom: solid ${color.gray.default} 2px;
 `;
 
@@ -30,12 +24,17 @@ const Wrapper2 = styled.div`
   justify-content: space-between;
   width: 100%;
   max-width: 640px;
-  /* height: 350px; */
   margin-right: auto;
   margin-left: 10px;
 `;
 
-const index = ({ profileData, setEditState, windowHeight }) => {
+const index = ({
+  profileData,
+  setEditState,
+  windowHeight,
+  setTabState,
+  tabState,
+}) => {
   const {
     profileImg,
     profileName,
@@ -47,8 +46,6 @@ const index = ({ profileData, setEditState, windowHeight }) => {
     profileTags,
     profileCollections,
   } = profileData;
-
-  
 
   return (
     <>
@@ -72,6 +69,8 @@ const index = ({ profileData, setEditState, windowHeight }) => {
           profileMyposts={profileMyposts}
           profileLikes={profileLikes}
           profileCollections={profileCollections}
+          setTabState={setTabState}
+          tabState={tabState}
         ></MenuBar>
       </Container2>
     </>

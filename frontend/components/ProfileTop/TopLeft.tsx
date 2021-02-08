@@ -1,7 +1,5 @@
 import React from "react";
 import styled from "@emotion/styled";
-import Button from "../Button";
-import color from "../../styles/theme";
 import Image from "next/image";
 
 const Container = styled.div`
@@ -9,7 +7,6 @@ const Container = styled.div`
   justify-items: flex-end;
   width: 230px;
   min-width: 230px;
-  /* height: 430px; */
   margin-left: auto;
   margin-right: 20px;
 `;

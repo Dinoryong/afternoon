@@ -2,8 +2,6 @@ import React, { useState } from "react";
 import styled from "@emotion/styled";
 import Button from "../Button";
 import color from "../../styles/theme";
-import Image from "next/image";
-import EditModal from "../../components/ProfileTop/EditModal";
 import ProfileTagBox from "../../components/ProfileTagBox";
 
 const TitleBox = styled.div`
@@ -20,7 +18,6 @@ const ProfileTitle = styled.div`
 
 const EditBox = styled.div`
   display: flex;
-  /* position: absolute; */
   width: 40px;
   height: 40px;
   margin-left: 14px;
@@ -29,7 +26,6 @@ const EditBox = styled.div`
 
 const FollowBox = styled.div`
   width: 50%;
-  /* height: 90px; */
   display: flex;
   margin-top: 15px;
   margin-bottom: 35px;
@@ -37,37 +33,30 @@ const FollowBox = styled.div`
 `;
 
 const ProfileFollowing = styled.div`
-  /* width: 100%; */
   font-size: 15px;
   font-weight: 100px;
   color: ${color.black.default};
   cursor: pointer;
-  /* margin-bottom: 4px; */
   padding: 4px;
 `;
 
 const ProfileFollower = styled.div`
-  /* width: 100%; */
   font-size: 15px;
   font-weight: 100px;
   color: ${color.black.default};
   cursor: pointer;
-  /* margin-bottom: 4px; */
   padding: 4px;
 `;
 
 const ProfilePost = styled.div`
-  /* width: 100%; */
   font-size: 15px;
   font-weight: 100px;
   color: ${color.black.default};
-  /* margin-bottom: 4px; */
   padding: 4px;
 `;
 
 const TextBox = styled.div`
   width: 100%;
-  /* height: 50px; */
   margin-bottom: 50px;
 `;
 
@@ -79,7 +68,6 @@ const ProfileText = styled.div`
 
 const TagDiv = styled.div`
   width: 100%;
-  /* max-width: 800px; */
   margin-bottom: 30px;
   display: flex;
   flex-wrap: wrap;
@@ -87,7 +75,6 @@ const TagDiv = styled.div`
 
 const TagTitle = styled.div`
   width: 100%;
-  /* height: 40px; */
   font-size: 15px;
   font-weight: "600";
   margin-bottom: 10px;
@@ -96,8 +83,6 @@ const TagTitle = styled.div`
 const TagList = styled.div`
   display: flex;
   width: 100%;
-  /* height: 40px; */
-  /* margin: 3px 0px; */
 `;
 
 const TopRight = ({
@@ -127,7 +112,6 @@ const TopRight = ({
             btnFontSize="15px"
             btnTextColor={color.black.default}
             btnBorderColor={color.black.default}
-            // btnHoverBorderColor={"transparent"}
             btnHoverBgColor="transparent"
             btnUseIcon={true}
             btnIconSrc={"/assets/icons/edit.png"}

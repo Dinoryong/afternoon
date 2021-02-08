@@ -38,13 +38,7 @@ const DynamicDiv = styled.div`
 const useCounter = () => {
   const loginState = useSelector((state) => state.login.loginState);
 
-  const dispatch = useDispatch();
-
-  const toggle = async () => {
-    await dispatch({ type: "TOGGLE" });
-  };
-
-  return { loginState, toggle };
+  return { loginState };
 };
 
 const index = () => {
@@ -56,7 +50,7 @@ const index = () => {
   const [isExist, setIsExist] = useState(false);
   const [SearchApiState, setSearchApiState] = useState(false);
 
-  const { loginState, toggle } = useCounter();
+  const { loginState } = useCounter();
 
   const isTagCheck = () => {
     if (TagList.findIndex((t) => t.tagTitle === routerQuery) >= 0) {
@@ -82,7 +76,7 @@ const index = () => {
   useEffect(function mount() {
     isTagCheck();
 
-    const getSearchRequest = async () => {
+    const getSearchResult = async () => {
       const result = await GET_SEARCH(routerQuery);
 
       if (result.status === 200) {
@@ -107,7 +101,7 @@ const index = () => {
     };
 
     if (!SearchApiState) {
-      getSearchRequest();
+      getSearchResult();
     }
   });
 
@@ -162,7 +156,6 @@ const index = () => {
           </DynamicDiv>
         </Wrapper>
       )}
-      {!isExist && <div>없어요</div>}
     </Container>
   );
 };

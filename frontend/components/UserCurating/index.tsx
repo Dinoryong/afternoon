@@ -10,14 +10,6 @@ const Container = styled.div`
   display: flex;
   width: 100%;
   max-width: 930px;
-  margin-top: 152px;
-  margin-bottom: 10px;
-`;
-
-const Container2 = styled.div`
-  display: flex;
-  width: 1280px;
-  border-bottom: solid ${color.gray.default} 2px;
 `;
 
 const Wrapper2 = styled.div`
