@@ -45,7 +45,6 @@ public class AccountService {
 
             return  new BaseMessage(HttpStatus.OK, profile);
 
-
         }catch (Exception e)
         {
             resultMap.put("errors",e);
@@ -138,7 +137,28 @@ public class AccountService {
             Account aAccount= accountRepository.findAccountByAccountId(myId);
             Account bAccount= accountRepository.findAccountByAccountId(yourId);
             aAccount.followAccount(bAccount);
-            resultMap.put("message",myId+"가 "+yourId+" 를 팔로우하였습니다.");
+            resultMap.put("message",myId+"님이 "+yourId+" 를 팔로우하였습니다.");
+            return new BaseMessage(HttpStatus.OK,resultMap);
+        }catch (Exception e)
+        {
+            resultMap.put("message","객체가 존재하지 않습니다.");
+            return new BaseMessage( HttpStatus.BAD_REQUEST,resultMap);
+        }
+    }
+
+    public BaseMessage disconnect(Long myId, Long yourId){
+        Map<String, Object> resultMap = new HashMap<>();
+        logger.info("yourId : "+yourId);
+        if(myId==yourId)
+        {
+            resultMap.put("message","자기 자신을 팔로우 취소 할 수 없습니다.");
+            return new BaseMessage( HttpStatus.BAD_REQUEST,resultMap);
+        }
+        try {
+            Account aAccount= accountRepository.findAccountByAccountId(myId);
+            Account bAccount= accountRepository.findAccountByAccountId(yourId);
+            aAccount.disconnectAccount(bAccount);
+            resultMap.put("message",myId+"님이 "+yourId+" 를 팔로우 취소하였습니다.");
             return new BaseMessage(HttpStatus.OK,resultMap);
         }catch (Exception e)
         {

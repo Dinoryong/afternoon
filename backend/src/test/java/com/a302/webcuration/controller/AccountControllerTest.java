@@ -151,6 +151,19 @@ public class AccountControllerTest extends BaseControllerTest {
     }
 
     @Test
+    public void disconnect_성공() throws Exception {
+
+        Long yourId = 27L;
+
+        String token = "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJzdWIiOiLroZzqt7jsnbjthqDtgbAiLCJleHAiOjE2MTMxODkyMzQsImFjY291bnRJZCI6MjQsImFjY291bnRFbWFpbCI6ImRudGpyNDc3MkBuYXRlLmNvbSJ9.QU_FxH4hw6qHQEU2mYmbe4729DXqkmeD0k0lop-_3EY";
+        mockMvc.perform(delete("/api/accounts/myfollowing/"+yourId)
+                .header("Authorization","Bearer "+token)
+                .contentType(MediaType.APPLICATION_JSON))
+                .andExpect(status().isOk())
+                .andDo(print());
+    }
+
+    @Test
     public void follow_실패_셀프팔로우() throws Exception {
 
         Long yourId = 2L;

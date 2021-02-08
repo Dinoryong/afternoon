@@ -77,6 +77,18 @@ public class AccountController {
         return new ResponseEntity(bm,bm.getHttpStatus());
     }
 
+    // TODO: 2021-02-08 팔로우 취소
+    @DeleteMapping("/myfollowing/{yourid}")
+    public ResponseEntity disconnect(@PathVariable Long yourid, @RequestHeader(value = "Authorization") String token){
+
+        Long myId = jwtService.getAccountId(token);
+        logger.info("my: "+myId+" your: "+yourid);
+        BaseMessage bm = accountService.disconnect(myId, yourid);
+        return new ResponseEntity(bm,bm.getHttpStatus());
+    }
+
+    //--------------------------------------관심태그------------------------------------------------------
+
     @PutMapping("/mytag")
     public ResponseEntity selectTag(@RequestBody @Valid AccountDto.AccountTagRequest accountTagRequest, @RequestHeader(value = "Authorization") String token) {
         if(!accountTagRequest.getTags().isEmpty()){
