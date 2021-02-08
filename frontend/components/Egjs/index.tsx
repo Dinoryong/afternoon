@@ -64,10 +64,11 @@ const Writer = styled.div`
   font-weight: 500;
 `;
 
-const ItemEl = ({ id, src, writer, title }) => (
+const ItemEl = ({ id, src, writer, title, togglePost }) => (
   <Item
     onClick={() => {
       console.log(id);
+      togglePost(id);
     }}
   >
     <Thumbnail>
@@ -91,7 +92,11 @@ const useCounter = () => {
     await dispatch({ type: "TOGGLE" });
   };
 
-  return { loginState, toggle };
+  const togglePost = async (toggleId) => {
+    await dispatch({ type: "TOGGLE_POST", toggleId });
+  };
+
+  return { loginState, toggle, togglePost };
 };
 
 const index = ({ postData }) => {
@@ -100,53 +105,57 @@ const index = ({ postData }) => {
   const [isEnd, setIsEnd] = useState(false);
   const [appendAble, setAppendAble] = useState(true);
 
-  const { loginState, toggle } = useCounter();
+  const { loginState, toggle, togglePost } = useCounter();
+
   const DIVIDE_COUNT = 10;
 
   return (
-    <GridLayout
-      tag="div"
-      threshold={100}
-      options={{
-        horizontal: false,
-      }}
-      layoutOptions={{ margin: 20, align: "center" }}
-      onAppend={() => {
-        if (!isEnd && appendAble && appendList.length <= postData.length) {
-          if (startIndex + DIVIDE_COUNT < postData.length) {
-            const cur = postData.slice(startIndex, startIndex + DIVIDE_COUNT);
-            setAppendList(appendList.concat(cur));
-            setStartIndex(startIndex + DIVIDE_COUNT);
+    <>
+      <GridLayout
+        tag="div"
+        threshold={100}
+        options={{
+          horizontal: false,
+        }}
+        layoutOptions={{ margin: 20, align: "center" }}
+        onAppend={() => {
+          if (!isEnd && appendAble && appendList.length <= postData.length) {
+            if (startIndex + DIVIDE_COUNT < postData.length) {
+              const cur = postData.slice(startIndex, startIndex + DIVIDE_COUNT);
+              setAppendList(appendList.concat(cur));
+              setStartIndex(startIndex + DIVIDE_COUNT);
+            } else {
+              setIsEnd(true);
+              const cur = postData.slice(startIndex);
+              setAppendList(appendList.concat(cur));
+            }
           } else {
-            setIsEnd(true);
-            const cur = postData.slice(startIndex);
-            setAppendList(appendList.concat(cur));
+            if (appendAble) {
+              setAppendAble(false);
+            }
           }
-        } else {
-          if (appendAble) {
-            setAppendAble(false);
+        }}
+        onLayoutComplete={(e) => {
+          if (!loginState && isEnd) {
+            toggle();
           }
-        }
-      }}
-      onLayoutComplete={(e) => {
-        if (!loginState && isEnd) {
-          toggle();
-        }
-      }}
-    >
-      {appendList &&
-        appendList.map((f, index) => {
-          return (
-            <ItemEl
-              key={index}
-              id={f.postsId}
-              src={f.postsPhoto}
-              writer={f.postsWriter}
-              title={f.postsTitle}
-            />
-          );
-        })}
-    </GridLayout>
+        }}
+      >
+        {appendList &&
+          appendList.map((f, index) => {
+            return (
+              <ItemEl
+                key={index}
+                id={f.postsId}
+                src={f.postsPhoto}
+                writer={f.postsWriter}
+                title={f.postsTitle}
+                togglePost={togglePost}
+              />
+            );
+          })}
+      </GridLayout>
+    </>
   );
 };
 
