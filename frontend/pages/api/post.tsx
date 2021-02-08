@@ -8,7 +8,7 @@ const VIA_API_DEV = secrets.VIA_API_DEV;
 export const SUBMIT_POST = async (req) => {
   if (!VIA_API_DEV) {
     try {
-      return { status: 200, data: {} };
+      return { status: 201, data: {} };
     } catch (error) {
       console.log(error);
     }
@@ -75,4 +75,3 @@ export const GET_FEED = async () => {
     return { status, data };
   }
 };
-
