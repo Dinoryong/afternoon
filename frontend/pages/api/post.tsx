@@ -45,7 +45,7 @@ export const GET_FEED = async () => {
     try {
       return {
         status: 200,
-        data: FeedRes.FeedResDummy.data,
+        data: FeedRes.FeedResDummy,
       };
     } catch (error) {
       console.log(error);
@@ -65,7 +65,7 @@ export const GET_FEED = async () => {
         })
         .then((res) => {
           console.log(res);
-          data = res.data;
+          data = res.data.data;
           status = res.status;
         });
       return { status, data };
@@ -95,14 +95,14 @@ export const GET_POST_DETAIL = async (req) => {
 
     try {
       await axios
-        .get(`${API_ROOT_URI}/api/????/req`, {
+        .get(`${API_ROOT_URI}/api/posts/${req}`, {
           headers: {
             Authorization: `Bearer ${window.localStorage.getItem("authToken")}`,
           },
         })
         .then((res) => {
           console.log(res);
-          data = res.data;
+          data = res.data.data;
           status = res.status;
         });
       return { status, data };

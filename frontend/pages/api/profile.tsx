@@ -28,11 +28,12 @@ export const GET_MY_INFO = async () => {
           headers: { Authorization: `Bearer ${authToken}` },
         })
         .then((res) => {
-          data = res.data;
-          status = res.status;
           console.log(res);
-          return { status, data };
+          data = res.data.data;
+          status = res.status;
         });
+
+      return { status, data };
     } catch (error) {
       console.log(error);
     }

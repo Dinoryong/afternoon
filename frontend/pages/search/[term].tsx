@@ -4,7 +4,7 @@ import TagCurating from "../../components/TagCurating";
 import UserCurating from "../../components/UserCurating";
 import { useRouter } from "next/router";
 import dynamic from "next/dynamic";
-import { GET_SEARCH } from "../api/search";
+import { GET_SEARCH_LOGIN, GET_SEARCH_LOGOUT } from "../api/search";
 import TagList from "../../data/TagList";
 import { useSelector, useDispatch } from "react-redux";
 
@@ -76,12 +76,32 @@ const index = () => {
   useEffect(function mount() {
     isTagCheck();
 
-    const getSearchResult = async () => {
-      const result = await GET_SEARCH(routerQuery);
+    const getSearchResultLogin = async () => {
+      const result = await GET_SEARCH_LOGIN(routerQuery);
 
       if (result.status === 200) {
-        // data.data 로 날아오는거 체크해보기
-        // console.log(result.data);
+        setIsExist(true);
+        if (result.data.writtenPosts.length > 0) {
+          console.log("검색어 게시글 있음");
+          setSearchApiState(true);
+          if (loginState) {
+            setPostData(result.data.writtenPosts);
+          } else {
+            setPostData(result.data.writtenPosts.slice(0, 20));
+          }
+        } else {
+          console.log("검색어 게시글 없음");
+        }
+      } else if (result.status === 204) {
+        setIsExist(false);
+        console.log("검색어 매칭 없음");
+      }
+    };
+
+    const getSearchResultLogout = async () => {
+      const result = await GET_SEARCH_LOGOUT(routerQuery);
+
+      if (result.status === 200) {
         setIsExist(true);
         if (result.data.writtenPosts.length > 0) {
           console.log("검색어 게시글 있음");
@@ -101,7 +121,8 @@ const index = () => {
     };
 
     if (!SearchApiState) {
-      getSearchResult();
+      if (loginState) getSearchResultLogin();
+      else getSearchResultLogout();
     }
   });
 
