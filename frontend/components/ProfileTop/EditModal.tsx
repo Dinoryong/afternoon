@@ -83,7 +83,6 @@ const InputName = styled.input`
   ::placeholder {
     font-size: 15px;
   }
-  /* font-size: 12px; */
   :focus {
     outline: none;
   }

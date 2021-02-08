@@ -7,7 +7,6 @@ import TopLeft from "../../components/ProfileTop/TopLeft";
 import TopRight from "../../components/ProfileTop/TopRight";
 import MenuBar from "../../components/ProfileTop/MenuBar";
 
-
 const Container1 = styled.div`
   display: flex;
   width: 100%;
@@ -35,7 +34,14 @@ const Wrapper2 = styled.div`
   margin-left: 10px;
 `;
 
-const index = ({ profileData, setEditState, windowHeight }) => {
+const index = ({
+  profileData,
+  setEditState,
+  followingData,
+  setFollowingState,
+  // setFollowerState,
+  windowHeight,
+}) => {
   const {
     profileImg,
     profileName,
@@ -48,8 +54,13 @@ const index = ({ profileData, setEditState, windowHeight }) => {
     profileCollections,
   } = profileData;
 
+  const {
+    followingImg,
+    followingName,
+    followingNickname,
+    followingPosts,
+  } = followingData;
   
-
   return (
     <>
       <Container1>
@@ -63,6 +74,12 @@ const index = ({ profileData, setEditState, windowHeight }) => {
             profileMyposts={profileMyposts}
             profileTags={profileTags}
             setEditState={setEditState}
+            followingImg={followingImg}
+            followingName={followingName}
+            followingNickname={followingNickname}
+            followingPosts={followingPosts}
+            setFollowingState={setFollowingState}
+            // setFollowerState={setFollowerState}
             windowHeight={windowHeight}
           ></TopRight>
         </Wrapper2>
