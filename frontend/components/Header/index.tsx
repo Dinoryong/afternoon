@@ -8,6 +8,7 @@ import { useSelector, useDispatch } from "react-redux";
 import LoginModal from "../LoginModal";
 import SubmitModal from "../SubmitModal";
 import { AUTO_LOGIN } from "../../pages/api/user";
+import PostDetail from "../PostDetail";
 
 const Container = styled.div`
   position: fixed;
@@ -53,11 +54,15 @@ const useCounter = () => {
   const isShown = useSelector((state) => state.login.isShown);
   const loginState = useSelector((state) => state.login.loginState);
   const autoLogin = useSelector((state) => state.login.autoLogin);
+  const postShown = useSelector((state) => state.post.postShown);
   const submitShown = useSelector((state) => state.submit.submitShown);
 
   const dispatch = useDispatch();
   const toggle = async () => {
     await dispatch({ type: "TOGGLE" });
+  };
+  const togglePost = async () => {
+    await dispatch({ type: "TOGGLE_POST" });
   };
   const autoLoginCheck = async () => {
     await dispatch({ type: "AUTO_LOGIN_CHECK" });
@@ -82,6 +87,8 @@ const useCounter = () => {
     autoLogin,
     isShown,
     toggle,
+    togglePost,
+    postShown,
   };
 };
 
@@ -101,6 +108,8 @@ const index = () => {
     isShown,
     autoLogin,
     toggle,
+    togglePost,
+    postShown,
   } = useCounter();
 
   const [windowWidth, setWindowWidth] = useState<number>();
@@ -145,8 +154,8 @@ const index = () => {
 
   useEffect(() => {
     document.body.style.overflow =
-      isShown || submitShown || inputFocus ? "hidden" : "scroll";
-  }, [isShown, submitShown, inputFocus]);
+      isShown || submitShown || inputFocus || postShown ? "hidden" : "scroll";
+  }, [isShown, submitShown, inputFocus, postShown]);
 
   const containerStyle = {
     display: routerPath === "/signup" ? "none" : "flex",
@@ -172,6 +181,10 @@ const index = () => {
     }
   };
 
+  const onClickPostBg = () => {
+    togglePost();
+  };
+
   return (
     <>
       {inputFocus && (
@@ -183,6 +196,17 @@ const index = () => {
         ></ModalFrame>
       )}
       <Container style={containerStyle}>
+        {postShown && (
+          <>
+            <ModalFrame style={{ height: windowHeight }}>
+              <CloseBg onClick={onClickPostBg}></CloseBg>
+              <PostDetail
+                windowWidth={windowWidth}
+                windowHeight={windowHeight}
+              ></PostDetail>
+            </ModalFrame>
+          </>
+        )}
         {isShown && (
           <>
             <ModalFrame style={{ height: windowHeight }}>

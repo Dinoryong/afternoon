@@ -1,12 +1,12 @@
 import React, { useEffect, useState } from "react";
 import styled from "@emotion/styled";
 import ProfileTop from "../../components/ProfileTop";
-import Button from "../../components/Button";
-import color from "../../styles/theme";
-import Image from "next/image";
 import EditModal from "../../components/ProfileTop/EditModal";
 import FollowingList from "../../components/ProfileTop/FollowingList";
 import { GET_MY_INFO } from "../api/profile";
+import dynamic from "next/dynamic";
+import { useRouter } from "next/router";
+import { useSelector } from "react-redux";
 
 const ModalFrame = styled.div`
   position: absolute;
@@ -14,24 +14,43 @@ const ModalFrame = styled.div`
   justify-content: center;
   align-items: center;
   width: 100%;
+  height: 100%;
   background-color: rgba(0, 0, 0, 0.5);
   z-index: 11;
 `;
 
-const Container1 = styled.div`
+const Container = styled.div`
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  width: 100%;
+`;
+
+const TopWrapper = styled.div`
   display: flex;
   flex-direction: column;
   align-items: center;
   justify-content: center;
   width: 100%;
+  padding-top: 122px;
   /* height: 800px; */
 `;
 
-const Container2 = styled.div`
+const DynamicDiv = styled.div`
+  position: relative;
   display: flex;
-  width: 100%;
-  height: 800px;
+  flex-direction: column;
+  width: 1280px;
+  margin-top: 60px;
+  /* width: 100%; */
 `;
+
+const useCounter = () => {
+  const loginState = useSelector((state) => state.login.loginState);
+
+  return { loginState };
+};
 
 const index = () => {
   const profileData = {
@@ -61,6 +80,14 @@ const index = () => {
 
   const [followingState, setFollowingState] = useState(false);
   // const [followerState, setFollowerState] = useStae(false);
+  
+  const [tabState, setTabState] = useState(0);
+
+  const [postData, setPostData] = useState([]);
+  const [SearchApiState, setSearchApiState] = useState(false);
+
+  const router = useRouter();
+  const { loginState } = useCounter();
 
   const [windowHeight, setWindowHeight] = useState<number>();
 
@@ -69,6 +96,34 @@ const index = () => {
   }, [editState]);
 
   useEffect(function mount() {
+    if (!loginState) {
+      router.push("/");
+    }
+
+    const getSearchRequest = async () => {
+      const result = await GET_MY_INFO();
+
+      if (result.status === 200) {
+        // data.data 로 날아오는거 체크해보기
+        // console.log(result.data);
+        if (result.data.writtenPosts.length > 0) {
+          console.log("프로필 게시글 있음");
+          setSearchApiState(true);
+          setPostData(result.data.writtenPosts);
+        } else {
+          console.log("프로필 게시글 없음");
+        }
+      } else if (result.status === 204) {
+        console.log("프로필 매칭 없음");
+      } else {
+        router.push("/");
+      }
+    };
+
+    if (!SearchApiState) {
+      getSearchRequest();
+    }
+
     const getMyInfo = async () => {
       const result = await GET_MY_INFO();
       if (result.status === 200) {
@@ -95,11 +150,17 @@ const index = () => {
     return cleanup;
   });
 
+  const DynamicComponentWithNoSSR = dynamic(
+    () => import("../../components/Egjs"),
+    {
+      ssr: false,
+    }
+  );
+
   return (
-    <>
+    <Container style={{ height: windowHeight }}>
       {editState && (
         <ModalFrame
-          style={{ position: "fixed", height: windowHeight }}
           onClick={() => {
             setEditState(false);
           }}
@@ -107,7 +168,6 @@ const index = () => {
           <EditModal setEditState={setEditState}></EditModal>
         </ModalFrame>
       )}
-
       {followingState && (
         <ModalFrame
           style={{ position: "fixed", height: windowHeight }}
@@ -121,17 +181,28 @@ const index = () => {
           ></FollowingList>
         </ModalFrame>
       )}
-      <Container1>
-        <ProfileTop
-          profileData={profileData}
-          setEditState={setEditState}
-          followingData={followingData}
-          setFollowingState={setFollowingState}
-          windowHeight={windowHeight}
-        ></ProfileTop>
-      </Container1>
-      <Container2>{/* <ProfileBottom></ProfileBottom> */}</Container2>
-    </>
+      {loginState && (
+        <>
+          <TopWrapper>
+            <ProfileTop
+              profileData={profileData}
+              setEditState={setEditState}
+              windowHeight={windowHeight}
+              setTabState={setTabState}
+              setFollowingState={setFollowingState}
+              tabState={tabState}
+            ></ProfileTop>
+          </TopWrapper>
+          <DynamicDiv>
+            {postData && postData.length > 0 && (
+              <DynamicComponentWithNoSSR
+                postData={postData}
+              ></DynamicComponentWithNoSSR>
+            )}
+          </DynamicDiv>
+        </>
+      )}
+    </Container>
   );
 };
 

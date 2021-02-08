@@ -1,4 +1,5 @@
 import axios from "axios";
+import FeedRes from "../../data/FeedRes";
 import secrets from "../../secrets";
 
 const API_ROOT_URI = secrets.API_ROOT_URI;
@@ -6,9 +7,13 @@ const VIA_API_DEV = secrets.VIA_API_DEV;
 
 export const GET_MY_INFO = async () => {
   const authToken = window.localStorage.getItem("authToken");
+
   if (!VIA_API_DEV) {
     try {
-      return { status: 200, data: {} };
+      return {
+        status: 200,
+        data: FeedRes.FeedResDummySmall.data,
+      };
     } catch (error) {
       console.log(error);
     }
@@ -110,7 +115,6 @@ export const ADD_FOLLOW_USERS = async (req) => {
     }
     return { status: false };
   } else {
-
     let status;
     let data;
 
@@ -158,4 +162,3 @@ export const DELETE_FOLLOW_USERS = async (req) => {
     }
   }
 };
-

@@ -1,6 +1,5 @@
 import { useMemo } from "react";
 import { combineReducers, createStore } from "redux";
-import { AUTO_LOGIN } from "../pages/api/user";
 
 let store;
 
@@ -10,33 +9,33 @@ const baseInitialState = {
   count: 0,
 };
 
-const baseReducer = (state = initialState.base, action) => {
-  switch (action.type) {
-    case "TICK":
-      return {
-        ...state,
-        lastUpdate: action.lastUpdate,
-        light: !!action.light,
-      };
-    case "INCREMENT":
-      return {
-        ...state,
-        count: state.count + 1,
-      };
-    case "DECREMENT":
-      return {
-        ...state,
-        count: state.count - 1,
-      };
-    case "RESET":
-      return {
-        ...state,
-        count: state.count,
-      };
-    default:
-      return state;
-  }
-};
+// const baseReducer = (state = initialState.base, action) => {
+//   switch (action.type) {
+//     case "TICK":
+//       return {
+//         ...state,
+//         lastUpdate: action.lastUpdate,
+//         light: !!action.light,
+//       };
+//     case "INCREMENT":
+//       return {
+//         ...state,
+//         count: state.count + 1,
+//       };
+//     case "DECREMENT":
+//       return {
+//         ...state,
+//         count: state.count - 1,
+//       };
+//     case "RESET":
+//       return {
+//         ...state,
+//         count: state.count,
+//       };
+//     default:
+//       return state;
+//   }
+// };
 
 const loginInitialState = {
   isShown: false,
@@ -102,16 +101,36 @@ const submitReducer = (state = initialState.submit, action) => {
   }
 };
 
+const postInitialState = {
+  postShown: false,
+  toggleId: 0,
+};
+
+const postReducer = (state = initialState.post, action) => {
+  switch (action.type) {
+    case "TOGGLE_POST":
+      return {
+        ...state,
+        postShown: !state.postShown,
+        toggleId: action.toggleId,
+      };
+    default:
+      return state;
+  }
+};
+
 const initialState = {
-  base: baseInitialState,
+  // base: baseInitialState,
   login: loginInitialState,
   submit: submitInitialState,
+  post: postInitialState,
 };
 
 const rootReducer = combineReducers({
-  base: baseReducer,
+  // base: baseReducer,
   login: loginReducer,
   submit: submitReducer,
+  post: postReducer,
 });
 
 function initStore(preloadedState = initialState) {

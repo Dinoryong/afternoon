@@ -10,7 +10,7 @@ export const GET_SEARCH = async (routerQuery) => {
     try {
       return {
         status: 200,
-        data: FeedRes.FeedResDummySmall.data,
+        data: FeedRes.FeedResDummy.data,
       };
     } catch (error) {
       console.log(error);

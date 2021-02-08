@@ -6,6 +6,7 @@ import { useRouter } from "next/router";
 import dynamic from "next/dynamic";
 import { GET_SEARCH } from "../api/search";
 import TagList from "../../data/TagList";
+import { useSelector, useDispatch } from "react-redux";
 
 const Container = styled.div`
   display: flex;
@@ -34,15 +35,22 @@ const DynamicDiv = styled.div`
   /* width: 100%; */
 `;
 
+const useCounter = () => {
+  const loginState = useSelector((state) => state.login.loginState);
+
+  return { loginState };
+};
+
 const index = () => {
   const router = useRouter();
   const routerQuery = router.query.term;
-  
 
   const [postData, setPostData] = useState([]);
   const [isTag, setIsTag] = useState(0);
   const [isExist, setIsExist] = useState(false);
   const [SearchApiState, setSearchApiState] = useState(false);
+
+  const { loginState } = useCounter();
 
   const isTagCheck = () => {
     if (TagList.findIndex((t) => t.tagTitle === routerQuery) >= 0) {
@@ -68,7 +76,7 @@ const index = () => {
   useEffect(function mount() {
     isTagCheck();
 
-    const getSearchRequest = async () => {
+    const getSearchResult = async () => {
       const result = await GET_SEARCH(routerQuery);
 
       if (result.status === 200) {
@@ -78,7 +86,11 @@ const index = () => {
         if (result.data.writtenPosts.length > 0) {
           console.log("검색어 게시글 있음");
           setSearchApiState(true);
-          setPostData(result.data.writtenPosts);
+          if (loginState) {
+            setPostData(result.data.writtenPosts);
+          } else {
+            setPostData(result.data.writtenPosts.slice(0, 20));
+          }
         } else {
           console.log("검색어 게시글 없음");
         }
@@ -89,7 +101,7 @@ const index = () => {
     };
 
     if (!SearchApiState) {
-      getSearchRequest();
+      getSearchResult();
     }
   });
 
@@ -123,9 +135,17 @@ const index = () => {
     <Container>
       {isExist && (
         <Wrapper>
-          {isTag && isTag == 1 && <TagCurating tagData={tagData} routerQuery={routerQuery}></TagCurating>}
+          {isTag && isTag == 1 && (
+            <TagCurating
+              tagData={tagData}
+              routerQuery={routerQuery}
+            ></TagCurating>
+          )}
           {isTag && isTag == 2 && (
-            <UserCurating userData={userData} routerQuery={routerQuery}></UserCurating>
+            <UserCurating
+              userData={userData}
+              routerQuery={routerQuery}
+            ></UserCurating>
           )}
           <DynamicDiv>
             {postData && postData.length > 0 && (
@@ -136,7 +156,6 @@ const index = () => {
           </DynamicDiv>
         </Wrapper>
       )}
-      {!isExist && <div>없어요</div>}
     </Container>
   );
 };
