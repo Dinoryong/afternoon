@@ -65,22 +65,22 @@ const index = ({ windowWidth, windowHeight }) => {
   const { toggleId } = useCounter();
 
   const [postState, setPostState] = useState(false);
-  const [postDetail, setPostDetail] = useState({ postsPhoto: [""] });
+  const [postDetail, setPostDetail] = useState({ postsPhotos: [] });
   const [maxPhoto, setMaxPhoto] = useState(0);
 
   const [curPhoto, setCurPhoto] = useState(0);
 
   useEffect(() => {
-    setMaxPhoto(postDetail.postsPhoto.length);
-  }, [postDetail.postsPhoto[0]]);
+    setMaxPhoto(postDetail.postsPhotos.length);
+  }, [postDetail.postsPhotos]);
 
   useEffect(() => {
     const getPostDetail = async () => {
       const result = await GET_POST_DETAIL(toggleId);
       if (result.status === 200) {
         setPostState(true);
-        console.log(result.data.post);
-        setPostDetail(result.data.post);
+        console.log(result.data);
+        setPostDetail(result.data);
       } else {
         console.log("단일 포스트 데이터 에러");
       }
@@ -99,9 +99,9 @@ const index = ({ windowWidth, windowHeight }) => {
       }}
     >
       <Wrapper>
-        {postDetail && postDetail.postsPhoto[0] !== "" && (
+        {postDetail && postDetail.postsPhotos[0] !== "" && (
           <ImageDiv>
-            {postDetail.postsPhoto.map((ph, index) => {
+            {postDetail.postsPhotos.map((ph, index) => {
               return (
                 <div key={index}>
                   <PinFrame>

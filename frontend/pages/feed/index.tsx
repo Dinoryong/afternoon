@@ -42,10 +42,10 @@ const index = () => {
       if (result.status === 200) {
         // data.data 로 날아오는거 체크해보기
         // console.log(result.data);
-        if (result.data.writtenPosts.length > 0) {
+        if (result.data && result.data.length > 0) {
           console.log("피드내용 있음");
           setFeedApiState(true);
-          setPostData(result.data.writtenPosts);
+          setPostData(result.data);
         } else {
           router.push("/prefer");
           console.log("피드내용 없음");

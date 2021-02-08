@@ -92,17 +92,13 @@ const index = () => {
       const result = await GET_MY_INFO();
 
       if (result.status === 200) {
-        // data.data 로 날아오는거 체크해보기
-        // console.log(result.data);
-        if (result.data.writtenPosts.length > 0) {
-          console.log("프로필 게시글 있음");
+        if (result.data.writtenPosts) {
+          console.log(result.data);
           setSearchApiState(true);
           setPostData(result.data.writtenPosts);
         } else {
-          console.log("프로필 게시글 없음");
+          router.push("/");
         }
-      } else if (result.status === 204) {
-        console.log("프로필 매칭 없음");
       } else {
         router.push("/");
       }
