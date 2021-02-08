@@ -53,7 +53,7 @@ public class Account {
     private Role accountRole = Role.TEMPORARY;
     //팔로잉
     @Builder.Default
-    @ManyToMany(fetch = FetchType.EAGER)
+    @ManyToMany
     private Set<Account> following=new HashSet<>();
 
     @Builder.Default
@@ -97,12 +97,22 @@ public class Account {
         this.getFollowing().add(account);
         account.getFollower().add(this);
     }
-    // TODO: 2021-02-06 관심태그  
+
+    public void disconnectAccount(Account yourAccount){
+        for (Account account : following){
+            if(account==yourAccount){
+                this.getFollowing().remove(account);
+                account.getFollower().remove(this);
+            }
+        }
+    }
+
     public void tagging(Tag tag){
             this.getTags().add(tag);
             tag.getAccounts().add(this);
     }
 
+    // TODO: 2021-02-08 하나만 삭제하는걸로 변경해야함
     //관심태그 삭제
     public void deleteTag(){
         for (Tag tag : tags){

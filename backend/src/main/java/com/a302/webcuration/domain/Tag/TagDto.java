@@ -20,5 +20,6 @@ public class TagDto {
     public static class TagRelatedPosts{
         private List<PostsDto.PostsWithOnePhoto> writtenPosts;
         private int writtenPostsCnt;
+        private boolean tagState;
     }
 }

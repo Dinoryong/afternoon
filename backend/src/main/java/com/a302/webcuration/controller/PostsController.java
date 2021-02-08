@@ -31,11 +31,10 @@ public class PostsController {
 
     }
 
-    // TODO: 2021-02-04 bm으로 바꾸기 
     @GetMapping("/{postsid}")
     public ResponseEntity retrievePosts(@PathVariable Long postsid){
-        PostsDto.PostsResponse postsResponse=postsService.retrievePosts(postsid);
-        return new ResponseEntity(new BaseMessage(HttpStatus.OK,postsResponse),HttpStatus.OK);
+        BaseMessage bm=postsService.retrievePosts(postsid);
+        return new ResponseEntity(bm,bm.getHttpStatus());
     }
 
 //    @DeleteMapping("{postsid}")
