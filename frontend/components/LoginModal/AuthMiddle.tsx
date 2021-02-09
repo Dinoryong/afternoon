@@ -1,10 +1,10 @@
 import React, { useState } from "react";
-import Button from "../Button";
 import styled from "@emotion/styled";
-import color from "../../styles/theme";
-import { CHECK_EMAIL, CONFIRM_LOGIN } from "../../pages/api/user";
 import { useRouter } from "next/router";
 import { useDispatch } from "react-redux";
+import color from "../../styles/theme";
+import Button from "../Button";
+import { CHECK_EMAIL, CONFIRM_LOGIN } from "../../pages/api/user";
 
 const Container = styled.div`
   display: flex;
@@ -50,7 +50,6 @@ const ConfirmButton = styled.div`
 
 const SendingBox = styled.div`
   display: flex;
-  /* flex-direction: column; */
   justify-content: space-between;
   width: 300px;
   color: ${color.black.default};
@@ -74,37 +73,38 @@ const LoginButton = styled.div`
   margin-bottom: 10px;
 `;
 
-const useCounter = () => {
+const useStore = () => {
   const dispatch = useDispatch();
-  const toggle = async () => {
-    await dispatch({ type: "TOGGLE" });
+
+  const toggle = () => {
+    dispatch({ type: "TOGGLE" });
   };
-  const autoLoginCheck = async () => {
-    await dispatch({ type: "AUTO_LOGIN_CHECK" });
+  const loginStateTrue = () => {
+    dispatch({ type: "LOGIN_STATE_TRUE" });
   };
-  const loginStateTrue = async () => {
-    await dispatch({ type: "LOGIN_STATE_TRUE" });
-  };
-  return { toggle, autoLoginCheck, loginStateTrue };
+
+  return { toggle, loginStateTrue };
 };
 
 const AuthMiddle = ({ currentEmail }) => {
-  const [authKey, setAuthKey] = useState("");
-
   const router = useRouter();
+  const { toggle, loginStateTrue } = useStore();
 
-  const { toggle, autoLoginCheck, loginStateTrue } = useCounter();
+  const [authKey, setAuthKey] = useState("");
+  const [checkState, setCheckState] = useState(false);
 
   const requestCheckEmail = async () => {
-    const checkProps = {
+    const checkEmailReq = {
       act: "check-authKey-off",
       accountEmail: currentEmail,
       accountAuthKey: authKey,
     };
 
-    const result = await CHECK_EMAIL(checkProps);
+    const result = await CHECK_EMAIL(checkEmailReq);
+    console.log(result);
 
     if (result.status === 200) {
+      setCheckState(true);
       alert("이메일 인증 성공");
     } else {
       alert("이메일 인증 실패");
@@ -112,32 +112,35 @@ const AuthMiddle = ({ currentEmail }) => {
   };
 
   const requestConfirmLogin = async () => {
-    const checkProps = {
+    const confirmLoginReq = {
       act: "check-authKey-on",
       accountEmail: currentEmail,
       accountAuthKey: authKey,
     };
 
-    const result = await CONFIRM_LOGIN(checkProps);
+    const result = await CONFIRM_LOGIN(confirmLoginReq);
     console.log(result);
 
     if (result.status === 200) {
-      alert("로그인 성공");
-
-      const authToken = result.headers.authorization.slice(7);
-
       window.localStorage.setItem("accountEmail", result.data.accountEmail);
-      window.localStorage.setItem("accountId", result.data.accountId);
+      window.localStorage.setItem(
+        "accountId",
+        result.data.accountId.toString()
+      );
       window.localStorage.setItem(
         "accountNickname",
         result.data.accountNickname
       );
-      window.localStorage.setItem("authToken", authToken);
+      window.localStorage.setItem(
+        "authToken",
+        result.headers.Authorization[0].slice(7)
+      );
       loginStateTrue();
       toggle();
+      alert("로그인 성공");
       router.push("/feed");
     } else {
-      alert("로그인 실패 : " + result.status);
+      alert("로그인 실패");
     }
   };
 
@@ -150,7 +153,7 @@ const AuthMiddle = ({ currentEmail }) => {
           onChange={(e) => {
             setAuthKey(e.target.value);
           }}
-        ></InputNumber>
+        />
         <ConfirmButton>
           <Button
             btnBgColor={color.red.light}
@@ -173,7 +176,7 @@ const AuthMiddle = ({ currentEmail }) => {
       </SendingBox>
       <LoginButton>
         <Button
-          btnBgColor={color.gray.light}
+          btnBgColor={checkState ? color.red.light : color.gray.light}
           btnWidth="300px"
           btnText="로그인"
           btnTextColor={color.white.default}
@@ -181,7 +184,7 @@ const AuthMiddle = ({ currentEmail }) => {
           btnFontWeight={700}
           btnBorderColor="transparent"
           btnHoverBorderColor="transparent"
-          btnHoverBgColor={color.gray.semidark}
+          btnHoverBgColor={checkState ? color.red.dark : color.gray.light}
           btnHoverTextColor={color.white.default}
           btnOnClick={requestConfirmLogin}
         />

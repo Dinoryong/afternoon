@@ -50,12 +50,7 @@ const index = ({
     profileCollections,
   } = profileData;
 
-  const {
-    followingImg,
-    followingName,
-    followingNickname,
-    followingPosts,
-  } = followingData;
+  const { followingName, followingNickname, followingPosts } = followingData;
 
   return (
     <>
@@ -70,7 +65,6 @@ const index = ({
             profileMyposts={profileMyposts}
             profileTags={profileTags}
             setEditState={setEditState}
-            followingImg={followingImg}
             followingName={followingName}
             followingNickname={followingNickname}
             followingPosts={followingPosts}

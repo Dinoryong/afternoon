@@ -1,8 +1,8 @@
 import React, { useEffect, useState } from "react";
-import Button from "../Button";
 import styled from "@emotion/styled";
 import color from "../../styles/theme";
-import { REQUEST_LOGIN } from "../../pages/api/user";
+import Button from "../Button";
+import { EMAIL_LOGIN } from "../../pages/api/user";
 
 const Container = styled.div`
   display: flex;
@@ -43,7 +43,6 @@ const InputEmail = styled.input`
 const Text = styled.div`
   display: flex;
   width: 300px;
-  /* margin-top: 4px; */
   justify-content: center;
   align-items: center;
   font-size: 12px;
@@ -66,28 +65,32 @@ const pattern = new RegExp(
 );
 
 const LoginMiddle = ({ setAuthState, setCurrentEmail }) => {
-  const autoEmail = window.localStorage.getItem("accountEmail");
+  let autoEmail = "";
+  if (window.localStorage.getItem("accountEmail") !== null)
+    autoEmail = window.localStorage.getItem("accountEmail");
+
+  const [emailValid, setEmailValid] = useState(false);
   const [inputEmail, setInputEmail] = useState(
     autoEmail !== undefined ? autoEmail : ""
   );
-  const [emailValid, setEmailValid] = useState(false);
 
   useEffect(() => {
     setEmailValid(pattern.test(inputEmail));
   }, [inputEmail]);
 
-  const requestLogin = async () => {
+  const requestEmailLogin = async () => {
     if (pattern.test(inputEmail)) {
-      const loginProps = {
+      const emailLoginReq = {
         act: "login-request",
         accountEmail: inputEmail,
       };
 
-      const result = await REQUEST_LOGIN(loginProps);
+      const result = await EMAIL_LOGIN(emailLoginReq);
+      console.log(result);
 
-      if (result.status) {
+      if (result.status === 200) {
         setAuthState(1);
-        setCurrentEmail(inputEmail);
+        setCurrentEmail(emailLoginReq.accountEmail);
       } else {
         alert("로그인 요청 실패");
       }
@@ -105,7 +108,7 @@ const LoginMiddle = ({ setAuthState, setCurrentEmail }) => {
           onChange={(e) => {
             setInputEmail(e.target.value);
           }}
-        ></InputEmail>
+        />
         <Text>로그인 요청하기 버튼을 누르시면</Text>
         <Text>이메일로 인증번호가 발송됩니다</Text>
         <LoginButton>
@@ -120,7 +123,7 @@ const LoginMiddle = ({ setAuthState, setCurrentEmail }) => {
             btnHoverBorderColor="transparent"
             btnHoverBgColor={!emailValid ? color.gray.semidark : color.red.dark}
             btnHoverTextColor={color.white.default}
-            btnOnClick={!emailValid ? () => {} : requestLogin}
+            btnOnClick={!emailValid ? () => {} : requestEmailLogin}
           />
         </LoginButton>
       </InputBox>

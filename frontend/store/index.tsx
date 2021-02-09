@@ -3,40 +3,6 @@ import { combineReducers, createStore } from "redux";
 
 let store;
 
-const baseInitialState = {
-  lastUpdate: 0,
-  light: false,
-  count: 0,
-};
-
-// const baseReducer = (state = initialState.base, action) => {
-//   switch (action.type) {
-//     case "TICK":
-//       return {
-//         ...state,
-//         lastUpdate: action.lastUpdate,
-//         light: !!action.light,
-//       };
-//     case "INCREMENT":
-//       return {
-//         ...state,
-//         count: state.count + 1,
-//       };
-//     case "DECREMENT":
-//       return {
-//         ...state,
-//         count: state.count - 1,
-//       };
-//     case "RESET":
-//       return {
-//         ...state,
-//         count: state.count,
-//       };
-//     default:
-//       return state;
-//   }
-// };
-
 const loginInitialState = {
   isShown: false,
   autoLogin: false,
@@ -67,6 +33,7 @@ const loginReducer = (state = initialState.login, action) => {
       };
     case "AUTO_LOGIN_FALSE":
       state.autoLogin = false;
+
       return {
         ...state,
         autoLogin: state.autoLogin,
@@ -79,6 +46,7 @@ const loginReducer = (state = initialState.login, action) => {
       };
     case "LOGIN_STATE_FALSE":
       state.loginState = false;
+
       return {
         ...state,
         loginState: state.loginState,
@@ -120,14 +88,12 @@ const postReducer = (state = initialState.post, action) => {
 };
 
 const initialState = {
-  // base: baseInitialState,
   login: loginInitialState,
   submit: submitInitialState,
   post: postInitialState,
 };
 
 const rootReducer = combineReducers({
-  // base: baseReducer,
   login: loginReducer,
   submit: submitReducer,
   post: postReducer,

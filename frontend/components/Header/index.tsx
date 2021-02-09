@@ -1,14 +1,14 @@
 import React, { useEffect, useState } from "react";
 import styled from "@emotion/styled";
+import { useSelector, useDispatch, RootStateOrAny } from "react-redux";
+import { useRouter } from "next/router";
 import HeaderLeft from "./HeaderLeft";
 import HeaderCenter from "./HeaderCenter";
 import HeaderRight from "./HeaderRight";
-import { useRouter } from "next/router";
-import { useSelector, useDispatch } from "react-redux";
 import LoginModal from "../LoginModal";
 import SubmitModal from "../SubmitModal";
-import { AUTO_LOGIN } from "../../pages/api/user";
 import PostDetail from "../PostDetail";
+import { AUTO_LOGIN } from "../../pages/api/user";
 
 const Container = styled.div`
   position: fixed;
@@ -50,31 +50,40 @@ const CloseBg = styled.div`
   cursor: zoom-out;
 `;
 
-const useCounter = () => {
-  const isShown = useSelector((state) => state.login.isShown);
-  const loginState = useSelector((state) => state.login.loginState);
-  const autoLogin = useSelector((state) => state.login.autoLogin);
-  const postShown = useSelector((state) => state.post.postShown);
-  const submitShown = useSelector((state) => state.submit.submitShown);
+const useStore = () => {
+  const isShown = useSelector((state: RootStateOrAny) => state.login.isShown);
+  const loginState = useSelector(
+    (state: RootStateOrAny) => state.login.loginState
+  );
+  const autoLogin = useSelector(
+    (state: RootStateOrAny) => state.login.autoLogin
+  );
+  const postShown = useSelector(
+    (state: RootStateOrAny) => state.post.postShown
+  );
+  const submitShown = useSelector(
+    (state: RootStateOrAny) => state.submit.submitShown
+  );
 
   const dispatch = useDispatch();
-  const toggle = async () => {
-    await dispatch({ type: "TOGGLE" });
+
+  const toggle = () => {
+    dispatch({ type: "TOGGLE" });
   };
   const togglePost = async () => {
-    await dispatch({ type: "TOGGLE_POST" });
+    dispatch({ type: "TOGGLE_POST" });
   };
   const autoLoginCheck = async () => {
-    await dispatch({ type: "AUTO_LOGIN_CHECK" });
+    dispatch({ type: "AUTO_LOGIN_CHECK" });
   };
   const loginStateTrue = async () => {
-    await dispatch({ type: "LOGIN_STATE_TRUE" });
+    dispatch({ type: "LOGIN_STATE_TRUE" });
   };
   const loginStateFalse = async () => {
-    await dispatch({ type: "LOGIN_STATE_FALSE" });
+    dispatch({ type: "LOGIN_STATE_FALSE" });
   };
   const toggleSubmit = async () => {
-    await dispatch({ type: "TOGGLE_SUBMIT" });
+    dispatch({ type: "TOGGLE_SUBMIT" });
   };
 
   return {
@@ -95,9 +104,6 @@ const useCounter = () => {
 const index = () => {
   const router = useRouter();
   const routerPath = router.pathname;
-  const [inputFocus, setInputFocus] = useState(false);
-  const [searchTerm, setSearchTerm] = useState("");
-
   const {
     autoLoginCheck,
     toggleSubmit,
@@ -110,17 +116,29 @@ const index = () => {
     toggle,
     togglePost,
     postShown,
-  } = useCounter();
+  } = useStore();
+
+  const [inputFocus, setInputFocus] = useState(false);
+  const [searchTerm, setSearchTerm] = useState("");
 
   const [windowWidth, setWindowWidth] = useState<number>();
   const [windowHeight, setWindowHeight] = useState<number>();
 
   useEffect(() => {
-    autoLoginCheck();
+    const requestAutoLogin = async () => {
+      const autoLoginReq = {
+        accountEmail: window.localStorage.getItem("accountEmail"),
+        accountId: window.localStorage.getItem("accountId"),
+      };
+      const autoLoginConfig = {
+        headers: {
+          Authorization: `Bearer ${window.localStorage.getItem("authToken")}`,
+        },
+      };
 
-    const doAutoLogin = async () => {
-      const result = await AUTO_LOGIN();
+      const result = await AUTO_LOGIN(autoLoginReq, autoLoginConfig);
       console.log(result);
+
       if (result.status === 200) {
         loginStateTrue();
       } else {
@@ -128,10 +146,10 @@ const index = () => {
       }
     };
 
-    // console.log(autoLogin, loginState);
-    if (autoLogin) {
-      if (!loginState) {
-        doAutoLogin();
+    if (!loginState) {
+      autoLoginCheck();
+      if (autoLogin) {
+        requestAutoLogin();
       }
     }
 
@@ -193,38 +211,29 @@ const index = () => {
             setInputFocus(false);
           }}
           style={{ position: "fixed", height: windowHeight }}
-        ></ModalFrame>
+        />
       )}
       <Container style={containerStyle}>
         {postShown && (
-          <>
-            <ModalFrame style={{ height: windowHeight }}>
-              <CloseBg onClick={onClickPostBg}></CloseBg>
-              <PostDetail
-                windowWidth={windowWidth}
-                windowHeight={windowHeight}
-              ></PostDetail>
-            </ModalFrame>
-          </>
+          <ModalFrame style={{ height: windowHeight }}>
+            <CloseBg onClick={onClickPostBg} />
+            <PostDetail windowWidth={windowWidth} windowHeight={windowHeight} />
+          </ModalFrame>
         )}
         {isShown && (
-          <>
-            <ModalFrame style={{ height: windowHeight }}>
-              <CloseBg onClick={toggle}></CloseBg>
-              <LoginModal></LoginModal>
-            </ModalFrame>
-          </>
+          <ModalFrame style={{ height: windowHeight }}>
+            <CloseBg onClick={toggle} />
+            <LoginModal />
+          </ModalFrame>
         )}
         {submitShown && (
-          <>
-            <ModalFrame style={{ height: windowHeight }}>
-              <CloseBg onClick={onClickSubmitBg}></CloseBg>
-              <SubmitModal
-                windowWidth={windowWidth}
-                windowHeight={windowHeight}
-              ></SubmitModal>
-            </ModalFrame>
-          </>
+          <ModalFrame style={{ height: windowHeight }}>
+            <CloseBg onClick={onClickSubmitBg} />
+            <SubmitModal
+              windowWidth={windowWidth}
+              windowHeight={windowHeight}
+            />
+          </ModalFrame>
         )}
         <Wrapper>
           <HeaderLeft

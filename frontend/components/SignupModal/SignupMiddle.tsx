@@ -1,11 +1,10 @@
 import React, { useState } from "react";
-import Button from "../Button";
 import styled from "@emotion/styled";
-import color from "../../styles/theme";
-import { SIGN_UP } from "../../pages/api/user";
 import { useRouter } from "next/router";
+import color from "../../styles/theme";
+import Button from "../Button";
+import { SIGN_UP } from "../../pages/api/user";
 
-// 가장 바깥 구획 나누기
 const Container = styled.div`
   display: flex;
   flex-direction: column;
@@ -13,7 +12,6 @@ const Container = styled.div`
   width: 300px;
 `;
 
-// 내부 컨텐츠 시작
 const InputName = styled.input`
   display: flex;
   width: 300px;
@@ -87,13 +85,14 @@ const SignupMiddle = () => {
   const [inputEmail, setInputEmail] = useState("");
 
   const requestSignup = async () => {
-    const signupProps = {
+    const signupReq = {
       accountName: inputName,
       accountEmail: inputEmail,
       accountNickname: inputNickName,
     };
 
-    const result = await SIGN_UP(signupProps);
+    const result = await SIGN_UP(signupReq);
+    console.log(result);
 
     if (result.status === 201) {
       window.localStorage.setItem("accountEmail", result.data.accountEmail);
@@ -112,21 +111,21 @@ const SignupMiddle = () => {
         onChange={(e) => {
           setInputName(e.target.value);
         }}
-      ></InputName>
+      />
       <InputNickname
         placeholder={"닉네임을 입력해주세요. (영문, 한글 2글자 이상)"}
         value={inputNickName}
         onChange={(e) => {
           setInputNickName(e.target.value);
         }}
-      ></InputNickname>
+      />
       <InputEmail
         placeholder={"이메일을 입력해주세요. (example@site.com)"}
         value={inputEmail}
         onChange={(e) => {
           setInputEmail(e.target.value);
         }}
-      ></InputEmail>
+      />
       <SignupButton>
         <Button
           btnBgColor={color.red.default}
