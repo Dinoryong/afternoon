@@ -100,9 +100,9 @@ public class AccountController {
             return ResponseEntity.ok().build();
     }
 
-    // TODO: 2021-02-08 delete 태그
-//    @DeleteMapping("/mytag/{id}")
-//    public ResponseEntity deleteTag(@PathVariable Long id, @RequestHeader(value = "Authorization") String token){
-//
-//    }
+    @DeleteMapping("/mytag/{id}")
+    public ResponseEntity deleteTag(@PathVariable Long id, @RequestHeader(value = "Authorization") String token){
+        BaseMessage bm=accountService.deleteTag(id,token);
+        return new ResponseEntity(bm,bm.getHttpStatus());
+    }
 }

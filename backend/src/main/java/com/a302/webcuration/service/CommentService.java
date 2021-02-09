@@ -62,7 +62,7 @@ public class CommentService {
         comment.addCommentWriterId(accountId);
 
         try {
-            //링크가 존재하는 경우
+            //핀이 존재하는 경우
             Pin pin = pinRepository.findPinByPinId(request.getPinId());
             if(pin!=null)
             {

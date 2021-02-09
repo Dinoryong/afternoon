@@ -22,6 +22,8 @@ public class PinDto {
         private String pinLink;
         @NotNull(message = "pinNum 사진위치가 있어야합니다.")
         private Integer pinNum;
+        private String pinApiLink;
+        private String pinApiClass;
 
         public com.a302.webcuration.domain.Pin.Pin toEntity(){
             return com.a302.webcuration.domain.Pin.Pin.builder()
@@ -30,6 +32,8 @@ public class PinDto {
                     .pinLocX(this.pinLocX)
                     .pinLink(this.pinLink)
                     .pinNum(this.pinNum)
+                    .pinApiLink(pinApiLink)
+                    .pinApiClass(pinApiClass)
                     .build();
 
         }
