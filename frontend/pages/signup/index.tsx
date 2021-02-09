@@ -3,13 +3,10 @@ import styled from "@emotion/styled";
 import SignupModal from "../../components/SignupModal";
 import Image from "next/image";
 import Link from "next/link";
-// import Button from "../../components/Buttons"
 
 const Container = styled.div`
   position: relative;
-  /* margin-top: 80px; */
   height: 100%;
-  background-color: #eeeeee;
   display: flex;
   justify-content: center;
   align-items: center;
@@ -79,14 +76,12 @@ const MiniBox1 = styled.div`
   display: flex;
   flex-direction: column;
   width: 100%;
-  /* height: 30%; */
 `;
 
 const MiniBox2 = styled.div`
   display: flex;
   flex-direction: column;
   width: 100%;
-  /* height: 30%; */
   margin-bottom: 150px;
   justify-content: space-between;
 `;
@@ -94,7 +89,6 @@ const MiniBox2 = styled.div`
 const MiniBox3 = styled.div`
   display: flex;
   width: 100%;
-  /* height: 40%; */
 `;
 
 const InnerBox2 = styled.div`
@@ -106,14 +100,10 @@ const InnerBox2 = styled.div`
   height: 100%;
 `;
 
-type EventProps = {
-  text?: string;
-};
-
 const index = () => {
   const [windowHeight, setWindowHeight] = useState<number>();
 
-  useEffect(function mount() {
+  useEffect(() => {
     const resizeHandler = () => {
       setWindowHeight(window.innerHeight);
     };
@@ -136,7 +126,7 @@ const index = () => {
         layout="fill"
         objectFit="cover"
       ></Image>
-      <BgOpacityFrame></BgOpacityFrame>
+      <BgOpacityFrame />
       <Content>
         <InnerBox1 style={{ height: `${windowHeight - 80}px` }}>
           <MiniBox1>
@@ -162,7 +152,7 @@ const index = () => {
           </MiniBox3>
         </InnerBox1>
         <InnerBox2>
-          <SignupModal></SignupModal>
+          <SignupModal />
         </InnerBox2>
       </Content>
     </Container>

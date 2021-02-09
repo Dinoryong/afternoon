@@ -74,13 +74,13 @@ const index = () => {
     followingNickname: "민트프라푸치노",
     followingPosts: "356",
   };
- 
+
   const [editState, setEditState] = useState(false);
   const [infoState, setInfoState] = useState(false);
 
   const [followingState, setFollowingState] = useState(false);
   // const [followerState, setFollowerState] = useStae(false);
-  
+
   const [tabState, setTabState] = useState(0);
 
   const [postData, setPostData] = useState([]);
@@ -186,6 +186,7 @@ const index = () => {
               windowHeight={windowHeight}
               setTabState={setTabState}
               setFollowingState={setFollowingState}
+              followingData={followingData}
               tabState={tabState}
             ></ProfileTop>
           </TopWrapper>

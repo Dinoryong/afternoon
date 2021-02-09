@@ -1,11 +1,11 @@
-const SignUp = {
+export const SignUpData = {
   httpStatus: "CREATED",
   headers: null,
   data: {
-    accountId: 34,
-    accountName: "회원체크",
-    accountNickname: "회원쳌",
-    accountEmail: "dngngn3045@hanmail.net",
+    accountId: 24,
+    accountName: "이재욱",
+    accountNickname: "난재",
+    accountEmail: "dngngn3045@gmail.com",
     accountCreateDate: "2021-02-08",
     accountBio: "",
     accountPhoto: "",
@@ -20,19 +20,19 @@ const SignUp = {
   },
 };
 
-const SendEmail = {
+export const EmailLoginData = {
   httpStatus: "OK",
   headers: { Authorization: ["default"] },
   data: { message: "성공적으로 메일이 전송되었습니다." },
 };
 
-const CheckEmail = {
+export const CheckEmailData = {
   httpStatus: "OK",
   headers: { Authorization: ["default"] },
   data: { message: "인증키가 일치합니다.", "first-login": "true" },
 };
 
-const ConfirmLogin = {
+export const ConfirmLoginData = {
   httpStatus: "OK",
   headers: {
     Authorization: [
@@ -40,13 +40,13 @@ const ConfirmLogin = {
     ],
   },
   data: {
-    accountId: 34,
-    accountEmail: "dngngn3045@hanmail.net",
-    accountNickname: "회원쳌",
+    accountId: 24,
+    accountEmail: "dngngn3045@gmail.com",
+    accountNickname: "난재",
   },
 };
 
-const AutoLogin = {
+export const AutoLoginData = {
   httpStatus: "OK",
   headers: {
     Authorization: [
@@ -60,7 +60,7 @@ const AutoLogin = {
   },
 };
 
-const SubmitPost = {
+export const SubmitPostData = {
   httpStatus: "CREATED",
   headers: null,
   data: {
@@ -75,7 +75,7 @@ const SubmitPost = {
   },
 };
 
-const GetProfile = {
+export const GetProfileData = {
   httpStatus: "OK",
   headers: null,
   data: {
@@ -105,9 +105,9 @@ const GetProfile = {
   },
 };
 
-const FeedNull = { httpStatus: "OK", headers: null, data: [] };
+export const FeedNullData = { httpStatus: "OK", headers: null, data: [] };
 
-const FeedList = {
+export const FeedListData = {
   httpStatus: "OK",
   headers: null,
   data: [
@@ -128,9 +128,9 @@ const FeedList = {
   ],
 };
 
-const AddPreferTags = {};
+export const AddPreferTagsData = {};
 
-const GetSearchUserOnLoginNull = {
+export const GetSearchUserOnLoginNullData = {
   httpStatus: "OK",
   headers: null,
   data: {
@@ -153,7 +153,7 @@ const GetSearchUserOnLoginNull = {
   },
 };
 
-const GetSearchUserOnLogin = {
+export const GetSearchUserOnLoginData = {
   httpStatus: "OK",
   headers: null,
   data: {
@@ -191,7 +191,7 @@ const GetSearchUserOnLogin = {
   },
 };
 
-const GetSearchUserOnLogout = {
+export const GetSearchUserOnLogoutData = {
   httpStatus: "OK",
   headers: null,
   data: {
@@ -229,13 +229,13 @@ const GetSearchUserOnLogout = {
   },
 };
 
-const GetSearchTagOnLoginNull = {
+export const GetSearchTagOnLoginNullData = {
   httpStatus: "OK",
   headers: null,
   data: { writtenPosts: [], writtenPostsCnt: 0, tagState: false },
 };
 
-const GetSearchTagOnLogin = {
+export const GetSearchTagOnLoginData = {
   httpStatus: "OK",
   headers: null,
   data: {
@@ -253,7 +253,7 @@ const GetSearchTagOnLogin = {
   },
 };
 
-const GetSearchTagOnLogout = {
+export const GetSearchTagOnLogoutData = {
   httpStatus: "OK",
   headers: null,
   data: {
@@ -271,7 +271,7 @@ const GetSearchTagOnLogout = {
   },
 };
 
-const GetOnePost = {
+export const GetOnePostData = {
   httpStatus: "OK",
   headers: null,
   data: {
@@ -291,6 +291,8 @@ const GetOnePost = {
         pinLocX: 36.81214421252372,
         pinLink: "",
         pinNum: 1,
+        pinApiLink: "",
+        pinApiClass: "",
       },
       {
         pinName: "노트",
@@ -298,6 +300,8 @@ const GetOnePost = {
         pinLocX: 32.44781783681214,
         pinLink: "",
         pinNum: 1,
+        pinApiLink: "",
+        pinApiClass: "",
       },
       {
         pinName: "카메라",
@@ -305,6 +309,8 @@ const GetOnePost = {
         pinLocX: 80.07590132827325,
         pinLink: "",
         pinNum: 1,
+        pinApiLink: "",
+        pinApiClass: "",
       },
       {
         pinName: "이어폰",
@@ -312,6 +318,8 @@ const GetOnePost = {
         pinLocX: 31.688804554079695,
         pinLink: "",
         pinNum: 2,
+        pinApiLink: "",
+        pinApiClass: "",
       },
       {
         pinName: "스마트폰",
@@ -319,6 +327,8 @@ const GetOnePost = {
         pinLocX: 65.84440227703985,
         pinLink: "",
         pinNum: 2,
+        pinApiLink: "",
+        pinApiClass: "",
       },
       {
         pinName: "커피",
@@ -326,6 +336,8 @@ const GetOnePost = {
         pinLocX: 81.59392789373814,
         pinLink: "",
         pinNum: 2,
+        pinApiLink: "",
+        pinApiClass: "",
       },
       {
         pinName: "테니스공",
@@ -333,6 +345,8 @@ const GetOnePost = {
         pinLocX: 39.27893738140417,
         pinLink: "",
         pinNum: 3,
+        pinApiLink: "",
+        pinApiClass: "",
       },
     ],
     comments: [],

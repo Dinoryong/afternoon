@@ -1,11 +1,11 @@
 import React, { useState } from "react";
 import styled from "@emotion/styled";
+import { useDispatch } from "react-redux";
 import Image from "next/image";
 import UserModalTop from "../UserModal/UserModalTop";
-import LoginMiddle from "./LoginMiddle";
 import UserModalBottom from "../UserModal/UserModalBottom";
 import UserModalFoot from "../UserModal/UserModalFoot";
-import { useSelector, useDispatch } from "react-redux";
+import LoginMiddle from "./LoginMiddle";
 import AuthMiddle from "./AuthMiddle";
 
 const Container = styled.div`
@@ -34,11 +34,13 @@ const Xbutton = styled.div`
   cursor: pointer;
 `;
 
-const useCounter = () => {
+const useStore = () => {
   const dispatch = useDispatch();
-  const toggle = async () => {
-    await dispatch({ type: "TOGGLE" });
+
+  const toggle = () => {
+    dispatch({ type: "TOGGLE" });
   };
+
   return { toggle };
 };
 
@@ -46,7 +48,7 @@ const index = () => {
   const [authState, setAuthState] = useState(0);
   const [currentEmail, setCurrentEmail] = useState("");
 
-  const { toggle } = useCounter();
+  const { toggle } = useStore();
 
   return (
     <Container>
@@ -55,24 +57,24 @@ const index = () => {
           src="/assets/icons/x_mark.png"
           layout="fill"
           objectFit="contain"
-        ></Image>
+        />
       </Xbutton>
-      <UserModalTop></UserModalTop>
+      <UserModalTop />
       {authState === 0 ? (
         <LoginMiddle
           setAuthState={setAuthState}
           setCurrentEmail={setCurrentEmail}
-        ></LoginMiddle>
+        />
       ) : (
-        <AuthMiddle currentEmail={currentEmail}></AuthMiddle>
+        <AuthMiddle currentEmail={currentEmail} />
       )}
       <UserModalBottom
         bottomText="다른 SNS계정으로 로그인하기"
         snsText1="Facebook으로 로그인"
         snsText2="카카오톡으로 로그인"
         snsText3="Google로 로그인"
-      ></UserModalBottom>
-      <UserModalFoot footText="계정이 없으신가요? 회원가입하기"></UserModalFoot>
+      />
+      <UserModalFoot footText="계정이 없으신가요? 회원가입하기" />
     </Container>
   );
 };

@@ -23,15 +23,15 @@ const Container = styled.div`
 const index = () => {
   return (
     <Container>
-      <UserModalTop></UserModalTop>
-      <SignupMiddle></SignupMiddle>
+      <UserModalTop />
+      <SignupMiddle />
       <UserModalBottom
         bottomText="다른 SNS계정으로 가입하기"
         snsText1="Facebook 계정으로 가입하기"
         snsText2="카카오 계정으로 가입하기"
         snsText3="Google 계정으로 가입하기"
-      ></UserModalBottom>
-      <UserModalFoot footText="계정이 없으신가요? 회원가입하기"></UserModalFoot>
+      />
+      <UserModalFoot footText="계정이 없으신가요? 회원가입하기" />
     </Container>
   );
 };

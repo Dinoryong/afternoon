@@ -1,128 +1,165 @@
 import axios from "axios";
 import secrets from "../../secrets";
+import {
+  SignUpData,
+  EmailLoginData,
+  CheckEmailData,
+  ConfirmLoginData,
+  AutoLoginData,
+} from "../../data/ApiData";
 
 const API_ROOT_URI = secrets.API_ROOT_URI;
 const VIA_API_DEV = secrets.VIA_API_DEV;
 
+const timeout = (ms) => {
+  return new Promise((resolve) => setTimeout(resolve, ms));
+};
+
 export const SIGN_UP = async (req) => {
+  console.log("SIGN_UP : REQUEST");
+  console.log(req);
+
+  let status: number = 0;
+  let data: { accountEmail: string } = { accountEmail: "" };
+
   if (!VIA_API_DEV) {
+    console.log("SIGN_UP : LOCAL");
+
     try {
-      return { status: 200, data: { accountEmail: "" } };
+      await timeout(1000);
+      // throw new Error();
+      status = 201;
+      data = SignUpData.data;
     } catch (error) {
       console.log(error);
     }
-    return { status: false };
   } else {
-    // API 요청 시 실행
-    let data = {};
-    let status = 0;
+    console.log("SIGN_UP : DEV");
 
     try {
       await axios.post(`${API_ROOT_URI}/api/accounts`, req).then((res) => {
-        console.log(res);
-        data = res.data.data;
         status = res.status;
+        data = res.data.data;
       });
-      return { status, data };
     } catch (error) {
       console.log(error);
     }
-
-    return { status: status };
   }
+
+  return { status, data };
 };
 
-export const REQUEST_LOGIN = async (req) => {
+export const EMAIL_LOGIN = async (req) => {
+  console.log("EMAIL_LOGIN : REQUEST");
+  console.log(req);
+
+  let status: number = 0;
+  let data: {} = {};
+
   if (!VIA_API_DEV) {
+    console.log("EMAIL_LOGIN : LOCAL");
+
     try {
-      return { status: 200, data: {} };
+      await timeout(1000);
+      // throw new Error();
+      status = 200;
+      data = EmailLoginData.data;
     } catch (error) {
       console.log(error);
     }
-    return { status: false };
   } else {
-    // API 요청 시 실행
-    let data = {};
-    let status = 0;
+    console.log("EMAIL_LOGIN : DEV");
 
     try {
       await axios.post(API_ROOT_URI + "/api/login", req).then((res) => {
-        console.log(res);
-        data = res.data.data;
         status = res.status;
+        data = res.data.data;
       });
-      return { status, data };
     } catch (error) {
       console.log(error);
     }
-    return { status: false };
   }
+
+  return { status, data };
 };
 
 export const CHECK_EMAIL = async (req) => {
+  console.log("CHECK_EMAIL : REQUEST");
+  console.log(req);
+
+  let status: number = 0;
+  let data: {} = {};
+
   if (!VIA_API_DEV) {
+    console.log("CHECK_EMAIL : LOCAL");
+
     try {
-      return { status: 200, data: {} };
+      await timeout(1000);
+      // throw new Error();
+      status = 200;
+      data = CheckEmailData.data;
     } catch (error) {
       console.log(error);
     }
-    return { status: false };
   } else {
-    // API 요청 시 실행
-    let data = {};
-    let status = 0;
+    console.log("CHECK_EMAIL : DEV");
 
     try {
       await axios.post(API_ROOT_URI + "/api/login", req).then((res) => {
-        console.log(res);
         data = res.data.data;
         status = res.status;
       });
-      return { status, data };
     } catch (error) {
       console.log(error);
     }
-    return { status: false };
   }
+
+  return { status, data };
 };
 
 export const CONFIRM_LOGIN = async (req) => {
+  console.log("CONFIRM_LOGIN : REQUEST");
+  console.log(req);
+
+  let status: number = 0;
+  let data: {
+    accountId: number;
+    accountEmail: string;
+    accountNickname: string;
+  } = {
+    accountId: 0,
+    accountEmail: "",
+    accountNickname: "",
+  };
+  let headers: { Authorization: Array<string> } = { Authorization: [""] };
+
   if (!VIA_API_DEV) {
+    console.log("CONFIRM_LOGIN : LOCAL");
+
     try {
-      return {
-        data: { accountEmail: "dngngn3045@gmail.com", accountId: 1 },
-        status: 200,
-        headers: { authorization: "Bearer dkanxhzmswlqdjsjgrl" },
-      };
+      await timeout(1000);
+      // throw new Error();
+      status = 200;
+      data = ConfirmLoginData.data;
+      headers = ConfirmLoginData.headers;
     } catch (error) {
       console.log(error);
     }
-    return { status: false };
   } else {
-    // API 요청 시 실행
-    let data;
-    let status;
-    let headers;
+    console.log("CONFIRM_LOGIN : DEV");
 
     try {
       await axios.post(API_ROOT_URI + "/api/login", req).then((res) => {
-        console.log(res);
         data = res.data.data;
         status = res.status;
         headers = res.headers;
       });
-      return {
-        status,
-        data,
-        headers,
-      };
     } catch (error) {
       console.log(error);
     }
-    return {
-      status: false,
-    };
   }
+
+  return { status, data, headers };
 };
 
 export const LOG_OUT = async () => {
@@ -132,40 +169,49 @@ export const LOG_OUT = async () => {
   window.localStorage.removeItem("accountNickname");
 };
 
-export const AUTO_LOGIN = async () => {
-  const accountEmail = window.localStorage.getItem("accountEmail");
-  const accountId = window.localStorage.getItem("accountId");
-  const authToken = window.localStorage.getItem("authToken");
+export const AUTO_LOGIN = async (req, config) => {
+  console.log("AUTO_LOGIN : REQUEST");
+  console.log(req);
+
+  let status: number = 0;
+  let data: {
+    accountId: number;
+    accountEmail: string;
+    accountNickname: string;
+  } = {
+    accountId: 0,
+    accountEmail: "",
+    accountNickname: "",
+  };
+  let headers: { Authorization: Array<string> } = { Authorization: [""] };
+
   if (!VIA_API_DEV) {
+    console.log("AUTO_LOGIN : LOCAL");
+
     try {
-      return { status: 200, data: {} };
+      await timeout(1000);
+      // throw new Error();
+      status = 200;
+      data = AutoLoginData.data;
+      headers = AutoLoginData.headers;
     } catch (error) {
       console.log(error);
     }
-    return { status: false };
   } else {
-    // API 요청 시 실행
-    let status;
-    let data;
+    console.log("AUTO_LOGIN : DEV");
 
     try {
       await axios
-        .post(
-          API_ROOT_URI + "/api/auto-login",
-          { accountId, accountEmail },
-          {
-            headers: { Authorization: `Bearer ${authToken}` },
-          }
-        )
+        .post(API_ROOT_URI + "/api/auto-login", req, config)
         .then((res) => {
-          console.log(res);
           status = res.status;
           data = res.data.data;
+          headers = res.headers;
         });
-      return { status, data };
     } catch (error) {
       console.log(error);
     }
-    return { status: false };
   }
+
+  return { status, data, headers };
 };
