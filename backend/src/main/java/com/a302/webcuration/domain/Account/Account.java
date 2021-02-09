@@ -112,13 +112,16 @@ public class Account {
             tag.getAccounts().add(this);
     }
 
-    // TODO: 2021-02-08 하나만 삭제하는걸로 변경해야함
     //관심태그 삭제
-    public void deleteTag(){
+    public boolean deleteTag(Tag deleteTag){
         for (Tag tag : tags){
-            tag.getAccounts().remove(this);
+            if(tag==deleteTag){
+                this.tags.remove(deleteTag);
+                tag.getAccounts().remove(this);
+                return true;
+            }
         }
-        tags.clear();
+        return false;
     }
 
     @Override

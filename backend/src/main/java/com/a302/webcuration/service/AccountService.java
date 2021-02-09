@@ -167,7 +167,6 @@ public class AccountService {
         }
     }
 
-    // TODO: 2021-02-08  return 주기
     public void selectTag(AccountDto.AccountTagRequest accountTagRequest, String token){
         Long myId = jwtService.getAccountId(token);
         Account account=accountRepository.findAccountByAccountId(myId);
@@ -182,6 +181,23 @@ public class AccountService {
         }
     }
 
-    // TODO: 2021-02-08 관심태그 취소 
+    public BaseMessage deleteTag(Long tagId, String token) {
+        Map<String, Object> resultMap = new HashMap<>();
+        Long myId = jwtService.getAccountId(token);
+        Account account=accountRepository.findAccountByAccountId(myId);
+        Boolean deleteComplete=false;
+        try {
+            Tag tag= tagRepository.findTagByTagId(tagId);
+            deleteComplete=account.deleteTag(tag);
+            resultMap.put("delete",deleteComplete);
+        }catch (Exception e){
+            logger.error(e.getMessage());
+            resultMap.put("message","태그 삭제하는데 오류");
+            return new BaseMessage( HttpStatus.BAD_REQUEST,resultMap);
+        }
+        return new BaseMessage( HttpStatus.OK,deleteComplete);
+    }
+
+
 
 }

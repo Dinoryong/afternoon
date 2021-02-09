@@ -228,7 +228,7 @@ public class AccountControllerTest extends BaseControllerTest {
         tag=tagRepository.findByTagTitle(tagName);
         accountTagRequest.getTags().add(modelMapper.map(tag, TagDto.Tag.class));
 
-        String token = "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJzdWIiOiLroZzqt7jsnbjthqDtgbAiLCJleHAiOjE2MTMxODkyMzQsImFjY291bnRJZCI6MjQsImFjY291bnRFbWFpbCI6ImRudGpyNDc3MkBuYXRlLmNvbSJ9.QU_FxH4hw6qHQEU2mYmbe4729DXqkmeD0k0lop-_3EY";
+        String token = "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJzdWIiOiLroZzqt7jsnbjthqDtgbAiLCJleHAiOjE2MTMyODExMjUsImFjY291bnRJZCI6MjQsImFjY291bnRFbWFpbCI6ImRudGpyNDc3MkBuYXZlci5jb20ifQ._yBdL2TyTOxTT2hF47G6oCjnI-Gy84pUYR-80BmILIk";
         mockMvc.perform(put("/api/accounts/mytag")
                 .header("Authorization","Bearer "+token)
                 .contentType(MediaType.APPLICATION_JSON)
@@ -236,6 +236,18 @@ public class AccountControllerTest extends BaseControllerTest {
                 .andExpect(status().isOk())
                 .andDo(print());
     }
+
+    @Test
+    public void 관심태그취소_성공() throws Exception{
+        String tagId="10";
+        String token = "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJzdWIiOiLroZzqt7jsnbjthqDtgbAiLCJleHAiOjE2MTMyODExMjUsImFjY291bnRJZCI6MjQsImFjY291bnRFbWFpbCI6ImRudGpyNDc3MkBuYXZlci5jb20ifQ._yBdL2TyTOxTT2hF47G6oCjnI-Gy84pUYR-80BmILIk";
+        mockMvc.perform(delete("/api/accounts/mytag/"+tagId)
+                .header("Authorization","Bearer "+token)
+                .contentType(MediaType.APPLICATION_JSON))
+                .andExpect(status().isOk())
+                .andDo(print());
+    }
+
     //--------------------------------------태그 기준 피드------------------------------------------------------
     @Test
     public void 태그기준피드_성공() throws Exception{
