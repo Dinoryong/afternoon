@@ -1,8 +1,8 @@
-import React, { useState } from "react";
+import React from "react";
 import styled from "@emotion/styled";
-import color from "../../styles/theme";
 import TagLeft from "./TagLeft";
 import TagRight from "./TagRight";
+import TagList from "../../data/TagList";
 
 const Container = styled.div`
   width: 100%;
@@ -11,37 +11,25 @@ const Container = styled.div`
   justify-content: center;
 `;
 
-// const Wrapper = styled.div`
-//   display: flex;
-//   margin: 10px 0px;
-// `;
-
-const index = ({ tagData, routerQuery }) => {
-  // const [expand, setExpand] = useState(false);
-  const {
-    tagTitle,
-    tagText,
-    tagContributions,
-    tagUsers,
-    tagTopUser,
-    tagTopPost,
-    tagTopContributer,
-  } = tagData;
+const index = ({ searchData, routerQuery }) => {
+  const currentTag = TagList.find((x) => x.tagTitle === routerQuery);
 
   return (
-    <Container>
-      {/* <Wrapper> */}
-      <TagLeft tagTitle={tagTitle} tagText={tagText}></TagLeft>
-      <TagRight
-        tagContributions={tagContributions}
-        tagUsers={tagUsers}
-        tagTopUser={tagTopUser}
-        tagTopPost={tagTopPost}
-        tagTopContributer={tagTopContributer}
-        routerQuery={routerQuery}
-      ></TagRight>
-      {/* </Wrapper> */}
-    </Container>
+    <>
+      {currentTag && currentTag.tagTitle && (
+        <Container>
+          <TagLeft
+            tagTitle={currentTag.tagTitle}
+            tagDesc={currentTag.tagDesc}
+          />
+          <TagRight
+            tagState={searchData.tagState}
+            writtenPostsCnt={searchData.writtenPostsCnt}
+            tagId={currentTag.tagId}
+          />
+        </Container>
+      )}
+    </>
   );
 };
 

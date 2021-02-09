@@ -131,7 +131,7 @@ export const CONFIRM_LOGIN = async (req) => {
     accountEmail: "",
     accountNickname: "",
   };
-  let headers: { Authorization: Array<string> } = { Authorization: [""] };
+  let headers: { authorization: string } = { authorization: "" };
 
   if (!VIA_API_DEV) {
     console.log("CONFIRM_LOGIN : LOCAL");
@@ -141,7 +141,8 @@ export const CONFIRM_LOGIN = async (req) => {
       // throw new Error();
       status = 200;
       data = ConfirmLoginData.data;
-      headers = ConfirmLoginData.headers;
+      headers.authorization =
+        "Bearer eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJzdWIiOiLroZzqt7jsnbjthqDtgbAiLCJleHAiOjE2MTMzMTMyMTcsImFjY291bnRJZCI6MjQsImFjY291bnRFbWFpbCI6ImRuZ25nbjMwNDVAZ21haWwuY29tIn0.BBp6ruE_7HOk2OQsY6Y3fXP1YikoXdeSm-6zAUd97b0";
     } catch (error) {
       console.log(error);
     }
@@ -183,17 +184,16 @@ export const AUTO_LOGIN = async (req, config) => {
     accountEmail: "",
     accountNickname: "",
   };
-  let headers: { Authorization: Array<string> } = { Authorization: [""] };
+  let headers: { authorization: string } = { authorization: "" };
 
   if (!VIA_API_DEV) {
     console.log("AUTO_LOGIN : LOCAL");
 
     try {
-      await timeout(1000);
+      await timeout(500);
       // throw new Error();
       status = 200;
       data = AutoLoginData.data;
-      headers = AutoLoginData.headers;
     } catch (error) {
       console.log(error);
     }
@@ -206,7 +206,6 @@ export const AUTO_LOGIN = async (req, config) => {
         .then((res) => {
           status = res.status;
           data = res.data.data;
-          headers = res.headers;
         });
     } catch (error) {
       console.log(error);

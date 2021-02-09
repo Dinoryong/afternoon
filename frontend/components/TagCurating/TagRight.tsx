@@ -3,6 +3,7 @@ import styled from "@emotion/styled";
 import color from "../../styles/theme";
 import Button from "../Button";
 import { ADD_TAGS, DELETE_TAGS } from "../../pages/api/profile";
+import { RootStateOrAny, useDispatch, useSelector } from "react-redux";
 
 const Container = styled.div`
   display: flex;
@@ -22,81 +23,28 @@ const TopBox = styled.div`
   border-radius: 4px;
 `;
 
-const ContributionBox = styled.div`
+const RowBox = styled.div`
   display: flex;
   justify-content: space-between;
-  margin: 20px 30px 15px 30px;
-  border-bottom: 1px solid lightgray;
-  padding-bottom: 8px;
+  padding: 15px 10px;
+  margin: 0px 20px;
+  :not(:last-child) {
+    border-bottom: 1px solid lightgray;
+  }
 `;
 
-const InsideContributor1 = styled.div`
+const RowBoxTag = styled.div`
   display: flex;
 `;
 
-const InsideContributor2 = styled.div`
-  display: flex;
-`;
-
-const UsersBox = styled.div`
-  display: flex;
-  justify-content: space-between;
-  margin: 0px 30px 15px 30px;
-  border-bottom: 1px solid lightgray;
-  padding-bottom: 8px;
-`;
-
-const InsideUsers1 = styled.div`
-  display: flex;
-`;
-
-const InsideUsers2 = styled.div`
-  display: flex;
-`;
-
-const TopuserBox = styled.div`
-  display: flex;
-  justify-content: space-between;
-  margin: 0px 30px 15px 30px;
-  border-bottom: 1px solid lightgray;
-  padding-bottom: 8px;
-`;
-
-const InsideTopuser1 = styled.div`
-  display: flex;
-`;
-
-const InsideTopuser2 = styled.div`
-  display: flex;
-`;
-
-// const ToppostBox = styled.div`
-//   display: flex;
-//   margin: 0px 20px 15px 20px;
-//   border-bottom: 1px solid lightgray;
-//   padding-bottom: 8px;
-// `;
-
-const TopcontributorBox = styled.div`
-  display: flex;
-  justify-content: space-between;
-  margin: 0px 30px 20px 30px;
-`;
-
-const InsideTopcontributor1 = styled.div`
-  display: flex;
-`;
-
-const InsideTopcontributor2 = styled.div`
+const RowBoxData = styled.div`
   display: flex;
 `;
 
 const BottomBox = styled.div`
   display: flex;
   width: 100%;
-  /* min-width: 450px; */
   flex-direction: column;
-  /* background-color: green; */
 `;
 
 const LikeTag = styled.div`
@@ -104,52 +52,75 @@ const LikeTag = styled.div`
   justify-content: center;
   width: 100%;
   margin-top: 20px;
-  /* min-width: 450px; */
-  /* background-color: white; */
 `;
 
-const TagRight = ({
-  tagContributions,
-  tagUsers,
-  tagTopUser,
-  tagTopPost,
-  tagTopContributer,
-  routerQuery,
-}) => {
-  const [tagState, setTagState] = useState(false);
+const useStore = () => {
+  const loginState = useSelector(
+    (state: RootStateOrAny) => state.login.loginState
+  );
 
-  const tagRequest = { tags: [routerQuery] };
+  const dispatch = useDispatch();
 
-  const addTagOnClick = () => {
-    setTagState(true);
-    ADD_TAGS(tagRequest);
+  const toggle = () => {
+    dispatch({ type: "TOGGLE" });
   };
 
-  const deleteTagOnClick = () => {
-    setTagState(false);
-    DELETE_TAGS(tagRequest);
+  return {
+    loginState,
+    toggle,
+  };
+};
+
+const TagRight = ({ tagState, writtenPostsCnt, tagId }) => {
+  const { loginState, toggle } = useStore();
+
+  const [tagBtnState, setTagBtnState] = useState(tagState);
+
+  const requestAddTags = async () => {
+    setTagBtnState(true);
+    const addTagsReq = { tags: [tagId] };
+    const headerConfig = {
+      headers: {
+        Authorization: `Bearer ${window.localStorage.getItem("authToken")}`,
+      },
+    };
+
+    const result = await ADD_TAGS(addTagsReq, headerConfig);
+    console.log(result);
+  };
+
+  const requestDeleteTags = async () => {
+    setTagBtnState(false);
+    const deleteTagsReq = tagId;
+    const deleteTagsConfig = {
+      headers: {
+        Authorization: `Bearer ${window.localStorage.getItem("authToken")}`,
+      },
+    };
+
+    const result = await DELETE_TAGS(deleteTagsReq, deleteTagsConfig);
+    console.log(result);
   };
 
   return (
     <Container>
       <TopBox>
-        <ContributionBox>
-          <InsideContributor1>게시물</InsideContributor1>
-          <InsideContributor2>{tagContributions}</InsideContributor2>
-        </ContributionBox>
-        <UsersBox>
-          <InsideUsers1>기여한</InsideUsers1>
-          <InsideUsers2>{tagUsers}</InsideUsers2>
-        </UsersBox>
-        <TopuserBox>
-          <InsideTopuser1>좋아요 만땅러</InsideTopuser1>
-          <InsideTopuser2>{tagTopUser}</InsideTopuser2>
-        </TopuserBox>
-        {/* <ToppostBox>좋아요를 많이 받은 게시물 {tagTopPost}</ToppostBox> */}
-        <TopcontributorBox>
-          <InsideTopcontributor1>기여 만땅러</InsideTopcontributor1>
-          <InsideTopcontributor2>{tagTopContributer}</InsideTopcontributor2>
-        </TopcontributorBox>
+        <RowBox>
+          <RowBoxTag>등록된 게시물</RowBoxTag>
+          <RowBoxData>{writtenPostsCnt}</RowBoxData>
+        </RowBox>
+        <RowBox>
+          <RowBoxTag>등록한 사용자</RowBoxTag>
+          <RowBoxData>163</RowBoxData>
+        </RowBox>
+        <RowBox>
+          <RowBoxTag>좋아요 TOP 5</RowBoxTag>
+          <RowBoxData>난재</RowBoxData>
+        </RowBox>
+        <RowBox>
+          <RowBoxTag>게시물 TOP 5</RowBoxTag>
+          <RowBoxData>난재</RowBoxData>
+        </RowBox>
       </TopBox>
       <BottomBox>
         <LikeTag>
@@ -158,7 +129,9 @@ const TagRight = ({
             btnWidth="100%"
             btnMarginLeft="0px"
             btnMarginRight="0px"
-            btnText={tagState ? "관심태그에서 삭제하기" : "관심태그로 설정하기"}
+            btnText={
+              tagBtnState ? "내 관심태그에서 삭제" : "내 관심태그로 추가"
+            }
             btnFontSize="15px"
             btnTextColor={color.white.default}
             btnHeight="40px"
@@ -167,7 +140,13 @@ const TagRight = ({
             btnHoverBorderColor="transparent"
             btnHoverBgColor={color.gray.dark}
             btnHoverTextColor={color.white.default}
-            btnOnClick={tagState ? deleteTagOnClick : addTagOnClick}
+            btnOnClick={
+              !loginState
+                ? toggle
+                : tagBtnState
+                ? requestDeleteTags
+                : requestAddTags
+            }
           />
         </LikeTag>
       </BottomBox>

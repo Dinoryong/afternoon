@@ -1,7 +1,5 @@
 import React from "react";
 import styled from "@emotion/styled";
-import Button from "../Button";
-import color from "../../styles/theme";
 import Image from "next/image";
 
 const Container = styled.div`
@@ -21,13 +19,15 @@ const ImgBox = styled.div`
   margin-top: 17px;
 `;
 
-const TopLeft = ({ userImg }) => {
+const TopLeft = ({ accountPhoto = "/assets/logos/pinset_logo_black.png" }) => {
+  if (accountPhoto === "") accountPhoto = "/assets/logos/pinset_logo_black.png";
+
   return (
     <Container>
       <ImgBox>
         <Image
           className="next_border_image circle"
-          src={userImg}
+          src={accountPhoto}
           layout="fill"
           objectFit="cover"
         ></Image>

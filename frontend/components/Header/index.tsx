@@ -8,7 +8,6 @@ import HeaderRight from "./HeaderRight";
 import LoginModal from "../LoginModal";
 import SubmitModal from "../SubmitModal";
 import PostDetail from "../PostDetail";
-import { AUTO_LOGIN } from "../../pages/api/user";
 
 const Container = styled.div`
   position: fixed;
@@ -125,33 +124,7 @@ const index = () => {
   const [windowHeight, setWindowHeight] = useState<number>();
 
   useEffect(() => {
-    const requestAutoLogin = async () => {
-      const autoLoginReq = {
-        accountEmail: window.localStorage.getItem("accountEmail"),
-        accountId: window.localStorage.getItem("accountId"),
-      };
-      const autoLoginConfig = {
-        headers: {
-          Authorization: `Bearer ${window.localStorage.getItem("authToken")}`,
-        },
-      };
-
-      const result = await AUTO_LOGIN(autoLoginReq, autoLoginConfig);
-      console.log(result);
-
-      if (result.status === 200) {
-        loginStateTrue();
-      } else {
-        loginStateFalse();
-      }
-    };
-
-    if (!loginState) {
-      autoLoginCheck();
-      if (autoLogin) {
-        requestAutoLogin();
-      }
-    }
+    console.log(loginState);
 
     setWindowWidth(window.innerWidth);
     setWindowHeight(window.innerHeight);

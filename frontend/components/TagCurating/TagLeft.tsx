@@ -29,12 +29,12 @@ const ContentText = styled.div`
   font-size: 16px;
 `;
 
-const TagLeft = ({ tagTitle, tagText }) => {
+const TagLeft = ({ tagTitle, tagDesc }) => {
   return (
     <Container>
       <TextBox>
-        <TitleText>{ tagTitle }</TitleText>
-        <ContentText>{ tagText }</ContentText>
+        <TitleText>{tagTitle}</TitleText>
+        <ContentText>{tagDesc}</ContentText>
       </TextBox>
     </Container>
   );

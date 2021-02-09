@@ -22,22 +22,21 @@ export const SignUpData = {
 
 export const EmailLoginData = {
   httpStatus: "OK",
-  headers: { Authorization: ["default"] },
+  headers: { authorization: ["default"] },
   data: { message: "성공적으로 메일이 전송되었습니다." },
 };
 
 export const CheckEmailData = {
   httpStatus: "OK",
-  headers: { Authorization: ["default"] },
+  headers: { authorization: ["default"] },
   data: { message: "인증키가 일치합니다.", "first-login": "true" },
 };
 
 export const ConfirmLoginData = {
   httpStatus: "OK",
   headers: {
-    Authorization: [
+    authorization:
       "Bearer eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJzdWIiOiLroZzqt7jsnbjthqDtgbAiLCJleHAiOjE2MTMyMjY1ODYsImFjY291bnRJZCI6MzQsImFjY291bnRFbWFpbCI6ImRuZ25nbjMwNDVAaGFubWFpbC5uZXQifQ.U_PrkuaGt_IpxP8AjYiKxrX7id3EuOuENY2hI9VPNDQ",
-    ],
   },
   data: {
     accountId: 24,
@@ -48,11 +47,7 @@ export const ConfirmLoginData = {
 
 export const AutoLoginData = {
   httpStatus: "OK",
-  headers: {
-    Authorization: [
-      "Bearer eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJzdWIiOiLroZzqt7jsnbjthqDtgbAiLCJleHAiOjE2MTMyMjUyNDgsImFjY291bnRJZCI6MjQsImFjY291bnRFbWFpbCI6ImRuZ25nbjMwNDVAZ21haWwuY29tIn0.y8DnQEkyrHAjhnog7gnwGGeQQXz2dHGzPLtlSMDiTJ4",
-    ],
-  },
+  headers: null,
   data: {
     accountId: 24,
     accountEmail: "dngngn3045@gmail.com",
@@ -84,7 +79,8 @@ export const GetProfileData = {
     accountNickname: "난재",
     accountEmail: "dngngn3045@gmail.com",
     accountCreateDate: "2021-02-07",
-    accountBio: "",
+    accountBio:
+      "대통령이 궐위된 때 또는 대통령 당선자가 사망하거나 판결 기타의 사유로 그 자격을 상실한 때에는 60일 이내에 후임자를 선거한다. 국회의원의 선거구와 비례대표제 기타 선거에 관한 사항은 법률로 정한다.",
     accountPhoto: "",
     following: [{ id: 34, name: "회원체크", nickname: "회원쳌" }],
     follower: [],
@@ -130,7 +126,7 @@ export const FeedListData = {
 
 export const AddPreferTagsData = {};
 
-export const GetSearchUserOnLoginNullData = {
+export const SearchLoginUserNullData = {
   httpStatus: "OK",
   headers: null,
   data: {
@@ -153,32 +149,33 @@ export const GetSearchUserOnLoginNullData = {
   },
 };
 
-export const GetSearchUserOnLoginData = {
+export const SearchLoginUserData = {
   httpStatus: "OK",
   headers: null,
   data: {
-    accountId: 34,
-    accountName: "회원체크",
-    accountNickname: "회원쳌",
-    accountEmail: "dngngn3045@hanmail.net",
+    accountId: 24,
+    accountName: "이재욱",
+    accountNickname: "난재",
+    accountEmail: "dngngn3045@gmail.com",
     accountCreateDate: "2021-02-08",
-    accountBio: "",
+    accountBio:
+      "대통령이 궐위된 때 또는 대통령 당선자가 사망하거나 판결 기타의 사유로 그 자격을 상실한 때에는 60일 이내에 후임자를 선거한다. 국회의원의 선거구와 비례대표제 기타 선거에 관한 사항은 법률로 정한다.",
     accountPhoto: "",
-    following: [],
-    follower: [{ id: 24, name: "이재욱", nickname: "난재" }],
+    following: [{ id: 34, name: "회원쳌", nickname: "회원체크" }],
+    follower: [],
     accountFollowingCnt: 0,
     accountFollowerCnt: 1,
     writtenPosts: [
       {
         postsId: 35,
-        postsWriter: "회원체크",
+        postsWriter: "난재",
         postsTitle: "피드리스트 테스트",
         postsPhoto:
           "https://firebasestorage.googleapis.com/v0/b/ssafy-a302.appspot.com/o/images%2FNuQgGJYw2Y8L5r9o?alt=media&token=8fbe4205-9a42-41fc-a516-959d1e53bf16",
       },
       {
         postsId: 36,
-        postsWriter: "회원체크",
+        postsWriter: "난재",
         postsTitle: "헬스장",
         postsPhoto:
           "https://firebasestorage.googleapis.com/v0/b/ssafy-a302.appspot.com/o/images%2FQzddbMK6AHAxhEiY?alt=media&token=dd0e875c-9b15-426a-9339-5d91eb8ab109",
@@ -187,55 +184,17 @@ export const GetSearchUserOnLoginData = {
     writtenPostsCnt: 2,
     likePosts: [],
     tags: [{ tagId: 14 }, { tagId: 12 }, { tagId: 18 }],
-    followState: true,
-  },
-};
-
-export const GetSearchUserOnLogoutData = {
-  httpStatus: "OK",
-  headers: null,
-  data: {
-    accountId: 34,
-    accountName: "회원체크",
-    accountNickname: "회원쳌",
-    accountEmail: "dngngn3045@hanmail.net",
-    accountCreateDate: "2021-02-08",
-    accountBio: "",
-    accountPhoto: "",
-    following: [],
-    follower: [],
-    accountFollowingCnt: 0,
-    accountFollowerCnt: 0,
-    writtenPosts: [
-      {
-        postsId: 35,
-        postsWriter: "회원체크",
-        postsTitle: "피드리스트 테스트",
-        postsPhoto:
-          "https://firebasestorage.googleapis.com/v0/b/ssafy-a302.appspot.com/o/images%2FNuQgGJYw2Y8L5r9o?alt=media&token=8fbe4205-9a42-41fc-a516-959d1e53bf16",
-      },
-      {
-        postsId: 36,
-        postsWriter: "회원체크",
-        postsTitle: "헬스장",
-        postsPhoto:
-          "https://firebasestorage.googleapis.com/v0/b/ssafy-a302.appspot.com/o/images%2FQzddbMK6AHAxhEiY?alt=media&token=dd0e875c-9b15-426a-9339-5d91eb8ab109",
-      },
-    ],
-    writtenPostsCnt: 2,
-    likePosts: [],
-    tags: [{ tagId: 12 }, { tagId: 14 }, { tagId: 18 }],
     followState: false,
   },
 };
 
-export const GetSearchTagOnLoginNullData = {
+export const SearchLoginTagNullData = {
   httpStatus: "OK",
   headers: null,
   data: { writtenPosts: [], writtenPostsCnt: 0, tagState: false },
 };
 
-export const GetSearchTagOnLoginData = {
+export const SearchLoginTagData = {
   httpStatus: "OK",
   headers: null,
   data: {
@@ -253,7 +212,45 @@ export const GetSearchTagOnLoginData = {
   },
 };
 
-export const GetSearchTagOnLogoutData = {
+export const SearchLogoutUserData = {
+  httpStatus: "OK",
+  headers: null,
+  data: {
+    accountId: 24,
+    accountName: "이재욱",
+    accountNickname: "난재",
+    accountEmail: "dngngn3045@gmail.com",
+    accountCreateDate: "2021-02-08",
+    accountBio: "A302 화이팅~",
+    accountPhoto: "",
+    following: [],
+    follower: [],
+    accountFollowingCnt: 0,
+    accountFollowerCnt: 0,
+    writtenPosts: [
+      {
+        postsId: 35,
+        postsWriter: "난재",
+        postsTitle: "피드리스트 테스트",
+        postsPhoto:
+          "https://firebasestorage.googleapis.com/v0/b/ssafy-a302.appspot.com/o/images%2FNuQgGJYw2Y8L5r9o?alt=media&token=8fbe4205-9a42-41fc-a516-959d1e53bf16",
+      },
+      {
+        postsId: 36,
+        postsWriter: "난재",
+        postsTitle: "헬스장",
+        postsPhoto:
+          "https://firebasestorage.googleapis.com/v0/b/ssafy-a302.appspot.com/o/images%2FQzddbMK6AHAxhEiY?alt=media&token=dd0e875c-9b15-426a-9339-5d91eb8ab109",
+      },
+    ],
+    writtenPostsCnt: 2,
+    likePosts: [],
+    tags: [{ tagId: 12 }, { tagId: 14 }, { tagId: 18 }],
+    followState: false,
+  },
+};
+
+export const SearchLogoutTagData = {
   httpStatus: "OK",
   headers: null,
   data: {
