@@ -3,7 +3,7 @@ import styled from "@emotion/styled";
 import Button from "../Button";
 import color from "../../styles/theme";
 import ProfileTagBox from "../../components/ProfileTagBox";
-import FollowingList from "../../components/ProfileTop/FollowingList"
+import FollowingList from "../../components/Follow/FollowingList"
 
 const TitleBox = styled.div`
   display: flex;

@@ -6,90 +6,92 @@ import { useDispatch } from "react-redux";
 import Image from "next/image";
 
 const Container = styled.div`
-  width: 400px;
-  height: 400px;
+  width: 300px;
+  height: 320px;
   display: flex;
   position: absolute;
   z-index: 3;
   flex-direction: column;
   align-items: center;
-  justify-content: space-between;
+  /* justify-content: space-between; */
   background-color: rgba(255, 255, 255, 0.92);
-  padding-top: 8px;
-  padding-bottom: 8px;
-  padding-left: 35px;
-  padding-right: 35px;
   border-radius: 10px;
   font-size: 15px;
 `;
 
 const Wrapper1 = styled.div`
   display: flex;
-  width: 300px;
+  width: 100%;
   justify-content: space-between;
-  margin-bottom: 40px;
+  padding: 15px;
 `;
 
 const Xbutton = styled.div`
   width: 17px;
   height: 17px;
   background-color: "transparent";
-  position: absolute;
-  top: 22px;
-  right: 22px;
+  position: relative;
+  /* top: 22px;
+  right: 22px; */
   cursor: pointer;
 `;
 
 const FollowingTitle = styled.div`
   display: flex;
   font-weight: bold;
-  position: absolute;
-  top: 22px;
-  left: 22px;
+  /* position: absolute; */
+  /* top: 22px;
+  left: 22px; */
 `;
 
 const Wrapper2 = styled.div`
   display: flex;
   justify-content: flex-start;
+  align-items: center;
+  flex-direction: column;
+  padding: 0px 20px;
+  overflow-y: scroll;
+  margin-bottom: 20px;
 `;
 
-const FollowingBox1 = styled.div`
-  display: flex;
-  position: relative;
-  width: 50px;
-  height: 50px;
-  margin-right: 30px;
-`;
+// const FollowingBox1 = styled.div`
+//   display: flex;
+//   position: relative;
+//   width: 30px;
+//   height: 30px;
+//   margin-right: 20px;
+// `;
 
 const FollowingBox2 = styled.div`
   display: flex;
-  /* margin-left: 5px; */
-  /* width: 300px; */
+  margin: 10px 0px;
+  width: 220px;
   justify-content: space-between;
-  padding-top: 7px;
-  /* align-content: center; */
+  /* margin-top: 20px; */
+  /* margin-left: 10px; */
+  /* scroll-behavior: */
+  /* justify-content: flex-start; */
 `;
 
-const FollowingName = styled.div`
-  display: flex;
-  /* width: 100px; */
-  margin-right: 10px;
-`;
+// const FollowingName = styled.div`
+//   display: flex;
+//   /* width: 100px; */
+//   margin-right: 10px;
+// `;
 
 const FollowingNickname = styled.div`
   display: flex;
-  /* width: 100px; */
-  /* height: 20px; */
-  /* margin-top: 15px;
-  margin-bottom: 5px; */
-  margin-right: 10px; 
+  /* width: 130px; */
+  /* margin-right: 20px; */
 `;
 
 const FollowingPosts = styled.div`
   display: flex;
+  color: ${color.gray.dark}
+  /* width: 70px; */
   /* width: 70px; */
   /* height: 20px; */
-  margin-right: 10px;
+  /* margin-left: 20px; */
 `;
 
 const useCounter = () => {
@@ -100,10 +102,10 @@ const useCounter = () => {
   return { toggle };
 };
 
-const FollowingList = ({setFollowingState, followingData}) => {
+const FollowingList = ({ setFollowingState, followingData }) => {
   const {
-    followingImg,
-    followingName,
+    /* followingImg, */
+    // followingName,
     followingNickname,
     followingPosts,
   } = followingData;
@@ -113,8 +115,12 @@ const FollowingList = ({setFollowingState, followingData}) => {
   return (
     <Container>
       <Wrapper1>
-        <FollowingTitle>profileName님의 팔로잉리스트</FollowingTitle>
-        <Xbutton onClick={()=>{setFollowingState(false)}}>
+        <FollowingTitle>팔로잉</FollowingTitle>
+        <Xbutton
+          onClick={() => {
+            setFollowingState(false);
+          }}
+        >
           <Image
             src="/assets/icons/x_mark.png"
             layout="fill"
@@ -123,61 +129,35 @@ const FollowingList = ({setFollowingState, followingData}) => {
         </Xbutton>
       </Wrapper1>
       <Wrapper2>
-        <FollowingBox1>
-          <Image
-            className="next_border_image circle"
-            src={followingImg}
-            layout="fill"
-            objectFit="cover"
-          ></Image>
-        </FollowingBox1>
         <FollowingBox2>
-          <FollowingName>{followingName}</FollowingName>
           <FollowingNickname>{followingNickname}</FollowingNickname>
           <FollowingPosts>{followingPosts}</FollowingPosts>
         </FollowingBox2>
-      </Wrapper2>
-      <Wrapper2>
-        <FollowingBox1>
-          <Image
-            className="next_border_image circle"
-            src={followingImg}
-            layout="fill"
-            objectFit="cover"
-          ></Image>
-        </FollowingBox1>
         <FollowingBox2>
-          <FollowingName>{followingName}</FollowingName>
           <FollowingNickname>{followingNickname}</FollowingNickname>
           <FollowingPosts>{followingPosts}</FollowingPosts>
         </FollowingBox2>
-      </Wrapper2>
-      <Wrapper2>
-        <FollowingBox1>
-          <Image
-            className="next_border_image circle"
-            src={followingImg}
-            layout="fill"
-            objectFit="cover"
-          ></Image>
-        </FollowingBox1>
         <FollowingBox2>
-          <FollowingName>{followingName}</FollowingName>
           <FollowingNickname>{followingNickname}</FollowingNickname>
           <FollowingPosts>{followingPosts}</FollowingPosts>
         </FollowingBox2>
-      </Wrapper2>
-      <Wrapper2>
-        <FollowingBox1>
-          <Image
-            className="next_border_image circle"
-            src={followingImg}
-            layout="fill"
-            objectFit="cover"
-          ></Image>
-        </FollowingBox1>
         <FollowingBox2>
-          <FollowingName>{followingName}</FollowingName>
+          <FollowingNickname>{followingNickname}</FollowingNickname>
+          <FollowingPosts>{followingPosts}</FollowingPosts>
+        </FollowingBox2>
+        <FollowingBox2>
+          <FollowingNickname>{followingNickname}</FollowingNickname>
+          <FollowingPosts>{followingPosts}</FollowingPosts>
+        </FollowingBox2>
+        <FollowingBox2>
+          <FollowingNickname>{followingNickname}</FollowingNickname>
+          <FollowingPosts>{followingPosts}</FollowingPosts>
+        </FollowingBox2>
+        <FollowingBox2>
+          <FollowingNickname>{followingNickname}</FollowingNickname>
+          <FollowingPosts>{followingPosts}</FollowingPosts>
+        </FollowingBox2>
+        <FollowingBox2>
           <FollowingNickname>{followingNickname}</FollowingNickname>
           <FollowingPosts>{followingPosts}</FollowingPosts>
         </FollowingBox2>

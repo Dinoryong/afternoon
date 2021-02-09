@@ -2,7 +2,7 @@ import React, { useEffect, useState } from "react";
 import styled from "@emotion/styled";
 import ProfileTop from "../../components/ProfileTop";
 import EditModal from "../../components/ProfileTop/EditModal";
-import FollowingList from "../../components/ProfileTop/FollowingList";
+import FollowingList from "../../components/Follow/FollowingList";
 import { GET_MY_INFO } from "../api/profile";
 import dynamic from "next/dynamic";
 import { useRouter } from "next/router";
@@ -70,9 +70,9 @@ const index = () => {
   const followingData = {
     followingImg:
       "https://images.unsplash.com/photo-1612536295020-34428662e57d?ixid=MXwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHw%3D&ixlib=rb-1.2.1&auto=format&fit=crop&w=634&q=80",
-    followingName: "이민트",
-    followingNickname: "민트프라푸치노",
-    followingPosts: "356",
+    // followingName: "이민트",
+    followingNickname: "민민트프라푸치노",
+    followingPosts: "3526",
   };
 
   const [editState, setEditState] = useState(false);
