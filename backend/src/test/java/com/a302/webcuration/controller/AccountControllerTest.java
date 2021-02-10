@@ -39,9 +39,9 @@ public class AccountControllerTest extends BaseControllerTest {
     public void Account_생성_성공() throws Exception {
         //When
         AccountDto.CreateAccountRequest createAccountRequest = AccountDto.CreateAccountRequest.builder()
-                .accountName("한우석")
-                .accountNickname("VVS우석")
-                .accountEmail("dntjr4772@naver.com")
+                .accountName("최재웅")
+                .accountNickname("GS재웅")
+                .accountEmail("dntjr4772@nate.com")
                 .build();
 
         mockMvc.perform(post("/api/accounts")
@@ -265,6 +265,79 @@ public class AccountControllerTest extends BaseControllerTest {
         mockMvc.perform(get("/api/accounts/feed/follow/"+Id)
                 .contentType(MediaType.APPLICATION_JSON))
                 .andExpect(status().isOk())
+                .andDo(print());
+    }
+
+    //--------------------------------------게시물 좋아요------------------------------------------------------
+    @Test
+    public void 게시물좋아요_성공() throws Exception{
+        AccountDto.LikeRequest likeRequest=new AccountDto.LikeRequest();
+        likeRequest.setPostId(29L);
+        String token = "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJzdWIiOiLroZzqt7jsnbjthqDtgbAiLCJleHAiOjE2MTMzOTYxMjQsImFjY291bnRJZCI6MjQsImFjY291bnRFbWFpbCI6ImRudGpyNDc3MkBuYXZlci5jb20ifQ.0mWYyk4V9kE92-VX4x66EiHQRTDMbLN_b44cxG20mR8";
+        mockMvc.perform(put("/api/accounts/like")
+                .header("Authorization","Bearer "+token)
+                .contentType(MediaType.APPLICATION_JSON)
+                .content(objectMapper.writeValueAsString(likeRequest)))
+                .andExpect(status().isOk())
+                .andDo(print());
+    }
+
+    @Test
+    public void 게시물좋아요_실패_이미좋아요() throws Exception{
+        AccountDto.LikeRequest likeRequest=new AccountDto.LikeRequest();
+        likeRequest.setPostId(29L);
+        String token = "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJzdWIiOiLroZzqt7jsnbjthqDtgbAiLCJleHAiOjE2MTMzOTYxMjQsImFjY291bnRJZCI6MjQsImFjY291bnRFbWFpbCI6ImRudGpyNDc3MkBuYXZlci5jb20ifQ.0mWYyk4V9kE92-VX4x66EiHQRTDMbLN_b44cxG20mR8";
+        mockMvc.perform(put("/api/accounts/like")
+                .header("Authorization","Bearer "+token)
+                .contentType(MediaType.APPLICATION_JSON)
+                .content(objectMapper.writeValueAsString(likeRequest)))
+                .andExpect(status().isBadRequest())
+                .andDo(print());
+    }
+
+    @Test
+    public void 게시물좋아요_실패_없는게시물() throws Exception{
+        AccountDto.LikeRequest likeRequest=new AccountDto.LikeRequest();
+        likeRequest.setPostId(30L);
+        String token = "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJzdWIiOiLroZzqt7jsnbjthqDtgbAiLCJleHAiOjE2MTMzOTYxMjQsImFjY291bnRJZCI6MjQsImFjY291bnRFbWFpbCI6ImRudGpyNDc3MkBuYXZlci5jb20ifQ.0mWYyk4V9kE92-VX4x66EiHQRTDMbLN_b44cxG20mR8";
+        mockMvc.perform(put("/api/accounts/like")
+                .header("Authorization","Bearer "+token)
+                .contentType(MediaType.APPLICATION_JSON)
+                .content(objectMapper.writeValueAsString(likeRequest)))
+                .andExpect(status().isBadRequest())
+                .andDo(print());
+    }
+
+    @Test
+    public void 게시물좋아요취소_성공() throws Exception{
+        String id="29";
+        String token = "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJzdWIiOiLroZzqt7jsnbjthqDtgbAiLCJleHAiOjE2MTMzOTYxMjQsImFjY291bnRJZCI6MjQsImFjY291bnRFbWFpbCI6ImRudGpyNDc3MkBuYXZlci5jb20ifQ.0mWYyk4V9kE92-VX4x66EiHQRTDMbLN_b44cxG20mR8";
+        mockMvc.perform(delete("/api/accounts/like/"+id)
+                .header("Authorization","Bearer "+token)
+                .contentType(MediaType.APPLICATION_JSON))
+                .andExpect(status().isOk())
+                .andDo(print());
+    }
+
+    @Test
+    public void 게시물좋아요취소_실패_이미좋아요취소() throws Exception{
+        String id="29";
+        String token = "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJzdWIiOiLroZzqt7jsnbjthqDtgbAiLCJleHAiOjE2MTMzOTYxMjQsImFjY291bnRJZCI6MjQsImFjY291bnRFbWFpbCI6ImRudGpyNDc3MkBuYXZlci5jb20ifQ.0mWYyk4V9kE92-VX4x66EiHQRTDMbLN_b44cxG20mR8";
+        mockMvc.perform(delete("/api/accounts/like/"+id)
+                .header("Authorization","Bearer "+token)
+                .contentType(MediaType.APPLICATION_JSON))
+                .andExpect(status().isBadRequest())
+                .andDo(print());
+    }
+
+    @Test
+    public void 게시물좋아요취소_실패_존재하지않는게시물() throws Exception{
+        String id="30";
+        String token = "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJzdWIiOiLroZzqt7jsnbjthqDtgbAiLCJleHAiOjE2MTMzOTYxMjQsImFjY291bnRJZCI6MjQsImFjY291bnRFbWFpbCI6ImRudGpyNDc3MkBuYXZlci5jb20ifQ.0mWYyk4V9kE92-VX4x66EiHQRTDMbLN_b44cxG20mR8";
+        mockMvc.perform(delete("/api/accounts/like/"+id)
+                .header("Authorization","Bearer "+token)
+                .contentType(MediaType.APPLICATION_JSON))
+                .andExpect(status().isBadRequest())
                 .andDo(print());
     }
 }

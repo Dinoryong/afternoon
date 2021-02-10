@@ -37,7 +37,7 @@ public class LoginController {
     @PostMapping("/login")
     public ResponseEntity login(@RequestBody @Valid AccountDto.LoginRequest loginRequest) {
         BaseMessage bm = loginService.login(loginRequest);
-        return new ResponseEntity(bm,bm.getHeaders(),bm.getHttpStatus());
+        return new ResponseEntity(new BaseMessage(bm.getHttpStatus(),bm.getData()),bm.getHeaders(),bm.getHttpStatus());
     }
 
     @PostMapping("/auto-login")

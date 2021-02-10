@@ -181,8 +181,13 @@ public class AccountDto {
     //태그 설정
     @Getter @Setter @RequiredArgsConstructor
     public static class AccountTagRequest{
-        //private List<String> tagName=new ArrayList<>();
         private List<TagDto.Tag> tags=new ArrayList<>();
+    }
+
+    @Data @NoArgsConstructor
+    public static class LikeRequest {
+        @NotNull
+        private Long postId;
     }
 
 }

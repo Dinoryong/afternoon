@@ -77,7 +77,7 @@ public class AccountController {
         return new ResponseEntity(bm,bm.getHttpStatus());
     }
 
-    // TODO: 2021-02-08 팔로우 취소
+
     @DeleteMapping("/myfollowing/{yourid}")
     public ResponseEntity disconnect(@PathVariable Long yourid, @RequestHeader(value = "Authorization") String token){
 
@@ -103,6 +103,21 @@ public class AccountController {
     @DeleteMapping("/mytag/{id}")
     public ResponseEntity deleteTag(@PathVariable Long id, @RequestHeader(value = "Authorization") String token){
         BaseMessage bm=accountService.deleteTag(id,token);
+        return new ResponseEntity(bm,bm.getHttpStatus());
+    }
+
+    //--------------------------------------게시물 좋아요------------------------------------------------------
+
+    @PutMapping("/like")
+    public ResponseEntity likePosts(@RequestBody AccountDto.LikeRequest likeRequest,@RequestHeader(value = "Authorization") String token){
+        BaseMessage bm=accountService.likePosts(likeRequest,token);
+        return new ResponseEntity(bm,bm.getHttpStatus());
+    }
+
+    @DeleteMapping("/like/{id}")
+    public ResponseEntity cancelLikedPosts(@PathVariable Long id, @RequestHeader(value = "Authorization") String token){
+        logger.info("id : "+id);
+        BaseMessage bm=accountService.cancelLikedPosts(id,token);
         return new ResponseEntity(bm,bm.getHttpStatus());
     }
 }
