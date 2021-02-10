@@ -6,6 +6,7 @@ import com.a302.webcuration.domain.Account.AccountDto;
 import com.a302.webcuration.domain.Account.AccountRepository;
 import com.a302.webcuration.domain.Post.Posts;
 import com.a302.webcuration.domain.Post.PostsDto;
+import com.a302.webcuration.domain.Post.PostsRepository;
 import com.a302.webcuration.domain.Tag.Tag;
 import com.a302.webcuration.domain.Tag.TagDto;
 import com.a302.webcuration.domain.Tag.TagRepository;
@@ -15,6 +16,8 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
+import org.springframework.web.bind.annotation.DeleteMapping;
+import org.springframework.web.bind.annotation.GetMapping;
 
 import javax.transaction.Transactional;
 import java.util.*;
@@ -29,6 +32,7 @@ public class AccountService {
     private final AccountRepository accountRepository;
     private final ModelMapper modelMapper;
     private final TagRepository tagRepository;
+    private final PostsRepository postsRepository;
 
     private final JwtService jwtService;
 
@@ -206,6 +210,44 @@ public class AccountService {
         return new BaseMessage( HttpStatus.OK,deleteComplete);
     }
 
+    //게시물 좋아요
+    public BaseMessage likePosts(AccountDto.LikeRequest likeRequest, String token) {
+        Map<String, Object> resultMap = new HashMap<>();
+        Long myId = jwtService.getAccountId(token);
+        Account account=accountRepository.findAccountByAccountId(myId);
+        Posts posts=postsRepository.findPostsByPostsId(likeRequest.getPostId());
+        if(posts!=null){
+            if(account.likePosts(posts)){
+                resultMap.put("message",account.getAccountName()+"회원님이 "+posts.getPostsTitle()+" 게시글을 좋아요했습니다");
+                return new BaseMessage( HttpStatus.OK,resultMap);
+            }else{
+                resultMap.put("message","이미 좋아요한 게시물입니다.");
+                return new BaseMessage( HttpStatus.BAD_REQUEST,resultMap);
+            }
 
+        }else{
+            resultMap.put("message","존재하지 않는 게시물입니다.");
+            return new BaseMessage( HttpStatus.BAD_REQUEST,resultMap);
+        }
+    }
 
+    public BaseMessage cancelLikedPosts(Long postsId, String token) {
+        Map<String, Object> resultMap = new HashMap<>();
+        Long myId = jwtService.getAccountId(token);
+        Account account=accountRepository.findAccountByAccountId(myId);
+        Posts posts=postsRepository.findPostsByPostsId(postsId);
+        if(posts!=null){
+            if(account.cancelLikedPosts(posts)){
+                resultMap.put("message",account.getAccountName()+"회원님이 "+posts.getPostsTitle()+" 게시글을 좋아요 취소했습니다");
+                return new BaseMessage( HttpStatus.OK,resultMap);
+            }else{
+                resultMap.put("message","좋아요되어있지 않은 게시물입니다.");
+                return new BaseMessage( HttpStatus.BAD_REQUEST,resultMap);
+            }
+
+        }else{
+            resultMap.put("message","존재하지 않는 게시물입니다.");
+            return new BaseMessage( HttpStatus.BAD_REQUEST,resultMap);
+        }
+    }
 }

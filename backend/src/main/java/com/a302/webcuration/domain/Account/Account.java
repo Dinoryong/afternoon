@@ -123,6 +123,22 @@ public class Account {
         }
         return false;
     }
+    //게시물 좋아요
+    public boolean likePosts(Posts posts){
+        if(this.getLikePosts().contains(posts))
+            return false;
+        this.getLikePosts().add(posts);
+        posts.getLikeAccounts().add(this);
+        return true;
+    }
+    //게시물 좋아요 취소
+    public boolean cancelLikedPosts(Posts posts){
+        if(!this.getLikePosts().contains(posts))
+            return false;
+        this.likePosts.remove(posts);
+        posts.getLikeAccounts().remove(this);
+        return true;
+    }
 
     @Override
     public String toString() {
