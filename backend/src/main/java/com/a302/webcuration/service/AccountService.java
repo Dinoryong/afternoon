@@ -87,6 +87,13 @@ public class AccountService {
                         .build();
                 writtenPosts.add(writtenPost);
             }
+            //정렬
+            Collections.sort(writtenPosts, new Comparator<PostsDto.PostsWithOnePhoto>() {
+                @Override
+                public int compare(PostsDto.PostsWithOnePhoto o1, PostsDto.PostsWithOnePhoto o2) {
+                    return (int)(o2.getPostsId()- o1.getPostsId());
+                }
+            });
             profile.setWrittenPosts(writtenPosts);
             profile.setWrittenPostsCnt(writtenPostsCnt);
 
@@ -137,6 +144,7 @@ public class AccountService {
             Account aAccount= accountRepository.findAccountByAccountId(myId);
             Account bAccount= accountRepository.findAccountByAccountId(yourId);
             aAccount.followAccount(bAccount);
+            logger.debug("message",myId+"님이 "+yourId+" 를 팔로우하였습니다.");
             resultMap.put("message",myId+"님이 "+yourId+" 를 팔로우하였습니다.");
             return new BaseMessage(HttpStatus.OK,resultMap);
         }catch (Exception e)

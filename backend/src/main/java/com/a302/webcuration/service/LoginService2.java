@@ -180,9 +180,7 @@ public class LoginService2 {
             Account account=accountRepository.findByAccountEmail(request.getAccountEmail());
             String nickname= account.getAccountNickname();
             resultMap = loginInfo(id,email,nickname);
-            HttpHeaders httpHeaders = new HttpHeaders();
-            httpHeaders.add("Authorization",token);
-            return new BaseMessage(HttpStatus.OK,httpHeaders,resultMap);
+            return new BaseMessage(HttpStatus.OK,resultMap);
         }
         else
         {

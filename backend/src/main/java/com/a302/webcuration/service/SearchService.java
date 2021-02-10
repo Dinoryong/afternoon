@@ -129,5 +129,4 @@ public class SearchService {
             return new BaseMessage(HttpStatus.BAD_REQUEST,resultMap);
         }
     }
-
 }

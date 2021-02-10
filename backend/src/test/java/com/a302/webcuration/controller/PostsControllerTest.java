@@ -42,13 +42,21 @@ public class PostsControllerTest extends BaseControllerTest {
         //pin
         List<PinDto.Pin> pins=new ArrayList<>();
         PinDto.Pin pin1=PinDto.Pin.builder()
-                .pinName("노트북")
+                .pinName("오디세이 노트북")
                 .pinLocY(10.1)
                 .pinLocX(10.1)
                 .pinLink("https://smartstore.naver.com/ntseller/products/5281314437")
                 .pinNum(1)
                 .build();
         pins.add(pin1);
+        PinDto.Pin pin2=PinDto.Pin.builder()
+                .pinName("마우스")
+                .pinLocY(10.1)
+                .pinLocX(10.1)
+                .pinLink("https://smartstore.naver.com/ntseller/products/5281314437")
+                .pinNum(1)
+                .build();
+        pins.add(pin2);
 
         PostsDto.CreatePostsRequest createAccountRequest= PostsDto.CreatePostsRequest.builder()
                 .postsTitle(postsTitle)
@@ -57,7 +65,7 @@ public class PostsControllerTest extends BaseControllerTest {
                 .postsTags(postsTags)
                 .postsPins(pins)
                 .build();
-        String token = "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJzdWIiOiLroZzqt7jsnbjthqDtgbAiLCJleHAiOjE2MTMxOTkyMjIsImFjY291bnRJZCI6MjcsImFjY291bnRFbWFpbCI6ImRudGpyNDc3MkBuYXZlci5jb20ifQ.tQIexhsgYZhMu-KjGOxp3cFdioMyPAspdQqgaVxE3Xg";
+        String token = "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJzdWIiOiLroZzqt7jsnbjthqDtgbAiLCJleHAiOjE2MTMzOTEyNTQsImFjY291bnRJZCI6MjQsImFjY291bnRFbWFpbCI6ImRudGpyNDc3MkBuYXZlci5jb20ifQ.Ps_Kqoii6Htjuc94kO5nu-ieSwy6D6cJHQQ2M-olpys";
 
         mockMvc.perform(post("/api/posts")
                 .header("Authorization","Bearer "+token)
@@ -138,7 +146,7 @@ public class PostsControllerTest extends BaseControllerTest {
                 .postsTags(postsTags)
                 .postsPins(pins)
                 .build();
-        String token = "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJzdWIiOiLroZzqt7jsnbjthqDtgbAiLCJleHAiOjE2MTI3ODcwNjIsImFjY291bnRJZCI6MSwiYWNjb3VudEVtYWlsIjoiZG50anI0NzcyQG5hdmVyLmNvbSJ9.tiZPXCzeB0uHo6BQmXwxDJdsEwXFe-HFImn5lMA5JTs";
+        String token = "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJzdWIiOiLroZzqt7jsnbjthqDtgbAiLCJleHAiOjE2MTMzOTEyNTQsImFjY291bnRJZCI6MjQsImFjY291bnRFbWFpbCI6ImRudGpyNDc3MkBuYXZlci5jb20ifQ.Ps_Kqoii6Htjuc94kO5nu-ieSwy6D6cJHQQ2M-olpys";
 
         mockMvc.perform(post("/api/posts")
                 .header("Authorization","Bearer "+token)
