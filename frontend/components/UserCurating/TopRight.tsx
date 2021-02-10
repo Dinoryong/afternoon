@@ -2,9 +2,9 @@ import React, { useState } from "react";
 import styled from "@emotion/styled";
 import Button from "../Button";
 import color from "../../styles/theme";
-import Image from "next/image";
 import ProfileTagBox from "../ProfileTagBox";
-import { ADD_FOLLOW_USERS, DELETE_FOLLOW_USERS } from "../../pages/api/profile";
+import { FOLLOW_USER, UNFOLLOW_USER } from "../../pages/api/profile";
+import { RootStateOrAny, useDispatch, useSelector } from "react-redux";
 
 const TitleBox = styled.div`
   display: flex;
@@ -66,6 +66,7 @@ const UserText = styled.div`
   width: 100%;
   font-size: 15px;
   font-weight: 100px;
+  margin-left: 6px;
 `;
 
 const TagDiv = styled.div`
@@ -75,64 +76,80 @@ const TagDiv = styled.div`
   flex-wrap: wrap;
 `;
 
-const TagTitle = styled.div`
-  width: 100%;
-  font-size: 15px;
-  font-weight: "600";
-  margin-bottom: 10px;
-`;
+const useStore = () => {
+  const loginState = useSelector(
+    (state: RootStateOrAny) => state.login.loginState
+  );
 
-const TagList = styled.div`
-  display: flex;
-  width: 100%;
-`;
+  const dispatch = useDispatch();
 
-const TopRight = ({
-  userName,
-  userBox,
-  userFollowing,
-  userFollower,
-  userPosts,
-  userTags,
-  routerQuery,
-  accountsId,
-}) => {
-  // const editProfile = () => {};
-
-  const [followState, setFollowState] = useState(false);
-
-  const followRequest = { yourId: accountsId };
-
-  console.log(routerQuery);
-
-  const addFollowOnClick = () => {
-    setFollowState(true);
-    ADD_FOLLOW_USERS(followRequest);
+  const toggle = () => {
+    dispatch({ type: "TOGGLE" });
   };
 
-  const deleteFollowOnClick = () => {
-    setFollowState(false);
-    DELETE_FOLLOW_USERS(followRequest);
+  return {
+    loginState,
+    toggle,
+  };
+};
+
+const TopRight = ({
+  accountId,
+  accountNickname,
+  accountBio,
+  followingList,
+  followerList,
+  followingCnt,
+  followerCnt,
+  postsCnt,
+  tagList,
+  followState,
+}) => {
+  const { loginState, toggle } = useStore();
+
+  const [followBtnState, setFollowBtnState] = useState(followState);
+
+  const addFollowOnClick = async () => {
+    const followReq = { yourId: accountId };
+    const followUserConfig = {
+      headers: {
+        Authorization: `Bearer ${window.localStorage.getItem("authToken")}`,
+      },
+    };
+    setFollowBtnState(true);
+    const result = await FOLLOW_USER(followReq, followUserConfig);
+    console.log(result);
+  };
+
+  const deleteFollowOnClick = async () => {
+    const unfollowReq = accountId;
+    const unfollowUserConfig = {
+      headers: {
+        Authorization: `Bearer ${window.localStorage.getItem("authToken")}`,
+      },
+    };
+    setFollowBtnState(false);
+    const result = await UNFOLLOW_USER(unfollowReq, unfollowUserConfig);
+    console.log(result);
   };
 
   return (
     <>
       <TitleBox>
-        <UserTitle>{userName}</UserTitle>
+        <UserTitle>{accountNickname}</UserTitle>
         <EditBox>
           <Button
             btnBgColor="transparent"
-            btnWidth="120px"
+            btnWidth="125px"
             btnHeight="32px"
-            btnText={followState ? "팔로우 끊기" : "팔로우하기"}
+            btnText={followBtnState ? "팔로우 해제" : "팔로우 하기"}
             btnFontSize="15px"
             btnTextColor={color.black.default}
             btnBorderColor={color.black.default}
-            // btnHoverBorderColor={"transparent"}
             btnHoverBgColor="transparent"
             btnUseIcon={true}
             btnIconSrc={
-              followState
+              followBtnState
                 ? "/assets/icons/follow_check.png"
                 : "/assets/icons/follow_plus.png"
             }
@@ -141,25 +158,32 @@ const TopRight = ({
             btnIconMargin={"2px 0px 0px 12px"}
             btnUseOpacity={true}
             btnSetOpacity={"0.4"}
-            btnOnClick={followState ? deleteFollowOnClick : addFollowOnClick}
+            btnOnClick={
+              !loginState
+                ? toggle
+                : followBtnState
+                ? deleteFollowOnClick
+                : addFollowOnClick
+            }
           />
         </EditBox>
       </TitleBox>
       <FollowBox>
-        <UserFollowing>팔로잉 {userFollowing}</UserFollowing>
-        <UserFollower>팔로워 {userFollower}</UserFollower>
-        <UserPost>게시물 {userPosts}</UserPost>
+        <UserFollowing>팔로잉 {followingCnt}</UserFollowing>
+        <UserFollower>팔로워 {followerCnt}</UserFollower>
+        <UserPost>게시물 {postsCnt}</UserPost>
       </FollowBox>
       <TextBox>
-        <UserText>{userBox}</UserText>
+        <UserText>{accountBio}</UserText>
       </TextBox>
       <TagDiv>
-        {userTags &&
-          userTags.map((t, index) => {
+        {tagList &&
+          tagList.length > 0 &&
+          tagList.map((t, index) => {
             return (
               <ProfileTagBox
                 key={index}
-                tagId={t}
+                tagId={t.tagId}
                 tagMargin="0px 8px 8px 0px"
                 tagUseDelete={false}
               />

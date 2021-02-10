@@ -3,7 +3,7 @@ import styled from "@emotion/styled";
 import Button from "../Button";
 import color from "../../styles/theme";
 import { NextRouter } from "next/router";
-import { useSelector, useDispatch } from "react-redux";
+import { useSelector, useDispatch, RootStateOrAny } from "react-redux";
 import { LOG_OUT } from "../../pages/api/user";
 
 const Container = styled.div`
@@ -21,16 +21,18 @@ type HeaderProps = {
 };
 
 const useCounter = () => {
-  const loginState = useSelector((state) => state.login.loginState);
+  const loginState = useSelector(
+    (state: RootStateOrAny) => state.login.loginState
+  );
   const dispatch = useDispatch();
   const toggle = async () => {
-    await dispatch({ type: "TOGGLE" });
+    dispatch({ type: "TOGGLE" });
   };
   const loginStateFalse = async () => {
-    await dispatch({ type: "LOGIN_STATE_FALSE" });
+    dispatch({ type: "LOGIN_STATE_FALSE" });
   };
   const autoLoginFalse = async () => {
-    await dispatch({ type: "AUTO_LOGIN_FALSE" });
+    dispatch({ type: "AUTO_LOGIN_FALSE" });
   };
   return { loginState, loginStateFalse, toggle, autoLoginFalse };
 };

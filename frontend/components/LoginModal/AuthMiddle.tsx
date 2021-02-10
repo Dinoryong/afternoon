@@ -133,7 +133,7 @@ const AuthMiddle = ({ currentEmail }) => {
       );
       window.localStorage.setItem(
         "authToken",
-        result.headers.Authorization[0].slice(7)
+        result.headers.authorization.slice(7)
       );
       loginStateTrue();
       toggle();

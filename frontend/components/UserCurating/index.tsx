@@ -1,8 +1,5 @@
 import React from "react";
 import styled from "@emotion/styled";
-import Button from "../Button";
-import color from "../../styles/theme";
-import Image from "next/image";
 import TopLeft from "../UserCurating/TopLeft";
 import TopRight from "../UserCurating/TopRight";
 
@@ -12,7 +9,7 @@ const Container = styled.div`
   max-width: 930px;
 `;
 
-const Wrapper2 = styled.div`
+const Wrapper = styled.div`
   display: flex;
   flex-direction: column;
   justify-content: space-between;
@@ -22,38 +19,39 @@ const Wrapper2 = styled.div`
   margin-left: 10px;
 `;
 
-const index = ({ userData, routerQuery }) => {
+const index = ({ searchData }) => {
   const {
-    userImg,
-    userName,
-    userBox,
-    userFollowing,
-    userFollower,
-    userPosts,
-    userLikes,
-    userTags,
-    userCollections,
-    accountsId,
-  } = userData;
+    accountPhoto,
+    accountId,
+    accountNickname,
+    accountBio,
+    following,
+    follower,
+    accountFollowingCnt,
+    accountFollowerCnt,
+    writtenPostsCnt,
+    tags,
+    followState,
+  } = searchData;
 
   return (
-    <>
-      <Container>
-        <TopLeft userImg={userImg}></TopLeft>
-        <Wrapper2>
-          <TopRight
-            userName={userName}
-            userBox={userBox}
-            userFollowing={userFollowing}
-            userFollower={userFollower}
-            userPosts={userPosts}
-            userTags={userTags}
-            routerQuery={routerQuery}
-            accountsId={accountsId}
-          ></TopRight>
-        </Wrapper2>
-      </Container>
-    </>
+    <Container>
+      <TopLeft accountPhoto={accountPhoto}></TopLeft>
+      <Wrapper>
+        <TopRight
+          accountId={accountId}
+          accountNickname={accountNickname}
+          accountBio={accountBio}
+          followingList={following}
+          followerList={follower}
+          followingCnt={accountFollowingCnt}
+          followerCnt={accountFollowerCnt}
+          postsCnt={writtenPostsCnt}
+          tagList={tags}
+          followState={followState}
+        ></TopRight>
+      </Wrapper>
+    </Container>
   );
 };
 

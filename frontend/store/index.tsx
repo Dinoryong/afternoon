@@ -5,7 +5,7 @@ let store;
 
 const loginInitialState = {
   isShown: false,
-  autoLogin: false,
+  autoLogin: 0,
   loginState: false,
 };
 
@@ -22,9 +22,9 @@ const loginReducer = (state = initialState.login, action) => {
       const authToken = window.localStorage.getItem("authToken");
 
       if (accountEmail !== null && accountId !== null && authToken !== null) {
-        state.autoLogin = true;
+        state.autoLogin = 1;
       } else {
-        state.autoLogin = false;
+        state.autoLogin = 2;
       }
 
       return {
@@ -32,8 +32,7 @@ const loginReducer = (state = initialState.login, action) => {
         autoLogin: state.autoLogin,
       };
     case "AUTO_LOGIN_FALSE":
-      state.autoLogin = false;
-
+      state.autoLogin = 2;
       return {
         ...state,
         autoLogin: state.autoLogin,

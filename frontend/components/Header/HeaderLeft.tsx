@@ -6,7 +6,7 @@ import Button from "../Button";
 import color from "../../styles/theme";
 import { NextRouter } from "next/router";
 import AutoSuggest from "../AutoSuggest";
-import { useSelector, useDispatch } from "react-redux";
+import { useSelector, useDispatch, RootStateOrAny } from "react-redux";
 
 const Container = styled.div`
   display: flex;
@@ -116,8 +116,10 @@ type HeaderProps = {
   setSearchTerm?: Dispatch<SetStateAction<String>>;
 };
 
-const useCounter = () => {
-  const loginState = useSelector((state) => state.login.loginState);
+const useStore = () => {
+  const loginState = useSelector(
+    (state: RootStateOrAny) => state.login.loginState
+  );
 
   const dispatch = useDispatch();
   const toggle = async () => {
@@ -140,7 +142,7 @@ const HeaderLeft = ({
 }: HeaderProps) => {
   const props = { routerPath, inputFocus };
 
-  const { loginState, toggle } = useCounter();
+  const { loginState, toggle } = useStore();
 
   const titleBoxStyle = {
     color:
@@ -157,7 +159,6 @@ const HeaderLeft = ({
     borderRadius: inputFocus ? "8px" : "24px",
     borderBottomLeftRadius: inputFocus ? "0px" : "24px",
     borderBottomRightRadius: inputFocus ? "0px" : "24px",
-    // borderBottomColor: inputFocus ? color.white.default : "transparent",
   };
 
   const searchInputStyle = {
@@ -246,7 +247,7 @@ const HeaderLeft = ({
           <SearchIcon
             onClick={() => {
               setInputFocus(false);
-              console.log("서치");
+              router.push(`/search/${searchTerm}`);
             }}
           >
             <Image

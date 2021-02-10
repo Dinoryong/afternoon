@@ -48,7 +48,7 @@ const SuggestImage = styled.div`
 
 const SuggestTitle = styled.div`
   width: 120px;
-  margin: 0px 12px;
+  margin: 0px 12px 0px 0px;
   font-weight: bold;
   color: ${color.black.default};
 `;
@@ -91,7 +91,7 @@ const index = ({ setInputFocus }) => {
                     router.push(`/search/${s.title}`);
                   }}
                 >
-                  <SuggestImage>
+                  {/* <SuggestImage>
                     <Image
                       src={
                         s.type === 1
@@ -101,7 +101,7 @@ const index = ({ setInputFocus }) => {
                       layout="fill"
                       objectFit="contain"
                     ></Image>
-                  </SuggestImage>
+                  </SuggestImage> */}
                   <SuggestTitle>{s.title}</SuggestTitle>
                   <SuggestCount>
                     {s.type === 1 ? `팔로워 ${s.count}` : `게시물 ${s.count}`}
