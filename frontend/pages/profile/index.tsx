@@ -36,27 +36,8 @@ const useStore = () => {
   const loginState = useSelector(
     (state: RootStateOrAny) => state.login.loginState
   );
-  const editShown = useSelector(
-    (state: RootStateOrAny) => state.user.editShown
-  );
-  const followShown = useSelector(
-    (state: RootStateOrAny) => state.user.followShown
-  );
-
-  const dispatch = useDispatch();
-
-  const toggleEdit = async () => {
-    dispatch({ type: "TOGGLE_EDIT" });
-  };
-  const toggleFollow = async () => {
-    dispatch({ type: "TOGGLE_FOLLOW" });
-  };
 
   return {
-    toggleEdit,
-    toggleFollow,
-    editShown,
-    followShown,
     loginState,
   };
 };
@@ -72,13 +53,7 @@ const index = () => {
   const [getMyInfoApiState, setgetMyInfoApiState] = useState(false);
 
   const router = useRouter();
-  const {
-    toggleEdit,
-    toggleFollow,
-    editShown,
-    followShown,
-    loginState,
-  } = useStore();
+  const { loginState } = useStore();
 
   const [windowHeight, setWindowHeight] = useState<number>();
 

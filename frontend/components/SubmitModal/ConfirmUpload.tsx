@@ -290,7 +290,7 @@ type StateProps = {
   addState?: boolean;
 };
 
-const useCounter = () => {
+const useStore = () => {
   const dispatch = useDispatch();
 
   const toggleSubmit = async () => {
@@ -311,7 +311,7 @@ const ConfirmUpload = ({
   uploadState,
 }) => {
   const router = useRouter();
-  const { toggleSubmit } = useCounter();
+  const { toggleSubmit } = useStore();
 
   const [currentImg, setCurrentImg] = useState(0);
   const [addState, setAddState] = useState(false);
@@ -418,6 +418,26 @@ const ConfirmUpload = ({
     };
 
     return postRequest;
+  };
+
+  const requestSubmitPost = async () => {
+    const submitPostReq = setPostRequest();
+    const submitPostConfig = {
+      headers: {
+        Authorization: `Bearer ${window.localStorage.getItem("authToken")}`,
+      },
+    };
+
+    const result = await SUBMIT_POST(submitPostReq, submitPostConfig);
+    console.log(result);
+
+    if (result.status === 201) {
+      alert("게시물 등록 성공");
+      toggleSubmit();
+      router.push("/submit");
+    } else {
+      alert("게시물 등록 실패");
+    }
   };
 
   useEffect(() => {
@@ -997,30 +1017,6 @@ const ConfirmUpload = ({
               />
               <RightButtonBox>
                 <Button
-                  btnOnClick={() => {
-                    console.log("태그 : " + selectTagList);
-                    console.log("제목 : " + inputTitle);
-                    console.log("내용 : " + inputContent);
-                    console.log("사진1 : " + img1HasPin);
-                    console.log("사진2 : " + img2HasPin);
-                    console.log("사진3 : " + img3HasPin);
-                    console.log("사진4 : " + img4HasPin);
-                    console.log({
-                      inputPinName,
-                      inputPinLink,
-                      inputPinPosX,
-                      inputPinPosY,
-                    });
-
-                    let reqTagList = [];
-
-                    selectTagList.map((t) => {
-                      reqTagList.push({ tagId: t });
-                    });
-                    console.log(reqTagList);
-
-                    console.log(setPostRequest());
-                  }}
                   btnText={"취소"}
                   btnHoverBgColor={color.red.default}
                   btnHoverBorderColor={color.red.default}
@@ -1028,19 +1024,20 @@ const ConfirmUpload = ({
                   btnMarginLeft="0"
                   btnMarginRight="0"
                   btnWidth="80px"
-                />
-                <Button
-                  btnOnClick={async () => {
-                    const result = await SUBMIT_POST(setPostRequest());
-                    console.log(result);
-                    if (result.status === 201) {
-                      alert("게시물 등록 성공");
+                  btnOnClick={() => {
+                    if (
+                      confirm(
+                        "PINSET : 사진 등록을 취소하시겠습니까?\n확인을 누르시면 현재까지 작업이 사라집니다."
+                      )
+                    ) {
                       toggleSubmit();
-                      router.push("/profile");
                     } else {
-                      alert("게시물 등록 실패");
+                      return;
                     }
                   }}
+                />
+                <Button
+                  btnOnClick={requestSubmitPost}
                   btnBgColor={color.black.default}
                   btnBorderColor={color.black.default}
                   btnTextColor={color.white.default}

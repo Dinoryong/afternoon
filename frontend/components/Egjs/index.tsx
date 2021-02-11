@@ -1,6 +1,5 @@
 import React, { useState } from "react";
 import styled from "@emotion/styled";
-// import { GridLayout } from "@egjs/react-layout";
 import { GridLayout } from "@egjs/react-infinitegrid";
 import color from "../../styles/theme";
 import { useSelector, useDispatch } from "react-redux";
@@ -67,7 +66,6 @@ const Writer = styled.div`
 const ItemEl = ({ id, src, writer, title, togglePost }) => (
   <Item
     onClick={() => {
-      console.log(id);
       togglePost(id);
     }}
   >
@@ -142,14 +140,14 @@ const index = ({ postData }) => {
         }}
       >
         {appendList &&
-          appendList.map((f, index) => {
+          appendList.map((al, index) => {
             return (
               <ItemEl
                 key={index}
-                id={f.postsId}
-                src={f.postsPhoto}
-                writer={f.postsWriter}
-                title={f.postsTitle}
+                id={al.postsId}
+                src={al.postsPhoto}
+                writer={al.postsWriter}
+                title={al.postsTitle}
                 togglePost={togglePost}
               />
             );
