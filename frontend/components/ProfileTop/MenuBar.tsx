@@ -9,16 +9,9 @@ const MyLikes = styled.div``;
 
 const MyCollections = styled.div``;
 
-const MenuBar = ({
-  profileMyposts,
-  profileLikes,
-  profileCollections,
-  setTabState,
-  tabState,
-}) => {
-  const postString = "게시물 " + profileMyposts;
-  const likesString = "좋아요 " + profileLikes;
-  const collectionsString = "컬렉션 " + profileCollections;
+const MenuBar = ({ writtenPostsCnt, likePostsCnt, setTabState, tabState }) => {
+  const postString = "게시물 " + writtenPostsCnt;
+  const likesString = "좋아요 " + likePostsCnt;
 
   return (
     <>
@@ -72,7 +65,7 @@ const MenuBar = ({
           }}
         />
       </MyLikes>
-      <MyCollections>
+      {/* <MyCollections>
         <Button
           btnWidth="auto"
           btnHeight="70px"
@@ -96,7 +89,7 @@ const MenuBar = ({
             setTabState(2);
           }}
         />
-      </MyCollections>
+      </MyCollections> */}
     </>
   );
 };

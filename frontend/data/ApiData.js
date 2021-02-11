@@ -70,7 +70,7 @@ export const SubmitPostData = {
   },
 };
 
-export const GetProfileData = {
+export const GetMyInfoData = {
   httpStatus: "OK",
   headers: null,
   data: {
@@ -82,7 +82,7 @@ export const GetProfileData = {
     accountBio:
       "대통령이 궐위된 때 또는 대통령 당선자가 사망하거나 판결 기타의 사유로 그 자격을 상실한 때에는 60일 이내에 후임자를 선거한다. 국회의원의 선거구와 비례대표제 기타 선거에 관한 사항은 법률로 정한다.",
     accountPhoto: "",
-    following: [{ id: 34, name: "회원체크", nickname: "회원쳌" }],
+    following: [{ id: 34, name: "회원쳌", nickname: "회원체크" }],
     follower: [],
     accountFollowingCnt: 1,
     accountFollowerCnt: 0,
@@ -97,6 +97,7 @@ export const GetProfileData = {
     ],
     writtenPostsCnt: 1,
     likePosts: [],
+    likePostsCnt: 0,
     tags: [{ tagId: 2 }, { tagId: 4 }, { tagId: 9 }, { tagId: 7 }],
   },
 };
@@ -161,8 +162,8 @@ export const SearchLoginUserData = {
     accountBio:
       "대통령이 궐위된 때 또는 대통령 당선자가 사망하거나 판결 기타의 사유로 그 자격을 상실한 때에는 60일 이내에 후임자를 선거한다. 국회의원의 선거구와 비례대표제 기타 선거에 관한 사항은 법률로 정한다.",
     accountPhoto: "",
-    following: [{ id: 34, name: "회원쳌", nickname: "회원체크" }],
-    follower: [],
+    following: [],
+    follower: [{ id: 34, name: "회원쳌", nickname: "회원체크" }],
     accountFollowingCnt: 0,
     accountFollowerCnt: 1,
     writtenPosts: [

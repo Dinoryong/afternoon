@@ -3,7 +3,6 @@ import styled from "@emotion/styled";
 import Button from "../Button";
 import color from "../../styles/theme";
 import ProfileTagBox from "../../components/ProfileTagBox";
-import FollowingList from "../../components/Follow/FollowingList"
 
 const TitleBox = styled.div`
   display: flex;
@@ -12,7 +11,7 @@ const TitleBox = styled.div`
   align-items: center;
 `;
 
-const ProfileTitle = styled.div`
+const UserTitle = styled.div`
   font-size: 45px;
   font-weight: bold;
 `;
@@ -28,12 +27,12 @@ const EditBox = styled.div`
 const FollowBox = styled.div`
   width: 50%;
   display: flex;
-  /* margin-top: 15px; */
+  margin-top: 15px;
   margin-bottom: 35px;
   justify-content: space-between;
 `;
 
-const ProfileFollowing = styled.div`
+const UserFollowing = styled.div`
   font-size: 15px;
   font-weight: 100px;
   color: ${color.black.default};
@@ -41,7 +40,7 @@ const ProfileFollowing = styled.div`
   padding: 4px;
 `;
 
-const ProfileFollower = styled.div`
+const UserFollower = styled.div`
   font-size: 15px;
   font-weight: 100px;
   color: ${color.black.default};
@@ -49,7 +48,7 @@ const ProfileFollower = styled.div`
   padding: 4px;
 `;
 
-const ProfilePost = styled.div`
+const UserPost = styled.div`
   font-size: 15px;
   font-weight: 100px;
   color: ${color.black.default};
@@ -61,10 +60,11 @@ const TextBox = styled.div`
   margin-bottom: 50px;
 `;
 
-const ProfileText = styled.div`
+const UserText = styled.div`
   width: 100%;
   font-size: 15px;
   font-weight: 100px;
+  margin-left: 6px;
 `;
 
 const TagDiv = styled.div`
@@ -74,46 +74,21 @@ const TagDiv = styled.div`
   flex-wrap: wrap;
 `;
 
-const TagTitle = styled.div`
-  width: 100%;
-  font-size: 15px;
-  font-weight: "600";
-  margin-bottom: 10px;
-`;
-
-const TagList = styled.div`
-  display: flex;
-  width: 100%;
-`;
-
 const TopRight = ({
-  profileName,
-  profileBox,
-  profileFollowing,
-  profileFollower,
-  profileMyposts,
-  profileTags,
-  windowHeight,
-  setEditState,
-  setFollowingState,
-  // setFollowerState,
+  accountNickname,
+  accountBio,
+  followingCnt,
+  followerCnt,
+  postsCnt,
+  tagList,
+  toggleEdit,
+  setUserListState,
+  toggleFollow,
 }) => {
-  const editProfile = () => {
-    setEditState(true);
-  };
-
-  const viewFollowing = () => {
-    setFollowingState(true)
-  };
-
-  // const viewFollower = () => {
-  //   setFollowerState(true)
-  // };
-
   return (
     <>
       <TitleBox>
-        <ProfileTitle>{profileName}</ProfileTitle>
+        <UserTitle>{accountNickname}</UserTitle>
         <EditBox>
           <Button
             btnBgColor="transparent"
@@ -131,64 +106,40 @@ const TopRight = ({
             btnIconMargin={"2px 0px 0px 12px"}
             btnUseOpacity={true}
             btnSetOpacity={"0.4"}
-            btnOnClick={editProfile}
+            btnOnClick={toggleEdit}
           />
         </EditBox>
       </TitleBox>
       <FollowBox>
-        <ProfileFollowing>
-          <Button
-            btnBgColor="transparent"
-            btnWidth="70px"
-            btnHeight="20px"
-            btnText={profileFollowing}
-            btnFontSize="15px"
-            btnTextColor={color.black.default}
-            btnBorderColor="transparent"
-            // btnUseIcon={true}
-            // btnIconSrc={"/assets/icons/edit.png"}
-            // btnIconHeight={"15px"}
-            // btnIconWidth={"15px"}
-            // btnIconMargin={"0px"}
-            btnUseOpacity={true}
-            btnSetOpacity={"0.4"}
-            btnOnClick={viewFollowing}
-          />
-        </ProfileFollowing>
-        <ProfileFollower>
-          <Button
-            btnBgColor="transparent"
-            btnWidth="70px"
-            btnHeight="20px"
-            btnText= {profileFollower}
-            btnFontSize="15px"
-            btnTextColor={color.black.default}
-            btnBorderColor="transparent"
-            // btnHoverBorderColor={"transparent"}
-            // btnUseIcon={true}
-            // btnIconSrc={"/assets/icons/edit.png"}
-            // btnIconHeight={"15px"}
-            // btnIconWidth={"15px"}
-            // btnIconMargin={"2px 0px 0px 12px"}
-            btnUseOpacity={true}
-            btnSetOpacity={"0.4"}
-            // btnOnClick={viewFollower}
-          />
-        </ProfileFollower>
-        <ProfilePost>
-          게시물 {profileMyposts}
-        </ProfilePost>
+        <UserFollowing
+          onClick={() => {
+            setUserListState(1);
+            toggleFollow();
+          }}
+        >
+          팔로잉 {followingCnt}
+        </UserFollowing>
+        <UserFollower
+          onClick={() => {
+            setUserListState(2);
+            toggleFollow();
+          }}
+        >
+          팔로워 {followerCnt}
+        </UserFollower>
+        <UserPost>게시물 {postsCnt}</UserPost>
       </FollowBox>
       <TextBox>
-        <ProfileText>{profileBox}</ProfileText>
+        <UserText>{accountBio}</UserText>
       </TextBox>
       <TagDiv>
-        {profileTags &&
-          profileTags.map((t, index) => {
+        {tagList &&
+          tagList.length > 0 &&
+          tagList.map((t, index) => {
             return (
               <ProfileTagBox
                 key={index}
-                tagId={t}
+                tagId={t.tagId}
                 tagMargin="0px 8px 8px 0px"
                 tagUseDelete={false}
               />

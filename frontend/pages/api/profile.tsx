@@ -1,6 +1,6 @@
 import axios from "axios";
-import FeedRes from "../../data/FeedRes";
 import secrets from "../../secrets";
+import { GetMyInfoData } from "../../data/ApiData";
 
 const API_ROOT_URI = secrets.API_ROOT_URI;
 const VIA_API_DEV = secrets.VIA_API_DEV;
@@ -9,40 +9,81 @@ const timeout = (ms) => {
   return new Promise((resolve) => setTimeout(resolve, ms));
 };
 
-export const GET_MY_INFO = async () => {
-  const authToken = window.localStorage.getItem("authToken");
+export const GET_MY_INFO = async (config) => {
+  console.log("GET_MY_INFO : REQUEST");
+
+  let status: number = 0;
+  let data: {
+    accountId: number;
+    accountName: string;
+    accountEmail: string;
+    accountNickname: string;
+    accountCreateDate: string;
+    accountBio: string;
+    accountPhoto: string;
+    following?: Array<{ id: number; name: string; nickname: string }>;
+    follower?: Array<{ id: number; name: string; nickname: string }>;
+    accountFollowingCnt: number;
+    accountFollowerCnt: number;
+    writtenPosts?: Array<{
+      postsId: number;
+      postsWriter: string;
+      postsTitle: string;
+      postsPhoto: string;
+    }>;
+    writtenPostsCnt: number;
+    likePosts?: Array<{
+      postsId: number;
+      postsWriter: string;
+      postsTitle: string;
+      postsPhoto: string;
+    }>;
+    likePostsCnt: number;
+    tags?: Array<{ tagId: number }>;
+  } = {
+    accountId: 0,
+    accountName: "",
+    accountNickname: "",
+    accountEmail: "",
+    accountCreateDate: "",
+    accountBio: "",
+    accountPhoto: "",
+    following: [],
+    follower: [],
+    accountFollowingCnt: 0,
+    accountFollowerCnt: 0,
+    writtenPosts: [],
+    writtenPostsCnt: 0,
+    likePosts: [],
+    likePostsCnt: 0,
+    tags: [],
+  };
 
   if (!VIA_API_DEV) {
+    console.log("GET_MY_INFO : LOCAL");
+
     try {
-      return {
-        status: 200,
-        data: FeedRes.FeedResDummySmall.data,
-      };
+      await timeout(1000);
+      // throw new Error();
+      status = 200;
+      data = GetMyInfoData.data;
     } catch (error) {
       console.log(error);
     }
-    return { status: false };
   } else {
-    let status;
-    let data;
+    console.log("GET_MY_INFO : DEV");
 
     try {
-      await axios
-        .get(API_ROOT_URI + "/api/accounts", {
-          headers: { Authorization: `Bearer ${authToken}` },
-        })
-        .then((res) => {
-          console.log(res);
-          data = res.data.data;
-          status = res.status;
-        });
-
-      return { status, data };
+      await axios.get(API_ROOT_URI + "/api/accounts", config).then((res) => {
+        status = res.status;
+        data = res.data.data;
+      });
     } catch (error) {
       console.log(error);
     }
-    return { status: false };
   }
+
+  return { status, data };
 };
 
 export const ADD_TAGS = async (req, config) => {

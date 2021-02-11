@@ -97,13 +97,13 @@ const TopRight = ({
   accountId,
   accountNickname,
   accountBio,
-  followingList,
-  followerList,
   followingCnt,
   followerCnt,
   postsCnt,
   tagList,
   followState,
+  setUserListState,
+  toggleFollow,
 }) => {
   const { loginState, toggle } = useStore();
 
@@ -169,8 +169,22 @@ const TopRight = ({
         </EditBox>
       </TitleBox>
       <FollowBox>
-        <UserFollowing>팔로잉 {followingCnt}</UserFollowing>
-        <UserFollower>팔로워 {followerCnt}</UserFollower>
+        <UserFollowing
+          onClick={() => {
+            setUserListState(1);
+            toggleFollow();
+          }}
+        >
+          팔로잉 {followingCnt}
+        </UserFollowing>
+        <UserFollower
+          onClick={() => {
+            setUserListState(2);
+            toggleFollow();
+          }}
+        >
+          팔로워 {followerCnt}
+        </UserFollower>
         <UserPost>게시물 {postsCnt}</UserPost>
       </FollowBox>
       <TextBox>

@@ -1,7 +1,9 @@
-import React from "react";
+import React, { useState } from "react";
 import styled from "@emotion/styled";
 import TopLeft from "../UserCurating/TopLeft";
 import TopRight from "../UserCurating/TopRight";
+import FollowList from "../FollowList";
+import { RootStateOrAny, useDispatch, useSelector } from "react-redux";
 
 const Container = styled.div`
   display: flex;
@@ -18,7 +20,22 @@ const Wrapper = styled.div`
   margin-right: auto;
   margin-left: 10px;
 `;
+const useStore = () => {
+  const followShown = useSelector(
+    (state: RootStateOrAny) => state.user.followShown
+  );
 
+  const dispatch = useDispatch();
+
+  const toggleFollow = async () => {
+    dispatch({ type: "TOGGLE_FOLLOW" });
+  };
+
+  return {
+    toggleFollow,
+    followShown,
+  };
+};
 const index = ({ searchData }) => {
   const {
     accountPhoto,
@@ -33,25 +50,37 @@ const index = ({ searchData }) => {
     tags,
     followState,
   } = searchData;
+  const { toggleFollow, followShown } = useStore();
+
+  const [userListState, setUserListState] = useState(0);
 
   return (
-    <Container>
-      <TopLeft accountPhoto={accountPhoto}></TopLeft>
-      <Wrapper>
-        <TopRight
-          accountId={accountId}
-          accountNickname={accountNickname}
-          accountBio={accountBio}
-          followingList={following}
-          followerList={follower}
-          followingCnt={accountFollowingCnt}
-          followerCnt={accountFollowerCnt}
-          postsCnt={writtenPostsCnt}
-          tagList={tags}
-          followState={followState}
-        ></TopRight>
-      </Wrapper>
-    </Container>
+    <>
+      {followShown && userListState !== 0 && (
+        <FollowList
+          toggleFollow={toggleFollow}
+          userListState={userListState}
+          userList={userListState === 1 ? following : follower}
+        ></FollowList>
+      )}
+      <Container>
+        <TopLeft accountPhoto={accountPhoto}></TopLeft>
+        <Wrapper>
+          <TopRight
+            accountId={accountId}
+            accountNickname={accountNickname}
+            accountBio={accountBio}
+            followingCnt={accountFollowingCnt}
+            followerCnt={accountFollowerCnt}
+            postsCnt={writtenPostsCnt}
+            tagList={tags}
+            followState={followState}
+            setUserListState={setUserListState}
+            toggleFollow={toggleFollow}
+          ></TopRight>
+        </Wrapper>
+      </Container>
+    </>
   );
 };
 

@@ -1,4 +1,5 @@
 import styled from "@emotion/styled";
+import { useRouter } from "next/router";
 import React, { useState } from "react";
 import TagList from "../../data/TagList";
 import color from "../../styles/theme";
@@ -31,21 +32,16 @@ const DeleteBox = styled.div`
   color: ${color.black.default};
 `;
 
-const index = ({
-  tagId = 1,
-  tagMargin = "0px",
-  tagOnClick = () => {
-    console.log(tagId);
-  },
-  tagUseDelete = true,
-}) => {
+const index = ({ tagId = 1, tagMargin = "0px", tagUseDelete = true }) => {
   const [mouseOver, setMouseOver] = useState(false);
+
+  const router = useRouter();
 
   const tagInfo = TagList[tagId - 1];
 
   return (
     <Container
-      onClick={tagOnClick}
+      onClick={() => router.push(`/search/${tagInfo.tagTitle}`)}
       onMouseOver={() => {
         if (tagUseDelete) setMouseOver(true);
       }}

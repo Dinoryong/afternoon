@@ -83,9 +83,6 @@ const index = () => {
     setIsTag(0);
   }, [routerQuery]);
 
-  // 로그인 중인지? => loginState
-  // 검색어가 태그인지?
-
   useEffect(() => {
     const requestSearch = async () => {
       const getResult = async () => {

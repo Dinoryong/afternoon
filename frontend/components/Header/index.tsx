@@ -51,17 +51,17 @@ const CloseBg = styled.div`
 
 const useStore = () => {
   const isShown = useSelector((state: RootStateOrAny) => state.login.isShown);
-  const loginState = useSelector(
-    (state: RootStateOrAny) => state.login.loginState
-  );
-  const autoLogin = useSelector(
-    (state: RootStateOrAny) => state.login.autoLogin
-  );
   const postShown = useSelector(
     (state: RootStateOrAny) => state.post.postShown
   );
   const submitShown = useSelector(
     (state: RootStateOrAny) => state.submit.submitShown
+  );
+  const editShown = useSelector(
+    (state: RootStateOrAny) => state.user.editShown
+  );
+  const followShown = useSelector(
+    (state: RootStateOrAny) => state.user.followShown
   );
 
   const dispatch = useDispatch();
@@ -72,27 +72,23 @@ const useStore = () => {
   const togglePost = async () => {
     dispatch({ type: "TOGGLE_POST" });
   };
-  const autoLoginCheck = async () => {
-    dispatch({ type: "AUTO_LOGIN_CHECK" });
-  };
-  const loginStateTrue = async () => {
-    dispatch({ type: "LOGIN_STATE_TRUE" });
-  };
-  const loginStateFalse = async () => {
-    dispatch({ type: "LOGIN_STATE_FALSE" });
-  };
   const toggleSubmit = async () => {
     dispatch({ type: "TOGGLE_SUBMIT" });
   };
+  const toggleEdit = async () => {
+    dispatch({ type: "TOGGLE_EDIT" });
+  };
+  const toggleFollow = async () => {
+    dispatch({ type: "TOGGLE_FOLLOW" });
+  };
 
   return {
-    autoLoginCheck,
     toggleSubmit,
+    toggleEdit,
+    toggleFollow,
     submitShown,
-    loginState,
-    loginStateTrue,
-    loginStateFalse,
-    autoLogin,
+    editShown,
+    followShown,
     isShown,
     toggle,
     togglePost,
@@ -104,14 +100,13 @@ const index = () => {
   const router = useRouter();
   const routerPath = router.pathname;
   const {
-    autoLoginCheck,
     toggleSubmit,
+    toggleEdit,
+    toggleFollow,
     submitShown,
-    loginStateTrue,
-    loginStateFalse,
-    loginState,
+    editShown,
+    followShown,
     isShown,
-    autoLogin,
     toggle,
     togglePost,
     postShown,
@@ -124,8 +119,6 @@ const index = () => {
   const [windowHeight, setWindowHeight] = useState<number>();
 
   useEffect(() => {
-    console.log(loginState);
-
     setWindowWidth(window.innerWidth);
     setWindowHeight(window.innerHeight);
 
@@ -172,10 +165,6 @@ const index = () => {
     }
   };
 
-  const onClickPostBg = () => {
-    togglePost();
-  };
-
   return (
     <>
       {inputFocus && (
@@ -187,9 +176,19 @@ const index = () => {
         />
       )}
       <Container style={containerStyle}>
+        {editShown && (
+          <ModalFrame style={{ height: windowHeight }}>
+            <CloseBg onClick={toggleEdit} />
+          </ModalFrame>
+        )}
+        {followShown && (
+          <ModalFrame style={{ height: windowHeight }}>
+            <CloseBg onClick={toggleFollow} />
+          </ModalFrame>
+        )}
         {postShown && (
           <ModalFrame style={{ height: windowHeight }}>
-            <CloseBg onClick={onClickPostBg} />
+            <CloseBg onClick={togglePost} />
             <PostDetail windowWidth={windowWidth} windowHeight={windowHeight} />
           </ModalFrame>
         )}
