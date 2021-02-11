@@ -86,16 +86,40 @@ const postReducer = (state = initialState.post, action) => {
   }
 };
 
+const userInitialState = {
+  editShown: false,
+  followShown: false,
+};
+
+const userReducer = (state = initialState.user, action) => {
+  switch (action.type) {
+    case "TOGGLE_EDIT":
+      return {
+        ...state,
+        editShown: !state.editShown,
+      };
+    case "TOGGLE_FOLLOW":
+      return {
+        ...state,
+        followShown: !state.followShown,
+      };
+    default:
+      return state;
+  }
+};
+
 const initialState = {
   login: loginInitialState,
   submit: submitInitialState,
   post: postInitialState,
+  user: userInitialState,
 };
 
 const rootReducer = combineReducers({
   login: loginReducer,
   submit: submitReducer,
   post: postReducer,
+  user: userReducer,
 });
 
 function initStore(preloadedState = initialState) {

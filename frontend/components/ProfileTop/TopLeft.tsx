@@ -19,13 +19,14 @@ const ImgBox = styled.div`
   margin-top: 17px;
 `;
 
-const TopLeft = ({ profileImg }) => {
+const TopLeft = ({ accountPhoto = "/assets/logos/pinset_logo_black.png" }) => {
+  if (accountPhoto === "") accountPhoto = "/assets/logos/pinset_logo_black.png";
   return (
     <Container>
       <ImgBox>
         <Image
           className="next_border_image circle"
-          src={profileImg}
+          src={accountPhoto}
           layout="fill"
           objectFit="cover"
         ></Image>

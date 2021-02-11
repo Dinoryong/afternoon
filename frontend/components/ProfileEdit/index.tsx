@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState } from "react";
 import styled from "@emotion/styled";
 import Button from "../Button";
 import color from "../../styles/theme";
@@ -9,7 +9,7 @@ const Container = styled.div`
   height: 600px;
   display: flex;
   position: absolute;
-  z-index: 3;
+  z-index: 10;
   flex-direction: column;
   align-items: center;
   justify-content: center;
@@ -20,6 +20,7 @@ const Container = styled.div`
   padding-right: 35px;
   border-radius: 10px;
   font-size: 15px;
+  top: 122px;
 `;
 
 const EditBox = styled.div`
@@ -142,16 +143,24 @@ const EditButton = styled.div`
   margin-bottom: 10px;
 `;
 
-const EditModal = ({ setEditState }) => {
+const index = ({
+  toggleEdit,
+  accountPhoto = "/assets/logos/pinset_logo_black.png",
+  accountName,
+  accountNickname,
+  accountBio,
+}) => {
+  const [nameInput, setNameInput] = useState(accountName);
+  const [nicknameInput, setNicknameInput] = useState(accountNickname);
+  const [bioInput, setBioInput] = useState(accountBio);
+
+  if (accountPhoto === "") accountPhoto = "/assets/logos/pinset_logo_black.png";
+
   return (
     <Container>
       <EditBox>
         <EditTitle>프로필 수정</EditTitle>
-        <Xbutton
-          onClick={() => {
-            setEditState(false);
-          }}
-        >
+        <Xbutton onClick={toggleEdit}>
           <Image
             src="/assets/icons/x_mark.png"
             layout="fill"
@@ -162,19 +171,26 @@ const EditModal = ({ setEditState }) => {
       <ImgBox>
         <Image
           className="next_border_image circle"
-          src="/assets/images/sample_profile.png"
+          src={accountPhoto}
           layout="fill"
           objectFit="cover"
         ></Image>
       </ImgBox>
       <NameTitle>이름</NameTitle>
-      <InputName></InputName>
+      <InputName
+        value={nameInput}
+        onChange={(e) => setNameInput(e.target.value)}
+      ></InputName>
       <NicknameTitle>닉네임</NicknameTitle>
-      <InputNickname></InputNickname>
+      <InputNickname
+        value={nicknameInput}
+        onChange={(e) => setNicknameInput(e.target.value)}
+      ></InputNickname>
       <BioTitle>소개글</BioTitle>
       <InputBio
         rows={5}
-        value="가지에 풀밭에 심장의 인간의 더운지라 있을 되려니와, 것이다. 있으며, 황금시대를 불어 바이며, 관현악이며, 뿐이다. 낙원을 보내는 생생하며, 봄날의 때에, 돋고, 위하여 구하지 힘차게 힘있다. 것이 소담스러운 투명하되 않는 철환하였는가? 실로 바이며, 인생의 속잎나고, 이 꽃이 우리 있으랴? 우리는 낙원을 용감하고 것은 꽃이 못할 평화스러운 몸이 너의 것이다. 뜨거운지라, 우리 바이며, 인간에 끓는 황금시대를 예수는 얼마나 것이다. 싶이 얼음 것이 인간의 이것이다. 얼마나 넣는 목숨을 산야에 꾸며 보이는 없으면, 불어 품고 부패뿐이다. 우리 피가 이상, 소담스러운 스며들어 오직 생의 길을 약동하다. 것이다.보라, 위하여서 인간에 우리 열매를 것이 만물은 바로 그리하였는가?"
+        value={bioInput}
+        onChange={(e) => setBioInput(e.target.value)}
       ></InputBio>
       <EditButton>
         <Button
@@ -194,4 +210,4 @@ const EditModal = ({ setEditState }) => {
   );
 };
 
-export default EditModal;
+export default index;
