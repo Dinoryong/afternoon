@@ -6,7 +6,7 @@ import UploadButtonBox from "./UploadButtonBox";
 import UploadPreviewBox from "./UploadPreviewBox";
 import firebase from "firebase";
 import { keyframes } from "@emotion/react";
-import { useSelector } from "react-redux";
+import { RootStateOrAny, useDispatch, useSelector } from "react-redux";
 
 const Container = styled.div`
   display: flex;
@@ -140,11 +140,20 @@ const makeid = (length) => {
   return result;
 };
 
-const useCounter = () => {
-  const submitShown = useSelector((state) => state.submit.submitShown);
+const useStore = () => {
+  const submitShown = useSelector(
+    (state: RootStateOrAny) => state.submit.submitShown
+  );
+
+  const dispatch = useDispatch();
+
+  const toggleSubmit = async () => {
+    dispatch({ type: "TOGGLE_SUBMIT" });
+  };
 
   return {
     submitShown,
+    toggleSubmit,
   };
 };
 
@@ -162,7 +171,7 @@ const PhotoUpload = ({
 }) => {
   const storage = firebase.storage();
 
-  const { submitShown } = useCounter();
+  const { submitShown, toggleSubmit } = useStore();
   const [blockNext, setBlockNext] = useState(
     imageAsFile1.url === "" ? true : false
   );
@@ -208,7 +217,7 @@ const PhotoUpload = ({
   ]);
 
   const uploadToFirebase = (imageAsFile, setImageAsFile) => {
-    console.log("start of upload");
+    console.log("FIREBASE : UPLOAD");
     // async magic goes here...
     const { image } = imageAsFile;
     const imageId = makeid(16);
@@ -348,11 +357,16 @@ const PhotoUpload = ({
         <ButtonDiv>
           <Button
             btnText={"취소"}
-            btnOnClick={(): void => {
-              console.log(imageAsFile1);
-              console.log(imageAsFile2);
-              console.log(imageAsFile3);
-              console.log(imageAsFile4);
+            btnOnClick={() => {
+              if (
+                confirm(
+                  "PINSET : 사진 등록을 취소하시겠습니까?\n확인을 누르시면 현재까지 작업이 사라집니다."
+                )
+              ) {
+                toggleSubmit();
+              } else {
+                return;
+              }
             }}
           ></Button>
           <Button

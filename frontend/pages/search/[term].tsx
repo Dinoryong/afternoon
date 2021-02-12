@@ -59,8 +59,6 @@ const index = () => {
 
   const { loginState } = useCounter();
 
-  console.log(loginState);
-
   const isTagCheck = async () => {
     if (TagList.findIndex((t) => t.tagTitle === routerQuery) >= 0) {
       setIsTag(1);

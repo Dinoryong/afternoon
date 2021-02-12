@@ -1,37 +1,63 @@
 import axios from "axios";
 import secrets from "../../secrets";
-import FeedRes from "../../data/FeedRes";
+import {
+  FeedListData,
+  FeedNullData,
+  GetOnePostData,
+  SubmitPostData,
+} from "../../data/ApiData";
 
 const API_ROOT_URI = secrets.API_ROOT_URI;
 const VIA_API_DEV = secrets.VIA_API_DEV;
 
-export const SUBMIT_POST = async (req) => {
+const timeout = (ms) => {
+  return new Promise((resolve) => setTimeout(resolve, ms));
+};
+
+export const SUBMIT_POST = async (req, config) => {
+  console.log("SUBMIT_POST : REQUEST");
+  console.log(req);
+
+  let status: number = 0;
+  let data: {
+    postsTitle?: String;
+    postsContents?: String;
+    postsPhotos?: Array<string>;
+    tags?: Array<{ tagId: number }>;
+    pins?: Array<{
+      pinName?: string;
+      pinLocY?: number;
+      pinLocX?: number;
+      pinLink?: string;
+      pinNum?: number;
+      pinApiLink?: string;
+      pinApiClass?: string;
+    }>;
+  } = {
+    postsTitle: "",
+    postsContents: "",
+    postsPhotos: [],
+    tags: [],
+    pins: [],
+  };
+
   if (!VIA_API_DEV) {
+    console.log("SUBMIT_POST : REQUEST");
     try {
-      setTimeout(() => {}, 3000);
-      return { status: 201, data: {} };
+      await timeout(1000);
+      // throw new Error();
+      return { status: 201, data: SubmitPostData.data };
     } catch (error) {
       console.log(error);
     }
-    return { status: false };
   } else {
-    // API 요청 시 실행
-    let data = {};
-    let status = 0;
+    console.log("SUBMIT_POST : REQUEST");
 
     try {
-      await axios
-        .post(`${API_ROOT_URI}/api/posts`, req, {
-          headers: {
-            Authorization: `Bearer ${window.localStorage.getItem("authToken")}`,
-          },
-        })
-        .then((res) => {
-          console.log(res);
-          data = res.data;
-          status = res.status;
-        });
-      return { status, data };
+      await axios.post(`${API_ROOT_URI}/api/posts`, req, config).then((res) => {
+        data = res.data;
+        status = res.status;
+      });
     } catch (error) {
       console.log(error);
     }
@@ -40,76 +66,97 @@ export const SUBMIT_POST = async (req) => {
   }
 };
 
-export const GET_FEED = async () => {
+export const GET_FEED = async (config) => {
+  console.log("GET_FEED : REQUEST");
+
+  let status: number = 0;
+  let data: Array<{
+    postsId: number;
+    postsWriter: string;
+    postsTitle: string;
+    postsPhoto: string;
+  }> = [];
+
   if (!VIA_API_DEV) {
+    console.log("GET_FEED : LOCAL");
+
     try {
-      return {
-        status: 200,
-        data: FeedRes.FeedResDummy,
-      };
+      await timeout(1000);
+      // throw new Error();
+      status = 200;
+      data = FeedListData.data;
+      // data = FeedNullData.data;
     } catch (error) {
       console.log(error);
     }
-    return { status: false };
   } else {
-    // API 요청 시 실행
-    let data;
-    let status;
+    console.log("GET_FEED : DEV");
 
     try {
-      await axios
-        .get(`${API_ROOT_URI}/api/feed`, {
-          headers: {
-            Authorization: `Bearer ${window.localStorage.getItem("authToken")}`,
-          },
-        })
-        .then((res) => {
-          console.log(res);
-          data = res.data.data;
-          status = res.status;
-        });
-      return { status, data };
+      await axios.get(`${API_ROOT_URI}/api/feed`, config).then((res) => {
+        data = res.data.data;
+        status = res.status;
+      });
     } catch (error) {
       console.log(error);
     }
-
-    return { status, data };
   }
+
+  return { status, data };
 };
 
-export const GET_POST_DETAIL = async (req) => {
+export const GET_ONE_POST = async (req) => {
+  console.log("GET_ONE_POST : REQUEST => " + req);
+
+  let status: number = 0;
+  let data: {
+    postsTitle: String;
+    postsContents: String;
+    postsPhotos: Array<string>;
+    tags: Array<{ tagId: number }>;
+    pins: Array<{
+      pinName: string;
+      pinLocY: number;
+      pinLocX: number;
+      pinLink: string;
+      pinNum: number;
+      pinApiLink: string;
+      pinApiClass: string;
+    }>;
+  } = {
+    postsTitle: "",
+    postsContents: "",
+    postsPhotos: [],
+    tags: [],
+    pins: [],
+  };
+
   if (!VIA_API_DEV) {
+    console.log("GET_ONE_POST : LOCAL");
+
     try {
-      return {
-        status: 200,
-        data: FeedRes.FeedOneRes.data,
-      };
+      await timeout(1000);
+      // throw new Error();
+      status = 200;
+      data = GetOnePostData.data;
     } catch (error) {
       console.log(error);
     }
-    return { status: false };
   } else {
-    // API 요청 시 실행
+    console.log("GET_ONE_POST : DEV");
+
     let data;
     let status;
 
     try {
-      await axios
-        .get(`${API_ROOT_URI}/api/posts/${req}`, {
-          headers: {
-            Authorization: `Bearer ${window.localStorage.getItem("authToken")}`,
-          },
-        })
-        .then((res) => {
-          console.log(res);
-          data = res.data.data;
-          status = res.status;
-        });
-      return { status, data };
+      await axios.get(`${API_ROOT_URI}/api/posts/${req}`).then((res) => {
+        data = res.data.data;
+        status = res.status;
+      });
     } catch (error) {
       console.log(error);
     }
-
-    return { status, data };
   }
+
+  return { status, data };
 };

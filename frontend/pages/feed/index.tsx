@@ -35,26 +35,29 @@ const index = () => {
     }
   );
 
-  useEffect(function mount() {
-    const getFeedRequest = async () => {
-      const result = await GET_FEED();
+  useEffect(() => {
+    const RequestGetFeed = async () => {
+      const getFeedConfig = {
+        headers: {
+          Authorization: `Bearer ${window.localStorage.getItem("authToken")}`,
+        },
+      };
+
+      const result = await GET_FEED(getFeedConfig);
+      console.log(result);
 
       if (result.status === 200) {
-        // data.data 로 날아오는거 체크해보기
-        // console.log(result.data);
         if (result.data && result.data.length > 0) {
-          console.log("피드내용 있음");
-          setFeedApiState(true);
           setPostData(result.data);
         } else {
           router.push("/prefer");
-          console.log("피드내용 없음");
         }
       }
     };
 
     if (!feedApiState) {
-      getFeedRequest();
+      RequestGetFeed();
+      setFeedApiState(true);
     }
   });
 
