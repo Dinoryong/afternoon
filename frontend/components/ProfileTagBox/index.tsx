@@ -26,15 +26,7 @@ const TextBox = styled.div`
   transition: all 0.3s;
 `;
 
-const DeleteBox = styled.div`
-  position: absolute;
-  transition: all 0.3s;
-  color: ${color.black.default};
-`;
-
-const index = ({ tagId = 1, tagMargin = "0px", tagUseDelete = true }) => {
-  const [mouseOver, setMouseOver] = useState(false);
-
+const index = ({ tagId = 1, tagMargin = "0px" }) => {
   const router = useRouter();
 
   const tagInfo = TagList[tagId - 1];
@@ -42,22 +34,13 @@ const index = ({ tagId = 1, tagMargin = "0px", tagUseDelete = true }) => {
   return (
     <Container
       onClick={() => router.push(`/search/${tagInfo.tagTitle}`)}
-      onMouseOver={() => {
-        if (tagUseDelete) setMouseOver(true);
-      }}
-      onMouseLeave={() => {
-        if (tagUseDelete) setMouseOver(false);
-      }}
       style={{
         // backgroundColor: mouseOver ? "white" : tagInfo.tagColor,
         margin: tagMargin,
         // borderColor: mouseOver ? color.black.default : tagInfo.tagColor,
       }}
     >
-      <TextBox style={mouseOver ? { opacity: 0 } : { opacity: 1 }}>
-        {tagInfo.tagTitle}
-      </TextBox>
-      <DeleteBox style={{ opacity: mouseOver ? 1 : 0 }}>태그삭제</DeleteBox>
+      <TextBox>{tagInfo.tagTitle}</TextBox>
     </Container>
   );
 };

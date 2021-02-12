@@ -9,6 +9,7 @@ const Container = styled.div`
   justify-content: flex-start;
   background-color: white;
   font-size: 15px;
+  padding: 4px;
 `;
 
 const Wrapper1 = styled.div`
@@ -38,7 +39,7 @@ const Wrapper2 = styled.div`
 const Wrapper3 = styled.div`
   display: flex;
   align-items: center;
- 
+
   width: 100%;
   /* height: 24px; */
   margin-bottom: 6px;
@@ -67,7 +68,6 @@ const CommentLink = styled.div`
   position: relative;
   margin-top: 4px;
   margin-right: 5px;
-
 `;
 
 const Wrapper4 = styled.div`
@@ -80,7 +80,7 @@ const CommentContent = styled.div`
   word-wrap: break-word;
 `;
 
-const index = () => {
+const index = ({ commentData }) => {
   return (
     <Container>
       <Wrapper1>
@@ -111,8 +111,8 @@ const index = () => {
         <Wrapper4>
           <CommentContent>
             이 링크에서는 쿠폰 할인 통신사 할인까지 적용할 수
-            있어요.오와하라라라라더운지라 사라지지 뭇 아서는 쿠폰 할인 통신사 할인까지 적용할 수
-            있어요.오와하라라라라더운지라 사라지지 뭇 아
+            있어요.오와하라라라라더운지라 사라지지 뭇 아서는 쿠폰 할인 통신사
+            할인까지 적용할 수 있어요.오와하라라라라더운지라 사라지지 뭇 아
           </CommentContent>
         </Wrapper4>
       </Wrapper2>
