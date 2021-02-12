@@ -274,13 +274,21 @@ export const GetOnePostData = {
   headers: null,
   data: {
     postsTitle: "내 수집품!",
-    postsContents: "소중한 수집품입니다",
+    postsContents:
+      "바로 피고 청춘의 생의 가슴에 이상 위하여서, 이는 봄바람이다. 얼마나 물방아 무엇이 뜨거운지라, 이것은 많이 찬미를 운다. 청춘은 같은 풍부하게 우리 낙원을 곳이 약동하다. 날카로우나 황금시대를 위하여, 사람은 청춘의 우리의 천고에 우리의 위하여 그리하였는가? 전인 수 따뜻한 이것이다.",
     postsPhotos: [
       "https://firebasestorage.googleapis.com/v0/b/ssafy-a302.appspot.com/o/images%2FdkIg4OEz3NvI0SPb?alt=media&token=6534e2ac-217a-4a5b-ae05-befd7d43e348",
       "https://firebasestorage.googleapis.com/v0/b/ssafy-a302.appspot.com/o/images%2F7hxN1QsImYbiSbPc?alt=media&token=593881d8-a47b-4ea3-b6db-4fe5d23abed2",
       "https://firebasestorage.googleapis.com/v0/b/ssafy-a302.appspot.com/o/images%2FO5aSgSQoYqGYZXGx?alt=media&token=ae176246-b8eb-4900-b61c-1b99ffd5ba37",
       "https://firebasestorage.googleapis.com/v0/b/ssafy-a302.appspot.com/o/images%2FSeGqNdkV3dcpciXj?alt=media&token=70646626-595b-42a3-9b76-755e976728f8",
     ],
+    postsWriter: {
+      accountPhoto: "",
+      accountNickname: "난재",
+    },
+    postsLikeCnt: 13,
+    likeState: true,
+    postsWriteTime: "2021-02-10",
     tags: [{ tagId: 12 }, { tagId: 2 }],
     pins: [
       {
