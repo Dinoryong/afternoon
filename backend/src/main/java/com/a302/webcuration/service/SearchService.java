@@ -71,6 +71,13 @@ public class SearchService {
                         .build();
                 postsWithOnePhotos.add(writtenPost);
             }
+            //정렬
+            Collections.sort(postsWithOnePhotos, new Comparator<PostsDto.PostsWithOnePhoto>() {
+                @Override
+                public int compare(PostsDto.PostsWithOnePhoto o1, PostsDto.PostsWithOnePhoto o2) {
+                    return (int)(o2.getPostsId()- o1.getPostsId());
+                }
+            });
 
             //로그인하고 태그검색시 자신이 관심태그로 설정해놨는지 여부 체크
             boolean tagState = false;

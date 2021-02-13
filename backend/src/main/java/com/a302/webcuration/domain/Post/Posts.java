@@ -55,6 +55,8 @@ public class Posts {
         account.getMyPosts().add(this);
     }
 
+
+
     @Override
     public String toString() {
         return "Posts{" +

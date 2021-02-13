@@ -26,7 +26,7 @@ public class AccountControllerTest extends BaseControllerTest {
 
     @Test
     public void Account_조회_성공() throws Exception {
-        String token = "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJzdWIiOiLroZzqt7jsnbjthqDtgbAiLCJleHAiOjE2MTMxMzI1NDUsImFjY291bnRJZCI6MjQsImFjY291bnRFbWFpbCI6ImRudGpyNDc3MkBuYXRlLmNvbSJ9.hgRt267I8KSFMMtft7YaV7Wr8NjFMe2KO-f590IHdOU";
+        String token = "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJzdWIiOiLroZzqt7jsnbjthqDtgbAiLCJleHAiOjE2MTM1NjcyMDksImFjY291bnRJZCI6MjQsImFjY291bnRFbWFpbCI6ImRuZ25nbjMwNDVAZ21haWwuY29tIn0.X0LgmJiC4gvwjuJ5MPdshlBcCF864N4Qntn6oEeQjCI";
 
         mockMvc.perform(get("/api/accounts")
                 .header("Authorization","Bearer "+token)

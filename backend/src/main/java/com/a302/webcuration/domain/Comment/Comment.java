@@ -18,16 +18,20 @@ public class Comment {
     private Long commentId;
 
     //accountId
-    private Long commentWriterId;
+    //private Long commentWriterId;
+    //작성자 사진, 작성자 닉네임
+    private String accountNickname="";
+    private String accountPhoto ="";
 
     @Builder.Default
     private String commentLink ="";
     @Builder.Default
     private String commentContent="";
 
-    public void addCommentWriterId(long id)
+    public void addCommentWriter(String accountNickname, String accountPhoto)
     {
-        this.commentWriterId=id;
+        this.accountNickname=accountNickname;
+        this.accountPhoto=accountPhoto;
     }
 
     public void saveWithCascadePosts(Posts post){

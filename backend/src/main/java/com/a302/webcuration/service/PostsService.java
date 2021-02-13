@@ -33,7 +33,6 @@ import java.io.*;
 import java.net.HttpURLConnection;
 import java.net.MalformedURLException;
 import java.net.URL;
-import java.net.URLEncoder;
 
 @Service
 @Transactional
@@ -78,7 +77,7 @@ public class PostsService {
                 pin.saveWithCascadePosts(posts);
             }
             Posts createdPosts=postsRepository.save(posts);
-            PostsDto.PostsResponse postsResponse = modelMapper.map(createdPosts,PostsDto.PostsResponse.class);
+            PostsDto.CreatePostsResponse postsResponse = modelMapper.map(createdPosts, PostsDto.CreatePostsResponse.class);
             return new BaseMessage(HttpStatus.CREATED,postsResponse);
         }
         catch (Exception e)
@@ -96,14 +95,56 @@ public class PostsService {
             return new BaseMessage( HttpStatus.BAD_REQUEST,resultMap);
         }
         logger.info("posts = " + posts);
-        PostsDto.PostsResponse postsResponse = modelMapper.map(posts,PostsDto.PostsResponse.class);
+        PostsDto.PostsResponse postsResponse = modelMapper.map(posts, PostsDto.PostsResponse.class);
+        logger.info("postsResponse = " + postsResponse);
+
         logger.info("postsResponse = " + postsResponse);
         return new BaseMessage(HttpStatus.OK,postsResponse);
 
     }
 
-    public void deletePosts(Long postsid) {
+    public BaseMessage retrievePosts(Long postsid,String token){
+        Map<String, Object> resultMap = new HashMap<>();
+        Account myAccount;
+        Long myId = jwtService.getAccountId(token);
+        myAccount = accountRepository.findAccountByAccountId(myId);
 
+        Posts posts=postsRepository.findPostsByPostsId(postsid);
+        if(posts==null){
+            resultMap.put("message","존재하지 않는 게시물입니다.");
+            return new BaseMessage( HttpStatus.BAD_REQUEST,resultMap);
+        }
+        logger.info("posts = " + posts);
+        PostsDto.PostsWithLoginResponse postsResponse = modelMapper.map(posts, PostsDto.PostsWithLoginResponse.class);
+        logger.info("postsResponse = " + postsResponse);
+        //좋아요 수
+        postsResponse.setPostsLikeCnt(posts.getLikeAccounts().size());
+        //좋아요 상태
+        for (Account likeAccount : posts.getLikeAccounts()){
+            if(likeAccount==myAccount){
+                postsResponse.setLikeState(true);
+            }
+        }
+        logger.info("after postsResponse = " + postsResponse);
+        // TODO: 2021-02-13 이 핀에 해당하는 코멘트들 주기
+
+        return new BaseMessage(HttpStatus.OK,postsResponse);
+    }
+
+    public BaseMessage deletePosts(Long postsid,String token) {
+        Map<String, Object> resultMap = new HashMap<>();
+        Long myId = jwtService.getAccountId(token);
+        Account postWriter = accountRepository.findAccountByAccountId(myId);
+        Posts posts=postsRepository.findPostsByPostsId(postsid);
+        if(posts==null){
+            resultMap.put("message","존재하지 않는 게시물입니다.");
+            return new BaseMessage( HttpStatus.BAD_REQUEST,resultMap);
+        }else if(posts.getPostWriter()!=postWriter){
+            resultMap.put("message","작성자 이외에는 글을 삭제할 수 없습니다.");
+            return new BaseMessage( HttpStatus.BAD_REQUEST,resultMap);
+        }
+        postsRepository.deleteById(postsid);
+        return new BaseMessage(HttpStatus.OK);
     }
 
     //Naver Search API
