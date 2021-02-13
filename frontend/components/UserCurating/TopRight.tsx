@@ -199,7 +199,6 @@ const TopRight = ({
                 key={index}
                 tagId={t.tagId}
                 tagMargin="0px 8px 8px 0px"
-                tagUseDelete={false}
               />
             );
           })}
