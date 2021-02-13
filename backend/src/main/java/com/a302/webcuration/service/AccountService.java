@@ -46,20 +46,43 @@ public class AccountService {
             logger.info("account = " + account.getAccountName());
             AccountDto.MyAccountProfile profile=profileMapping(account);
             //좋아요한 게시물 profile.set
+            List<PostsDto.PostsWithOnePhoto> likePosts=new ArrayList<>();
+            int likePostsCnt=account.getLikePosts().size();
+            for (int idx=0;idx<likePostsCnt;idx++){
+                Posts posts=account.getLikePosts().get(idx);
+                PostsDto.PostsWithOnePhoto likePost= PostsDto.PostsWithOnePhoto.builder()
+                        .postsId(posts.getPostsId())
+                        .postsWriter(posts.getPostWriter().getAccountName())
+                        .postsTitle(posts.getPostsTitle())
+                        .postsPhoto(posts.getPostsPhotos().get(0))
+                        .build();
+                likePosts.add(likePost);
+            }
+            //정렬
+            Collections.sort(likePosts, new Comparator<PostsDto.PostsWithOnePhoto>() {
+                @Override
+                public int compare(PostsDto.PostsWithOnePhoto o1, PostsDto.PostsWithOnePhoto o2) {
+                    return (int)(o2.getPostsId()- o1.getPostsId());
+                }
+            });
 
+            profile.setLikesPosts(likePosts);
+            profile.setLikesPostsCnt(likePostsCnt);
             return  new BaseMessage(HttpStatus.OK, profile);
 
         }catch (Exception e)
         {
             resultMap.put("errors",e);
+            logger.info("errors : ",e);
             return new BaseMessage(HttpStatus.BAD_REQUEST,resultMap);
         }
     }
 
     AccountDto.MyAccountProfile profileMapping(Account account) throws Exception{
         try {
+            logger.info("test1 ");
             AccountDto.MyAccountProfile profile = modelMapper.map(account, AccountDto.MyAccountProfile.class);
-
+            logger.info("test2 ");
             //팔로잉, 팔로워
             List<AccountDto.FollowingDto> following = new ArrayList<>();
             List<AccountDto.FollowerDto> follower = new ArrayList<>();

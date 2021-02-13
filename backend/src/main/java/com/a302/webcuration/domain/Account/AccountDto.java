@@ -38,38 +38,28 @@ public class AccountDto {
         private String nickname;
     }
 
-    // TODO: 2021-02-06  내가 좋아요한 게시물
     @Getter @Setter @RequiredArgsConstructor
     public static class MyAccountProfile {
-
         private Long accountId;
-
         private String accountName;
-
         private String accountNickname;
-
         private String accountEmail;
-
         private LocalDate accountCreateDate;
-
         private String accountBio;
 
         private String accountPhoto;
-
+        //팔로잉, 팔로워
         private List<AccountDto.FollowingDto> following;
-
         private List<AccountDto.FollowerDto> follower;
-
         private int accountFollowingCnt;
-
         private int accountFollowerCnt;
-
+        //내가 쓴 게시물
         private List<PostsDto.PostsWithOnePhoto> writtenPosts;
-
         private int writtenPostsCnt;
-
-        private List<PostsDto.PostsWithOnePhoto> likePosts;
-
+        //내가 좋아요한 게시물
+        private List<PostsDto.PostsWithOnePhoto> likesPosts;
+        private int likesPostsCnt;
+        //내 관심 태그
         private List<TagDto.Tag> tags;
 
     }
@@ -113,6 +103,7 @@ public class AccountDto {
     @Getter @Setter @RequiredArgsConstructor
     public static class UpdateRequest
     {
+        private String accountName;
         private String accountBio;
         private String accountNickname;
         private String accountPhoto;
@@ -160,9 +151,6 @@ public class AccountDto {
     }
     @Getter @Setter @RequiredArgsConstructor
     public static class LoginRequest{
-
-        //TODO
-        //@NotNull
         private String act;
 
         @Email(message = "알맞은 이메일 형식이 아닙니다.")
@@ -188,6 +176,13 @@ public class AccountDto {
     public static class LikeRequest {
         @NotNull
         private Long postId;
+    }
+    //작성자 사진 / 작성자닉네임  / 좋아요 상태
+    @Data
+    public static class PostsWriter{
+        private String accountPhoto;
+        private String accountNickname;
+
     }
 
 }

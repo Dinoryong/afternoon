@@ -26,14 +26,21 @@ public class PostsController {
 
     }
 
+    @GetMapping("/login/{postsid}")
+    public ResponseEntity retrievePosts(@PathVariable Long postsid,@RequestHeader(value = "Authorization") String token){
+        BaseMessage bm=postsService.retrievePosts(postsid,token);
+        return new ResponseEntity(bm,bm.getHttpStatus());
+    }
+
     @GetMapping("/{postsid}")
     public ResponseEntity retrievePosts(@PathVariable Long postsid){
         BaseMessage bm=postsService.retrievePosts(postsid);
         return new ResponseEntity(bm,bm.getHttpStatus());
     }
 
-//    @DeleteMapping("{postsid}")
-//    public ResponseEntity deletePosts(@PathVariable Long postsid){
-//        postsService.deletePosts(postsid);
-//    }
+    @DeleteMapping("/{postsid}")
+    public ResponseEntity deletePosts(@PathVariable Long postsid,@RequestHeader(value = "Authorization") String token){
+        BaseMessage bm=postsService.deletePosts(postsid,token);
+        return new ResponseEntity(bm,bm.getHttpStatus());
+    }
 }

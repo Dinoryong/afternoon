@@ -38,9 +38,8 @@ public class CommentControllerTest extends BaseControllerTest {
                 .commentContent(content)
                 .build();
 
-        long postId = 12L;
-        String token = "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJzdWIiOiLroZzqt7jsnbjthqDtgbAiLCJleHAiOjE2MTI2MzE3ODMsImFjY291bnRJZCI6MiwiYWNjb3VudEVtYWlsIjoiamFzb245NjdAbmF2ZXIuY29tIn0.ek9mnRJnWzg12jUN3494DLVqpsS9rxM-OkBQjeKL5JI";
-        mockMvc.perform(post("/api/comments/"+postId)
+        String token = "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJzdWIiOiLroZzqt7jsnbjthqDtgbAiLCJleHAiOjE2MTMzOTU1NzEsImFjY291bnRJZCI6MjgsImFjY291bnRFbWFpbCI6ImRudGpyNDc3MkBuYXRlLmNvbSJ9.tau4ZBv9cfMfDDQ0euyasCfW1mKyprVXJV6iYzxofug";
+        mockMvc.perform(post("/api/comments")
                 .header("Authorization","Bearer "+token)
                 .contentType(MediaType.APPLICATION_JSON)
                 .content(objectMapper.writeValueAsString(request)))
@@ -59,9 +58,8 @@ public class CommentControllerTest extends BaseControllerTest {
                 .commentLink(link)
                 .build();
 
-        long postId = 12L;
         String token = "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJzdWIiOiLroZzqt7jsnbjthqDtgbAiLCJleHAiOjE2MTI2MzE3ODMsImFjY291bnRJZCI6MiwiYWNjb3VudEVtYWlsIjoiamFzb245NjdAbmF2ZXIuY29tIn0.ek9mnRJnWzg12jUN3494DLVqpsS9rxM-OkBQjeKL5JI";
-        mockMvc.perform(post("/api/comments/"+postId)
+        mockMvc.perform(post("/api/comments")
                 .header("Authorization","Bearer "+token)
                 .contentType(MediaType.APPLICATION_JSON)
                 .content(objectMapper.writeValueAsString(request)))
@@ -77,7 +75,6 @@ public class CommentControllerTest extends BaseControllerTest {
 
         CommentDto.CreateCommentRequest request = CommentDto.CreateCommentRequest.builder()
                 .commentContent(content)
-                .pinNum(1)
                 .pinId(13L)
                 .commentLink(link)
                 .build();
@@ -100,17 +97,38 @@ public class CommentControllerTest extends BaseControllerTest {
         CommentDto.CreateCommentRequest request = CommentDto.CreateCommentRequest.builder()
                 .commentContent(content)
                 .commentLink(link)
-                .pinNum(1)
                 .pinId(13L)
                 .build();
 
-        long postId = 12L;
-        String token = "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJzdWIiOiLroZzqt7jsnbjthqDtgbAiLCJleHAiOjE2MTI2MzE3ODMsImFjY291bnRJZCI6MiwiYWNjb3VudEVtYWlsIjoiamFzb245NjdAbmF2ZXIuY29tIn0.ek9mnRJnWzg12jUN3494DLVqpsS9rxM-OkBQjeKL5JI";
-        mockMvc.perform(post("/api/comments/"+postId)
+        String token = "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJzdWIiOiLroZzqt7jsnbjthqDtgbAiLCJleHAiOjE2MTMzOTU1NzEsImFjY291bnRJZCI6MjgsImFjY291bnRFbWFpbCI6ImRudGpyNDc3MkBuYXRlLmNvbSJ9.tau4ZBv9cfMfDDQ0euyasCfW1mKyprVXJV6iYzxofug";
+        mockMvc.perform(post("/api/comments")
                 .header("Authorization","Bearer "+token)
                 .contentType(MediaType.APPLICATION_JSON)
                 .content(objectMapper.writeValueAsString(request)))
                 .andExpect(status().isOk())
+                .andDo(print());
+    }
+
+    @Test
+    public void createComment_성공_모두존재() throws Exception {
+
+        String content = "댓글 생성 테스트";
+        String link = "link_test.com";
+
+        CommentDto.CreateCommentRequest request = CommentDto.CreateCommentRequest.builder()
+                .commentContent(content)
+                .commentLink(link)
+                .pinId(26L)
+                .postsId(25L)
+                .pinNum(1)
+                .build();
+
+        String token = "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJzdWIiOiLroZzqt7jsnbjthqDtgbAiLCJleHAiOjE2MTM2Njc3MzksImFjY291bnRJZCI6MSwiYWNjb3VudEVtYWlsIjoiZG50anI0NzcyQG5hdGUuY29tIn0.sVdShJvwy1DXLeT08_yQKwUQ6XCo2Z9FPhI_ufuC59M";
+        mockMvc.perform(post("/api/comments")
+                .header("Authorization","Bearer "+token)
+                .contentType(MediaType.APPLICATION_JSON)
+                .content(objectMapper.writeValueAsString(request)))
+                .andExpect(status().isCreated())
                 .andDo(print());
     }
 

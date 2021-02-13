@@ -23,14 +23,13 @@ public class CommentController {
     private final CommentService commentService;
     public static final Logger logger = LoggerFactory.getLogger(CommentController.class);
 
-    @PostMapping("/{postsid}")
-    public ResponseEntity createComment(@PathVariable Long postsid, @RequestBody  @Valid CommentDto.CreateCommentRequest request, @RequestHeader(value = "Authorization") String token)
+    @PostMapping
+    public ResponseEntity createComment(@RequestBody @Valid CommentDto.CreateCommentRequest request, @RequestHeader(value = "Authorization") String token)
     {
         Long accountId = jwtService.getAccountId(token);
-        BaseMessage bm = commentService.createComment(postsid,accountId,request);
+        BaseMessage bm = commentService.createComment(accountId,request);
 
         return new ResponseEntity(bm,bm.getHttpStatus());
-
     }
     @GetMapping("/{postid}")
     public ResponseEntity retrieveComment(@PathVariable Long postid)

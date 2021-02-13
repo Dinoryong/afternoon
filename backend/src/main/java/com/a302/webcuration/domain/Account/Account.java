@@ -80,6 +80,7 @@ public class Account {
 
     public void updateAccount(AccountDto.UpdateRequest request)
     {
+        this.accountName=request.getAccountName();
         this.accountNickname=request.getAccountNickname();
         this.accountBio =request.getAccountBio();
         this.accountPhoto=request.getAccountPhoto();

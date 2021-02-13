@@ -5,6 +5,7 @@ import com.a302.webcuration.domain.Post.Posts;
 import lombok.*;
 
 import javax.persistence.*;
+import javax.validation.constraints.NotNull;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -14,7 +15,7 @@ public class Pin {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     private Long pinId;
-
+    @NotNull
     private String pinName;
     private Double pinLocY;
     private Double pinLocX;

@@ -14,8 +14,7 @@ import org.springframework.http.MediaType;
 import java.util.ArrayList;
 import java.util.List;
 
-import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
-import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
+import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.*;
 import static org.springframework.test.web.servlet.result.MockMvcResultHandlers.print;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
@@ -105,7 +104,7 @@ public class PostsControllerTest extends BaseControllerTest {
                 .postsTags(postsTags)
                 .postsPins(pins)
                 .build();
-        String token = "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJzdWIiOiLroZzqt7jsnbjthqDtgbAiLCJleHAiOjE2MTMzOTU1NzEsImFjY291bnRJZCI6MjgsImFjY291bnRFbWFpbCI6ImRudGpyNDc3MkBuYXRlLmNvbSJ9.tau4ZBv9cfMfDDQ0euyasCfW1mKyprVXJV6iYzxofug";
+        String token = "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJzdWIiOiLroZzqt7jsnbjthqDtgbAiLCJleHAiOjE2MTM2Njc3MzksImFjY291bnRJZCI6MSwiYWNjb3VudEVtYWlsIjoiZG50anI0NzcyQG5hdGUuY29tIn0.sVdShJvwy1DXLeT08_yQKwUQ6XCo2Z9FPhI_ufuC59M";
 
         mockMvc.perform(post("/api/posts")
                 .header("Authorization","Bearer "+token)
@@ -209,6 +208,30 @@ public class PostsControllerTest extends BaseControllerTest {
     public void Posts_조회_실패() throws Exception{
         Long id=24L;
         mockMvc.perform(get("/api/posts/"+Long.toString(id))
+                .contentType(MediaType.APPLICATION_JSON))
+                .andExpect(status().isBadRequest())
+                .andDo(print());
+    }
+
+    @Test
+    public void Posts_로그인상태_조회_성공() throws Exception{
+        Long id=25L;
+        String token = "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJzdWIiOiLroZzqt7jsnbjthqDtgbAiLCJleHAiOjE2MTM2Njc3MzksImFjY291bnRJZCI6MSwiYWNjb3VudEVtYWlsIjoiZG50anI0NzcyQG5hdGUuY29tIn0.sVdShJvwy1DXLeT08_yQKwUQ6XCo2Z9FPhI_ufuC59M";
+
+        mockMvc.perform(get("/api/posts/login/"+Long.toString(id))
+                .header("Authorization","Bearer "+token)
+                .contentType(MediaType.APPLICATION_JSON))
+                .andExpect(status().isOk())
+                .andDo(print());
+    }
+
+    @Test
+    public void Posts_삭제_성공() throws Exception{
+        Long id=29L;
+        String token = "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJzdWIiOiLroZzqt7jsnbjthqDtgbAiLCJleHAiOjE2MTMzOTU1NzEsImFjY291bnRJZCI6MjgsImFjY291bnRFbWFpbCI6ImRudGpyNDc3MkBuYXRlLmNvbSJ9.tau4ZBv9cfMfDDQ0euyasCfW1mKyprVXJV6iYzxofug";
+
+        mockMvc.perform(delete("/api/posts/"+Long.toString(id))
+                .header("Authorization","Bearer "+token)
                 .contentType(MediaType.APPLICATION_JSON))
                 .andExpect(status().isBadRequest())
                 .andDo(print());
