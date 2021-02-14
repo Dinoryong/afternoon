@@ -249,10 +249,12 @@ export const EDIT_PROFILE = async (req, config) => {
     console.log("EDIT_PROFILE : DEV");
 
     try {
-      await axios.delete(API_ROOT_URI + `/api/???`, req, config).then((res) => {
-        status = res.status;
-        data = res.data.data;
-      });
+      await axios
+        .put(API_ROOT_URI + `/api/accounts`, req, config)
+        .then((res) => {
+          status = res.status;
+          data = res.data.data;
+        });
     } catch (error) {
       console.log(error);
     }
