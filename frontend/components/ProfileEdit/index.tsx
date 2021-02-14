@@ -156,6 +156,8 @@ const index = ({
 
   if (accountPhoto === "") accountPhoto = "/assets/logos/pinset_logo_black.png";
 
+  // accountName accountNickname accountPhoto accountBio => 200 문제 시 400
+
   return (
     <Container>
       <EditBox>

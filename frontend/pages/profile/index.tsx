@@ -75,7 +75,7 @@ const index = () => {
       if (result.status === 200) {
         setProfileData(result.data);
         setPostData(result.data.writtenPosts);
-        setLikeData(result.data.likePosts);
+        setLikeData(result.data.likesPosts);
         setInfoState(2);
       } else {
         router.push("/");

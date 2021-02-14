@@ -9,9 +9,9 @@ const MyLikes = styled.div``;
 
 const MyCollections = styled.div``;
 
-const MenuBar = ({ writtenPostsCnt, likePostsCnt, setTabState, tabState }) => {
+const MenuBar = ({ writtenPostsCnt, likesPostsCnt, setTabState, tabState }) => {
   const postString = "게시물 " + writtenPostsCnt;
-  const likesString = "좋아요 " + likePostsCnt;
+  const likesString = "좋아요 " + likesPostsCnt;
 
   return (
     <>

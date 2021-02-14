@@ -73,6 +73,7 @@ const index = ({ profileData, setTabState, tabState }) => {
     writtenPostsCnt,
     likePostsCnt,
     tags,
+    likesPostsCnt,
   } = profileData;
 
   return (
@@ -112,7 +113,7 @@ const index = ({ profileData, setTabState, tabState }) => {
       <Container2>
         <MenuBar
           writtenPostsCnt={writtenPostsCnt}
-          likePostsCnt={likePostsCnt}
+          likesPostsCnt={likesPostsCnt}
           setTabState={setTabState}
           tabState={tabState}
         ></MenuBar>
