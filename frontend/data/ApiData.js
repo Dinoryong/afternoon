@@ -287,7 +287,7 @@ export const GetOnePostData = {
     pins: [
       {
         pinId: 2,
-        pinName: "마우스",
+        pinName: "마우스 이름 길게길게 로지텍 마우스 G370",
         pinLocY: 78.85375494071147,
         pinLocX: 89.72332015810277,
         pinLink: "https://naver.com",

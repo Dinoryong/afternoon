@@ -250,10 +250,11 @@ const NewPinIcon = styled.div`
   display: flex;
   justify-content: center;
   align-items: center;
-  width: 20px;
-  height: 20px;
+  width: 40px;
+  height: 40px;
   border-radius: 50%;
-  border: 2px solid ${color.white.default};
+  background-color: ${color.white.default};
+  /* border: 2px solid ${color.white.default}; */
   top: 50%;
   left: 50%;
 `;
@@ -513,12 +514,17 @@ const ConfirmUpload = ({
               return (
                 <NewPinIcon
                   style={{
-                    top: `${inputPinPosY[p] - 1000 / imgDim.offsetHeight}%`,
-                    left: `${inputPinPosX[p] - 1000 / imgDim.offsetWidth}%`,
+                    top: `${inputPinPosY[p] - 2000 / imgDim.offsetHeight}%`,
+                    left: `${inputPinPosX[p] - 2000 / imgDim.offsetWidth}%`,
                   }}
                   key={index}
                 >
-                  <NewPinMini></NewPinMini>
+                  <Image
+                    src={"/assets/icons/eye_close.png"}
+                    width={36}
+                    height={36}
+                    objectFit="contain"
+                  ></Image>
                 </NewPinIcon>
               );
             })}
@@ -528,12 +534,17 @@ const ConfirmUpload = ({
               return (
                 <NewPinIcon
                   style={{
-                    top: `${inputPinPosY[p] - 1000 / imgDim.offsetHeight}%`,
-                    left: `${inputPinPosX[p] - 1000 / imgDim.offsetWidth}%`,
+                    top: `${inputPinPosY[p] - 2000 / imgDim.offsetHeight}%`,
+                    left: `${inputPinPosX[p] - 2000 / imgDim.offsetWidth}%`,
                   }}
                   key={index}
                 >
-                  <NewPinMini></NewPinMini>
+                  <Image
+                    src={"/assets/icons/eye_close.png"}
+                    width={36}
+                    height={36}
+                    objectFit="contain"
+                  ></Image>
                 </NewPinIcon>
               );
             })}
@@ -543,12 +554,17 @@ const ConfirmUpload = ({
               return (
                 <NewPinIcon
                   style={{
-                    top: `${inputPinPosY[p] - 1000 / imgDim.offsetHeight}%`,
-                    left: `${inputPinPosX[p] - 1000 / imgDim.offsetWidth}%`,
+                    top: `${inputPinPosY[p] - 2000 / imgDim.offsetHeight}%`,
+                    left: `${inputPinPosX[p] - 2000 / imgDim.offsetWidth}%`,
                   }}
                   key={index}
                 >
-                  <NewPinMini></NewPinMini>
+                  <Image
+                    src={"/assets/icons/eye_close.png"}
+                    width={36}
+                    height={36}
+                    objectFit="contain"
+                  ></Image>
                 </NewPinIcon>
               );
             })}
@@ -558,12 +574,17 @@ const ConfirmUpload = ({
               return (
                 <NewPinIcon
                   style={{
-                    top: `${inputPinPosY[p] - 1000 / imgDim.offsetHeight}%`,
-                    left: `${inputPinPosX[p] - 1000 / imgDim.offsetWidth}%`,
+                    top: `${inputPinPosY[p] - 2000 / imgDim.offsetHeight}%`,
+                    left: `${inputPinPosX[p] - 2000 / imgDim.offsetWidth}%`,
                   }}
                   key={index}
                 >
-                  <NewPinMini></NewPinMini>
+                  <Image
+                    src={"/assets/icons/eye_close.png"}
+                    width={36}
+                    height={36}
+                    objectFit="contain"
+                  ></Image>
                 </NewPinIcon>
               );
             })}
