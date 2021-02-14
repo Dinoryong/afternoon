@@ -110,7 +110,7 @@ const index = ({ currentPin, commentData }) => {
             className="next_border_image circle"
             src={accountPhoto}
             layout="fill"
-            objectFit="contain"
+            objectFit="cover"
           ></Image>
         </CommentImg>
       </Wrapper1>

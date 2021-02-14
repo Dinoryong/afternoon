@@ -1,8 +1,11 @@
-import React, { useState } from "react";
+import React, { useRef, useState } from "react";
 import styled from "@emotion/styled";
 import Button from "../Button";
 import color from "../../styles/theme";
 import Image from "next/image";
+import firebase from "firebase";
+import { useRouter } from "next/router";
+import { EDIT_PROFILE } from "../../pages/api/profile";
 
 const Container = styled.div`
   width: 400px;
@@ -55,6 +58,17 @@ const ImgBox = styled.div`
   width: 140px;
   height: 140px;
   margin: 30px 0px 10px 0px;
+`;
+
+const EditPhoto = styled.div`
+  position: absolute;
+  width: 100%;
+  height: 100%;
+  cursor: pointer;
+`;
+
+const PhotoInput = styled("input")`
+  display: none;
 `;
 
 const NameTitle = styled.div`
@@ -143,6 +157,17 @@ const EditButton = styled.div`
   margin-bottom: 10px;
 `;
 
+const makeid = (length) => {
+  var result = "";
+  var characters =
+    "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789";
+  var charactersLength = characters.length;
+  for (var i = 0; i < length; i++) {
+    result += characters.charAt(Math.floor(Math.random() * charactersLength));
+  }
+  return result;
+};
+
 const index = ({
   toggleEdit,
   accountPhoto = "/assets/logos/pinset_logo_black.png",
@@ -150,13 +175,97 @@ const index = ({
   accountNickname,
   accountBio,
 }) => {
+  const router = useRouter();
+  const inputFile = useRef(null);
+
+  const storage = firebase.storage();
+
   const [nameInput, setNameInput] = useState(accountName);
   const [nicknameInput, setNicknameInput] = useState(accountNickname);
   const [bioInput, setBioInput] = useState(accountBio);
+  const [profileAsFile, setProfileAsFile] = useState({
+    image: null,
+    url: accountPhoto,
+    progress: 0,
+  });
 
   if (accountPhoto === "") accountPhoto = "/assets/logos/pinset_logo_black.png";
 
   // accountName accountNickname accountPhoto accountBio => 200 문제 시 400
+
+  const requestEditProfile = async () => {
+    const editProfileReq = {
+      accountName: nameInput,
+      accountNickname: nicknameInput,
+      accountPhoto: profileAsFile.url,
+      accountBio: bioInput,
+    };
+    const editProfileConfig = {
+      headers: {
+        Authorization: `Bearer ${window.localStorage.getItem("authToken")}`,
+      },
+    };
+
+    const result = await EDIT_PROFILE(editProfileReq, editProfileConfig);
+    console.log(result);
+
+    if (result.status === 200) {
+      toggleEdit();
+      router.push("/submit");
+    }
+  };
+
+  const uploadToFirebase = (image) => {
+    console.log("FIREBASE : UPLOAD");
+    // async magic goes here...
+    const imageId = makeid(16);
+
+    if (image === null) {
+      console.error(`not an image, the image file is a ${typeof image}`);
+    }
+    const uploadTask = storage.ref(`/images/${imageId}`).put(image);
+    //initiates the firebase side uploading
+    uploadTask.on(
+      "state_changed",
+      (snapShot) => {
+        //takes a snap shot of the process as it is happening
+        setProfileAsFile({
+          ...profileAsFile,
+          progress: Math.round(
+            (snapShot.bytesTransferred / snapShot.totalBytes) * 100
+          ),
+        });
+      },
+      (err) => {
+        //catches the errors
+        console.log(err);
+      },
+      () => {
+        // gets the functions from storage refences the image storage in firebase by the children
+        // gets the download url then sets the image from firebase as the value for the imgUrl key:
+        storage
+          .ref("images")
+          .child(imageId)
+          .getDownloadURL()
+          .then((fireBaseUrl) => {
+            setProfileAsFile({
+              image: image,
+              url: fireBaseUrl,
+              progress: 100,
+            });
+          });
+      }
+    );
+  };
+
+  const onButtonClick = () => {
+    inputFile.current.click();
+  };
+
+  const handleFileChange = (e) => {
+    let image = e.target.files[0];
+    uploadToFirebase(image);
+  };
 
   return (
     <Container>
@@ -171,12 +280,29 @@ const index = ({
         </Xbutton>
       </EditBox>
       <ImgBox>
-        <Image
-          className="next_border_image circle"
-          src={accountPhoto}
-          layout="fill"
-          objectFit="cover"
-        ></Image>
+        {profileAsFile && profileAsFile.url === "" && (
+          <Image
+            className="next_border_image circle"
+            src={accountPhoto}
+            layout="fill"
+            objectFit="cover"
+          ></Image>
+        )}
+        {profileAsFile && profileAsFile.url !== "" && (
+          <Image
+            className="next_border_image circle"
+            src={profileAsFile.url}
+            layout="fill"
+            objectFit="cover"
+          ></Image>
+        )}
+        <EditPhoto onClick={onButtonClick}></EditPhoto>
+        <PhotoInput
+          type="file"
+          id="file"
+          ref={inputFile}
+          onChange={(e) => handleFileChange(e)}
+        ></PhotoInput>
       </ImgBox>
       <NameTitle>이름</NameTitle>
       <InputName
@@ -206,6 +332,7 @@ const index = ({
           btnHoverBorderColor="transparent"
           btnHoverBgColor={color.red.dark}
           btnHoverTextColor={color.white.default}
+          btnOnClick={requestEditProfile}
         />
       </EditButton>
     </Container>

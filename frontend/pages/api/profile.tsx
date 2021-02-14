@@ -226,3 +226,37 @@ export const UNFOLLOW_USER = async (req, config) => {
 
   return { status, data };
 };
+
+export const EDIT_PROFILE = async (req, config) => {
+  console.log("EDIT_PROFILE : REQUEST");
+  console.log(req);
+
+  let status: number = 0;
+  let data: {} = {};
+
+  if (!VIA_API_DEV) {
+    console.log("EDIT_PROFILE : LOCAL");
+
+    try {
+      await timeout(1000);
+      // throw new Error();
+      status = 200;
+      data = {};
+    } catch (error) {
+      console.log(error);
+    }
+  } else {
+    console.log("EDIT_PROFILE : DEV");
+
+    try {
+      await axios.delete(API_ROOT_URI + `/api/???`, req, config).then((res) => {
+        status = res.status;
+        data = res.data.data;
+      });
+    } catch (error) {
+      console.log(error);
+    }
+  }
+
+  return { status, data };
+};

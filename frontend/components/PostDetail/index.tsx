@@ -584,7 +584,9 @@ const index = ({ windowWidth, windowHeight }) => {
                               {postDetailData.postsWriter.accountNickname}
                             </ProfileNickname>
                             <PostCreated>
-                              {postDetailData.postsWriteTime}
+                              {postDetailData.postsWriteTime.slice(0, 4)}년{" "}
+                              {postDetailData.postsWriteTime.slice(5, 7)}월{" "}
+                              {postDetailData.postsWriteTime.slice(8, 10)}일
                             </PostCreated>
                           </ProfileRight>
                         </ProfileRow>
