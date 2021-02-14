@@ -98,7 +98,7 @@ const CommentContent = styled.div`
 `;
 
 const index = ({ currentPin, commentData }) => {
-  let accountPhoto = "/assets/logos/pinset_logo_black.png";
+  let accountPhoto = "/assets/icons/eye_open.png";
   if (commentData.accountPhoto !== "" && commentData.accountPhoto !== undefined)
     accountPhoto = commentData.accountPhoto;
 

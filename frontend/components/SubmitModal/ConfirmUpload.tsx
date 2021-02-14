@@ -643,9 +643,9 @@ const ConfirmUpload = ({
               }}
             ></InputContent>
             <BoxLine />
-            <BoxLabel>핀 추가 (선택)</BoxLabel>
+            <BoxLabel>눈 추가 (선택)</BoxLabel>
             <PinGuide>
-              사진을 선택하시고 + 버튼을 눌러 핀 위치를 지정해주세요
+              사진을 선택하시고 + 버튼을 눌러 눈 위치를 지정해주세요
             </PinGuide>
             <SelectPhotoBox>
               <PhotoButton
@@ -694,9 +694,9 @@ const ConfirmUpload = ({
                   return (
                     <EditPinDiv key={index}>
                       <PinNameBox>
-                        <PinLabel>핀 이름</PinLabel>
+                        <PinLabel>눈 이름</PinLabel>
                         <PinInput
-                          placeholder={"핀 이름을 입력해주세요"}
+                          placeholder={"눈 이름을 입력해주세요"}
                           value={inputPinName[p]}
                           onChange={(event) =>
                             setInputPinName(
@@ -708,9 +708,9 @@ const ConfirmUpload = ({
                         ></PinInput>
                       </PinNameBox>
                       <PinLinkBox>
-                        <PinLabel>핀 링크</PinLabel>
+                        <PinLabel>눈 링크</PinLabel>
                         <PinInput
-                          placeholder={"핀 링크를 입력해주세요"}
+                          placeholder={"눈 링크를 입력해주세요"}
                           value={inputPinLink[p]}
                           onChange={(event) =>
                             setInputPinLink(
@@ -724,12 +724,12 @@ const ConfirmUpload = ({
                       <PinNavBox>
                         <PinTagBox>
                           <PinIcon />
-                          <PinTag>핀 {String.fromCharCode(65 + index)}</PinTag>
+                          <PinTag>눈 {String.fromCharCode(65 + index)}</PinTag>
                         </PinTagBox>
                         <PinButtonBox>
                           <Button btnText={"위치변경"} btnHeight="28px" />
                           <Button
-                            btnText={"핀 삭제"}
+                            btnText={"눈 삭제"}
                             btnHeight="28px"
                             btnBgColor={color.red.dark}
                             btnTextColor={color.white.default}
@@ -771,9 +771,9 @@ const ConfirmUpload = ({
                   return (
                     <EditPinDiv key={index}>
                       <PinNameBox>
-                        <PinLabel>핀 이름</PinLabel>
+                        <PinLabel>눈 이름</PinLabel>
                         <PinInput
-                          placeholder={"핀 이름을 입력해주세요"}
+                          placeholder={"눈 이름을 입력해주세요"}
                           value={inputPinName[p]}
                           onChange={(event) =>
                             setInputPinName(
@@ -785,9 +785,9 @@ const ConfirmUpload = ({
                         ></PinInput>
                       </PinNameBox>
                       <PinLinkBox>
-                        <PinLabel>핀 링크</PinLabel>
+                        <PinLabel>눈 링크</PinLabel>
                         <PinInput
-                          placeholder={"핀 링크를 입력해주세요"}
+                          placeholder={"눈 링크를 입력해주세요"}
                           value={inputPinLink[p]}
                           onChange={(event) =>
                             setInputPinLink(
@@ -801,12 +801,12 @@ const ConfirmUpload = ({
                       <PinNavBox>
                         <PinTagBox>
                           <PinIcon />
-                          <PinTag>핀 {String.fromCharCode(65 + index)}</PinTag>
+                          <PinTag>눈 {String.fromCharCode(65 + index)}</PinTag>
                         </PinTagBox>
                         <PinButtonBox>
                           <Button btnText={"위치변경"} btnHeight="28px" />
                           <Button
-                            btnText={"핀 삭제"}
+                            btnText={"눈 삭제"}
                             btnHeight="28px"
                             btnBgColor={color.red.dark}
                             btnTextColor={color.white.default}
@@ -848,9 +848,9 @@ const ConfirmUpload = ({
                   return (
                     <EditPinDiv key={index}>
                       <PinNameBox>
-                        <PinLabel>핀 이름</PinLabel>
+                        <PinLabel>눈 이름</PinLabel>
                         <PinInput
-                          placeholder={"핀 이름을 입력해주세요"}
+                          placeholder={"눈 이름을 입력해주세요"}
                           value={inputPinName[p]}
                           onChange={(event) =>
                             setInputPinName(
@@ -862,9 +862,9 @@ const ConfirmUpload = ({
                         ></PinInput>
                       </PinNameBox>
                       <PinLinkBox>
-                        <PinLabel>핀 링크</PinLabel>
+                        <PinLabel>눈 링크</PinLabel>
                         <PinInput
-                          placeholder={"핀 링크를 입력해주세요"}
+                          placeholder={"눈 링크를 입력해주세요"}
                           value={inputPinLink[p]}
                           onChange={(event) =>
                             setInputPinLink(
@@ -878,12 +878,12 @@ const ConfirmUpload = ({
                       <PinNavBox>
                         <PinTagBox>
                           <PinIcon />
-                          <PinTag>핀 {String.fromCharCode(65 + index)}</PinTag>
+                          <PinTag>눈 {String.fromCharCode(65 + index)}</PinTag>
                         </PinTagBox>
                         <PinButtonBox>
                           <Button btnText={"위치변경"} btnHeight="28px" />
                           <Button
-                            btnText={"핀 삭제"}
+                            btnText={"눈 삭제"}
                             btnHeight="28px"
                             btnBgColor={color.red.dark}
                             btnTextColor={color.white.default}
@@ -925,9 +925,9 @@ const ConfirmUpload = ({
                   return (
                     <EditPinDiv key={index}>
                       <PinNameBox>
-                        <PinLabel>핀 이름</PinLabel>
+                        <PinLabel>눈 이름</PinLabel>
                         <PinInput
-                          placeholder={"핀 이름을 입력해주세요"}
+                          placeholder={"눈 이름을 입력해주세요"}
                           value={inputPinName[p]}
                           onChange={(event) =>
                             setInputPinName(
@@ -939,9 +939,9 @@ const ConfirmUpload = ({
                         ></PinInput>
                       </PinNameBox>
                       <PinLinkBox>
-                        <PinLabel>핀 링크</PinLabel>
+                        <PinLabel>눈 링크</PinLabel>
                         <PinInput
-                          placeholder={"핀 링크를 입력해주세요"}
+                          placeholder={"눈 링크를 입력해주세요"}
                           value={inputPinLink[p]}
                           onChange={(event) =>
                             setInputPinLink(
@@ -955,12 +955,12 @@ const ConfirmUpload = ({
                       <PinNavBox>
                         <PinTagBox>
                           <PinIcon />
-                          <PinTag>핀 {String.fromCharCode(65 + index)}</PinTag>
+                          <PinTag>눈 {String.fromCharCode(65 + index)}</PinTag>
                         </PinTagBox>
                         <PinButtonBox>
                           <Button btnText={"위치변경"} btnHeight="28px" />
                           <Button
-                            btnText={"핀 삭제"}
+                            btnText={"눈 삭제"}
                             btnHeight="28px"
                             btnBgColor={color.red.dark}
                             btnTextColor={color.white.default}
@@ -1048,7 +1048,7 @@ const ConfirmUpload = ({
                   btnOnClick={() => {
                     if (
                       confirm(
-                        "PINSET : 사진 등록을 취소하시겠습니까?\n확인을 누르시면 현재까지 작업이 사라집니다."
+                        "애프터눈 : 사진 등록을 취소하시겠습니까?\n확인을 누르시면 현재까지 작업이 사라집니다."
                       )
                     ) {
                       toggleSubmit();

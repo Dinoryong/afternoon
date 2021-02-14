@@ -170,7 +170,7 @@ const makeid = (length) => {
 
 const index = ({
   toggleEdit,
-  accountPhoto = "/assets/logos/pinset_logo_black.png",
+  accountPhoto = "/assets/icons/eye_open.png",
   accountName,
   accountNickname,
   accountBio,
@@ -189,7 +189,7 @@ const index = ({
     progress: 0,
   });
 
-  if (accountPhoto === "") accountPhoto = "/assets/logos/pinset_logo_black.png";
+  if (accountPhoto === "") accountPhoto = "/assets/icons/eye_open.png";
 
   // accountName accountNickname accountPhoto accountBio => 200 문제 시 400
 

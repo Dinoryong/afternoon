@@ -17,6 +17,7 @@ const Container = styled.div`
 const LogoBox = styled.div`
   display: flex;
   cursor: pointer;
+  margin-bottom: 2px;
 `;
 
 const LogoImage = styled.div`
@@ -24,23 +25,27 @@ const LogoImage = styled.div`
   min-width: 32px;
   width: 32px;
   height: 32px;
+  margin-top: 2px;
 `;
 
 const TitleBox = styled.div`
   display: flex;
   flex-direction: column;
+  justify-content: center;
+  align-items: center;
   margin-left: 12px;
-  min-width: 134px;
+  min-width: 70px;
   color: ${color.black.default};
 `;
 
 const TitleText = styled.a`
-  font-size: 15px;
+  font-size: 20px;
   font-weight: 700;
+  word-break: keep-all;
 `;
 
 const SloganText = styled.a`
-  margin-top: -4px;
+  /* margin-top: -4px; */
   font-size: 12px;
 `;
 
@@ -180,16 +185,16 @@ const HeaderLeft = ({
             <Image
               src={
                 (routerPath === "/" || routerPath === "/home") && !inputFocus
-                  ? "/assets/logos/pinset_logo_white.png"
-                  : "/assets/logos/pinset_logo_black.png"
+                  ? "/assets/icons/eye_open_white.png"
+                  : "/assets/icons/eye_open.png"
               }
               layout="fill"
               objectFit="contain"
             />
           </LogoImage>
           <TitleBox style={titleBoxStyle}>
-            <TitleText>PINSET</TitleText>
-            <SloganText>Share Pins from Photos</SloganText>
+            <TitleText>애프터눈</TitleText>
+            {/* <SloganText>미정</SloganText> */}
           </TitleBox>
         </LogoBox>
       </Link>

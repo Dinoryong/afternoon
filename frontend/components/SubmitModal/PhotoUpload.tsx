@@ -352,7 +352,7 @@ const PhotoUpload = ({
       </TopWrapper>
       <BottomWrapper>
         <WarningDiv>
-          (!) 사진 제거 시 해당 사진에 작성된 핀 내용이 삭제됩니다.
+          (!) 사진 제거 시 해당 사진에 작성된 눈 내용이 삭제됩니다.
         </WarningDiv>
         <ButtonDiv>
           <Button
@@ -360,7 +360,7 @@ const PhotoUpload = ({
             btnOnClick={() => {
               if (
                 confirm(
-                  "PINSET : 사진 등록을 취소하시겠습니까?\n확인을 누르시면 현재까지 작업이 사라집니다."
+                  "애프터눈 : 사진 등록을 취소하시겠습니까?\n확인을 누르시면 현재까지 작업이 사라집니다."
                 )
               ) {
                 toggleSubmit();

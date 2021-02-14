@@ -269,7 +269,7 @@ const index = ({ windowWidth, windowHeight }) => {
   const [pinList, setPinList] = useState([]);
   const [currentPin, setCurrentPin] = useState({
     pinId: -1,
-    pinName: "핀 선택안함",
+    pinName: "전체",
   });
 
   const [refreshState, setRefreshState] = useState(false);
@@ -396,7 +396,7 @@ const index = ({ windowWidth, windowHeight }) => {
       currentPin.pinId === pl.pinId
         ? {
             pinId: -1,
-            pinName: "핀 선택안함",
+            pinName: "전체",
           }
         : pl
     );
@@ -571,7 +571,7 @@ const index = ({ windowWidth, windowHeight }) => {
                                 className="next_border_image circle"
                                 src={
                                   postDetailData.postsWriter.accountPhoto === ""
-                                    ? "/assets/logos/pinset_logo_black.png"
+                                    ? "/assets/icons/eye_open.png"
                                     : postDetailData.postsWriter.accountPhoto
                                 }
                                 layout="fill"
@@ -639,7 +639,7 @@ const index = ({ windowWidth, windowHeight }) => {
                           onClick={() => {
                             setCurrentPin({
                               pinId: -1,
-                              pinName: "핀 선택안함",
+                              pinName: "전체",
                             });
                           }}
                         >

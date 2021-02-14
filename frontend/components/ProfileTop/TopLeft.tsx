@@ -19,8 +19,8 @@ const ImgBox = styled.div`
   margin-top: 17px;
 `;
 
-const TopLeft = ({ accountPhoto = "/assets/logos/pinset_logo_black.png" }) => {
-  if (accountPhoto === "") accountPhoto = "/assets/logos/pinset_logo_black.png";
+const TopLeft = ({ accountPhoto = "/assets/icons/eye_open.png" }) => {
+  if (accountPhoto === "") accountPhoto = "/assets/icons/eye_open.png";
   return (
     <Container>
       <ImgBox>

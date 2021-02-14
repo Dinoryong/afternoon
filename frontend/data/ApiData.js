@@ -276,7 +276,7 @@ export const GetOnePostData = {
   data: {
     postsId: 1,
     postsTitle: "첫 게시글!",
-    postsContents: "내 첫 핀셋 게시글이예요~",
+    postsContents: "내 첫 눈 게시글이예요~",
     postsWriteTime: "2021-02-14",
     postsLikeCnt: 0,
     likeState: false,
