@@ -4,6 +4,7 @@ import { useRouter } from "next/router";
 import color from "../../styles/theme";
 import Button from "../Button";
 import { SIGN_UP } from "../../pages/api/user";
+import Swal from "sweetalert2";
 
 const Container = styled.div`
   display: flex;
@@ -96,10 +97,10 @@ const SignupMiddle = () => {
 
     if (result.status === 201) {
       window.localStorage.setItem("accountEmail", result.data.accountEmail);
-      alert("회원가입에 성공했습니다.");
+      Swal.fire({ icon: "success", text: "회원가입에 성공했습니다" });
       router.push("/");
     } else {
-      alert("회원가입에 실패했습니다.");
+      Swal.fire({ icon: "error", text: "회원가입에 실패했습니다" });
     }
   };
 

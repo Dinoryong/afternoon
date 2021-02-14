@@ -8,6 +8,7 @@ import PinIcon from "../PinIcon";
 import TagBox from "../TagBox";
 import { useRouter } from "next/router";
 import { useDispatch } from "react-redux";
+import Swal from "sweetalert2";
 
 const Container = styled.div`
   position: relative;
@@ -433,11 +434,11 @@ const ConfirmUpload = ({
     console.log(result);
 
     if (result.status === 201) {
-      alert("게시물 등록 성공");
+      Swal.fire({ icon: "success", text: "게시물 등록 성공" });
       toggleSubmit();
       router.push("/submit");
     } else {
-      alert("게시물 등록 실패");
+      Swal.fire({ icon: "error", text: "게시물 등록 실패" });
     }
   };
 
@@ -1046,15 +1047,20 @@ const ConfirmUpload = ({
                   btnMarginRight="0"
                   btnWidth="80px"
                   btnOnClick={() => {
-                    if (
-                      confirm(
-                        "애프터눈 : 사진 등록을 취소하시겠습니까?\n확인을 누르시면 현재까지 작업이 사라집니다."
-                      )
-                    ) {
-                      toggleSubmit();
-                    } else {
-                      return;
-                    }
+                    Swal.fire({
+                      title: "사진 등록을 취소하시겠습니까?",
+                      text: "확인을 누르시면 현재까지 작업이 사라집니다",
+                      icon: "warning",
+                      showCancelButton: true,
+                      confirmButtonColor: "#3085d6",
+                      cancelButtonColor: "#d33",
+                      confirmButtonText: "확인",
+                      cancelButtonText: "취소",
+                    }).then((result) => {
+                      if (result.isConfirmed) {
+                        toggleSubmit();
+                      }
+                    });
                   }}
                 />
                 <Button

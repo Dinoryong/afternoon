@@ -5,6 +5,7 @@ import { useDispatch } from "react-redux";
 import color from "../../styles/theme";
 import Button from "../Button";
 import { CHECK_EMAIL, CONFIRM_LOGIN } from "../../pages/api/user";
+import Swal from "sweetalert2";
 
 const Container = styled.div`
   display: flex;
@@ -105,9 +106,9 @@ const AuthMiddle = ({ currentEmail }) => {
 
     if (result.status === 200) {
       setCheckState(true);
-      alert("이메일 인증 성공");
+      Swal.fire({ icon: "success", text: "이메일 인증 성공" });
     } else {
-      alert("이메일 인증 실패");
+      Swal.fire({ icon: "error", text: "이메일 인증 성공" });
     }
   };
 
@@ -137,10 +138,10 @@ const AuthMiddle = ({ currentEmail }) => {
       );
       loginStateTrue();
       toggle();
-      alert("로그인 성공");
+      Swal.fire({ icon: "success", text: "로그인 성공" });
       router.push("/feed");
     } else {
-      alert("로그인 실패");
+      Swal.fire({ icon: "success", text: "로그인 실패" });
     }
   };
 

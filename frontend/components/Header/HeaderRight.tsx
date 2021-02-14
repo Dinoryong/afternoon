@@ -5,6 +5,7 @@ import color from "../../styles/theme";
 import { NextRouter } from "next/router";
 import { useSelector, useDispatch, RootStateOrAny } from "react-redux";
 import { LOG_OUT } from "../../pages/api/user";
+import Swal from "sweetalert2";
 
 const Container = styled.div`
   display: flex;
@@ -54,7 +55,7 @@ const HeaderRight = ({
     await autoLoginFalse();
     await LOG_OUT();
     await loginStateFalse();
-    alert("로그아웃 되었습니다.");
+    Swal.fire({ icon: "success", text: "로그아웃 되었습니다." });
     router.push("/");
   };
 

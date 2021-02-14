@@ -6,6 +6,7 @@ import Image from "next/image";
 import firebase from "firebase";
 import { useRouter } from "next/router";
 import { EDIT_PROFILE } from "../../pages/api/profile";
+import Swal from "sweetalert2";
 
 const Container = styled.div`
   width: 400px;
@@ -271,7 +272,24 @@ const index = ({
     <Container>
       <EditBox>
         <EditTitle>프로필 수정</EditTitle>
-        <Xbutton onClick={toggleEdit}>
+        <Xbutton
+          onClick={() => {
+            Swal.fire({
+              title: "프로필 수정을 취소하시겠습니까?",
+              text: "확인을 누르시면 현재까지 작업이 사라집니다",
+              icon: "warning",
+              showCancelButton: true,
+              confirmButtonColor: "#3085d6",
+              cancelButtonColor: "#d33",
+              confirmButtonText: "확인",
+              cancelButtonText: "취소",
+            }).then((result) => {
+              if (result.isConfirmed) {
+                toggleEdit();
+              }
+            });
+          }}
+        >
           <Image
             src="/assets/icons/x_mark.png"
             layout="fill"
