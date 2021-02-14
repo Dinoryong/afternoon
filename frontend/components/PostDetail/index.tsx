@@ -272,8 +272,6 @@ const index = ({ windowWidth, windowHeight }) => {
     pinName: "전체",
   });
 
-  const [refreshState, setRefreshState] = useState(false);
-
   useEffect(() => {
     let pinImage = document.getElementById(`pinImage${currentImg}`);
     if (pinImage !== null) {
@@ -423,279 +421,268 @@ const index = ({ windowWidth, windowHeight }) => {
     const result = await SUBMIT_COMMENT(submitCommentReq, submitCommentConfig);
     console.log(result);
 
-    if (result.status === 200) {
+    if (result.status === 201) {
       togglePost();
     }
   };
 
   return (
-    <>
-      {!refreshState && (
-        <Container
-          style={{
-            width: `${windowWidth - 240}px`,
-            height: `${windowHeight - 80}px`,
-          }}
-        >
-          <Wrapper>
-            {postDetailData && Object.keys(postDetailData).length > 0 && (
-              <ImageDiv>
-                {imgDim &&
-                  imgDim.offsetHeight !== 0 &&
-                  imgDim.offsetWidth !== 0 && (
-                    <PinClickFrame
-                      style={{
-                        width: imgDim.offsetWidth,
-                        height: imgDim.offsetHeight,
-                      }}
-                    >
-                      <OpenInfoFrame
-                        onClick={() => setInfoState(!infoState)}
-                        infoState={infoState}
-                      ></OpenInfoFrame>
-                      {pinList &&
-                        pinList.length > 0 &&
-                        pinList.map((pl, index) => {
-                          return (
-                            <>
-                              <NewPinIcon
-                                style={
-                                  currentImg === pl.pinNum - 1
-                                    ? {
-                                        top: `${
-                                          pl.pinLocY -
-                                          2000 / imgDim.offsetHeight
-                                        }%`,
-                                        left: `${
-                                          pl.pinLocX - 2000 / imgDim.offsetWidth
-                                        }%`,
-                                      }
-                                    : {
-                                        display: "none",
-                                        top: `${
-                                          pl.pinLocY -
-                                          2000 / imgDim.offsetHeight
-                                        }%`,
-                                        left: `${
-                                          pl.pinLocX - 2000 / imgDim.offsetWidth
-                                        }%`,
-                                      }
-                                }
-                                key={index}
-                                onClick={() => pinCircleOnClick(pl)}
-                              >
-                                {currentImg === pl.pinNum - 1 &&
-                                  currentPin.pinId === pl.pinId && (
-                                    <PinModal
-                                      key={index}
-                                      pinData={pl}
-                                      accountNickname={
-                                        postDetailData.postsWriter
-                                          .accountNickname
-                                      }
-                                    ></PinModal>
-                                  )}
-                                <Image
-                                  src={
-                                    currentPin.pinId === pl.pinId
-                                      ? "/assets/icons/eye_open.png"
-                                      : "/assets/icons/eye_close.png"
-                                  }
-                                  width={36}
-                                  height={36}
-                                  objectFit="contain"
-                                ></Image>
-                              </NewPinIcon>
-                            </>
-                          );
-                        })}
-                    </PinClickFrame>
-                  )}
-                {photoList && Object.keys(photoList).length > 1 && (
-                  <ArrowLeft
-                    onClick={() =>
-                      setCurrentImg(
-                        currentImg === 0 ? maxPhoto - 1 : currentImg - 1
-                      )
-                    }
-                  >
-                    <Image
-                      src={"/assets/icons/arrow_left.png"}
-                      width="18"
-                      height="18"
-                      objectFit="contain"
-                    ></Image>
-                  </ArrowLeft>
-                )}
-                {photoList &&
-                  Object.keys(photoList).length > 0 &&
-                  photoList.map((pl, index) => {
+    <Container
+      style={{
+        width: `${windowWidth - 240}px`,
+        height: `${windowHeight - 80}px`,
+      }}
+    >
+      <Wrapper>
+        {postDetailData && Object.keys(postDetailData).length > 0 && (
+          <ImageDiv>
+            {imgDim && imgDim.offsetHeight !== 0 && imgDim.offsetWidth !== 0 && (
+              <PinClickFrame
+                style={{
+                  width: imgDim.offsetWidth,
+                  height: imgDim.offsetHeight,
+                }}
+              >
+                <OpenInfoFrame
+                  onClick={() => setInfoState(!infoState)}
+                  infoState={infoState}
+                ></OpenInfoFrame>
+                {pinList &&
+                  pinList.length > 0 &&
+                  pinList.map((pl, index) => {
                     return (
-                      <ImageBox
-                        key={index}
-                        style={currentImg === index ? {} : { display: "none" }}
-                        id={`pinImage${index}`}
-                        src={pl}
-                      ></ImageBox>
-                    );
-                  })}
-                {photoList && Object.keys(photoList).length > 1 && (
-                  <ArrowRight
-                    onClick={() =>
-                      setCurrentImg(
-                        currentImg === maxPhoto - 1 ? 0 : currentImg + 1
-                      )
-                    }
-                  >
-                    <Image
-                      src={"/assets/icons/arrow_right.png"}
-                      width="18"
-                      height="18"
-                      objectFit="contain"
-                    ></Image>
-                  </ArrowRight>
-                )}
-              </ImageDiv>
-            )}
-            {infoState &&
-              postDetailData &&
-              Object.keys(postDetailData).length > 0 && (
-                <InfoWrapper>
-                  <InfoDiv>
-                    <InfoTopDiv>
-                      <ProfileInfo>
-                        <ProfileRow>
-                          <ProfileLeft>
-                            <ProfileImage>
-                              <Image
-                                className="next_border_image circle"
-                                src={
-                                  postDetailData.postsWriter.accountPhoto === ""
-                                    ? "/assets/icons/eye_open.png"
-                                    : postDetailData.postsWriter.accountPhoto
+                      <>
+                        <NewPinIcon
+                          style={
+                            currentImg === pl.pinNum - 1
+                              ? {
+                                  top: `${
+                                    pl.pinLocY - 2000 / imgDim.offsetHeight
+                                  }%`,
+                                  left: `${
+                                    pl.pinLocX - 2000 / imgDim.offsetWidth
+                                  }%`,
                                 }
-                                layout="fill"
-                                objectFit="cover"
-                              ></Image>
-                            </ProfileImage>
-                          </ProfileLeft>
-                          <ProfileRight>
-                            <ProfileNickname>
-                              {postDetailData.postsWriter.accountNickname}
-                            </ProfileNickname>
-                            <PostCreated>
-                              {postDetailData.postsWriteTime.slice(0, 4)}년{" "}
-                              {postDetailData.postsWriteTime.slice(5, 7)}월{" "}
-                              {postDetailData.postsWriteTime.slice(8, 10)}일
-                            </PostCreated>
-                          </ProfileRight>
-                        </ProfileRow>
-                        <TagInfo>
-                          {postDetailData.tags.map((t, index) => {
-                            return (
-                              <ProfileTagBox
+                              : {
+                                  display: "none",
+                                  top: `${
+                                    pl.pinLocY - 2000 / imgDim.offsetHeight
+                                  }%`,
+                                  left: `${
+                                    pl.pinLocX - 2000 / imgDim.offsetWidth
+                                  }%`,
+                                }
+                          }
+                          key={index}
+                          onClick={() => pinCircleOnClick(pl)}
+                        >
+                          {currentImg === pl.pinNum - 1 &&
+                            currentPin.pinId === pl.pinId && (
+                              <PinModal
                                 key={index}
-                                tagId={t.tagId}
-                                tagMargin={"0px 8px 0px 0px"}
-                                togglePost={togglePost}
-                              ></ProfileTagBox>
-                            );
-                          })}
-                        </TagInfo>
-                      </ProfileInfo>
-                    </InfoTopDiv>
-                    <BoxLine />
-                    <InfoContentDiv>
-                      <PostTitle>{postDetailData.postsTitle}</PostTitle>
-                      <PostContent>{postDetailData.postsContents}</PostContent>
-                      <PostLikeDiv>
-                        <PostLikeImage onClick={postLikeBtnOnClick}>
+                                pinData={pl}
+                                accountNickname={
+                                  postDetailData.postsWriter.accountNickname
+                                }
+                              ></PinModal>
+                            )}
                           <Image
                             src={
-                              !loginState
-                                ? "/assets/icons/heart_empty.png"
-                                : likeBtnState
-                                ? "/assets/icons/heart_fill_red.png"
-                                : "/assets/icons/heart_empty.png"
+                              currentPin.pinId === pl.pinId
+                                ? "/assets/icons/eye_open.png"
+                                : "/assets/icons/eye_close.png"
                             }
-                            layout="fill"
+                            width={36}
+                            height={36}
                             objectFit="contain"
                           ></Image>
-                        </PostLikeImage>
-                        <PostLikeText>
-                          {!loginState
-                            ? postDetailData.postsLikeCnt
-                            : likeBtnState
-                            ? postDetailData.postsLikeCnt + 1
-                            : postDetailData.postsLikeCnt}
-                          명이 좋아합니다.
-                        </PostLikeText>
-                      </PostLikeDiv>
-                    </InfoContentDiv>
-                    <BoxLine />
-                    <InfoCommentDiv>
-                      {currentPin && currentPin.pinId !== -1 && (
-                        <CommentTagDiv
-                          onClick={() => {
-                            setCurrentPin({
-                              pinId: -1,
-                              pinName: "전체",
-                            });
-                          }}
-                        >
-                          <CommentBackBox>
-                            <Image
-                              src="/assets/icons/arrow_left.png"
-                              layout="fill"
-                            ></Image>
-                          </CommentBackBox>
-                          전체 댓글로 돌아가기
-                        </CommentTagDiv>
-                      )}
-                      {currentPin &&
-                        currentPin.pinId === -1 &&
-                        postDetailData.comments.map((postc, index) => {
-                          return (
-                            <Comment
-                              key={index}
-                              currentPin={currentPin}
-                              commentData={postc}
-                            ></Comment>
-                          );
-                        })}
-                      {currentPin &&
-                        currentPin.pinId !== -1 &&
-                        currentPin.comments.map((pinc, index) => {
-                          return (
-                            <Comment
-                              key={index}
-                              currentPin={currentPin}
-                              commentData={pinc}
-                            ></Comment>
-                          );
-                        })}
-                    </InfoCommentDiv>
-                  </InfoDiv>
-                  <SubmitCommentDiv>
-                    <BoxLine />
-                    <SubmitComment
-                      loginState={loginState}
-                      toggle={toggle}
-                      togglePost={togglePost}
-                      currentPin={currentPin}
-                      inputComment={inputComment}
-                      setInputComment={setInputComment}
-                      inputLink={inputLink}
-                      setInputLink={setInputLink}
-                      requestSubmitComment={requestSubmitComment}
-                    />
-                  </SubmitCommentDiv>
-                </InfoWrapper>
-              )}
-          </Wrapper>
-        </Container>
-      )}
-    </>
+                        </NewPinIcon>
+                      </>
+                    );
+                  })}
+              </PinClickFrame>
+            )}
+            {photoList && Object.keys(photoList).length > 1 && (
+              <ArrowLeft
+                onClick={() =>
+                  setCurrentImg(
+                    currentImg === 0 ? maxPhoto - 1 : currentImg - 1
+                  )
+                }
+              >
+                <Image
+                  src={"/assets/icons/arrow_left.png"}
+                  width="18"
+                  height="18"
+                  objectFit="contain"
+                ></Image>
+              </ArrowLeft>
+            )}
+            {photoList &&
+              Object.keys(photoList).length > 0 &&
+              photoList.map((pl, index) => {
+                return (
+                  <ImageBox
+                    key={index}
+                    style={currentImg === index ? {} : { display: "none" }}
+                    id={`pinImage${index}`}
+                    src={pl}
+                  ></ImageBox>
+                );
+              })}
+            {photoList && Object.keys(photoList).length > 1 && (
+              <ArrowRight
+                onClick={() =>
+                  setCurrentImg(
+                    currentImg === maxPhoto - 1 ? 0 : currentImg + 1
+                  )
+                }
+              >
+                <Image
+                  src={"/assets/icons/arrow_right.png"}
+                  width="18"
+                  height="18"
+                  objectFit="contain"
+                ></Image>
+              </ArrowRight>
+            )}
+          </ImageDiv>
+        )}
+        {infoState && postDetailData && Object.keys(postDetailData).length > 0 && (
+          <InfoWrapper>
+            <InfoDiv>
+              <InfoTopDiv>
+                <ProfileInfo>
+                  <ProfileRow>
+                    <ProfileLeft>
+                      <ProfileImage>
+                        <Image
+                          className="next_border_image circle"
+                          src={
+                            postDetailData.postsWriter.accountPhoto === ""
+                              ? "/assets/icons/eye_open.png"
+                              : postDetailData.postsWriter.accountPhoto
+                          }
+                          layout="fill"
+                          objectFit="cover"
+                        ></Image>
+                      </ProfileImage>
+                    </ProfileLeft>
+                    <ProfileRight>
+                      <ProfileNickname>
+                        {postDetailData.postsWriter.accountNickname}
+                      </ProfileNickname>
+                      <PostCreated>
+                        {postDetailData.postsWriteTime.slice(0, 4)}년{" "}
+                        {postDetailData.postsWriteTime.slice(5, 7)}월{" "}
+                        {postDetailData.postsWriteTime.slice(8, 10)}일
+                      </PostCreated>
+                    </ProfileRight>
+                  </ProfileRow>
+                  <TagInfo>
+                    {postDetailData.tags.map((t, index) => {
+                      return (
+                        <ProfileTagBox
+                          key={index}
+                          tagId={t.tagId}
+                          tagMargin={"0px 8px 0px 0px"}
+                          togglePost={togglePost}
+                        ></ProfileTagBox>
+                      );
+                    })}
+                  </TagInfo>
+                </ProfileInfo>
+              </InfoTopDiv>
+              <BoxLine />
+              <InfoContentDiv>
+                <PostTitle>{postDetailData.postsTitle}</PostTitle>
+                <PostContent>{postDetailData.postsContents}</PostContent>
+                <PostLikeDiv>
+                  <PostLikeImage onClick={postLikeBtnOnClick}>
+                    <Image
+                      src={
+                        !loginState
+                          ? "/assets/icons/heart_empty.png"
+                          : likeBtnState
+                          ? "/assets/icons/heart_fill_red.png"
+                          : "/assets/icons/heart_empty.png"
+                      }
+                      layout="fill"
+                      objectFit="contain"
+                    ></Image>
+                  </PostLikeImage>
+                  <PostLikeText>
+                    {!loginState
+                      ? postDetailData.postsLikeCnt
+                      : likeBtnState
+                      ? postDetailData.postsLikeCnt + 1
+                      : postDetailData.postsLikeCnt}
+                    명이 좋아합니다.
+                  </PostLikeText>
+                </PostLikeDiv>
+              </InfoContentDiv>
+              <BoxLine />
+              <InfoCommentDiv>
+                {currentPin && currentPin.pinId !== -1 && (
+                  <CommentTagDiv
+                    onClick={() => {
+                      setCurrentPin({
+                        pinId: -1,
+                        pinName: "전체",
+                      });
+                    }}
+                  >
+                    <CommentBackBox>
+                      <Image
+                        src="/assets/icons/arrow_left.png"
+                        layout="fill"
+                      ></Image>
+                    </CommentBackBox>
+                    전체 댓글로 돌아가기
+                  </CommentTagDiv>
+                )}
+                {currentPin &&
+                  currentPin.pinId === -1 &&
+                  postDetailData.comments.map((postc, index) => {
+                    return (
+                      <Comment
+                        key={index}
+                        currentPin={currentPin}
+                        commentData={postc}
+                      ></Comment>
+                    );
+                  })}
+                {currentPin &&
+                  currentPin.pinId !== -1 &&
+                  currentPin.comments.map((pinc, index) => {
+                    return (
+                      <Comment
+                        key={index}
+                        currentPin={currentPin}
+                        commentData={pinc}
+                      ></Comment>
+                    );
+                  })}
+              </InfoCommentDiv>
+            </InfoDiv>
+            <SubmitCommentDiv>
+              <BoxLine />
+              <SubmitComment
+                loginState={loginState}
+                toggle={toggle}
+                togglePost={togglePost}
+                currentPin={currentPin}
+                inputComment={inputComment}
+                setInputComment={setInputComment}
+                inputLink={inputLink}
+                setInputLink={setInputLink}
+                requestSubmitComment={requestSubmitComment}
+              />
+            </SubmitCommentDiv>
+          </InfoWrapper>
+        )}
+      </Wrapper>
+    </Container>
   );
 };
 

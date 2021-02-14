@@ -3,6 +3,7 @@ import styled from "@emotion/styled";
 import color from "../../styles/theme";
 import Button from "../Button";
 import { EMAIL_LOGIN } from "../../pages/api/user";
+import Swal from "sweetalert2";
 
 const Container = styled.div`
   display: flex;
@@ -92,10 +93,10 @@ const LoginMiddle = ({ setAuthState, setCurrentEmail }) => {
         setAuthState(1);
         setCurrentEmail(emailLoginReq.accountEmail);
       } else {
-        alert("로그인 요청 실패");
+        Swal.fire({ icon: "success", text: "로그인 요청 실패" });
       }
     } else {
-      alert("이메일 형식이 아닙니다.");
+      Swal.fire({ icon: "info", text: "이메일 형식으로 입력해주세요" });
     }
   };
 

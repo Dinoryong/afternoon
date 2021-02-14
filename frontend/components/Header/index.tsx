@@ -8,6 +8,7 @@ import HeaderRight from "./HeaderRight";
 import LoginModal from "../LoginModal";
 import SubmitModal from "../SubmitModal";
 import PostDetail from "../PostDetail";
+import Swal from "sweetalert2";
 
 const Container = styled.div`
   position: fixed;
@@ -154,15 +155,37 @@ const index = () => {
   };
 
   const onClickSubmitBg = () => {
-    if (
-      confirm(
-        "애프터눈 : 사진 등록을 취소하시겠습니까?\n확인을 누르시면 현재까지 작업이 사라집니다."
-      )
-    ) {
-      toggleSubmit();
-    } else {
-      return;
-    }
+    Swal.fire({
+      title: "사진 등록을 취소하시겠습니까?",
+      text: "확인을 누르시면 현재까지 작업이 사라집니다",
+      icon: "warning",
+      showCancelButton: true,
+      confirmButtonColor: "#3085d6",
+      cancelButtonColor: "#d33",
+      confirmButtonText: "확인",
+      cancelButtonText: "취소",
+    }).then((result) => {
+      if (result.isConfirmed) {
+        toggleSubmit();
+      }
+    });
+  };
+
+  const onClickEditBg = () => {
+    Swal.fire({
+      title: "프로필 수정을 취소하시겠습니까?",
+      text: "확인을 누르시면 현재까지 작업이 사라집니다",
+      icon: "warning",
+      showCancelButton: true,
+      confirmButtonColor: "#3085d6",
+      cancelButtonColor: "#d33",
+      confirmButtonText: "확인",
+      cancelButtonText: "취소",
+    }).then((result) => {
+      if (result.isConfirmed) {
+        toggleEdit();
+      }
+    });
   };
 
   return (
@@ -178,7 +201,7 @@ const index = () => {
       <Container style={containerStyle}>
         {editShown && (
           <ModalFrame style={{ height: windowHeight }}>
-            <CloseBg onClick={toggleEdit} />
+            <CloseBg onClick={onClickEditBg} />
           </ModalFrame>
         )}
         {followShown && (
