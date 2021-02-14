@@ -57,8 +57,8 @@ const Content = styled.div`
 const LogoBox = styled.div`
   position: relative;
   min-width: 32px;
-  width: 64px;
-  height: 64px;
+  width: 48px;
+  height: 48px;
   cursor: pointer;
 `;
 
@@ -133,7 +133,7 @@ const index = () => {
             <Link href="/">
               <LogoBox>
                 <Image
-                  src="/assets/logos/pinset_logo_white.png"
+                  src="/assets/icons/eye_open_white.png"
                   layout="fill"
                   objectFit="contain"
                 ></Image>

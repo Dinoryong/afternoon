@@ -156,7 +156,7 @@ const index = () => {
   const onClickSubmitBg = () => {
     if (
       confirm(
-        "PINSET : 사진 등록을 취소하시겠습니까?\n확인을 누르시면 현재까지 작업이 사라집니다."
+        "애프터눈 : 사진 등록을 취소하시겠습니까?\n확인을 누르시면 현재까지 작업이 사라집니다."
       )
     ) {
       toggleSubmit();
