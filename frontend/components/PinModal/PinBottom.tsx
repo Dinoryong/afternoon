@@ -12,13 +12,14 @@ const Container = styled.div`
 const InlineBox1 = styled.div`
   display: flex;
   align-content: space-between;
-  margin-top: 5px;
   cursor: pointer;
+  margin-top: 8px;
 `;
 
 const LinkBox = styled.div`
   display: flex;
   width: 100%;
+  /* opacity: 0.9; */
 `;
 
 const LinkInput = styled.div`
@@ -31,43 +32,10 @@ const LinkImg = styled.div`
   width: 20px;
   height: 20px;
   margin-left: 10px;
-  margin-top: 2px;
+  /* opacity: 0.9; */
 `;
 
-const InlineBox2 = styled.div`
-  display: flex;
-  position: relative;
-  justify-content: center;
-  cursor: pointer;
-`;
-
-const ArrowBox = styled.div<ExpandProps>`
-  display: flex;
-  position: relative;
-  width: 14px;
-  height: 14px;
-  margin-top: 8px;
-  transform: rotateX(${(props) => (props.expand ? `3.142rad` : `0rad`)});
-  transition: all 0.3s;
-`;
-
-const TransitionBox = styled.div`
-  overflow-y: hidden;
-  transition: all 0.3s;
-`;
-
-type ExpandProps = {
-  expand: boolean;
-};
-
-const PinBottom = ({
-  pinLink,
-  pinWriter,
-  apiLink,
-  pinComments,
-  expand,
-  setExpand,
-}) => {
+const PinBottom = ({ pinLink, pinWriter, pinApiLink }) => {
   return (
     <Container>
       <InlineBox1
@@ -76,7 +44,7 @@ const PinBottom = ({
         }}
       >
         <LinkBox>
-          <LinkInput>{pinWriter}님's Pick</LinkInput>
+          <LinkInput>{pinWriter}님의 구매정보</LinkInput>
         </LinkBox>
         <LinkImg>
           <Image
@@ -86,71 +54,22 @@ const PinBottom = ({
           ></Image>
         </LinkImg>
       </InlineBox1>
-      <TransitionBox
-        style={
-          expand
-            ? pinComments
-              ? {
-                  height: `${(pinComments.length + 1) * 29}px`,
-                }
-              : { height: "29px" }
-            : { height: 0 }
-        }
-      >
-        <InlineBox1
-          className="test"
-          onClick={() => {
-            window.open(apiLink, "_blank");
-          }}
-        >
-          <LinkBox>
-            <LinkInput>네이버 최저가</LinkInput>
-          </LinkBox>
-          <LinkImg>
-            <Image
-              src="/assets/icons/link.png"
-              layout="fill"
-              objectFit="contain"
-            ></Image>
-          </LinkImg>
-        </InlineBox1>
-        {pinComments &&
-          pinComments.map((com, index) => {
-            return (
-              <InlineBox1
-                key={index}
-                onClick={() => {
-                  window.open(com.commentLink, "_blank");
-                }}
-              >
-                <LinkBox>
-                  <LinkInput>{com.commentWriter}님's Pick</LinkInput>
-                </LinkBox>
-                <LinkImg>
-                  <Image
-                    src="/assets/icons/link.png"
-                    layout="fill"
-                    objectFit="contain"
-                  ></Image>
-                </LinkImg>
-              </InlineBox1>
-            );
-          })}
-      </TransitionBox>
-      <InlineBox2
+      <InlineBox1
         onClick={() => {
-          setExpand(!expand);
-          console.log(expand);
+          window.open(pinApiLink, "_blank");
         }}
       >
-        <ArrowBox expand={expand}>
+        <LinkBox>
+          <LinkInput>네이버 최저가</LinkInput>
+        </LinkBox>
+        <LinkImg>
           <Image
-            src="/assets/icons/arrow_down.png"
+            src="/assets/icons/link.png"
             layout="fill"
             objectFit="contain"
           ></Image>
-        </ArrowBox>
-      </InlineBox2>
+        </LinkImg>
+      </InlineBox1>
     </Container>
   );
 };

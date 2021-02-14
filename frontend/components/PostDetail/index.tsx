@@ -13,6 +13,7 @@ import color from "../../styles/theme";
 import ProfileTagBox from "../ProfileTagBox";
 import Comment from "../Comment";
 import SubmitComment from "./SubmitComment";
+import PinModal from "../PinModal";
 
 const Container = styled.div`
   position: relative;
@@ -56,10 +57,11 @@ const NewPinIcon = styled.div`
   display: flex;
   justify-content: center;
   align-items: center;
-  width: 20px;
-  height: 20px;
+  width: 40px;
+  height: 40px;
   border-radius: 50%;
-  border: 2px solid ${color.white.default};
+  background-color: ${color.white.default};
+  /* border: 2px solid ${color.white.default}; */
   top: 50%;
   left: 50%;
   cursor: pointer;
@@ -390,7 +392,14 @@ const index = ({ windowWidth, windowHeight }) => {
   };
 
   const pinCircleOnClick = (pl) => {
-    setCurrentPin(pl);
+    setCurrentPin(
+      currentPin.pinId === pl.pinId
+        ? {
+            pinId: -1,
+            pinName: "핀 선택안함",
+          }
+        : pl
+    );
     setInfoState(true);
   };
 
@@ -448,32 +457,56 @@ const index = ({ windowWidth, windowHeight }) => {
                         pinList.length > 0 &&
                         pinList.map((pl, index) => {
                           return (
-                            <NewPinIcon
-                              style={
-                                currentImg === pl.pinNum - 1
-                                  ? {
-                                      top: `${
-                                        pl.pinLocY - 1000 / imgDim.offsetHeight
-                                      }%`,
-                                      left: `${
-                                        pl.pinLocX - 1000 / imgDim.offsetWidth
-                                      }%`,
-                                    }
-                                  : {
-                                      display: "none",
-                                      top: `${
-                                        pl.pinLocY - 1000 / imgDim.offsetHeight
-                                      }%`,
-                                      left: `${
-                                        pl.pinLocX - 1000 / imgDim.offsetWidth
-                                      }%`,
-                                    }
-                              }
-                              key={index}
-                              onClick={() => pinCircleOnClick(pl)}
-                            >
-                              <NewPinMini></NewPinMini>
-                            </NewPinIcon>
+                            <>
+                              <NewPinIcon
+                                style={
+                                  currentImg === pl.pinNum - 1
+                                    ? {
+                                        top: `${
+                                          pl.pinLocY -
+                                          2000 / imgDim.offsetHeight
+                                        }%`,
+                                        left: `${
+                                          pl.pinLocX - 2000 / imgDim.offsetWidth
+                                        }%`,
+                                      }
+                                    : {
+                                        display: "none",
+                                        top: `${
+                                          pl.pinLocY -
+                                          2000 / imgDim.offsetHeight
+                                        }%`,
+                                        left: `${
+                                          pl.pinLocX - 2000 / imgDim.offsetWidth
+                                        }%`,
+                                      }
+                                }
+                                key={index}
+                                onClick={() => pinCircleOnClick(pl)}
+                              >
+                                {currentImg === pl.pinNum - 1 &&
+                                  currentPin.pinId === pl.pinId && (
+                                    <PinModal
+                                      key={index}
+                                      pinData={pl}
+                                      accountNickname={
+                                        postDetailData.postsWriter
+                                          .accountNickname
+                                      }
+                                    ></PinModal>
+                                  )}
+                                <Image
+                                  src={
+                                    currentPin.pinId === pl.pinId
+                                      ? "/assets/icons/eye_open.png"
+                                      : "/assets/icons/eye_close.png"
+                                  }
+                                  width={36}
+                                  height={36}
+                                  objectFit="contain"
+                                ></Image>
+                              </NewPinIcon>
+                            </>
                           );
                         })}
                     </PinClickFrame>

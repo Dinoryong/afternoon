@@ -17,21 +17,21 @@ const TitleText = styled.div`
   display: flex;
   color: ${color.black.default};
   font-weight: bold;
-  font-size: 16px;
+  font-size: 18px;
 `;
 
 const ContentText = styled.div`
   display: flex;
-  color: ${color.black.default};
-  font-size: 12px;
+  color: ${color.gray.dark};
+  font-size: 14px;
 `;
 
-const PinTop = ({ pinTitle, apiCategory }) => {
+const PinTop = ({ pinName, pinApiClass }) => {
   return (
     <Container>
       <TextBox>
-        <TitleText>{pinTitle}</TitleText>
-        <ContentText>{apiCategory}</ContentText>
+        <TitleText>{pinName}</TitleText>
+        <ContentText>{pinApiClass}</ContentText>
       </TextBox>
     </Container>
   );
