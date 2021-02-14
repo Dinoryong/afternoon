@@ -80,7 +80,8 @@ export const GetMyInfoData = {
     accountEmail: "dngngn3045@gmail.com",
     accountCreateDate: "2021-02-07",
     accountBio: "",
-    accountPhoto: "",
+    accountPhoto:
+      "https://firebasestorage.googleapis.com/v0/b/ssafy-a302.appspot.com/o/images%2F85KMvfD2G4DxpN72?alt=media&token=f4051b7b-7b1e-448c-8fb4-38e4665935cb",
     following: [],
     follower: [],
     accountFollowingCnt: 0,
@@ -160,7 +161,8 @@ export const SearchLoginUserData = {
     accountCreateDate: "2021-02-08",
     accountBio:
       "대통령이 궐위된 때 또는 대통령 당선자가 사망하거나 판결 기타의 사유로 그 자격을 상실한 때에는 60일 이내에 후임자를 선거한다. 국회의원의 선거구와 비례대표제 기타 선거에 관한 사항은 법률로 정한다.",
-    accountPhoto: "",
+    accountPhoto:
+      "https://firebasestorage.googleapis.com/v0/b/ssafy-a302.appspot.com/o/images%2FdkIg4OEz3NvI0SPb?alt=media&token=6534e2ac-217a-4a5b-ae05-befd7d43e348",
     following: [],
     follower: [{ id: 34, name: "회원쳌", nickname: "회원체크" }],
     accountFollowingCnt: 0,
@@ -278,7 +280,11 @@ export const GetOnePostData = {
     postsWriteTime: "2021-02-14",
     postsLikeCnt: 0,
     likeState: false,
-    postsWriter: { accountPhoto: "", accountNickname: "난재" },
+    postsWriter: {
+      accountPhoto:
+        "https://firebasestorage.googleapis.com/v0/b/ssafy-a302.appspot.com/o/images%2F85KMvfD2G4DxpN72?alt=media&token=f4051b7b-7b1e-448c-8fb4-38e4665935cb",
+      accountNickname: "난재",
+    },
     postsPhotos: [
       "https://firebasestorage.googleapis.com/v0/b/ssafy-a302.appspot.com/o/images%2F21pZUwb1qTaBR7O7?alt=media&token=4ff92079-66c2-4aa0-9483-54fe000b6fc4",
       "https://firebasestorage.googleapis.com/v0/b/ssafy-a302.appspot.com/o/images%2FQH5rJq8SoNBLKyJc?alt=media&token=957e2655-d663-4fc8-b569-4efb4a4ab7a2",
@@ -346,7 +352,8 @@ export const GetOnePostData = {
           {
             commentId: 9,
             accountNickname: "난재",
-            accountPhoto: "",
+            accountPhoto:
+              "https://firebasestorage.googleapis.com/v0/b/ssafy-a302.appspot.com/o/images%2F85KMvfD2G4DxpN72?alt=media&token=f4051b7b-7b1e-448c-8fb4-38e4665935cb",
             commentLink: "",
             commentContent: "애기옷 이쁘네요",
             pinName: "애기옷",
@@ -418,7 +425,8 @@ export const GetOnePostData = {
       {
         commentContent: "애기옷 이쁘네요",
         accountNickname: "난재",
-        accountPhoto: "",
+        accountPhoto:
+          "https://firebasestorage.googleapis.com/v0/b/ssafy-a302.appspot.com/o/images%2F85KMvfD2G4DxpN72?alt=media&token=f4051b7b-7b1e-448c-8fb4-38e4665935cb",
         commentLink: "",
         pinId: 4,
         pinNum: 2,
