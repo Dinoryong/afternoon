@@ -14,6 +14,7 @@ import ProfileTagBox from "../ProfileTagBox";
 import Comment from "../Comment";
 import SubmitComment from "./SubmitComment";
 import PinModal from "../PinModal";
+import Swal from "sweetalert2";
 
 const Container = styled.div`
   position: relative;
@@ -423,6 +424,14 @@ const index = ({ windowWidth, windowHeight }) => {
 
     if (result.status === 201) {
       togglePost();
+      Swal.fire({
+        icon: "success",
+        title: "댓글 작성 완료",
+        text: "댓글 작성 후 바로 보실 수 있게 노력할께요!",
+      });
+    } else {
+      togglePost();
+      Swal.fire({ icon: "error", text: "댓글 작성에 실패했습니다" });
     }
   };
 

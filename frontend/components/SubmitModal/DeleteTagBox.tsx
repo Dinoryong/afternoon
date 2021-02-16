@@ -10,7 +10,8 @@ const Container = styled.div`
   display: flex;
   justify-content: center;
   align-items: center;
-  width: fit-content;
+  width: 80px;
+  min-width: 80px;
   min-width: fit-content;
   padding: 4px 8px;
   font-size: 14px;
@@ -25,6 +26,12 @@ const Container = styled.div`
 
 const TextBox = styled.div`
   transition: all 0.3s;
+`;
+
+const DeleteBox = styled.div`
+  position: absolute;
+  transition: all 0.3s;
+  color: ${color.black.default};
 `;
 
 const useStore = () => {
@@ -45,26 +52,38 @@ const useStore = () => {
   return { toggleId, loginState, toggle, togglePost };
 };
 
-const index = ({ tagId = 1, tagMargin = "0px", togglePost = () => {} }) => {
+const DeleteTagBox = ({
+  tagId = 1,
+  tagMargin = "0px",
+  tagOnClick = () => {},
+  tagUseDelete = true,
+}) => {
   const router = useRouter();
+  const [mouseOver, setMouseOver] = useState(false);
 
   const tagInfo = TagList[tagId - 1];
 
   return (
     <Container
-      onClick={() => {
-        togglePost();
-        router.push(`/search/${tagInfo.tagTitle}`);
+      onClick={tagOnClick}
+      onMouseOver={() => {
+        if (tagUseDelete) setMouseOver(true);
+      }}
+      onMouseLeave={() => {
+        if (tagUseDelete) setMouseOver(false);
       }}
       style={{
-        // backgroundColor: mouseOver ? "white" : tagInfo.tagColor,
+        backgroundColor: mouseOver ? "white" : color.gray.light,
         margin: tagMargin,
-        // borderColor: mouseOver ? color.black.default : tagInfo.tagColor,
+        borderColor: mouseOver ? color.black.default : color.gray.light,
       }}
     >
-      <TextBox>{tagInfo.tagTitle}</TextBox>
+      <TextBox style={mouseOver ? { opacity: 0 } : { opacity: 1 }}>
+        {tagInfo.tagTitle}
+      </TextBox>
+      <DeleteBox style={{ opacity: mouseOver ? 1 : 0 }}>태그삭제</DeleteBox>
     </Container>
   );
 };
 
-export default index;
+export default DeleteTagBox;

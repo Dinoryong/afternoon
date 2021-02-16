@@ -45,17 +45,18 @@ const useStore = () => {
   return { toggleId, loginState, toggle, togglePost };
 };
 
-const index = ({ tagId = 1, tagMargin = "0px", togglePost = () => {} }) => {
+const SelectTagBox = ({
+  tagId = 1,
+  tagMargin = "0px",
+  tagOnClick = () => {},
+}) => {
   const router = useRouter();
 
   const tagInfo = TagList[tagId - 1];
 
   return (
     <Container
-      onClick={() => {
-        togglePost();
-        router.push(`/search/${tagInfo.tagTitle}`);
-      }}
+      onClick={tagOnClick}
       style={{
         // backgroundColor: mouseOver ? "white" : tagInfo.tagColor,
         margin: tagMargin,
@@ -67,4 +68,4 @@ const index = ({ tagId = 1, tagMargin = "0px", togglePost = () => {} }) => {
   );
 };
 
-export default index;
+export default SelectTagBox;

@@ -240,7 +240,10 @@ const HeaderLeft = ({
       />
       <SearchBox>
         {inputFocus && (
-          <AutoSuggest setInputFocus={setInputFocus}></AutoSuggest>
+          <AutoSuggest
+            setSearchTerm={setSearchTerm}
+            setInputFocus={setInputFocus}
+          ></AutoSuggest>
         )}
         <SearchInner
           style={searchBoxStyle}
@@ -275,7 +278,18 @@ const HeaderLeft = ({
               setSearchTerm(e.target.value);
             }}
             onKeyDown={(e) => {
-              if (e.key === "Enter") router.push(`/search/${searchTerm}`);
+              if (e.key === "Enter") {
+                router.push(`/search/${searchTerm}`);
+                setSearchTerm("");
+                setInputFocus(false);
+              }
+              if (e.key === "Tab") {
+                setInputFocus(false);
+              }
+              if (e.key === "Escape") {
+                // setInputFocus(false);
+                setSearchTerm("");
+              }
             }}
           />
         </SearchInner>

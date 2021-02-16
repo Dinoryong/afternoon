@@ -3,13 +3,13 @@ import styled from "@emotion/styled";
 import color from "../../styles/theme";
 import Image from "next/image";
 import { useRouter } from "next/router";
-import ProfileTagBox from "../ProfileTagBox";
+import SelectTagBox from "./SelectTagBox";
 import TagList from "../../data/TagList";
 
 const Container = styled.div`
   position: absolute;
-  top: 36px;
-  width: 100%;
+  top: 73px;
+  width: 380px;
   background-color: ${color.white.default};
   border-bottom-left-radius: 8px;
   border-bottom-right-radius: 8px;
@@ -35,7 +35,7 @@ const SuggestDefault = styled.div`
 
 const SuggestBox = styled.div`
   display: flex;
-  width: 600px;
+  width: 100%;
   flex-wrap: wrap;
   align-items: center;
   /* cursor: pointer; */
@@ -61,42 +61,32 @@ const SuggestCount = styled.div`
   color: ${color.gray.dark};
 `;
 
-const index = ({ setInputFocus, setSearchTerm }) => {
-  const suggestList = [
-    // { type: 1, title: "이재욱여덟글자야", count: 133 },
-    // { type: 2, title: "작업공간", count: 762 },
-    // { type: 1, title: "구영지", count: 211 },
-    // { type: 2, title: "개발자", count: 332 },
-    // { type: 1, title: "한우석", count: 183 },
-    // { type: 1, title: "최재웅", count: 311 },
-    // { type: 2, title: "디자이너", count: 543 },
-    // { type: 2, title: "스킨스쿠버", count: 192 },
-  ];
-
+const SelectTags = ({ setSelectTagList, selectTagList, setToggleTags }) => {
   const router = useRouter();
+  const filterTagList = TagList.filter(
+    (t) => selectTagList.findIndex((s) => s === t.tagId) < 0
+  );
+  //   console.log(filterTagList);
 
   return (
     <Container>
       <Wrapper>
         <SuggestContainer>
-          <SuggestDefault>
-            현재 검색어 추천 서비스에 문제가 있어 전체 태그 조회를 제공하고
-            있습니다.
-          </SuggestDefault>
+          <SuggestDefault>원하시는 태그를 선택해주세요.</SuggestDefault>
           <SuggestBox>
-            {TagList &&
-              TagList.length > 0 &&
-              TagList.map((s, index) => {
+            {filterTagList &&
+              filterTagList.length > 0 &&
+              filterTagList.map((s, index) => {
                 return (
-                  <ProfileTagBox
+                  <SelectTagBox
                     key={index}
                     tagId={s.tagId}
-                    togglePost={() => {
-                      setInputFocus(false);
-                      setSearchTerm("");
+                    tagOnClick={() => {
+                      setSelectTagList([...selectTagList, s.tagId]);
+                      setToggleTags(false);
                     }}
                     tagMargin={"8px 4px 0px 4px"}
-                  ></ProfileTagBox>
+                  ></SelectTagBox>
                   // <SuggestBox
                   //   key={index}
                   //   onClick={() => {
@@ -118,4 +108,4 @@ const index = ({ setInputFocus, setSearchTerm }) => {
   );
 };
 
-export default index;
+export default SelectTags;

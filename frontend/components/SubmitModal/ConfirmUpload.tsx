@@ -9,6 +9,9 @@ import TagBox from "../TagBox";
 import { useRouter } from "next/router";
 import { useDispatch } from "react-redux";
 import Swal from "sweetalert2";
+import SelectTags from "./SelectTags";
+import SelectTagBox from "./SelectTagBox";
+import DeleteTagBox from "./DeleteTagBox";
 
 const Container = styled.div`
   position: relative;
@@ -323,6 +326,8 @@ const ConfirmUpload = ({
   const [inputContent, setInputContent] = useState("");
   const [selectTagList, setSelectTagList] = useState([]);
 
+  const [toggleTags, setToggleTags] = useState(false);
+
   const [img1HasPin, setImg1HasPin] = useState([]);
   const [img2HasPin, setImg2HasPin] = useState([]);
   const [img3HasPin, setImg3HasPin] = useState([]);
@@ -480,15 +485,16 @@ const ConfirmUpload = ({
   };
 
   const onClickAddTag = () => {
-    let tagId = window.prompt("태그ID 입럭", "");
-    if (tagId === null || tagId === "") {
-      return;
-    } else if (parseInt(tagId) > 23 || parseInt(tagId) < 1) {
-      window.alert("1 ~ 23 사이의 숫자를 입력해주세요.");
-      onClickAddTag();
-    } else {
-      setSelectTagList([...selectTagList, tagId]);
-    }
+    setToggleTags(!toggleTags);
+    // let tagId = window.prompt("태그ID 입럭", "");
+    // if (tagId === null || tagId === "") {
+    //   return;
+    // } else if (parseInt(tagId) > 23 || parseInt(tagId) < 1) {
+    //   window.alert("1 ~ 23 사이의 숫자를 입력해주세요.");
+    //   onClickAddTag();
+    // } else {
+    //   setSelectTagList([...selectTagList, tagId]);
+    // }
   };
 
   return (
@@ -608,17 +614,24 @@ const ConfirmUpload = ({
             <AddTagDiv>
               {selectTagList &&
                 selectTagList.map((t, index) => (
-                  <TagBox
+                  <DeleteTagBox
                     key={index}
                     tagId={t}
                     tagMargin={"0px 6px"}
                     tagOnClick={() => {
                       setSelectTagList(selectTagList.filter((tl) => tl != t));
                     }}
-                  ></TagBox>
+                  ></DeleteTagBox>
                 ))}
               {selectTagList && selectTagList.length < 4 && (
                 <AddTagBox onClick={onClickAddTag}>+</AddTagBox>
+              )}
+              {toggleTags && (
+                <SelectTags
+                  setSelectTagList={setSelectTagList}
+                  selectTagList={selectTagList}
+                  setToggleTags={setToggleTags}
+                ></SelectTags>
               )}
             </AddTagDiv>
             <BoxLine />

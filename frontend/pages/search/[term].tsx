@@ -12,6 +12,8 @@ import {
 } from "../api/search";
 import TagList from "../../data/TagList";
 import { RootStateOrAny, useSelector } from "react-redux";
+import color from "../../styles/theme";
+import Swal from "sweetalert2";
 
 const Container = styled.div`
   display: flex;
@@ -36,6 +38,29 @@ const DynamicDiv = styled.div`
   flex-direction: column;
   width: 1280px;
   margin-top: 60px;
+`;
+
+const NullDiv = styled.div`
+  font-size: 28px;
+  font-weight: 700;
+  margin-top: 40px;
+  margin-bottom: 40px;
+`;
+
+const NullTagAdd = styled.div`
+  font-size: 18px;
+  display: flex;
+  align-items: center;
+  margin-bottom: 8px;
+`;
+
+const NullTagAddBtn = styled.div`
+  padding: 4px 8px;
+  background-color: ${color.green.dark};
+  margin-right: 8px;
+  border-radius: 8px;
+  color: white;
+  cursor: pointer;
 `;
 
 const useCounter = () => {
@@ -173,7 +198,32 @@ const index = () => {
           )}
         </Wrapper>
       )}
-      {routerQuery !== undefined && !termExist && <Wrapper>없어요</Wrapper>}
+      {routerQuery !== undefined && !termExist && (
+        <Wrapper>
+          <NullDiv>등록되지 않은 태그 또는 사용자입니다</NullDiv>
+          <NullTagAdd>검색하신 "{routerQuery}" 태그를 추가하시려면</NullTagAdd>
+          <NullTagAdd>
+            <NullTagAddBtn
+              onClick={() => {
+                setTimeout(() => {
+                  Swal.fire({
+                    title: "태그 등록신청 성공",
+                    text: "태그 검토 후 빠른 시일 내에 추가하겠습니다",
+                    icon: "success",
+                  }).then((result) => {
+                    if (result.isConfirmed) {
+                      router.push("/feed");
+                    }
+                  });
+                }, 500);
+              }}
+            >
+              태그 등록신청
+            </NullTagAddBtn>
+            버튼을 눌러주세요
+          </NullTagAdd>
+        </Wrapper>
+      )}
     </Container>
   );
 };
