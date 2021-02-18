@@ -94,7 +94,9 @@ const SignupMiddle = () => {
     setSignupValid(
       pattern.test(inputEmail) &&
         inputNickName.length > 1 &&
-        inputName.length > 1
+        inputNickName.length < 9 &&
+        inputName.length > 1 &&
+        inputName.length < 9
     );
   }, [inputEmail, inputNickName, inputName]);
 

@@ -635,7 +635,7 @@ const index = ({ windowWidth, windowHeight }) => {
                     {!loginState
                       ? postDetailData.postsLikeCnt
                       : likeBtnState
-                      ? postDetailData.postsLikeCnt + 1
+                      ? `회원님 외 ${postDetailData.postsLikeCnt}`
                       : postDetailData.postsLikeCnt}
                     명이 좋아합니다.
                   </PostLikeText>

@@ -1,4 +1,4 @@
-import React, { useRef, useState } from "react";
+import React, { useEffect, useRef, useState } from "react";
 import styled from "@emotion/styled";
 import Button from "../Button";
 import color from "../../styles/theme";
@@ -63,9 +63,17 @@ const ImgBox = styled.div`
 
 const EditPhoto = styled.div`
   position: absolute;
+  display: flex;
+  justify-content: center;
+  align-items: center;
   width: 100%;
   height: 100%;
   cursor: pointer;
+  background-color: rgba(0, 0, 0, 0.3);
+  border-radius: 50%;
+  font-size: 18px;
+  font-weight: 700;
+  color: white;
 `;
 
 const PhotoInput = styled("input")`
@@ -146,6 +154,7 @@ const InputBio = styled.textarea`
     outline: none;
   }
   margin-bottom: 10px;
+  resize: none;
 `;
 
 const EditButton = styled.div`
@@ -189,10 +198,19 @@ const index = ({
     url: accountPhoto,
     progress: 0,
   });
+  const [editValid, setEditValid] = useState(false);
+
+  useEffect(() => {
+    setEditValid(
+      nicknameInput.length > 1 &&
+        nicknameInput.length < 9 &&
+        nameInput.length > 1 &&
+        nameInput.length < 9 &&
+        (profileAsFile.progress === 0 || profileAsFile.progress === 100)
+    );
+  }, [profileAsFile, nicknameInput, nameInput]);
 
   if (accountPhoto === "") accountPhoto = "/assets/icons/eye_open.png";
-
-  // accountName accountNickname accountPhoto accountBio => 200 문제 시 400
 
   const requestEditProfile = async () => {
     const editProfileReq = {
@@ -314,7 +332,7 @@ const index = ({
             objectFit="cover"
           ></Image>
         )}
-        <EditPhoto onClick={onButtonClick}></EditPhoto>
+        <EditPhoto onClick={onButtonClick}>사진 변경</EditPhoto>
         <PhotoInput
           type="file"
           id="file"
@@ -340,7 +358,7 @@ const index = ({
       ></InputBio>
       <EditButton>
         <Button
-          btnBgColor={color.green.default}
+          btnBgColor={!editValid ? color.gray.semidark : color.green.default}
           btnWidth="300px"
           btnText="프로필 업데이트"
           btnTextColor={color.white.default}
@@ -348,9 +366,9 @@ const index = ({
           btnFontWeight={700}
           btnBorderColor="transparent"
           btnHoverBorderColor="transparent"
-          btnHoverBgColor={color.red.dark}
+          btnHoverBgColor={!editValid ? color.gray.semidark : color.green.dark}
           btnHoverTextColor={color.white.default}
-          btnOnClick={requestEditProfile}
+          btnOnClick={!editValid ? () => {} : requestEditProfile}
         />
       </EditButton>
     </Container>
