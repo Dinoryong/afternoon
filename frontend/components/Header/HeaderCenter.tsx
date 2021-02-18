@@ -4,6 +4,7 @@ import Button from "../Button";
 import Image from "next/image";
 import color from "../../styles/theme";
 import { useSelector, useDispatch } from "react-redux";
+import Swal from "sweetalert2";
 
 const Container = styled.div`
   display: flex;
@@ -134,6 +135,11 @@ const HeaderRight = ({
       <NoticeIcon {...props} style={noticeIconStyle}>
         <IconBox
           onClick={() => {
+            Swal.fire({
+              icon: "info",
+              title: "알림 서비스 준비 중..",
+              text: "슬프게도 여기에 시간을 투자할 수가 없어요..",
+            });
             setInputFocus(false);
           }}
         >

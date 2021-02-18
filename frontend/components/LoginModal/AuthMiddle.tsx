@@ -57,12 +57,14 @@ const SendingBox = styled.div`
   font-size: 12px;
   font-weight: 400;
   margin: 20px 0px;
+  cursor: pointer;
 `;
 
 const SendingText = styled.div`
   display: flex;
   width: 150px;
   justify-content: center;
+  cursor: pointer;
 `;
 
 const LoginButton = styled.div`
@@ -108,7 +110,7 @@ const AuthMiddle = ({ currentEmail }) => {
       setCheckState(true);
       Swal.fire({ icon: "success", text: "이메일 인증 성공" });
     } else {
-      Swal.fire({ icon: "error", text: "이메일 인증 성공" });
+      Swal.fire({ icon: "error", text: "이메일 인증 실패" });
     }
   };
 

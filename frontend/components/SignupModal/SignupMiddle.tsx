@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import styled from "@emotion/styled";
 import { useRouter } from "next/router";
 import color from "../../styles/theme";
@@ -78,12 +78,25 @@ const SignupButton = styled.div`
   margin-bottom: 10px;
 `;
 
+const pattern = new RegExp(
+  /^(("[\w-\s]+")|([\w-]+(?:\.[\w-]+)*)|("[\w-\s]+")([\w-]+(?:\.[\w-]+)*))(@((?:[\w-]+\.)*\w[\w-]{0,66})\.([a-z]{2,6}(?:\.[a-z]{2})?)$)|(@\[?((25[0-5]\.|2[0-4][0-9]\.|1[0-9]{2}\.|[0-9]{1,2}\.))((25[0-5]|2[0-4][0-9]|1[0-9]{2}|[0-9]{1,2})\.){2}(25[0-5]|2[0-4][0-9]|1[0-9]{2}|[0-9]{1,2})\]?$)/i
+);
+
 const SignupMiddle = () => {
   const router = useRouter();
 
   const [inputName, setInputName] = useState("");
   const [inputNickName, setInputNickName] = useState("");
   const [inputEmail, setInputEmail] = useState("");
+  const [signupValid, setSignupValid] = useState(false);
+
+  useEffect(() => {
+    setSignupValid(
+      pattern.test(inputEmail) &&
+        inputNickName.length > 1 &&
+        inputName.length > 1
+    );
+  }, [inputEmail, inputNickName, inputName]);
 
   const requestSignup = async () => {
     const signupReq = {
@@ -129,7 +142,7 @@ const SignupMiddle = () => {
       />
       <SignupButton>
         <Button
-          btnBgColor={color.red.default}
+          btnBgColor={!signupValid ? color.gray.semidark : color.red.default}
           btnWidth="300px"
           btnText="회원가입"
           btnTextColor={color.white.default}
@@ -137,9 +150,9 @@ const SignupMiddle = () => {
           btnFontWeight={700}
           btnBorderColor="transparent"
           btnHoverBorderColor="transparent"
-          btnHoverBgColor={color.red.dark}
+          btnHoverBgColor={!signupValid ? color.gray.semidark : color.red.dark}
           btnHoverTextColor={color.white.default}
-          btnOnClick={requestSignup}
+          btnOnClick={!signupValid ? () => {} : requestSignup}
         />
       </SignupButton>
     </Container>

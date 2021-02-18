@@ -15,6 +15,7 @@ import Comment from "../Comment";
 import SubmitComment from "./SubmitComment";
 import PinModal from "../PinModal";
 import Swal from "sweetalert2";
+import { useRouter } from "next/router";
 
 const Container = styled.div`
   position: relative;
@@ -158,6 +159,7 @@ const ProfileInfo = styled.div`
 
 const ProfileRow = styled.div`
   display: flex;
+  cursor: pointer;
 `;
 
 const ProfileLeft = styled.div`
@@ -272,6 +274,8 @@ const index = ({ windowWidth, windowHeight }) => {
     pinId: -1,
     pinName: "전체",
   });
+
+  const router = useRouter();
 
   useEffect(() => {
     let pinImage = document.getElementById(`pinImage${currentImg}`);
@@ -562,7 +566,14 @@ const index = ({ windowWidth, windowHeight }) => {
             <InfoDiv>
               <InfoTopDiv>
                 <ProfileInfo>
-                  <ProfileRow>
+                  <ProfileRow
+                    onClick={() => {
+                      togglePost();
+                      router.push(
+                        `/search/${postDetailData.postsWriter.accountNickname}`
+                      );
+                    }}
+                  >
                     <ProfileLeft>
                       <ProfileImage>
                         <Image

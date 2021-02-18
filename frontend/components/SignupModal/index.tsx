@@ -4,6 +4,8 @@ import UserModalTop from "../UserModal/UserModalTop";
 import SignupMiddle from "./SignupMiddle";
 import UserModalBottom from "../UserModal/UserModalBottom";
 import UserModalFoot from "../UserModal/UserModalFoot";
+import { useRouter } from "next/router";
+import { useDispatch } from "react-redux";
 
 const Container = styled.div`
   width: 400px;
@@ -20,7 +22,20 @@ const Container = styled.div`
   border-radius: 10px;
 `;
 
+const useStore = () => {
+  const dispatch = useDispatch();
+
+  const toggle = () => {
+    dispatch({ type: "TOGGLE" });
+  };
+
+  return { toggle };
+};
+
 const index = () => {
+  const router = useRouter();
+  const { toggle } = useStore();
+
   return (
     <Container>
       <UserModalTop />
@@ -31,7 +46,13 @@ const index = () => {
         snsText2="카카오 계정으로 가입하기"
         snsText3="Google 계정으로 가입하기"
       />
-      <UserModalFoot footText="계정이 없으신가요? 회원가입하기" />
+      <UserModalFoot
+        footText="계정이 있으신가요? 로그인하기"
+        footOnClick={() => {
+          router.push("/home");
+          toggle();
+        }}
+      />
     </Container>
   );
 };

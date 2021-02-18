@@ -80,6 +80,13 @@ const LoginMiddle = ({ setAuthState, setCurrentEmail }) => {
   }, [inputEmail]);
 
   const requestEmailLogin = async () => {
+    Swal.fire({
+      icon: "success",
+      title: "인증번호 발송 완료",
+      text: `서비스 상황에 따라 3~10초 정도 소요됩니다`,
+    });
+    setCurrentEmail(inputEmail);
+    setAuthState(1);
     if (pattern.test(inputEmail)) {
       const emailLoginReq = {
         act: "login-request",
@@ -90,8 +97,6 @@ const LoginMiddle = ({ setAuthState, setCurrentEmail }) => {
       console.log(result);
 
       if (result.status === 200) {
-        setAuthState(1);
-        setCurrentEmail(emailLoginReq.accountEmail);
       } else {
         Swal.fire({ icon: "success", text: "로그인 요청 실패" });
       }

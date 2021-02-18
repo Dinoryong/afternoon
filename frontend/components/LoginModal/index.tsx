@@ -7,6 +7,7 @@ import UserModalBottom from "../UserModal/UserModalBottom";
 import UserModalFoot from "../UserModal/UserModalFoot";
 import LoginMiddle from "./LoginMiddle";
 import AuthMiddle from "./AuthMiddle";
+import { useRouter } from "next/router";
 
 const Container = styled.div`
   width: 400px;
@@ -50,6 +51,8 @@ const index = () => {
 
   const { toggle } = useStore();
 
+  const router = useRouter();
+
   return (
     <Container>
       <Xbutton onClick={toggle}>
@@ -74,7 +77,13 @@ const index = () => {
         snsText2="카카오톡으로 로그인"
         snsText3="Google로 로그인"
       />
-      <UserModalFoot footText="계정이 없으신가요? 회원가입하기" />
+      <UserModalFoot
+        footText="계정이 없으신가요? 회원가입하기"
+        footOnClick={() => {
+          router.push("/signup");
+          toggle();
+        }}
+      />
     </Container>
   );
 };
