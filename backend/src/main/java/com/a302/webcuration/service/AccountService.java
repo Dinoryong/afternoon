@@ -142,7 +142,7 @@ public class AccountService {
                 account.updateAccount(request);
                 resultMap.put("message",account.getAccountName()+"님의 정보가 변경되었습니다.");
                 return new BaseMessage( HttpStatus.OK,resultMap);
-            }else if(duplicateCheck.getAccountId()==myId) {
+            }else if(duplicateCheck.getAccountEmail().equals(account.getAccountEmail())) {
                 account.updateAccount(request);
                 resultMap.put("message","기존과 동일한 닉네임입니다.");
                 return new BaseMessage( HttpStatus.OK,resultMap);
