@@ -38,7 +38,6 @@ public class SearchService {
         }
         Map<String, Object> resultMap = new HashMap<>();
         try {
-
             //태그 검색 시도
             Tag tag =tagRepository.findByTagTitle(name);
             if(tag!=null){
@@ -65,7 +64,7 @@ public class SearchService {
                 Posts posts=tag.getPosts().get(idx);
                 PostsDto.PostsWithOnePhoto writtenPost= PostsDto.PostsWithOnePhoto.builder()
                         .postsId(posts.getPostsId())
-                        .postsWriter(posts.getPostWriter().getAccountName())
+                        .postsWriter(posts.getPostWriter().getAccountNickname())
                         .postsTitle(posts.getPostsTitle())
                         .postsPhoto(posts.getPostsPhotos().get(0))
                         .build();

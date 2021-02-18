@@ -112,7 +112,7 @@ public class CommentControllerTest extends BaseControllerTest {
     @Test
     public void createComment_성공_모두존재() throws Exception {
 
-        String content = "댓글 생성 테스트";
+        String content = "댓글을 답니다";
         String link = "link_test.com";
 
         CommentDto.CreateCommentRequest request = CommentDto.CreateCommentRequest.builder()
