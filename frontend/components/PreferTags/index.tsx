@@ -24,7 +24,7 @@ const TagBox = styled.div`
   margin: 10px;
   cursor: pointer;
   color: ${color.white.default};
-  font-size: 18px;
+  font-size: 20px;
   :hover {
     font-size: 24px;
   }
@@ -40,9 +40,11 @@ const TagImg = styled.div`
 `;
 
 const TagTitle = styled.div`
+  height: 40px;
   display: flex;
   position: absolute;
   justify-content: center;
+  align-items: center;
   font-weight: 700;
   pointer-events: none;
   height: 30px;
@@ -64,8 +66,8 @@ const BgOpacityFrame = styled.div`
 `;
 
 const PreferTags = ({ selectTags, setSelectTags }) => {
-  const MAX_COL = TagList.length / 5;
-  const MAX_ROW = 5;
+  const MAX_ROW = 4;
+  const MAX_COL = TagList.length / MAX_ROW;
   let tagRows = 1;
 
   let tagRowList = [];
@@ -93,7 +95,7 @@ const PreferTags = ({ selectTags, setSelectTags }) => {
                   <TagImg>
                     <Image
                       className="next_border_image"
-                      src={"/assets/images/home_bg_0.jpg"}
+                      src={t.tagSrc}
                       layout="fill"
                       objectFit="cover"
                     ></Image>
@@ -101,8 +103,8 @@ const PreferTags = ({ selectTags, setSelectTags }) => {
                   <BgOpacityFrame
                     style={
                       selectTags.findIndex((x) => x === t.tagId) >= 0
-                        ? { backgroundColor: "rgba(0,0,0,0.7)" }
-                        : { backgroundColor: "rgba(0,0,0,0.2)" }
+                        ? { backgroundColor: "rgba(255,51,153,0.8)" }
+                        : { backgroundColor: "rgba(0,0,0,0.3)" }
                     }
                   ></BgOpacityFrame>
                   <TagTitle>{t.tagTitle}</TagTitle>

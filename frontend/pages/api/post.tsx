@@ -85,8 +85,8 @@ export const GET_FEED = async (config) => {
       await timeout(1000);
       // throw new Error();
       status = 200;
-      data = FeedListData.data;
-      // data = FeedNullData.data;
+      // data = FeedListData.data;
+      data = FeedNullData.data;
     } catch (error) {
       //replace_console_log(error);
     }
