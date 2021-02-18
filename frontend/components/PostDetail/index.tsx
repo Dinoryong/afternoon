@@ -54,7 +54,7 @@ const PinClickFrame = styled.div`
 `;
 
 const NewPinIcon = styled.div`
-  z-index: 5;
+  z-index: ${(props) => (props.isCurrent ? 6 : 5)};
   position: absolute;
   display: flex;
   justify-content: center;
@@ -67,13 +67,6 @@ const NewPinIcon = styled.div`
   top: 50%;
   left: 50%;
   cursor: pointer;
-`;
-
-const NewPinMini = styled.div`
-  width: 12px;
-  height: 12px;
-  border-radius: 50%;
-  background-color: ${color.white.default};
 `;
 
 const ArrowLeft = styled.div`
@@ -489,6 +482,7 @@ const index = ({ windowWidth, windowHeight }) => {
                                 }%`,
                               }
                         }
+                        isCurrent={currentPin.pinId === pl.pinId}
                         key={index}
                         onClick={() => pinCircleOnClick(pl)}
                       >
