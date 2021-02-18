@@ -20,8 +20,10 @@ public class Pin {
     private Double pinLocY;
     private Double pinLocX;
     // 작성자
+    @Column(columnDefinition = "TEXT")
     private String pinLink;
     // 네이버 API가 설정한 URL
+    @Column(columnDefinition = "TEXT")
     private String pinApiLink;
     // 네이버 API 통한 분류 소분류
     private String pinApiClass;
