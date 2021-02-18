@@ -100,12 +100,11 @@ public class AccountControllerTest extends BaseControllerTest {
 
     @Test
     public void Account_update_성공() throws Exception {
-
-
         AccountDto.UpdateRequest request = new AccountDto.UpdateRequest();
-        String token = "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJzdWIiOiLroZzqt7jsnbjthqDtgbAiLCJleHAiOjE2MTMxODkyMzQsImFjY291bnRJZCI6MjQsImFjY291bnRFbWFpbCI6ImRudGpyNDc3MkBuYXRlLmNvbSJ9.QU_FxH4hw6qHQEU2mYmbe4729DXqkmeD0k0lop-_3EY";
+        String token = "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJzdWIiOiLroZzqt7jsnbjthqDtgbAiLCJleHAiOjE2MTM2Njc3MzksImFjY291bnRJZCI6MSwiYWNjb3VudEVtYWlsIjoiZG50anI0NzcyQG5hdGUuY29tIn0.sVdShJvwy1DXLeT08_yQKwUQ6XCo2Z9FPhI_ufuC59M";
         request.setAccountBio("최재웅이");
         request.setAccountNickname("GS재웅님");
+        request.setAccountName("최재웅");
         request.setAccountPhoto("https://image.chosun.com/sitedata/image/202002/06/2020020602404_0.png");
         mockMvc.perform(put("/api/accounts/")
                 .header("Authorization","Bearer "+token)
