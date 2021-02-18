@@ -52,7 +52,7 @@ public class AccountService {
                 Posts posts=account.getLikePosts().get(idx);
                 PostsDto.PostsWithOnePhoto likePost= PostsDto.PostsWithOnePhoto.builder()
                         .postsId(posts.getPostsId())
-                        .postsWriter(posts.getPostWriter().getAccountName())
+                        .postsWriter(posts.getPostWriter().getAccountNickname())
                         .postsTitle(posts.getPostsTitle())
                         .postsPhoto(posts.getPostsPhotos().get(0))
                         .build();
