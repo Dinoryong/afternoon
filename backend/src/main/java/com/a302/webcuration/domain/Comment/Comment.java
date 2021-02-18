@@ -24,6 +24,7 @@ public class Comment {
     private String accountPhoto ="";
 
     @Builder.Default
+    @Column(columnDefinition = "TEXT")
     private String commentLink ="";
     @Builder.Default
     private String commentContent="";
