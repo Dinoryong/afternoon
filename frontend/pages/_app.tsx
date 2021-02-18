@@ -7,6 +7,7 @@ import { useStore } from "../store/index";
 import Header from "../components/Header";
 import LoginLoading from "../components/LoginLoading";
 import secrets from "../secrets";
+import Head from "next/head";
 
 const MyApp = ({ Component, pageProps }) => {
   const store = useStore(pageProps.initialReduxState);
@@ -21,6 +22,10 @@ const MyApp = ({ Component, pageProps }) => {
 
   return (
     <Provider store={store}>
+      <Head>
+        <title>애프터눈</title>
+        <link rel="shortcut icon" href="/afternoon_logo.png"></link>
+      </Head>
       {!renderState ? (
         <LoginLoading setRenderState={setRenderState}></LoginLoading>
       ) : (
