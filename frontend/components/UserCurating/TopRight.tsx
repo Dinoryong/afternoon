@@ -118,7 +118,7 @@ const TopRight = ({
     };
     setFollowBtnState(true);
     const result = await FOLLOW_USER(followReq, followUserConfig);
-    console.log(result);
+    //replace_console_log(result);
   };
 
   const deleteFollowOnClick = async () => {
@@ -130,7 +130,7 @@ const TopRight = ({
     };
     setFollowBtnState(false);
     const result = await UNFOLLOW_USER(unfollowReq, unfollowUserConfig);
-    console.log(result);
+    //replace_console_log(result);
   };
 
   return (

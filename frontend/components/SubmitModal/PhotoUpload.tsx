@@ -218,7 +218,7 @@ const PhotoUpload = ({
   ]);
 
   const uploadToFirebase = (imageAsFile, setImageAsFile) => {
-    console.log("FIREBASE : UPLOAD");
+    //replace_console_log("FIREBASE : UPLOAD");
     // async magic goes here...
     const { image } = imageAsFile;
     const imageId = makeid(16);
@@ -241,7 +241,7 @@ const PhotoUpload = ({
       },
       (err) => {
         //catches the errors
-        console.log(err);
+        //replace_console_log(err);
       },
       () => {
         // gets the functions from storage refences the image storage in firebase by the children

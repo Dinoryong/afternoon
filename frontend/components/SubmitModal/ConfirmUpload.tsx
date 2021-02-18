@@ -436,7 +436,7 @@ const ConfirmUpload = ({
     };
 
     const result = await SUBMIT_POST(submitPostReq, submitPostConfig);
-    console.log(result);
+    //replace_console_log(result);
 
     if (result.status === 201) {
       Swal.fire({ icon: "success", text: "게시물 등록 성공" });
@@ -741,7 +741,7 @@ const ConfirmUpload = ({
                           <PinTag>눈 {String.fromCharCode(65 + index)}</PinTag>
                         </PinTagBox>
                         <PinButtonBox>
-                          <Button btnText={"위치변경"} btnHeight="28px" />
+                          {/* <Button btnText={"위치변경"} btnHeight="28px" /> */}
                           <Button
                             btnText={"눈 삭제"}
                             btnHeight="28px"
@@ -818,7 +818,7 @@ const ConfirmUpload = ({
                           <PinTag>눈 {String.fromCharCode(65 + index)}</PinTag>
                         </PinTagBox>
                         <PinButtonBox>
-                          <Button btnText={"위치변경"} btnHeight="28px" />
+                          {/* <Button btnText={"위치변경"} btnHeight="28px" /> */}
                           <Button
                             btnText={"눈 삭제"}
                             btnHeight="28px"
@@ -895,7 +895,7 @@ const ConfirmUpload = ({
                           <PinTag>눈 {String.fromCharCode(65 + index)}</PinTag>
                         </PinTagBox>
                         <PinButtonBox>
-                          <Button btnText={"위치변경"} btnHeight="28px" />
+                          {/* <Button btnText={"위치변경"} btnHeight="28px" /> */}
                           <Button
                             btnText={"눈 삭제"}
                             btnHeight="28px"
@@ -972,7 +972,7 @@ const ConfirmUpload = ({
                           <PinTag>눈 {String.fromCharCode(65 + index)}</PinTag>
                         </PinTagBox>
                         <PinButtonBox>
-                          <Button btnText={"위치변경"} btnHeight="28px" />
+                          {/* <Button btnText={"위치변경"} btnHeight="28px" /> */}
                           <Button
                             btnText={"눈 삭제"}
                             btnHeight="28px"

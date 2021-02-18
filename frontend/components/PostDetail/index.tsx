@@ -302,7 +302,7 @@ const index = ({ windowWidth, windowHeight }) => {
         getOnePostLoginReq,
         getOnePostLoginConfig
       );
-      console.log(result);
+      //replace_console_log(result);
 
       if (result.status === 200) {
         setPinList(result.data.pins);
@@ -316,7 +316,7 @@ const index = ({ windowWidth, windowHeight }) => {
       const getOnePostLogoutReq = toggleId;
 
       const result = await GET_ONE_POST_LOGOUT(getOnePostLogoutReq);
-      console.log(result);
+      //replace_console_log(result);
 
       if (result.status === 200) {
         setPinList(result.data.pins);
@@ -366,7 +366,7 @@ const index = ({ windowWidth, windowHeight }) => {
     };
     setLikeBtnState(true);
     const result = await LIKE_POST(likePostReq, likePostConfig);
-    console.log(result);
+    //replace_console_log(result);
   };
 
   const unlikePostOnClick = async () => {
@@ -378,7 +378,7 @@ const index = ({ windowWidth, windowHeight }) => {
     };
     setLikeBtnState(false);
     const result = await UNLIKE_POST(unlikePostReq, unlikePostConfig);
-    console.log(result);
+    //replace_console_log(result);
   };
 
   const postLikeBtnOnClick = () => {
@@ -424,7 +424,7 @@ const index = ({ windowWidth, windowHeight }) => {
     };
 
     const result = await SUBMIT_COMMENT(submitCommentReq, submitCommentConfig);
-    console.log(result);
+    //replace_console_log(result);
 
     if (result.status === 201) {
       togglePost();
@@ -464,53 +464,51 @@ const index = ({ windowWidth, windowHeight }) => {
                   pinList.length > 0 &&
                   pinList.map((pl, index) => {
                     return (
-                      <>
-                        <NewPinIcon
-                          style={
-                            currentImg === pl.pinNum - 1
-                              ? {
-                                  top: `${
-                                    pl.pinLocY - 2000 / imgDim.offsetHeight
-                                  }%`,
-                                  left: `${
-                                    pl.pinLocX - 2000 / imgDim.offsetWidth
-                                  }%`,
-                                }
-                              : {
-                                  display: "none",
-                                  top: `${
-                                    pl.pinLocY - 2000 / imgDim.offsetHeight
-                                  }%`,
-                                  left: `${
-                                    pl.pinLocX - 2000 / imgDim.offsetWidth
-                                  }%`,
-                                }
+                      <NewPinIcon
+                        style={
+                          currentImg === pl.pinNum - 1
+                            ? {
+                                top: `${
+                                  pl.pinLocY - 2000 / imgDim.offsetHeight
+                                }%`,
+                                left: `${
+                                  pl.pinLocX - 2000 / imgDim.offsetWidth
+                                }%`,
+                              }
+                            : {
+                                display: "none",
+                                top: `${
+                                  pl.pinLocY - 2000 / imgDim.offsetHeight
+                                }%`,
+                                left: `${
+                                  pl.pinLocX - 2000 / imgDim.offsetWidth
+                                }%`,
+                              }
+                        }
+                        key={index}
+                        onClick={() => pinCircleOnClick(pl)}
+                      >
+                        <Image
+                          src={
+                            currentPin.pinId === pl.pinId
+                              ? "/assets/icons/eye_open.png"
+                              : "/assets/icons/eye_close.png"
                           }
-                          key={index}
-                          onClick={() => pinCircleOnClick(pl)}
-                        >
-                          {currentImg === pl.pinNum - 1 &&
-                            currentPin.pinId === pl.pinId && (
-                              <PinModal
-                                key={index}
-                                pinData={pl}
-                                accountNickname={
-                                  postDetailData.postsWriter.accountNickname
-                                }
-                              ></PinModal>
-                            )}
-                          <Image
-                            src={
-                              currentPin.pinId === pl.pinId
-                                ? "/assets/icons/eye_open.png"
-                                : "/assets/icons/eye_close.png"
-                            }
-                            width={36}
-                            height={36}
-                            objectFit="contain"
-                          ></Image>
-                        </NewPinIcon>
-                      </>
+                          width={36}
+                          height={36}
+                          objectFit="contain"
+                        ></Image>
+                        {currentImg === pl.pinNum - 1 &&
+                          currentPin.pinId === pl.pinId && (
+                            <PinModal
+                              key={index}
+                              pinData={pl}
+                              accountNickname={
+                                postDetailData.postsWriter.accountNickname
+                              }
+                            ></PinModal>
+                          )}
+                      </NewPinIcon>
                     );
                   })}
               </PinClickFrame>

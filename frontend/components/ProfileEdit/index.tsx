@@ -226,7 +226,7 @@ const index = ({
     };
 
     const result = await EDIT_PROFILE(editProfileReq, editProfileConfig);
-    console.log(result);
+    //replace_console_log(result);
 
     if (result.status === 200) {
       toggleEdit();
@@ -235,7 +235,7 @@ const index = ({
   };
 
   const uploadToFirebase = (image) => {
-    console.log("FIREBASE : UPLOAD");
+    //replace_console_log("FIREBASE : UPLOAD");
     // async magic goes here...
     const imageId = makeid(16);
 
@@ -257,7 +257,7 @@ const index = ({
       },
       (err) => {
         //catches the errors
-        console.log(err);
+        //replace_console_log(err);
       },
       () => {
         // gets the functions from storage refences the image storage in firebase by the children

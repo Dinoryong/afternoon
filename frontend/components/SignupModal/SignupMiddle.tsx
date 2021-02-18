@@ -108,7 +108,7 @@ const SignupMiddle = () => {
     };
 
     const result = await SIGN_UP(signupReq);
-    console.log(result);
+    //replace_console_log(result);
 
     if (result.status === 201) {
       window.localStorage.setItem("accountEmail", result.data.accountEmail);

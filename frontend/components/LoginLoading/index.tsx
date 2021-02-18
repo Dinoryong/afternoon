@@ -55,7 +55,7 @@ const index = ({ setRenderState }) => {
       };
 
       const result = await AUTO_LOGIN(autoLoginReq, autoLoginConfig);
-      console.log(result);
+      //replace_console_log(result);
 
       if (result.status === 200) {
         loginStateTrue();

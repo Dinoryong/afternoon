@@ -15,7 +15,7 @@ const timeout = (ms) => {
 };
 
 export const SEARCH_LOGIN_USER = async (req, config) => {
-  console.log("SEARCH_LOGIN_USER : REQUEST => " + req);
+  //replace_console_log("SEARCH_LOGIN_USER : REQUEST => " + req);
 
   let status: number = 0;
   let data: {
@@ -65,7 +65,7 @@ export const SEARCH_LOGIN_USER = async (req, config) => {
   };
 
   if (!VIA_API_DEV) {
-    console.log("SEARCH_LOGIN_USER : LOCAL");
+    //replace_console_log("SEARCH_LOGIN_USER : LOCAL");
 
     try {
       await timeout(1000);
@@ -73,10 +73,10 @@ export const SEARCH_LOGIN_USER = async (req, config) => {
       status = 204;
       data = SearchLoginUserData.data;
     } catch (error) {
-      console.log(error);
+      //replace_console_log(error);
     }
   } else {
-    console.log("SEARCH_LOGIN_USER : DEV");
+    //replace_console_log("SEARCH_LOGIN_USER : DEV");
 
     try {
       await axios
@@ -86,7 +86,7 @@ export const SEARCH_LOGIN_USER = async (req, config) => {
           status = res.status;
         });
     } catch (error) {
-      console.log(error);
+      //replace_console_log(error);
     }
   }
 
@@ -94,7 +94,7 @@ export const SEARCH_LOGIN_USER = async (req, config) => {
 };
 
 export const SEARCH_LOGIN_TAG = async (req, config) => {
-  console.log("SEARCH_LOGIN_TAG : REQUEST => " + req);
+  //replace_console_log("SEARCH_LOGIN_TAG : REQUEST => " + req);
 
   let status: number = 0;
   let data: {
@@ -113,7 +113,7 @@ export const SEARCH_LOGIN_TAG = async (req, config) => {
   };
 
   if (!VIA_API_DEV) {
-    console.log("SEARCH_LOGIN_TAG : LOCAL");
+    //replace_console_log("SEARCH_LOGIN_TAG : LOCAL");
 
     try {
       await timeout(1000);
@@ -121,10 +121,10 @@ export const SEARCH_LOGIN_TAG = async (req, config) => {
       status = 200;
       data = SearchLoginTagData.data;
     } catch (error) {
-      console.log(error);
+      //replace_console_log(error);
     }
   } else {
-    console.log("SEARCH_LOGIN_TAG : DEV");
+    //replace_console_log("SEARCH_LOGIN_TAG : DEV");
 
     try {
       await axios
@@ -134,7 +134,7 @@ export const SEARCH_LOGIN_TAG = async (req, config) => {
           status = res.status;
         });
     } catch (error) {
-      console.log(error);
+      //replace_console_log(error);
     }
   }
 
@@ -142,7 +142,7 @@ export const SEARCH_LOGIN_TAG = async (req, config) => {
 };
 
 export const SEARCH_LOGOUT_USER = async (req) => {
-  console.log("SEARCH_LOGOUT_USER : REQUEST => " + req);
+  //replace_console_log("SEARCH_LOGOUT_USER : REQUEST => " + req);
 
   let status: number = 0;
   let data: {
@@ -192,7 +192,7 @@ export const SEARCH_LOGOUT_USER = async (req) => {
   };
 
   if (!VIA_API_DEV) {
-    console.log("SEARCH_LOGOUT_USER : LOCAL");
+    //replace_console_log("SEARCH_LOGOUT_USER : LOCAL");
 
     try {
       await timeout(1000);
@@ -200,10 +200,10 @@ export const SEARCH_LOGOUT_USER = async (req) => {
       status = 200;
       data = SearchLogoutUserData.data;
     } catch (error) {
-      console.log(error);
+      //replace_console_log(error);
     }
   } else {
-    console.log("SEARCH_LOGOUT_USER : DEV");
+    //replace_console_log("SEARCH_LOGOUT_USER : DEV");
 
     try {
       await axios
@@ -213,7 +213,7 @@ export const SEARCH_LOGOUT_USER = async (req) => {
           status = res.status;
         });
     } catch (error) {
-      console.log(error);
+      //replace_console_log(error);
     }
   }
 
@@ -221,7 +221,7 @@ export const SEARCH_LOGOUT_USER = async (req) => {
 };
 
 export const SEARCH_LOGOUT_TAG = async (req) => {
-  console.log("SEARCH_LOGOUT_TAG : REQUEST => " + req);
+  //replace_console_log("SEARCH_LOGOUT_TAG : REQUEST => " + req);
 
   let status: number = 0;
   let data: {
@@ -240,7 +240,7 @@ export const SEARCH_LOGOUT_TAG = async (req) => {
   };
 
   if (!VIA_API_DEV) {
-    console.log("SEARCH_LOGOUT_TAG : LOCAL");
+    //replace_console_log("SEARCH_LOGOUT_TAG : LOCAL");
 
     try {
       await timeout(1000);
@@ -248,10 +248,10 @@ export const SEARCH_LOGOUT_TAG = async (req) => {
       status = 200;
       data = SearchLogoutTagData.data;
     } catch (error) {
-      console.log(error);
+      //replace_console_log(error);
     }
   } else {
-    console.log("SEARCH_LOGOUT_TAG : DEV");
+    //replace_console_log("SEARCH_LOGOUT_TAG : DEV");
 
     try {
       await axios
@@ -261,7 +261,7 @@ export const SEARCH_LOGOUT_TAG = async (req) => {
           status = res.status;
         });
     } catch (error) {
-      console.log(error);
+      //replace_console_log(error);
     }
   }
 

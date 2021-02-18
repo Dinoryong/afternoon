@@ -104,7 +104,7 @@ const AuthMiddle = ({ currentEmail }) => {
     };
 
     const result = await CHECK_EMAIL(checkEmailReq);
-    console.log(result);
+    //replace_console_log(result);
 
     if (result.status === 200) {
       setCheckState(true);
@@ -122,7 +122,7 @@ const AuthMiddle = ({ currentEmail }) => {
     };
 
     const result = await CONFIRM_LOGIN(confirmLoginReq);
-    console.log(result);
+    //replace_console_log(result);
 
     if (result.status === 200) {
       window.localStorage.setItem("accountEmail", result.data.accountEmail);

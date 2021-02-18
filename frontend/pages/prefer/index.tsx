@@ -94,7 +94,7 @@ const index = () => {
     };
 
     const result = await ADD_TAGS(addTagsReq, headerConfig);
-    console.log(result);
+    //replace_console_log(result);
 
     if (result.status === 200) {
       router.push("/feed");
@@ -114,7 +114,7 @@ const index = () => {
       };
 
       const result = await GET_FEED(getFeedConfig);
-      console.log(result);
+      //replace_console_log(result);
 
       if (result.status === 200) {
         if (result.data.length > 0) {

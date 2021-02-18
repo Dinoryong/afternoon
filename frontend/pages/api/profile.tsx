@@ -10,7 +10,7 @@ const timeout = (ms) => {
 };
 
 export const GET_MY_INFO = async (config) => {
-  console.log("GET_MY_INFO : REQUEST");
+  //replace_console_log("GET_MY_INFO : REQUEST");
 
   let status: number = 0;
   let data: {
@@ -60,7 +60,7 @@ export const GET_MY_INFO = async (config) => {
   };
 
   if (!VIA_API_DEV) {
-    console.log("GET_MY_INFO : LOCAL");
+    //replace_console_log("GET_MY_INFO : LOCAL");
 
     try {
       await timeout(1000);
@@ -68,10 +68,10 @@ export const GET_MY_INFO = async (config) => {
       status = 200;
       data = GetMyInfoData.data;
     } catch (error) {
-      console.log(error);
+      //replace_console_log(error);
     }
   } else {
-    console.log("GET_MY_INFO : DEV");
+    //replace_console_log("GET_MY_INFO : DEV");
 
     try {
       await axios.get(API_ROOT_URI + "/api/accounts", config).then((res) => {
@@ -79,7 +79,7 @@ export const GET_MY_INFO = async (config) => {
         data = res.data.data;
       });
     } catch (error) {
-      console.log(error);
+      //replace_console_log(error);
     }
   }
 
@@ -87,14 +87,14 @@ export const GET_MY_INFO = async (config) => {
 };
 
 export const ADD_TAGS = async (req, config) => {
-  console.log("ADD_TAGS : REQUEST");
-  console.log(req);
+  //replace_console_log("ADD_TAGS : REQUEST");
+  //replace_console_log(req);
 
   let status: number = 0;
   let data: {} = {};
 
   if (!VIA_API_DEV) {
-    console.log("ADD_TAGS : LOCAL");
+    //replace_console_log("ADD_TAGS : LOCAL");
 
     try {
       await timeout(1000);
@@ -102,10 +102,10 @@ export const ADD_TAGS = async (req, config) => {
       status = 200;
       data = {};
     } catch (error) {
-      console.log(error);
+      //replace_console_log(error);
     }
   } else {
-    console.log("ADD_TAGS : DEV");
+    //replace_console_log("ADD_TAGS : DEV");
 
     try {
       await axios
@@ -115,7 +115,7 @@ export const ADD_TAGS = async (req, config) => {
           data = res.data.data;
         });
     } catch (error) {
-      console.log(error);
+      //replace_console_log(error);
     }
   }
 
@@ -123,13 +123,13 @@ export const ADD_TAGS = async (req, config) => {
 };
 
 export const DELETE_TAGS = async (req, config) => {
-  console.log("DELETE_TAGS : REQUEST => " + req);
+  //replace_console_log("DELETE_TAGS : REQUEST => " + req);
 
   let status: number = 0;
   let data: {} = {};
 
   if (!VIA_API_DEV) {
-    console.log("DELETE_TAGS : LOCAL");
+    //replace_console_log("DELETE_TAGS : LOCAL");
 
     try {
       await timeout(1000);
@@ -137,10 +137,10 @@ export const DELETE_TAGS = async (req, config) => {
       status = 200;
       data = {};
     } catch (error) {
-      console.log(error);
+      //replace_console_log(error);
     }
   } else {
-    console.log("DELETE_TAGS : DEV");
+    //replace_console_log("DELETE_TAGS : DEV");
 
     try {
       await axios
@@ -150,7 +150,7 @@ export const DELETE_TAGS = async (req, config) => {
           data = res.data.data;
         });
     } catch (error) {
-      console.log(error);
+      //replace_console_log(error);
     }
   }
 
@@ -158,13 +158,13 @@ export const DELETE_TAGS = async (req, config) => {
 };
 
 export const FOLLOW_USER = async (req, config) => {
-  console.log("FOLLOW_USER : REQUEST => " + req);
+  //replace_console_log("FOLLOW_USER : REQUEST => " + req);
 
   let status: number = 0;
   let data: {} = {};
 
   if (!VIA_API_DEV) {
-    console.log("FOLLOW_USER : LOCAL");
+    //replace_console_log("FOLLOW_USER : LOCAL");
 
     try {
       await timeout(1000);
@@ -172,10 +172,10 @@ export const FOLLOW_USER = async (req, config) => {
       status = 200;
       data = {};
     } catch (error) {
-      console.log(error);
+      //replace_console_log(error);
     }
   } else {
-    console.log("FOLLOW_USER : DEV");
+    //replace_console_log("FOLLOW_USER : DEV");
 
     try {
       await axios
@@ -185,7 +185,7 @@ export const FOLLOW_USER = async (req, config) => {
           data = res.data.data;
         });
     } catch (error) {
-      console.log(error);
+      //replace_console_log(error);
     }
   }
 
@@ -193,13 +193,13 @@ export const FOLLOW_USER = async (req, config) => {
 };
 
 export const UNFOLLOW_USER = async (req, config) => {
-  console.log("UNFOLLOW_USER : REQUEST => " + req);
+  //replace_console_log("UNFOLLOW_USER : REQUEST => " + req);
 
   let status: number = 0;
   let data: {} = {};
 
   if (!VIA_API_DEV) {
-    console.log("UNFOLLOW_USER : LOCAL");
+    //replace_console_log("UNFOLLOW_USER : LOCAL");
 
     try {
       await timeout(1000);
@@ -207,10 +207,10 @@ export const UNFOLLOW_USER = async (req, config) => {
       status = 200;
       data = {};
     } catch (error) {
-      console.log(error);
+      //replace_console_log(error);
     }
   } else {
-    console.log("UNFOLLOW_USER : DEV");
+    //replace_console_log("UNFOLLOW_USER : DEV");
 
     try {
       await axios
@@ -220,7 +220,7 @@ export const UNFOLLOW_USER = async (req, config) => {
           data = res.data.data;
         });
     } catch (error) {
-      console.log(error);
+      //replace_console_log(error);
     }
   }
 
@@ -228,14 +228,14 @@ export const UNFOLLOW_USER = async (req, config) => {
 };
 
 export const EDIT_PROFILE = async (req, config) => {
-  console.log("EDIT_PROFILE : REQUEST");
-  console.log(req);
+  //replace_console_log("EDIT_PROFILE : REQUEST");
+  //replace_console_log(req);
 
   let status: number = 0;
   let data: {} = {};
 
   if (!VIA_API_DEV) {
-    console.log("EDIT_PROFILE : LOCAL");
+    //replace_console_log("EDIT_PROFILE : LOCAL");
 
     try {
       await timeout(1000);
@@ -243,10 +243,10 @@ export const EDIT_PROFILE = async (req, config) => {
       status = 200;
       data = {};
     } catch (error) {
-      console.log(error);
+      //replace_console_log(error);
     }
   } else {
-    console.log("EDIT_PROFILE : DEV");
+    //replace_console_log("EDIT_PROFILE : DEV");
 
     try {
       await axios
@@ -256,7 +256,7 @@ export const EDIT_PROFILE = async (req, config) => {
           data = res.data.data;
         });
     } catch (error) {
-      console.log(error);
+      //replace_console_log(error);
     }
   }
 

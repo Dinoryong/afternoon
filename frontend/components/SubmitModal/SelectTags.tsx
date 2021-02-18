@@ -66,7 +66,7 @@ const SelectTags = ({ setSelectTagList, selectTagList, setToggleTags }) => {
   const filterTagList = TagList.filter(
     (t) => selectTagList.findIndex((s) => s === t.tagId) < 0
   );
-  //   console.log(filterTagList);
+  //   //replace_console_log(filterTagList);
 
   return (
     <Container>

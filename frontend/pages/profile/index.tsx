@@ -79,7 +79,7 @@ const index = () => {
       };
 
       const result = await GET_MY_INFO(getMyInfoConfig);
-      console.log(result);
+      //replace_console_log(result);
 
       if (result.status === 200) {
         setProfileData(result.data);

@@ -16,14 +16,14 @@ const timeout = (ms) => {
 };
 
 export const SIGN_UP = async (req) => {
-  console.log("SIGN_UP : REQUEST");
-  console.log(req);
+  //replace_console_log("SIGN_UP : REQUEST");
+  //replace_console_log(req);
 
   let status: number = 0;
   let data: { accountEmail: string } = { accountEmail: "" };
 
   if (!VIA_API_DEV) {
-    console.log("SIGN_UP : LOCAL");
+    //replace_console_log("SIGN_UP : LOCAL");
 
     try {
       await timeout(1000);
@@ -31,10 +31,10 @@ export const SIGN_UP = async (req) => {
       status = 201;
       data = SignUpData.data;
     } catch (error) {
-      console.log(error);
+      //replace_console_log(error);
     }
   } else {
-    console.log("SIGN_UP : DEV");
+    //replace_console_log("SIGN_UP : DEV");
 
     try {
       await axios.post(`${API_ROOT_URI}/api/accounts`, req).then((res) => {
@@ -42,7 +42,7 @@ export const SIGN_UP = async (req) => {
         data = res.data.data;
       });
     } catch (error) {
-      console.log(error);
+      //replace_console_log(error);
     }
   }
 
@@ -50,14 +50,14 @@ export const SIGN_UP = async (req) => {
 };
 
 export const EMAIL_LOGIN = async (req) => {
-  console.log("EMAIL_LOGIN : REQUEST");
-  console.log(req);
+  //replace_console_log("EMAIL_LOGIN : REQUEST");
+  //replace_console_log(req);
 
   let status: number = 0;
   let data: {} = {};
 
   if (!VIA_API_DEV) {
-    console.log("EMAIL_LOGIN : LOCAL");
+    //replace_console_log("EMAIL_LOGIN : LOCAL");
 
     try {
       await timeout(1000);
@@ -65,10 +65,10 @@ export const EMAIL_LOGIN = async (req) => {
       status = 200;
       data = EmailLoginData.data;
     } catch (error) {
-      console.log(error);
+      //replace_console_log(error);
     }
   } else {
-    console.log("EMAIL_LOGIN : DEV");
+    //replace_console_log("EMAIL_LOGIN : DEV");
 
     try {
       await axios.post(API_ROOT_URI + "/api/login", req).then((res) => {
@@ -76,7 +76,7 @@ export const EMAIL_LOGIN = async (req) => {
         data = res.data.data;
       });
     } catch (error) {
-      console.log(error);
+      //replace_console_log(error);
     }
   }
 
@@ -84,14 +84,14 @@ export const EMAIL_LOGIN = async (req) => {
 };
 
 export const CHECK_EMAIL = async (req) => {
-  console.log("CHECK_EMAIL : REQUEST");
-  console.log(req);
+  //replace_console_log("CHECK_EMAIL : REQUEST");
+  //replace_console_log(req);
 
   let status: number = 0;
   let data: {} = {};
 
   if (!VIA_API_DEV) {
-    console.log("CHECK_EMAIL : LOCAL");
+    //replace_console_log("CHECK_EMAIL : LOCAL");
 
     try {
       await timeout(1000);
@@ -99,10 +99,10 @@ export const CHECK_EMAIL = async (req) => {
       status = 200;
       data = CheckEmailData.data;
     } catch (error) {
-      console.log(error);
+      //replace_console_log(error);
     }
   } else {
-    console.log("CHECK_EMAIL : DEV");
+    //replace_console_log("CHECK_EMAIL : DEV");
 
     try {
       await axios.post(API_ROOT_URI + "/api/login", req).then((res) => {
@@ -110,7 +110,7 @@ export const CHECK_EMAIL = async (req) => {
         status = res.status;
       });
     } catch (error) {
-      console.log(error);
+      //replace_console_log(error);
     }
   }
 
@@ -118,8 +118,8 @@ export const CHECK_EMAIL = async (req) => {
 };
 
 export const CONFIRM_LOGIN = async (req) => {
-  console.log("CONFIRM_LOGIN : REQUEST");
-  console.log(req);
+  //replace_console_log("CONFIRM_LOGIN : REQUEST");
+  //replace_console_log(req);
 
   let status: number = 0;
   let data: {
@@ -134,7 +134,7 @@ export const CONFIRM_LOGIN = async (req) => {
   let headers: { authorization: string } = { authorization: "" };
 
   if (!VIA_API_DEV) {
-    console.log("CONFIRM_LOGIN : LOCAL");
+    //replace_console_log("CONFIRM_LOGIN : LOCAL");
 
     try {
       await timeout(1000);
@@ -144,10 +144,10 @@ export const CONFIRM_LOGIN = async (req) => {
       headers.authorization =
         "Bearer eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJzdWIiOiLroZzqt7jsnbjthqDtgbAiLCJleHAiOjE2MTMzMTMyMTcsImFjY291bnRJZCI6MjQsImFjY291bnRFbWFpbCI6ImRuZ25nbjMwNDVAZ21haWwuY29tIn0.BBp6ruE_7HOk2OQsY6Y3fXP1YikoXdeSm-6zAUd97b0";
     } catch (error) {
-      console.log(error);
+      //replace_console_log(error);
     }
   } else {
-    console.log("CONFIRM_LOGIN : DEV");
+    //replace_console_log("CONFIRM_LOGIN : DEV");
 
     try {
       await axios.post(API_ROOT_URI + "/api/login", req).then((res) => {
@@ -156,7 +156,7 @@ export const CONFIRM_LOGIN = async (req) => {
         headers = res.headers;
       });
     } catch (error) {
-      console.log(error);
+      //replace_console_log(error);
     }
   }
 
@@ -171,8 +171,8 @@ export const LOG_OUT = async () => {
 };
 
 export const AUTO_LOGIN = async (req, config) => {
-  console.log("AUTO_LOGIN : REQUEST");
-  console.log(req);
+  //replace_console_log("AUTO_LOGIN : REQUEST");
+  //replace_console_log(req);
 
   let status: number = 0;
   let data: {
@@ -187,7 +187,7 @@ export const AUTO_LOGIN = async (req, config) => {
   let headers: { authorization: string } = { authorization: "" };
 
   if (!VIA_API_DEV) {
-    console.log("AUTO_LOGIN : LOCAL");
+    //replace_console_log("AUTO_LOGIN : LOCAL");
 
     try {
       await timeout(500);
@@ -195,10 +195,10 @@ export const AUTO_LOGIN = async (req, config) => {
       status = 200;
       data = AutoLoginData.data;
     } catch (error) {
-      console.log(error);
+      //replace_console_log(error);
     }
   } else {
-    console.log("AUTO_LOGIN : DEV");
+    //replace_console_log("AUTO_LOGIN : DEV");
 
     try {
       await axios
@@ -208,7 +208,7 @@ export const AUTO_LOGIN = async (req, config) => {
           data = res.data.data;
         });
     } catch (error) {
-      console.log(error);
+      //replace_console_log(error);
     }
   }
 

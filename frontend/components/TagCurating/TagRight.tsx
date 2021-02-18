@@ -96,7 +96,7 @@ const TagRight = ({ tagState, writtenPostsCnt, tagId }) => {
     };
 
     const result = await ADD_TAGS(addTagsReq, headerConfig);
-    console.log(result);
+    //replace_console_log(result);
   };
 
   const requestDeleteTags = async () => {
@@ -109,7 +109,7 @@ const TagRight = ({ tagState, writtenPostsCnt, tagId }) => {
     };
 
     const result = await DELETE_TAGS(deleteTagsReq, deleteTagsConfig);
-    console.log(result);
+    //replace_console_log(result);
   };
 
   return (

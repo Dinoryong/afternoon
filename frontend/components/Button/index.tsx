@@ -79,7 +79,7 @@ const index = ({
   btnHoverBorderColor = color.black.default,
   btnHoverBgColor,
   btnOnClick = () => {
-    console.log("onClick : 기능없음");
+    //replace_console_log("onClick : 기능없음");
   },
   btnUseOpacity,
   btnSetOpacity,

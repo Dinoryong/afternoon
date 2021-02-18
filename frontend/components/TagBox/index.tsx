@@ -34,7 +34,7 @@ const index = ({
   tagId = 1,
   tagMargin = "0px",
   tagOnClick = () => {
-    console.log(tagId);
+    //replace_console_log(tagId);
   },
   tagUseDelete = true,
 }) => {

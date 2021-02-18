@@ -44,7 +44,7 @@ const index = () => {
       };
 
       const result = await GET_FEED(getFeedConfig);
-      console.log(result);
+      //replace_console_log(result);
 
       if (result.status === 200) {
         if (result.data && result.data.length > 0) {
