@@ -190,7 +190,7 @@ public class LoginService2 {
             logger.error("request.getAccountEmail().getClass().getName() : "+request.getAccountEmail().getClass().getName());
             logger.error("email.getClass().getName() : "+email.getClass().getName());
             logger.error("id check "+(request.getAccountId()==id));
-            logger.error("email check "+(request.getAccountEmail()==email));
+            logger.error("email check "+request.getAccountEmail().equals(email));
             return new BaseMessage(HttpStatus.BAD_REQUEST,resultMap);
         }
     }
