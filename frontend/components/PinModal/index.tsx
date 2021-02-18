@@ -4,6 +4,7 @@ import PinTop from "./PinTop";
 import PinBottom from "./PinBottom";
 
 const Container = styled.div`
+  z-index: 6;
   position: absolute;
   width: max-content;
   height: max-content;
