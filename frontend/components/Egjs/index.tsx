@@ -63,10 +63,14 @@ const Writer = styled.div`
   font-weight: 500;
 `;
 
-const ItemEl = ({ id, src, writer, title, togglePost }) => (
+const ItemEl = ({ id, src, writer, title, togglePost, loginState, toggle }) => (
   <Item
     onClick={() => {
-      togglePost(id);
+      if (loginState) {
+        togglePost(id);
+      } else {
+        toggle();
+      }
     }}
   >
     <Thumbnail>
@@ -81,7 +85,7 @@ const ItemEl = ({ id, src, writer, title, togglePost }) => (
   </Item>
 );
 
-const useCounter = () => {
+const useStore = () => {
   const loginState = useSelector((state) => state.login.loginState);
 
   const dispatch = useDispatch();
@@ -103,7 +107,7 @@ const index = ({ postData }) => {
   const [isEnd, setIsEnd] = useState(false);
   const [appendAble, setAppendAble] = useState(true);
 
-  const { loginState, toggle, togglePost } = useCounter();
+  const { loginState, toggle, togglePost } = useStore();
 
   const DIVIDE_COUNT = 10;
 
@@ -149,6 +153,8 @@ const index = ({ postData }) => {
                 writer={al.postsWriter}
                 title={al.postsTitle}
                 togglePost={togglePost}
+                loginState={loginState}
+                toggle={toggle}
               />
             );
           })}
