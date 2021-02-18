@@ -40,7 +40,7 @@ const HomeBottom = () => {
   const [windowHeight, setWindowHeight] = useState<number>();
   const [scrollTop, setScrollTop] = useState(0);
 
-  console.log(scrollTop);
+  //replace_console_log(scrollTop);
 
   useEffect(function mount() {
     const resizeHandler = () => {

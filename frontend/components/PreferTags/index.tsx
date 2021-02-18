@@ -103,7 +103,7 @@ const PreferTags = ({ selectTags, setSelectTags }) => {
                   <BgOpacityFrame
                     style={
                       selectTags.findIndex((x) => x === t.tagId) >= 0
-                        ? { backgroundColor: "rgba(255,51,153,0.8)" }
+                        ? { backgroundColor: "rgba(0,0,0,0.8)" }
                         : { backgroundColor: "rgba(0,0,0,0.3)" }
                     }
                   ></BgOpacityFrame>

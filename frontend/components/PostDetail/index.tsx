@@ -268,6 +268,7 @@ const index = ({ windowWidth, windowHeight }) => {
   const [imgDim, setImgDim] = useState({ offsetWidth: 0, offsetHeight: 0 });
   const [infoState, setInfoState] = useState(false);
   const [likeBtnState, setLikeBtnState] = useState({});
+  const [likeCountLocal, setLikeCountLocal] = useState(0);
 
   const [pinList, setPinList] = useState([]);
   const [currentPin, setCurrentPin] = useState({
@@ -309,6 +310,7 @@ const index = ({ windowWidth, windowHeight }) => {
         setPhotoList(result.data.postsPhotos);
         setPostDetailData(result.data);
         setLikeBtnState(result.data.likeState);
+        setLikeCountLocal(result.data.postsLikeCnt);
       }
     };
 
@@ -365,6 +367,7 @@ const index = ({ windowWidth, windowHeight }) => {
       },
     };
     setLikeBtnState(true);
+    setLikeCountLocal(likeCountLocal + 1);
     const result = await LIKE_POST(likePostReq, likePostConfig);
     //replace_console_log(result);
   };
@@ -377,6 +380,7 @@ const index = ({ windowWidth, windowHeight }) => {
       },
     };
     setLikeBtnState(false);
+    setLikeCountLocal(likeCountLocal - 1);
     const result = await UNLIKE_POST(unlikePostReq, unlikePostConfig);
     //replace_console_log(result);
   };
@@ -630,11 +634,7 @@ const index = ({ windowWidth, windowHeight }) => {
                     ></Image>
                   </PostLikeImage>
                   <PostLikeText>
-                    {!loginState
-                      ? postDetailData.postsLikeCnt
-                      : likeBtnState
-                      ? `회원님 외 ${postDetailData.postsLikeCnt}`
-                      : postDetailData.postsLikeCnt}
+                    {likeCountLocal}
                     명이 좋아합니다.
                   </PostLikeText>
                 </PostLikeDiv>
