@@ -172,7 +172,8 @@ public class LoginService2 {
         }
         String email = jwtService.getAccountEmail(token);
         Long id = jwtService.getAccountId(token);
-        if(request.getAccountId()==id && request.getAccountEmail().equals(email))
+        //if(request.getAccountId()==id && request.getAccountEmail().equals(email))
+        if(request.getAccountEmail().equals(email))
         {
             resultMap.put("message","인증키가 일치합니다.");
             Account account=accountRepository.findByAccountEmail(request.getAccountEmail());
