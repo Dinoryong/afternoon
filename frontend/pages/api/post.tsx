@@ -202,7 +202,7 @@ export const GET_ONE_POST_LOGOUT = async (req) => {
     console.log("GET_ONE_POST_LOGOUT : DEV");
 
     try {
-      await axios.get(`${API_ROOT_URI}/api/posts/login/${req}`).then((res) => {
+      await axios.get(`${API_ROOT_URI}/api/posts/${req}`).then((res) => {
         data = res.data.data;
         status = res.status;
       });
