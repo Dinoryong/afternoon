@@ -26,6 +26,7 @@ const TitleText = styled.div`
 const ContentText = styled.div`
   display: flex;
   color: ${color.black.default};
+  line-height: 28px;
   font-size: 16px;
 `;
 
