@@ -33,6 +33,16 @@ const RowBox = styled.div`
   }
 `;
 
+const CuratingInfo = styled.div`
+  height: 150px;
+  width: 100%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  font-size: 14px;
+  /* font-weight: 700; */
+`;
+
 const RowBoxTag = styled.div`
   display: flex;
 `;
@@ -109,7 +119,8 @@ const TagRight = ({ tagState, writtenPostsCnt, tagId }) => {
           <RowBoxTag>등록된 게시물</RowBoxTag>
           <RowBoxData>{writtenPostsCnt}</RowBoxData>
         </RowBox>
-        <RowBox>
+        <CuratingInfo>검색 결과 요약 준비 중..</CuratingInfo>
+        {/* <RowBox>
           <RowBoxTag>등록한 사용자</RowBoxTag>
           <RowBoxData>163</RowBoxData>
         </RowBox>
@@ -120,7 +131,7 @@ const TagRight = ({ tagState, writtenPostsCnt, tagId }) => {
         <RowBox>
           <RowBoxTag>게시물 TOP 5</RowBoxTag>
           <RowBoxData>난재</RowBoxData>
-        </RowBox>
+        </RowBox> */}
       </TopBox>
       <BottomBox>
         <LikeTag>

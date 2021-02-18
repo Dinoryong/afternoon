@@ -32,6 +32,15 @@ const DynamicDiv = styled.div`
   margin-top: 60px;
 `;
 
+const NullPostDiv = styled.div`
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: 100%;
+  margin-top: 100px;
+  font-size: 18px;
+`;
+
 const useStore = () => {
   const loginState = useSelector(
     (state: RootStateOrAny) => state.login.loginState
@@ -131,6 +140,9 @@ const index = () => {
                     postData={postData}
                   ></DynamicComponentWithNoSSR>
                 )}
+                {postData && postData.length === 0 && (
+                  <NullPostDiv>작성하신 게시물이 없어요</NullPostDiv>
+                )}
               </DynamicDiv>
             )}
             {tabState === 1 && (
@@ -139,6 +151,9 @@ const index = () => {
                   <DynamicComponentWithNoSSR
                     postData={likeData}
                   ></DynamicComponentWithNoSSR>
+                )}
+                {likeData && likeData.length === 0 && (
+                  <NullPostDiv>좋아요한 게시물이 없어요</NullPostDiv>
                 )}
               </DynamicDiv>
             )}
