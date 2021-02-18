@@ -38,8 +38,8 @@ const TagList = [
   },
   {
     tagId: 6,
-    tagTitle: "의료",
-    tagDesc: "의료 요약 감성 내용",
+    tagTitle: "패션",
+    tagDesc: "패션 요약 감성 내용",
     tagColor: color.pastel.f,
     tagSrc: "/assets/images/prefer/6.jpg",
   },
