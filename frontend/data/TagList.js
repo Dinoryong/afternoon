@@ -12,7 +12,8 @@ const TagList = [
   {
     tagId: 2,
     tagTitle: "스키",
-    tagDesc: "지옥에 겨울이 온다면 난 거기서도 스키를 탈거다.",
+    tagDesc:
+      "자신을 시험해 볼 수 있는 한 가지 방법은 자연환경에 부딪혀 보는 것이다. 숲과 산에는, 자연이 던지는 어려움에 대항하여 자신을 시험해 볼 수 있는 기회가 많이 있다. 스키는 진정한 용기가 필요한 것이다.",
     tagColor: color.pastel.b,
     tagSrc: "/assets/images/prefer/2.jpg",
   },
@@ -58,7 +59,8 @@ const TagList = [
   {
     tagId: 8,
     tagTitle: "클라이밍",
-    tagDesc: "왜 산에 오르는가. 산이 거기에 있기 때문에 오른다.",
+    tagDesc:
+      "등반은 상대가 아닌 본인과의 부단한 싸움을 통해 극기를 하면서 새로운 길을 찾고 만족을 얻는다. 처절한 본인과의 싸움을 통해, 그리고 무한한 상상력을 통해 길을 개척해서 만들어 가는 행위다.",
     tagColor: color.pastel.h,
     tagSrc: "/assets/images/prefer/8.jpg",
   },
