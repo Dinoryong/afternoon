@@ -23,7 +23,7 @@ public class EmailService {
         SimpleMailMessage message = new SimpleMailMessage();
         message.setTo(email);
         message.setSubject("[PINSET] 로그인(이메일) 인증 코드 발송");
-        message.setText("이메일 인증코드는 "+authCode+" 입니다.");
+        message.setText("이메일 인증코드는 "+authCode+"입니다.");
         logger.info("message"+message);
         mailSender.send(message);
     }

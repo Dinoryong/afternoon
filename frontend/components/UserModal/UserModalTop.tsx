@@ -28,7 +28,7 @@ const ModalTitle = styled.div`
   align-items: center;
   color: ${color.black.default};
   font-size: 20px;
-  font-weight: 50px;
+  font-weight: 500;
 `;
 
 const ModalText = styled.div`

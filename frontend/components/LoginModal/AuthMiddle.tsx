@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import styled from "@emotion/styled";
 import { useRouter } from "next/router";
 import { useDispatch } from "react-redux";
@@ -95,6 +95,64 @@ const AuthMiddle = ({ currentEmail }) => {
 
   const [authKey, setAuthKey] = useState("");
   const [checkState, setCheckState] = useState(false);
+  const [authValid, setAuthValid] = useState(false);
+
+  useEffect(() => {
+    setAuthValid(authKey.length > 0);
+  }, [authKey]);
+
+  const openMailBox = () => {
+    const mailType = currentEmail.split("@")[1];
+    switch (mailType) {
+      case "gmail.com":
+        window.open("https://gmail.com");
+        break;
+      case "naver.com":
+        window.open("https://mail.naver.com");
+        break;
+      case "daum.net":
+        window.open("https://mail.daum.net");
+        break;
+      case "hanmail.net":
+        window.open("https://mail.daum.net");
+        break;
+      case "nate.com":
+        window.open("https://mail.nate.com");
+        break;
+      case "kakao.com":
+        window.open("https://mail.kakao.com");
+        break;
+      case "yahoo.com":
+        window.open("https://mail.yahoo.com");
+        break;
+      case "lycos.com":
+        window.open("https://mail.lycos.com/");
+        break;
+      case "yandex.com":
+        window.open("https://mail.yandex.com");
+        break;
+      case "yandex.ru":
+        window.open("https://mail.yandex.com");
+        break;
+      case "outlook.kr":
+        window.open("https://www.outlook.com");
+        break;
+      case "outlook.com":
+        window.open("https://www.outlook.com");
+        break;
+      case "hotmail.com":
+        window.open("https://www.outlook.com");
+        break;
+      default:
+        Swal.fire({
+          icon: "info",
+          title: "현재 바로가기를 지원하지 않는 이메일입니다.",
+          text:
+            "지원 중인 이메일 : gmail, naver, daum, hanmail, nate, kakao, yahoo, lycos, yandex, outlook, hotmail",
+        });
+        break;
+    }
+  };
 
   const requestCheckEmail = async () => {
     const checkEmailReq = {
@@ -159,7 +217,7 @@ const AuthMiddle = ({ currentEmail }) => {
         />
         <ConfirmButton>
           <Button
-            btnBgColor={color.red.light}
+            btnBgColor={authValid ? color.red.default : color.gray.semidark}
             btnWidth="100px"
             btnText="인증번호 확인"
             btnTextColor={color.white.default}
@@ -167,19 +225,19 @@ const AuthMiddle = ({ currentEmail }) => {
             btnFontWeight={700}
             btnBorderColor="transparent"
             btnHoverBorderColor="transparent"
-            btnHoverBgColor={color.red.dark}
+            btnHoverBgColor={authValid ? color.red.dark : color.gray.semidark}
             btnHoverTextColor={color.white.default}
             btnOnClick={requestCheckEmail}
           />
         </ConfirmButton>
       </InputBox>
       <SendingBox>
-        <SendingText>메일함으로 이동</SendingText>
+        <SendingText onClick={openMailBox}>메일함으로 이동</SendingText>
         <SendingText>인증번호 재발송</SendingText>
       </SendingBox>
       <LoginButton>
         <Button
-          btnBgColor={checkState ? color.red.light : color.gray.light}
+          btnBgColor={checkState ? color.red.default : color.gray.semidark}
           btnWidth="300px"
           btnText="로그인"
           btnTextColor={color.white.default}
@@ -187,7 +245,7 @@ const AuthMiddle = ({ currentEmail }) => {
           btnFontWeight={700}
           btnBorderColor="transparent"
           btnHoverBorderColor="transparent"
-          btnHoverBgColor={checkState ? color.red.dark : color.gray.light}
+          btnHoverBgColor={checkState ? color.red.dark : color.gray.semidark}
           btnHoverTextColor={color.white.default}
           btnOnClick={requestConfirmLogin}
         />

@@ -67,6 +67,7 @@ const index = () => {
         <LoginMiddle
           setAuthState={setAuthState}
           setCurrentEmail={setCurrentEmail}
+          toggle={toggle}
         />
       ) : (
         <AuthMiddle currentEmail={currentEmail} />

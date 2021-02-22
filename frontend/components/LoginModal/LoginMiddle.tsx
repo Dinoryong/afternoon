@@ -65,7 +65,7 @@ const pattern = new RegExp(
   /^(("[\w-\s]+")|([\w-]+(?:\.[\w-]+)*)|("[\w-\s]+")([\w-]+(?:\.[\w-]+)*))(@((?:[\w-]+\.)*\w[\w-]{0,66})\.([a-z]{2,6}(?:\.[a-z]{2})?)$)|(@\[?((25[0-5]\.|2[0-4][0-9]\.|1[0-9]{2}\.|[0-9]{1,2}\.))((25[0-5]|2[0-4][0-9]|1[0-9]{2}|[0-9]{1,2})\.){2}(25[0-5]|2[0-4][0-9]|1[0-9]{2}|[0-9]{1,2})\]?$)/i
 );
 
-const LoginMiddle = ({ setAuthState, setCurrentEmail }) => {
+const LoginMiddle = ({ toggle, setAuthState, setCurrentEmail }) => {
   let autoEmail = "";
   if (window.localStorage.getItem("accountEmail") !== null)
     autoEmail = window.localStorage.getItem("accountEmail");
@@ -98,7 +98,8 @@ const LoginMiddle = ({ setAuthState, setCurrentEmail }) => {
 
       if (result.status === 200) {
       } else {
-        Swal.fire({ icon: "success", text: "로그인 요청 실패" });
+        toggle();
+        Swal.fire({ icon: "error", text: "로그인 요청에 실패했습니다" });
       }
     } else {
       Swal.fire({ icon: "info", text: "이메일 형식으로 입력해주세요" });
