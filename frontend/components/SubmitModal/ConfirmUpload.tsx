@@ -428,6 +428,11 @@ const ConfirmUpload = ({
   };
 
   const requestSubmitPost = async () => {
+    if (selectTagList.length === 0) {
+      Swal.fire({ icon: "info", text: "태그를 선택해주세요" });
+      return;
+    }
+
     const submitPostReq = setPostRequest();
     const submitPostConfig = {
       headers: {

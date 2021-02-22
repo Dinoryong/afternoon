@@ -1,6 +1,6 @@
 module.exports = {
   images: {
-    loader: "imgix",
+    // loader: "imgix",
     domains: ["firebasestorage.googleapis.com", "images.unsplash.com"],
   },
   typescript: {
