@@ -185,4 +185,10 @@ public class AccountDto {
 
     }
 
+    @Data @AllArgsConstructor
+    public static class Contributor{
+        private String accountNickname;
+        private String accountPhoto;
+    }
+
 }

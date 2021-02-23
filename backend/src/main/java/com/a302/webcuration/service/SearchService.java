@@ -6,6 +6,7 @@ import com.a302.webcuration.domain.Account.AccountDto;
 import com.a302.webcuration.domain.Account.AccountRepository;
 import com.a302.webcuration.domain.Post.Posts;
 import com.a302.webcuration.domain.Post.PostsDto;
+import com.a302.webcuration.domain.Post.PostsRepository;
 import com.a302.webcuration.domain.Tag.Tag;
 import com.a302.webcuration.domain.Tag.TagDto;
 import com.a302.webcuration.domain.Tag.TagRepository;
@@ -27,6 +28,7 @@ public class SearchService {
     private final AccountRepository accountRepository;
     private final AccountService accountService;
     private final TagRepository tagRepository;
+    private final PostsRepository postsRepository;
     private final ModelMapper modelMapper;
     private final JwtService jwtService;
     public BaseMessage search(String name,String token){
@@ -91,10 +93,35 @@ public class SearchService {
                     }
                 }
             }
-
+            //큐레이팅 작업
+            //이 태그를 관심태그로 지정한 유저의 수
+            Long interestedPeopleCnt=postsRepository.selectsInterestedPeopleCnt(tag.getTagId());
+            logger.info("interestedPeopleCnt "+interestedPeopleCnt);
+            //이 태그 관련 제일 인기 많은 받은 게시물 top3
+            List<Long> popularPosts=postsRepository.selectsMostPopularPosts(tag.getTagId());
+            List<Long> mostPopularPosts=new ArrayList<>();
+            for (int idx=0;idx<popularPosts.size();idx++){
+                mostPopularPosts.add(popularPosts.get(idx));
+                if(idx==2) break;
+            }
+            logger.info("mostPopularPosts list.size() "+mostPopularPosts.size());
+            logger.info("mostPopularPosts list "+mostPopularPosts.get(0));
+            //이 태그에 top contributor top3
+            List<Object[]> contributors=postsRepository.selectsMostContributor(tag.getTagId());
+            List<AccountDto.Contributor> mostContributor=new ArrayList<>();
+            for (int idx=0;idx<contributors.size();idx++){
+                AccountDto.Contributor contributor=new AccountDto.Contributor( (String) contributors.get(idx)[0],(String) contributors.get(idx)[1]);
+                mostContributor.add(contributor);
+                if(idx==2) break;
+            }
+            logger.info("mostContributor list.size() "+mostContributor.size());
+            logger.info("mostContributor list "+mostContributor.get(0));
             TagDto.TagRelatedPosts tagRelatedPosts= TagDto.TagRelatedPosts.builder()
                     .writtenPosts(postsWithOnePhotos)
                     .writtenPostsCnt(postsCnt)
+                    .interestedPeopleCnt(interestedPeopleCnt)
+                    .mostPopularPosts(mostPopularPosts)
+                    .mostContributor(mostContributor)
                     .tagState(tagState)
                     .build();
             return new BaseMessage(HttpStatus.OK,tagRelatedPosts);

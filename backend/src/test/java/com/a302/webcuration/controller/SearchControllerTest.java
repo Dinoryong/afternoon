@@ -39,8 +39,8 @@ public class SearchControllerTest extends BaseControllerTest {
     }
     @Test
     public void 로그인_Tag_검색_성공() throws Exception {
-        String name="캠핑";
-        String token = "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJzdWIiOiLroZzqt7jsnbjthqDtgbAiLCJleHAiOjE2MTMxODkyMzQsImFjY291bnRJZCI6MjQsImFjY291bnRFbWFpbCI6ImRudGpyNDc3MkBuYXRlLmNvbSJ9.QU_FxH4hw6qHQEU2mYmbe4729DXqkmeD0k0lop-_3EY";
+        String name="개발자";
+        String token = "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJzdWIiOiLroZzqt7jsnbjthqDtgbAiLCJleHAiOjE2MTQ0MzA1MjcsImFjY291bnRJZCI6NjUsImFjY291bnRFbWFpbCI6ImRudGpyNDc3MkBuYXZlci5jb20ifQ.kYB_CJVdff9g7yz7dX2URa-s5L8YpnhTJ2UBR-88e8U";
         mockMvc.perform(get("/api/search/login/" +name)
                 .header("Authorization","Bearer "+token)
                 .contentType(MediaType.APPLICATION_JSON))

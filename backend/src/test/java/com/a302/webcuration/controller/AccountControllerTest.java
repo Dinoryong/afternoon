@@ -41,7 +41,7 @@ public class AccountControllerTest extends BaseControllerTest {
         AccountDto.CreateAccountRequest createAccountRequest = AccountDto.CreateAccountRequest.builder()
                 .accountName("최재웅")
                 .accountNickname("GS재웅")
-                .accountEmail("dntjr4772@nate.com")
+                .accountEmail("dntjr4772@naver.com")
                 .build();
 
         mockMvc.perform(post("/api/accounts")
@@ -271,8 +271,8 @@ public class AccountControllerTest extends BaseControllerTest {
     @Test
     public void 게시물좋아요_성공() throws Exception{
         AccountDto.LikeRequest likeRequest=new AccountDto.LikeRequest();
-        likeRequest.setPostId(29L);
-        String token = "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJzdWIiOiLroZzqt7jsnbjthqDtgbAiLCJleHAiOjE2MTMzOTYxMjQsImFjY291bnRJZCI6MjQsImFjY291bnRFbWFpbCI6ImRudGpyNDc3MkBuYXZlci5jb20ifQ.0mWYyk4V9kE92-VX4x66EiHQRTDMbLN_b44cxG20mR8";
+        likeRequest.setPostId(27L);
+        String token = "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJzdWIiOiLroZzqt7jsnbjthqDtgbAiLCJleHAiOjE2MTQ0OTg1OTAsImFjY291bnRJZCI6MzQsImFjY291bnRFbWFpbCI6ImRuZ25nbjMwNDVAaGFubWFpbC5uZXQifQ.F1Vh48LNW0kaFJtzVNiRMGFf_1U6D57tfdZv7C8CzGg";
         mockMvc.perform(put("/api/accounts/like")
                 .header("Authorization","Bearer "+token)
                 .contentType(MediaType.APPLICATION_JSON)
