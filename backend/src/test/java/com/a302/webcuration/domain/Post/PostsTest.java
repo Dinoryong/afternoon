@@ -48,4 +48,6 @@ public class PostsTest extends BaseDomainTest {
         postsRepository.deleteAll();
     }
 
+
+
 }

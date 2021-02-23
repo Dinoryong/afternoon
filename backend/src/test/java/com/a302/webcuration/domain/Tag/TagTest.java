@@ -1,10 +1,16 @@
 package com.a302.webcuration.domain.Tag;
 
 import com.a302.webcuration.common.BaseDomainTest;
+import com.a302.webcuration.domain.Account.Account;
+import com.a302.webcuration.domain.Post.Posts;
 import org.junit.Test;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.PageRequest;
 
 import javax.transaction.Transactional;
+
+import java.util.ArrayList;
+import java.util.List;
 
 import static org.junit.Assert.*;
 
@@ -114,6 +120,20 @@ public class TagTest extends BaseDomainTest {
                 .tagTitle(tagTitle)
                 .build();
         tagRepository.save(tag);
+    }
 
+
+    @Test
+    public void 태그_큐레이팅_성공()
+    {
+        //Given
+        Long tagId=21L;
+//        List<Account> list=tagRepository.selectMostPopularPosts(tagId);
+//        System.out.println("list.size() = " + list.size());
+//        for (Account account : list)
+//            System.out.println("account = " + account);
+        List<Object[]> list=tagRepository.selectsMostPopularPosts(tagId);
+        for (Object[] object : list)
+            System.out.println("account = " + object[0]+" "+object[1]);
     }
 }
