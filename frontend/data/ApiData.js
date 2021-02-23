@@ -214,8 +214,7 @@ export const SearchLoginTagData = {
       },
       {
         accountNickname: "난재",
-        accountPhoto:
-          "https://firebasestorage.googleapis.com/v0/b/ssafy-a302.appspot.com/o/images%2FQzddbMK6AHAxhEiY?alt=media&token=dd0e875c-9b15-426a-9339-5d91eb8ab109",
+        accountPhoto: "",
       },
     ],
     mostPopularPosts: [1, 2, 3],

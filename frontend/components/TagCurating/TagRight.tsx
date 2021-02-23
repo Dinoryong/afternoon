@@ -76,6 +76,16 @@ const CrtTopLikes = styled.div`
   margin-left: 12px;
 `;
 
+const CrtTopContributors = styled.div`
+  position: relative;
+  width: 28px;
+  height: 28px;
+  cursor: pointer;
+  margin-left: 12px;
+  border-radius: 50%;
+  border: 1px solid ${color.gray.default};
+`;
+
 const useStore = () => {
   const loginState = useSelector(
     (state: RootStateOrAny) => state.login.loginState
@@ -179,7 +189,7 @@ const TagRight = ({
             {mostContributor &&
               mostContributor.map((mc, index) => {
                 return (
-                  <CrtTopLikes
+                  <CrtTopContributors
                     onClick={() => {
                       router.push("/search/" + mc.accountNickname);
                     }}
@@ -187,11 +197,15 @@ const TagRight = ({
                   >
                     <Image
                       className={"next_border_image circle"}
-                      src={mc.accountPhoto}
+                      src={
+                        mc.accountPhoto === ""
+                          ? "/assets/icons/eye_open.png"
+                          : mc.accountPhoto
+                      }
                       layout="fill"
                       objectFit="cover"
                     ></Image>
-                  </CrtTopLikes>
+                  </CrtTopContributors>
                 );
               })}
           </RowBoxData>
