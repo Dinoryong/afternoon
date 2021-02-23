@@ -134,7 +134,7 @@ const index = () => {
       };
 
       const result = await getResult();
-      //replace_console_log(result);
+      console.log(result);
 
       if (result.status === 200) {
         setTermExist(true);

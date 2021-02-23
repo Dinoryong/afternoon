@@ -2,12 +2,27 @@ import styled from "@emotion/styled";
 import React, { useState } from "react";
 import ConfirmUpload from "./ConfirmUpload";
 import PhotoUpload from "./PhotoUpload";
+import PhotoUploadSmall from "./PhotoUploadSmall";
 
 const Container = styled.div`
   position: relative;
   display: flex;
   background-color: white;
   border-radius: 4px;
+  height: 95%;
+  width: 95%;
+  @media only screen and (max-width: 768px) {
+    min-height: 540px;
+    min-width: 340px;
+  }
+  @media only screen and (min-width: 768px) {
+    min-height: 720px;
+    min-width: 720px;
+  }
+  @media only screen and (min-width: 1280px) {
+    min-height: 700px;
+    min-width: 1050px;
+  }
 `;
 
 const Wrapper = styled.div`
@@ -48,20 +63,38 @@ const index = ({ windowWidth, windowHeight }) => {
       }}
     >
       <Wrapper>
-        <PhotoUpload
-          {...{
-            imageAsFile1,
-            setImageAsFile1,
-            imageAsFile2,
-            setImageAsFile2,
-            imageAsFile3,
-            setImageAsFile3,
-            imageAsFile4,
-            setImageAsFile4,
-            setUploadState,
-            uploadState,
-          }}
-        ></PhotoUpload>
+        {windowWidth > 768 && (
+          <PhotoUpload
+            {...{
+              imageAsFile1,
+              setImageAsFile1,
+              imageAsFile2,
+              setImageAsFile2,
+              imageAsFile3,
+              setImageAsFile3,
+              imageAsFile4,
+              setImageAsFile4,
+              setUploadState,
+              uploadState,
+            }}
+          ></PhotoUpload>
+        )}
+        {windowWidth <= 768 && (
+          <PhotoUploadSmall
+            {...{
+              imageAsFile1,
+              setImageAsFile1,
+              imageAsFile2,
+              setImageAsFile2,
+              imageAsFile3,
+              setImageAsFile3,
+              imageAsFile4,
+              setImageAsFile4,
+              setUploadState,
+              uploadState,
+            }}
+          ></PhotoUploadSmall>
+        )}
         <ConfirmUpload
           {...{
             imageAsFile1,
