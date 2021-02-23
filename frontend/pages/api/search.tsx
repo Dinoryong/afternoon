@@ -94,7 +94,13 @@ export const SEARCH_LOGIN_USER = async (req, config) => {
 };
 
 export const SEARCH_LOGIN_TAG = async (req, config) => {
-  //replace_console_log("SEARCH_LOGIN_TAG : REQUEST => " + req);
+  console.log("SEARCH_LOGIN_TAG : REQUEST => " + req);
+
+  // interestedPeopleCnt 이 태그를 관심태그로 지정한 유저 수
+  // mostContributor : 이 태그에 가장 많이 글 쓴 사람 Top3
+  //      { accountId: 24
+  //        accountPhoto: "https://firebase" }
+  // mostPopularPosts : 이 태그에서 가장 인기있는 글
 
   let status: number = 0;
   let data: {
@@ -113,7 +119,7 @@ export const SEARCH_LOGIN_TAG = async (req, config) => {
   };
 
   if (!VIA_API_DEV) {
-    //replace_console_log("SEARCH_LOGIN_TAG : LOCAL");
+    console.log("SEARCH_LOGIN_TAG : LOCAL");
 
     try {
       await timeout(1000);
@@ -121,10 +127,10 @@ export const SEARCH_LOGIN_TAG = async (req, config) => {
       status = 200;
       data = SearchLoginTagData.data;
     } catch (error) {
-      //replace_console_log(error);
+      console.log(error);
     }
   } else {
-    //replace_console_log("SEARCH_LOGIN_TAG : DEV");
+    console.log("SEARCH_LOGIN_TAG : DEV");
 
     try {
       await axios
@@ -134,7 +140,7 @@ export const SEARCH_LOGIN_TAG = async (req, config) => {
           status = res.status;
         });
     } catch (error) {
-      //replace_console_log(error);
+      console.log(error);
     }
   }
 
