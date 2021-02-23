@@ -4,6 +4,8 @@ import color from "../../styles/theme";
 import Button from "../Button";
 import { ADD_TAGS, DELETE_TAGS } from "../../pages/api/profile";
 import { RootStateOrAny, useDispatch, useSelector } from "react-redux";
+import Image from "next/image";
+import { useRouter } from "next/router";
 
 const Container = styled.div`
   display: flex;
@@ -25,12 +27,14 @@ const TopBox = styled.div`
 
 const RowBox = styled.div`
   display: flex;
+  align-items: center;
   justify-content: space-between;
-  padding: 15px 10px;
+  padding: 10px 10px;
   margin: 0px 20px;
   :not(:last-child) {
     border-bottom: 1px solid lightgray;
   }
+  height: 56px;
 `;
 
 const CuratingInfo = styled.div`
@@ -64,6 +68,14 @@ const LikeTag = styled.div`
   margin-top: 20px;
 `;
 
+const CrtTopLikes = styled.div`
+  position: relative;
+  width: 28px;
+  height: 28px;
+  cursor: pointer;
+  margin-left: 12px;
+`;
+
 const useStore = () => {
   const loginState = useSelector(
     (state: RootStateOrAny) => state.login.loginState
@@ -74,15 +86,26 @@ const useStore = () => {
   const toggle = () => {
     dispatch({ type: "TOGGLE" });
   };
-
+  const togglePost = async (toggleId) => {
+    await dispatch({ type: "TOGGLE_POST", toggleId });
+  };
   return {
     loginState,
     toggle,
+    togglePost,
   };
 };
 
-const TagRight = ({ tagState, writtenPostsCnt, tagId }) => {
-  const { loginState, toggle } = useStore();
+const TagRight = ({
+  tagState,
+  writtenPostsCnt,
+  tagId,
+  interestedPeopleCnt,
+  mostContributor,
+  mostPopularPosts,
+}) => {
+  const router = useRouter();
+  const { loginState, toggle, togglePost } = useStore();
 
   const [tagBtnState, setTagBtnState] = useState(tagState);
 
@@ -116,22 +139,63 @@ const TagRight = ({ tagState, writtenPostsCnt, tagId }) => {
     <Container>
       <TopBox>
         <RowBox>
-          <RowBoxTag>등록된 게시물</RowBoxTag>
+          <RowBoxTag>업로드 사진 수</RowBoxTag>
           <RowBoxData>{writtenPostsCnt}</RowBoxData>
         </RowBox>
-        <CuratingInfo>검색 결과 요약 준비 중..</CuratingInfo>
-        {/* <RowBox>
-          <RowBoxTag>등록한 사용자</RowBoxTag>
-          <RowBoxData>163</RowBoxData>
+        {/* <CuratingInfo>검색 결과 요약 준비 중..</CuratingInfo> */}
+        <RowBox>
+          <RowBoxTag>태그 팔로워 수</RowBoxTag>
+          <RowBoxData>{interestedPeopleCnt}</RowBoxData>
         </RowBox>
         <RowBox>
-          <RowBoxTag>좋아요 TOP 5</RowBoxTag>
-          <RowBoxData>난재</RowBoxData>
+          <RowBoxTag>인기글 TOP 3</RowBoxTag>
+          <RowBoxData>
+            {mostPopularPosts &&
+              mostPopularPosts.map((mpp, index) => {
+                return (
+                  <CrtTopLikes
+                    onClick={() => {
+                      if (loginState) {
+                        togglePost(mpp);
+                      } else {
+                        toggle();
+                      }
+                    }}
+                    key={index}
+                  >
+                    <Image
+                      src={"/assets/icons/medal_" + (index + 1) + ".png"}
+                      layout="fill"
+                      objectFit="contain"
+                    ></Image>
+                  </CrtTopLikes>
+                );
+              })}
+          </RowBoxData>
         </RowBox>
         <RowBox>
-          <RowBoxTag>게시물 TOP 5</RowBoxTag>
-          <RowBoxData>난재</RowBoxData>
-        </RowBox> */}
+          <RowBoxTag>업로더 TOP 3</RowBoxTag>
+          <RowBoxData>
+            {mostContributor &&
+              mostContributor.map((mc, index) => {
+                return (
+                  <CrtTopLikes
+                    onClick={() => {
+                      router.push("/search/" + mc.accountNickname);
+                    }}
+                    key={index}
+                  >
+                    <Image
+                      className={"next_border_image circle"}
+                      src={mc.accountPhoto}
+                      layout="fill"
+                      objectFit="cover"
+                    ></Image>
+                  </CrtTopLikes>
+                );
+              })}
+          </RowBoxData>
+        </RowBox>
       </TopBox>
       <BottomBox>
         <LikeTag>

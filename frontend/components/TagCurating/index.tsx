@@ -25,6 +25,9 @@ const index = ({ searchData, routerQuery }) => {
           <TagRight
             tagState={searchData.tagState}
             writtenPostsCnt={searchData.writtenPostsCnt}
+            interestedPeopleCnt={searchData.interestedPeopleCnt}
+            mostContributor={searchData.mostContributor}
+            mostPopularPosts={searchData.mostPopularPosts}
             tagId={currentTag.tagId}
           />
         </Container>

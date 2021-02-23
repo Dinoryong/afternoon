@@ -200,6 +200,25 @@ export const SearchLoginTagData = {
   httpStatus: "OK",
   headers: null,
   data: {
+    interestedPeopleCnt: 1,
+    mostContributor: [
+      {
+        accountNickname: "난재",
+        accountPhoto:
+          "https://firebasestorage.googleapis.com/v0/b/ssafy-a302.appspot.com/o/images%2FdkIg4OEz3NvI0SPb?alt=media&token=6534e2ac-217a-4a5b-ae05-befd7d43e348",
+      },
+      {
+        accountNickname: "VVS우석",
+        accountPhoto:
+          "https://firebasestorage.googleapis.com/v0/b/ssafy-a302.appspot.com/o/images%2FNuQgGJYw2Y8L5r9o?alt=media&token=8fbe4205-9a42-41fc-a516-959d1e53bf16",
+      },
+      {
+        accountNickname: "난재",
+        accountPhoto:
+          "https://firebasestorage.googleapis.com/v0/b/ssafy-a302.appspot.com/o/images%2FQzddbMK6AHAxhEiY?alt=media&token=dd0e875c-9b15-426a-9339-5d91eb8ab109",
+      },
+    ],
+    mostPopularPosts: [1, 2, 3],
     writtenPosts: [
       {
         postsId: 24,
