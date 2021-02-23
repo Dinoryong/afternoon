@@ -39,8 +39,13 @@ const ImageBox = styled("img")`
 
 const InfoWrapper = styled.div`
   position: relative;
-  min-width: 400px;
   height: 100%;
+  @media only screen and (min-width: 768px) {
+    min-width: 300px;
+  }
+  @media only screen and (min-width: 1280px) {
+    min-width: 400px;
+  }
 `;
 
 const InfoDiv = styled.div`
@@ -49,7 +54,12 @@ const InfoDiv = styled.div`
   justify-content: space-between;
   height: 100%;
   margin-left: 20px;
-  font-size: 14px;
+  @media only screen and (min-width: 768px) {
+    font-size: 13px;
+  }
+  @media only screen and (min-width: 1280px) {
+    font-size: 14px;
+  }
 `;
 
 const InfoTop = styled.div`
@@ -89,7 +99,6 @@ const BoxLabel = styled.div`
 `;
 
 const CommonInput = styled("textarea")`
-  font-size: 16px;
   margin-top: 10px;
   border: 0px;
   padding: 0px;
@@ -115,9 +124,9 @@ const InputContent = styled(CommonInput)`
 const PinGuide = styled.div`
   display: flex;
   justify-content: center;
-  margin-top: 10px;
   font-weight: 700;
   color: ${color.gray.dark};
+  margin-top: 10px;
 `;
 
 const SelectPhotoBox = styled.div`
@@ -128,14 +137,20 @@ const SelectPhotoBox = styled.div`
 `;
 
 const PhotoButton = styled.div`
-  margin: 0px 8px;
-  padding: 4px 16px;
   background-color: ${color.black.default};
   border-radius: 4px;
   color: ${color.white.default};
   cursor: pointer;
   opacity: 0.2;
-  transition: all 0.3s;
+  transition: opacity 0.3s;
+  @media only screen and (min-width: 768px) {
+    margin: 0px 4px;
+    padding: 4px 12px;
+  }
+  @media only screen and (min-width: 1280px) {
+    margin: 0px 8px;
+    padding: 4px 16px;
+  }
 `;
 
 const PinControlDiv = styled.div`
@@ -173,6 +188,12 @@ const PinLinkBox = styled.div`
 const PinLabel = styled.div`
   font-weight: 700;
   margin-right: 8px;
+  @media only screen and (min-width: 768px) {
+    min-width: 40px;
+  }
+  @media only screen and (min-width: 1280px) {
+    min-width: 45px;
+  }
 `;
 
 const PinInput = styled("input")`
@@ -280,15 +301,21 @@ const AddTagBox = styled.div`
   justify-content: center;
   align-items: center;
   padding: 4px 8px;
-  font-size: 14px;
   color: ${color.black.default};
   background-color: ${color.white.default};
   border: 1px dashed ${color.black.default};
   font-weight: 500;
   border-radius: 4px;
-  width: 80px;
   margin: 0px 6px;
   cursor: pointer;
+  @media only screen and (min-width: 768px) {
+    font-size: 13px;
+    width: 65px;
+  }
+  @media only screen and (min-width: 1280px) {
+    font-size: 14px;
+    width: 80px;
+  }
 `;
 
 type StateProps = {
@@ -664,7 +691,7 @@ const ConfirmUpload = ({
             <BoxLine />
             <BoxLabel>눈 추가 (선택)</BoxLabel>
             <PinGuide>
-              사진을 선택하시고 + 버튼을 눌러 눈 위치를 지정해주세요
+              사진 선택 후 + 버튼을 눌러 눈 위치를 지정해주세요
             </PinGuide>
             <SelectPhotoBox>
               <PhotoButton

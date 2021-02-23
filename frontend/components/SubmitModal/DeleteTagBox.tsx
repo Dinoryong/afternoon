@@ -10,11 +10,7 @@ const Container = styled.div`
   display: flex;
   justify-content: center;
   align-items: center;
-  width: 80px;
-  min-width: 80px;
   min-width: fit-content;
-  padding: 4px 8px;
-  font-size: 14px;
   color: ${color.gray.darker};
   border: 1px solid ${color.gray.light};
   background-color: ${color.gray.light};
@@ -22,6 +18,18 @@ const Container = styled.div`
   border-radius: 4px;
   cursor: pointer;
   transition: all 0.3s;
+  @media only screen and (min-width: 768px) {
+    width: 65px;
+    min-width: fit-content;
+    font-size: 13px;
+    padding: 4px 2px;
+  }
+  @media only screen and (min-width: 1280px) {
+    width: 80px;
+    min-width: 80px;
+    font-size: 14px;
+    padding: 4px 6px;
+  }
 `;
 
 const TextBox = styled.div`

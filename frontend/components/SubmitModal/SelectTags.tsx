@@ -8,15 +8,22 @@ import TagList from "../../data/TagList";
 
 const Container = styled.div`
   position: absolute;
-  top: 73px;
-  width: 380px;
   background-color: ${color.white.default};
   border-bottom-left-radius: 8px;
   border-bottom-right-radius: 8px;
   border: 1px solid ${color.gray.default};
   border-top: 0px;
-  font-size: 14px;
   color: ${color.gray.darker};
+  @media only screen and (min-width: 768px) {
+    width: 280px;
+    top: 72px;
+    font-size: 13px;
+  }
+  @media only screen and (min-width: 1280px) {
+    width: 380px;
+    top: 73px;
+    font-size: 14px;
+  }
 `;
 
 const Wrapper = styled.div`

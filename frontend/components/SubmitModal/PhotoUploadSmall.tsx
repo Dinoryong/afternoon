@@ -31,6 +31,7 @@ const TopWrapper = styled.div`
   height: 100%;
   /* border: 2px dashed ${color.gray.default}; */
   /* padding: 10px; */
+  overflow-y: scroll;
 `;
 
 const UploadBtnDiv = styled.div`
@@ -39,6 +40,7 @@ const UploadBtnDiv = styled.div`
   position: relative;
   width: 100%;
   height: 50%;
+  min-height: 40%;
   justify-content: center;
   align-items: center;
   margin: 10px 0px;
@@ -65,11 +67,13 @@ const WarningDiv = styled.div`
   font-weight: 700;
   font-size: 12px;
   color: ${color.red.default};
+  margin-top: 5px;
 `;
 
 const ButtonDiv = styled.div`
   z-index: 1;
   display: flex;
+  margin-top: 10px;
 `;
 
 const bounce = keyframes`
@@ -293,6 +297,52 @@ const PhotoUploadSmall = ({
             imageAsFile2.image !== null &&
             imageAsFile2.url !== "" && (
               <UploadPreviewBox imageAsFile={imageAsFile2} />
+            )}
+        </UploadBtnDiv>
+        <UploadBtnDiv>
+          {submitShown &&
+            imageAsFile2 &&
+            imageAsFile2.image !== null &&
+            imageAsFile3 && (
+              <ProgressContainer>
+                <ProgressBox>{imageAsFile3.progress} %</ProgressBox>
+              </ProgressContainer>
+            )}
+          {submitShown &&
+          imageAsFile2 &&
+          imageAsFile3 &&
+          imageAsFile2.image !== null &&
+          imageAsFile3.image === null ? (
+            <UploadButtonBox setImageAsFile={setImageAsFile3} />
+          ) : null}
+          {submitShown &&
+            imageAsFile3 &&
+            imageAsFile3.image !== null &&
+            imageAsFile3.url !== "" && (
+              <UploadPreviewBox imageAsFile={imageAsFile3} />
+            )}
+        </UploadBtnDiv>
+        <UploadBtnDiv>
+          {submitShown &&
+            imageAsFile3 &&
+            imageAsFile3.image !== null &&
+            imageAsFile4 && (
+              <ProgressContainer>
+                <ProgressBox>{imageAsFile4.progress} %</ProgressBox>
+              </ProgressContainer>
+            )}
+          {submitShown &&
+          imageAsFile3 &&
+          imageAsFile4 &&
+          imageAsFile3.image !== null &&
+          imageAsFile4.image === null ? (
+            <UploadButtonBox setImageAsFile={setImageAsFile4} />
+          ) : null}
+          {submitShown &&
+            imageAsFile4 &&
+            imageAsFile4.image !== null &&
+            imageAsFile4.url !== "" && (
+              <UploadPreviewBox imageAsFile={imageAsFile4} />
             )}
         </UploadBtnDiv>
       </TopWrapper>

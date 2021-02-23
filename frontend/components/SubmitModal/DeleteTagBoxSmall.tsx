@@ -10,9 +10,7 @@ const Container = styled.div`
   display: flex;
   justify-content: center;
   align-items: center;
-  width: fit-content;
   min-width: fit-content;
-  padding: 4px 8px;
   color: ${color.gray.darker};
   border: 1px solid ${color.gray.light};
   background-color: ${color.gray.light};
@@ -20,16 +18,20 @@ const Container = styled.div`
   border-radius: 4px;
   cursor: pointer;
   transition: all 0.3s;
-  @media only screen and (min-width: 768px) {
-    font-size: 13px;
-  }
-  @media only screen and (min-width: 1280px) {
-    font-size: 14px;
-  }
+  width: 55px;
+  min-width: fit-content;
+  font-size: 13px;
+  padding: 4px 2px;
 `;
 
 const TextBox = styled.div`
   transition: all 0.3s;
+`;
+
+const DeleteBox = styled.div`
+  position: absolute;
+  transition: all 0.3s;
+  color: ${color.black.default};
 `;
 
 const useStore = () => {
@@ -50,27 +52,38 @@ const useStore = () => {
   return { toggleId, loginState, toggle, togglePost };
 };
 
-const SelectTagBox = ({
+const DeleteTagBoxSmall = ({
   tagId = 1,
   tagMargin = "0px",
   tagOnClick = () => {},
+  tagUseDelete = true,
 }) => {
   const router = useRouter();
+  const [mouseOver, setMouseOver] = useState(false);
 
   const tagInfo = TagList[tagId - 1];
 
   return (
     <Container
       onClick={tagOnClick}
+      onMouseOver={() => {
+        if (tagUseDelete) setMouseOver(true);
+      }}
+      onMouseLeave={() => {
+        if (tagUseDelete) setMouseOver(false);
+      }}
       style={{
-        // backgroundColor: mouseOver ? "white" : tagInfo.tagColor,
+        backgroundColor: mouseOver ? "white" : color.gray.light,
         margin: tagMargin,
-        // borderColor: mouseOver ? color.black.default : tagInfo.tagColor,
+        borderColor: mouseOver ? color.black.default : color.gray.light,
       }}
     >
-      <TextBox>{tagInfo.tagTitle}</TextBox>
+      <TextBox style={mouseOver ? { opacity: 0 } : { opacity: 1 }}>
+        {tagInfo.tagTitle}
+      </TextBox>
+      <DeleteBox style={{ opacity: mouseOver ? 1 : 0 }}>태그삭제</DeleteBox>
     </Container>
   );
 };
 
-export default SelectTagBox;
+export default DeleteTagBoxSmall;

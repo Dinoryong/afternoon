@@ -94,7 +94,7 @@ export const SEARCH_LOGIN_USER = async (req, config) => {
 };
 
 export const SEARCH_LOGIN_TAG = async (req, config) => {
-  console.log("SEARCH_LOGIN_TAG : REQUEST => " + req);
+  //replace_console_log("SEARCH_LOGIN_TAG : REQUEST => " + req);
 
   // interestedPeopleCnt 이 태그를 관심태그로 지정한 유저 수
   // mostContributor : 이 태그에 가장 많이 글 쓴 사람 Top3
@@ -119,7 +119,7 @@ export const SEARCH_LOGIN_TAG = async (req, config) => {
   };
 
   if (!VIA_API_DEV) {
-    console.log("SEARCH_LOGIN_TAG : LOCAL");
+    //replace_console_log("SEARCH_LOGIN_TAG : LOCAL");
 
     try {
       await timeout(1000);
@@ -127,10 +127,10 @@ export const SEARCH_LOGIN_TAG = async (req, config) => {
       status = 200;
       data = SearchLoginTagData.data;
     } catch (error) {
-      console.log(error);
+      //replace_console_log(error);
     }
   } else {
-    console.log("SEARCH_LOGIN_TAG : DEV");
+    //replace_console_log("SEARCH_LOGIN_TAG : DEV");
 
     try {
       await axios
@@ -140,7 +140,7 @@ export const SEARCH_LOGIN_TAG = async (req, config) => {
           status = res.status;
         });
     } catch (error) {
-      console.log(error);
+      //replace_console_log(error);
     }
   }
 
