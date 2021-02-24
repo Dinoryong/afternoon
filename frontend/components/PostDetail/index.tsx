@@ -468,6 +468,14 @@ const index = ({ windowWidth, windowHeight }) => {
   const [inputLink, setInputLink] = useState("");
 
   const requestSubmitComment = async () => {
+    if (inputComment === "") {
+      Swal.fire({
+        icon: "info",
+        text: "댓글 내용을 입력해주세요!",
+      });
+      return;
+    }
+
     if (
       currentPin.pinId !== -1 &&
       inputLink.length > 0 &&
