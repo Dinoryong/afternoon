@@ -23,16 +23,10 @@ const LogoBox = styled.div`
 const LogoImage = styled.div`
   position: relative;
   margin-top: 2px;
-  @media only screen and (min-width: 768px) {
-    min-width: 28px;
-    width: 28px;
-    height: 28px;
-  }
-  @media only screen and (min-width: 1280px) {
-    min-width: 32px;
-    width: 32px;
-    height: 32px;
-  }
+  min-width: 28px;
+  width: 28px;
+  height: 28px;
+  margin-right: 4px;
 `;
 
 const TitleBox = styled.div`
@@ -40,25 +34,16 @@ const TitleBox = styled.div`
   flex-direction: column;
   justify-content: center;
   align-items: center;
-  min-width: 70px;
+  min-width: 50px;
   color: ${color.black.default};
-  @media only screen and (min-width: 768px) {
-    margin-left: 4px;
-  }
-  @media only screen and (min-width: 1280px) {
-    margin-left: 12px;
-  }
+  margin-left: 4px;
+  margin-right: 4px;
 `;
 
 const TitleText = styled.a`
   font-weight: 700;
   word-break: keep-all;
-  @media only screen and (min-width: 768px) {
-    font-size: 18px;
-  }
-  @media only screen and (min-width: 1280px) {
-    font-size: 20px;
-  }
+  font-size: 14px;
 `;
 
 const SloganText = styled.a`
@@ -70,7 +55,7 @@ const SearchBox = styled.div`
   display: flex;
   position: relative;
   align-items: center;
-  height: 38px;
+  height: 30px;
   width: 100%;
   /* max-width: 700px; */
   transition: all 0.3s;
@@ -96,7 +81,7 @@ const SearchInner = styled.div<HeaderProps>`
     border-color: ${color.gray.default};
     border-bottom: ${(props) =>
       props.inputFocus
-        ? "0px solid transparent"
+        ? "1px solid transparent"
         : `1px solid ${color.gray.default}`};
   }
   transition: all 0.3s;
@@ -104,24 +89,19 @@ const SearchInner = styled.div<HeaderProps>`
 
 const SearchIcon = styled.div`
   position: relative;
-  width: 15px;
-  height: 15px;
-  min-width: 15px;
+  width: 12px;
+  height: 12px;
+  min-width: 12px;
   cursor: pointer;
-  @media only screen and (min-width: 768px) {
-    margin-left: 12px;
-    margin-right: 6px;
-  }
-  @media only screen and (min-width: 1280px) {
-    margin-left: 16px;
-    margin-right: 10px;
-  }
+  margin-left: 8px;
+  margin-right: 4px;
 `;
 
 const SearchInput = styled("input")<HeaderProps>`
   border: 0px;
   background-color: transparent;
   width: 100%;
+  font-size: 12px;
   :focus {
     outline: none;
   }
@@ -132,12 +112,7 @@ const SearchInput = styled("input")<HeaderProps>`
         ? color.white.default
         : color.gray.dark};
   }
-  @media only screen and (min-width: 768px) {
-    margin-right: 10px;
-  }
-  @media only screen and (min-width: 1280px) {
-    margin-right: 20px;
-  }
+  margin-right: 8px;
 `;
 
 type HeaderProps = {
@@ -166,7 +141,7 @@ const useStore = () => {
   };
 };
 
-const HeaderLeft = ({
+const HeaderLeftSmall = ({
   router,
   routerPath,
   setInputFocus,
@@ -222,16 +197,18 @@ const HeaderLeft = ({
               objectFit="contain"
             />
           </LogoImage>
-          <TitleBox style={titleBoxStyle}>
+          {/* <TitleBox style={titleBoxStyle}>
             <TitleText>애프터눈</TitleText>
-          </TitleBox>
+          </TitleBox> */}
         </LogoBox>
       </Link>
       <Button
-        btnText="내 피드"
-        btnWidth={windowWidth < 1280 ? "60px" : "80px"}
-        btnMarginLeft={windowWidth < 1280 ? "8px" : "16px"}
-        btnMarginRight={windowWidth < 1280 ? "10px" : "20px"}
+        btnText="피드"
+        btnWidth={"40px"}
+        btnFontSize={"12px"}
+        btnHeight={"28px"}
+        btnMarginLeft={"4px"}
+        btnMarginRight={"10px"}
         btnHoverBorderColor={
           (routerPath === "/" || routerPath === "/home") && !inputFocus
             ? "transparent"
@@ -301,7 +278,7 @@ const HeaderLeft = ({
           <SearchInput
             {...props}
             style={searchInputStyle}
-            placeholder="태그 또는 사용자를 검색해보세요!"
+            placeholder="태그/사용자 검색"
             value={searchTerm}
             onChange={(e) => {
               setSearchTerm(e.target.value);
@@ -327,4 +304,4 @@ const HeaderLeft = ({
   );
 };
 
-export default HeaderLeft;
+export default HeaderLeftSmall;

@@ -9,18 +9,26 @@ import LoginModal from "../LoginModal";
 import SubmitModal from "../SubmitModal";
 import PostDetail from "../PostDetail";
 import Swal from "sweetalert2";
+import HeaderRightSmall from "./HeaderRightSmall";
+import HeaderLeftSmall from "./HeaderLeftSmall";
+import HeaderCenterSmall from "./HeaderCenterSmall";
 
 const Container = styled.div`
   position: fixed;
   z-index: 10;
   justify-content: center;
   display: flex;
-  height: 62px;
   width: 100%;
   font-size: 14px;
   background-color: white;
   box-shadow: 0px 4px 12px rgba(0, 0, 0, 0.08), 0px 0px 1px rgba(1, 0, 0, 0.1);
   transition: all 0.3s;
+  @media only screen and (max-width: 768px) {
+    height: 52px;
+  }
+  @media only screen and (min-width: 768px) {
+    height: 62px;
+  }
 `;
 
 const Wrapper = styled.div`
@@ -30,7 +38,12 @@ const Wrapper = styled.div`
   height: 100%;
   justify-content: space-between;
   align-items: center;
-  padding: 0px 20px;
+  @media only screen and (max-width: 768px) {
+    padding: 0px 10px;
+  }
+  @media only screen and (min-width: 768px) {
+    padding: 0px 20px;
+  }
 `;
 
 const ModalFrame = styled.div`
@@ -230,27 +243,58 @@ const index = () => {
             />
           </ModalFrame>
         )}
-        <Wrapper>
-          <HeaderLeft
-            router={router}
-            routerPath={routerPath}
-            setInputFocus={setInputFocus}
-            inputFocus={inputFocus}
-            searchTerm={searchTerm}
-            setSearchTerm={setSearchTerm}
-          />
-          <HeaderCenter
-            routerPath={routerPath}
-            inputFocus={inputFocus}
-            setInputFocus={setInputFocus}
-          />
-          <HeaderRight
-            router={router}
-            routerPath={routerPath}
-            inputFocus={inputFocus}
-            setInputFocus={setInputFocus}
-          />
-        </Wrapper>
+        {windowWidth > 768 && (
+          <Wrapper>
+            <HeaderLeft
+              router={router}
+              routerPath={routerPath}
+              setInputFocus={setInputFocus}
+              inputFocus={inputFocus}
+              searchTerm={searchTerm}
+              setSearchTerm={setSearchTerm}
+              windowWidth={windowWidth}
+            />
+            <HeaderCenter
+              routerPath={routerPath}
+              inputFocus={inputFocus}
+              setInputFocus={setInputFocus}
+              windowWidth={windowWidth}
+            />
+            <HeaderRight
+              router={router}
+              routerPath={routerPath}
+              inputFocus={inputFocus}
+              setInputFocus={setInputFocus}
+              windowWidth={windowWidth}
+            />
+          </Wrapper>
+        )}
+        {windowWidth <= 768 && (
+          <Wrapper>
+            <HeaderLeftSmall
+              router={router}
+              routerPath={routerPath}
+              setInputFocus={setInputFocus}
+              inputFocus={inputFocus}
+              searchTerm={searchTerm}
+              setSearchTerm={setSearchTerm}
+              windowWidth={windowWidth}
+            />
+            <HeaderCenterSmall
+              routerPath={routerPath}
+              inputFocus={inputFocus}
+              setInputFocus={setInputFocus}
+              windowWidth={windowWidth}
+            />
+            <HeaderRightSmall
+              router={router}
+              routerPath={routerPath}
+              inputFocus={inputFocus}
+              setInputFocus={setInputFocus}
+              windowWidth={windowWidth}
+            />
+          </Wrapper>
+        )}
       </Container>
     </>
   );

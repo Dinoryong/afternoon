@@ -15,20 +15,40 @@ const TagBox = styled.div`
   display: flex;
   flex-direction: column;
   position: relative;
-  width: 180px;
-  min-width: 180px;
-  min-height: 100px;
   justify-content: center;
   align-items: center;
   border-radius: 8px;
   margin: 10px;
   cursor: pointer;
   color: ${color.white.default};
-  font-size: 20px;
-  :hover {
-    font-size: 24px;
-  }
   transition: all 0.2s;
+  @media only screen and (max-width: 768px) {
+    width: 140px;
+    min-width: 140px;
+    min-height: 80px;
+    font-size: 16px;
+    :hover {
+      font-size: 20px;
+    }
+  }
+  @media only screen and (min-width: 768px) {
+    width: 140px;
+    min-width: 140px;
+    min-height: 80px;
+    font-size: 16px;
+    :hover {
+      font-size: 20px;
+    }
+  }
+  @media only screen and (min-width: 1280px) {
+    width: 180px;
+    min-width: 180px;
+    min-height: 100px;
+    font-size: 20px;
+    :hover {
+      font-size: 24px;
+    }
+  }
 `;
 
 const TagImg = styled.div`
@@ -65,8 +85,8 @@ const BgOpacityFrame = styled.div`
   transition: all 0.3s;
 `;
 
-const PreferTags = ({ selectTags, setSelectTags }) => {
-  const MAX_ROW = 4;
+const PreferTags = ({ windowWidth, selectTags, setSelectTags }) => {
+  const MAX_ROW = windowWidth <= 768 ? 2 : 4;
   const MAX_COL = TagList.length / MAX_ROW;
   let tagRows = 1;
 

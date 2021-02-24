@@ -21,7 +21,7 @@ const Container = styled.div`
   width: 55px;
   min-width: fit-content;
   font-size: 13px;
-  padding: 4px 2px;
+  padding: 4px 1px;
 `;
 
 const TextBox = styled.div`

@@ -7,6 +7,7 @@ import SelectTagBox from "./SelectTagBox";
 import TagList from "../../data/TagList";
 
 const Container = styled.div`
+  z-index: 11;
   position: absolute;
   background-color: ${color.white.default};
   border-bottom-left-radius: 8px;
@@ -14,6 +15,11 @@ const Container = styled.div`
   border: 1px solid ${color.gray.default};
   border-top: 0px;
   color: ${color.gray.darker};
+  @media only screen and (max-width: 768px) {
+    width: 100%;
+    top: 38px;
+    font-size: 13px;
+  }
   @media only screen and (min-width: 768px) {
     width: 280px;
     top: 72px;

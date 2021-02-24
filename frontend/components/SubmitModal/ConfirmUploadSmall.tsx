@@ -290,6 +290,7 @@ const NewPinMini = styled.div`
 
 const AddTagDiv = styled.div`
   display: flex;
+  width: 100%;
 `;
 
 const AddTagBox = styled.div`
@@ -544,14 +545,14 @@ const ConfirmUploadSmall = ({
               {selectTagList && selectTagList.length < 4 && (
                 <AddTagBox onClick={onClickAddTag}>+</AddTagBox>
               )}
-              {toggleTags && (
-                <SelectTags
-                  setSelectTagList={setSelectTagList}
-                  selectTagList={selectTagList}
-                  setToggleTags={setToggleTags}
-                ></SelectTags>
-              )}
             </AddTagDiv>
+            {toggleTags && (
+              <SelectTags
+                setSelectTagList={setSelectTagList}
+                selectTagList={selectTagList}
+                setToggleTags={setToggleTags}
+              ></SelectTags>
+            )}
           </InfoRow>
           <BoxLine />
           <InfoRow>

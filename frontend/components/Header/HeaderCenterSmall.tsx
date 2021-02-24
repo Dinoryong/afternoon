@@ -70,7 +70,7 @@ const useStore = () => {
   };
 };
 
-const HeaderCenter = ({
+const HeaderCenterSmall = ({
   routerPath,
   inputFocus,
   setInputFocus,
@@ -101,10 +101,12 @@ const HeaderCenter = ({
   return (
     <Container>
       <Button
-        btnText="사진 등록"
-        btnWidth={windowWidth < 1280 ? "70px" : "80px"}
-        btnMarginLeft={windowWidth < 1280 ? "10px" : "20px"}
+        btnText="업로드"
+        btnWidth={"50px"}
+        btnMarginLeft={"10px"}
         btnMarginRight="0px"
+        btnFontSize={"12px"}
+        btnHeight={"28px"}
         btnHoverBorderColor={
           (routerPath === "/" || routerPath === "/home") && !inputFocus
             ? "transparent"
@@ -163,4 +165,4 @@ const HeaderCenter = ({
   );
 };
 
-export default HeaderCenter;
+export default HeaderCenterSmall;

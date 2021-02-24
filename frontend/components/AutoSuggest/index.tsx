@@ -17,16 +17,27 @@ const Container = styled.div`
   border-top: 0px;
   font-size: 14px;
   color: ${color.gray.darker};
+  @media only screen and (max-width: 768px) {
+    top: 26px;
+    height: 204px;
+    overflow-y: scroll;
+  }
 `;
 
 const Wrapper = styled.div`
   display: flex;
   flex-direction: column;
   padding: 0px 16px 6px 16px;
+  @media only screen and (max-width: 768px) {
+    padding: 0px 4px 4px 4px;
+  }
 `;
 
 const SuggestContainer = styled.div`
   margin: 0px 0px 4px 0px;
+  @media only screen and (max-width: 768px) {
+    margin: 0px 0px 0px 0px;
+  }
 `;
 
 const SuggestDefault = styled.div`
@@ -35,12 +46,21 @@ const SuggestDefault = styled.div`
 
 const SuggestBox = styled.div`
   display: flex;
-  width: 600px;
   flex-wrap: wrap;
   align-items: center;
   /* cursor: pointer; */
-  margin-top: 8px;
   padding: 4px 0px;
+  @media only screen and (max-width: 768px) {
+    margin-top: 0px;
+    width: 100px;
+  }
+  @media only screen and (min-width: 768px) {
+    margin-top: 8px;
+    width: 266px;
+  }
+  @media only screen and (min-width: 1280px) {
+    width: 600px;
+  }
 `;
 
 const SuggestImage = styled.div`
@@ -79,10 +99,10 @@ const index = ({ setInputFocus, setSearchTerm }) => {
     <Container>
       <Wrapper>
         <SuggestContainer>
-          <SuggestDefault>
+          {/* <SuggestDefault>
             현재 검색어 추천 서비스에 문제가 있어 전체 태그 조회를 제공하고
             있습니다.
-          </SuggestDefault>
+          </SuggestDefault> */}
           <SuggestBox>
             {TagList &&
               TagList.length > 0 &&

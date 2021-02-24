@@ -10,13 +10,7 @@ import Swal from "sweetalert2";
 const Container = styled.div`
   display: flex;
   align-items: center;
-  border-left: 1px solid ${color.gray.default};
-  @media only screen and (min-width: 768px) {
-    padding-left: 10px;
-  }
-  @media only screen and (min-width: 1280px) {
-    padding-left: 15px;
-  }
+  padding-left: 4px;
 `;
 
 type HeaderProps = {
@@ -44,7 +38,7 @@ const useStore = () => {
   return { loginState, loginStateFalse, toggle, autoLoginFalse };
 };
 
-const HeaderRight = ({
+const HeaderRightSmall = ({
   router,
   routerPath,
   inputFocus,
@@ -80,10 +74,12 @@ const HeaderRight = ({
         <>
           <Button
             btnText={"로그아웃"}
-            btnWidth="60px"
             btnHoverBorderColor="transparent"
-            btnMarginLeft="0px"
-            btnMarginRight={windowWidth < 1280 ? "0px" : "8px"}
+            btnWidth={"50px"}
+            btnMarginLeft={"0px"}
+            btnMarginRight="0px"
+            btnFontSize={"12px"}
+            btnHeight={"28px"}
             btnBorderColor="transparent"
             btnBgColor={"transparent"}
             btnOnClick={requestLogout}
@@ -101,7 +97,10 @@ const HeaderRight = ({
           />
           <Button
             btnText={"프로필"}
-            btnWidth={windowWidth < 1280 ? "70px" : "80px"}
+            btnWidth={"50px"}
+            btnFontSize={"12px"}
+            btnHeight={"28px"}
+            btnMarginLeft={"4px"}
             btnBorderColor={color.green.default}
             btnBgColor={color.green.default}
             btnTextColor={color.white.default}
@@ -117,10 +116,12 @@ const HeaderRight = ({
         <>
           <Button
             btnText={"로그인"}
-            btnWidth="60px"
             btnHoverBorderColor="transparent"
-            btnMarginLeft="0px"
-            btnMarginRight={windowWidth < 1280 ? "0px" : "8px"}
+            btnWidth={"50px"}
+            btnMarginLeft={"0px"}
+            btnMarginRight="0px"
+            btnFontSize={"12px"}
+            btnHeight={"28px"}
             btnBorderColor="transparent"
             btnBgColor={"transparent"}
             btnTextColor={
@@ -132,7 +133,10 @@ const HeaderRight = ({
           />
           <Button
             btnText={"회원가입"}
-            btnWidth={windowWidth < 1280 ? "70px" : "80px"}
+            btnWidth={"50px"}
+            btnFontSize={"12px"}
+            btnHeight={"28px"}
+            btnMarginLeft={"4px"}
             btnBorderColor={color.green.default}
             btnBgColor={color.green.default}
             btnTextColor={color.white.default}
@@ -148,4 +152,4 @@ const HeaderRight = ({
   );
 };
 
-export default HeaderRight;
+export default HeaderRightSmall;

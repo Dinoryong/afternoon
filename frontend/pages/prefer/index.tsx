@@ -20,11 +20,19 @@ const Container = styled.div`
 
 const Wrapper = styled.div`
   display: flex;
-  width: 1000px;
   height: 100%;
   flex-direction: column;
   justify-content: space-between;
   align-items: center;
+  @media only screen and (max-width: 768px) {
+    width: 360px;
+  }
+  @media only screen and (min-width: 768px) {
+    width: 700px;
+  }
+  @media only screen and (min-width: 1280px) {
+    width: 1000px;
+  }
 `;
 
 const TopBox = styled.div`
@@ -32,8 +40,18 @@ const TopBox = styled.div`
   flex-direction: column;
   width: 100%;
   align-items: center;
-  margin-top: 60px;
-  margin-bottom: 20px;
+  @media only screen and (max-width: 768px) {
+    margin-top: 20px;
+    margin-bottom: 20px;
+  }
+  @media only screen and (min-width: 768px) {
+    margin-top: 40px;
+    margin-bottom: 20px;
+  }
+  @media only screen and (min-width: 1280px) {
+    margin-top: 60px;
+    margin-bottom: 20px;
+  }
 `;
 
 const InnerBox1 = styled.div`
@@ -41,19 +59,35 @@ const InnerBox1 = styled.div`
   flex-direction: column;
   margin-bottom: 13px;
   width: 100%;
-  font-size: 24px;
   font-weight: bold;
   justify-content: center;
   align-items: center;
+  @media only screen and (max-width: 768px) {
+    font-size: 18px;
+  }
+  @media only screen and (min-width: 768px) {
+    font-size: 22px;
+  }
+  @media only screen and (min-width: 1280px) {
+    font-size: 24px;
+  }
 `;
 
 const InnerBox2 = styled.div`
   display: flex;
   flex-direction: column;
   width: 100%;
-  font-size: 15px;
   justify-content: center;
   align-items: center;
+  @media only screen and (max-width: 768px) {
+    font-size: 13px;
+  }
+  @media only screen and (min-width: 768px) {
+    font-size: 14px;
+  }
+  @media only screen and (min-width: 1280px) {
+    font-size: 15px;
+  }
 `;
 
 const MiddleBox = styled.div`
@@ -70,14 +104,25 @@ const BottomBox = styled.div`
   width: 100%;
   justify-content: flex-end;
   align-items: center;
-  margin-bottom: 60px;
-  margin-top: 20px;
+  @media only screen and (max-width: 768px) {
+    margin-bottom: 20px;
+    margin-top: 20px;
+  }
+  @media only screen and (min-width: 768px) {
+    margin-bottom: 40px;
+    margin-top: 20px;
+  }
+  @media only screen and (min-width: 1280px) {
+    margin-bottom: 60px;
+    margin-top: 20px;
+  }
 `;
 
 const index = () => {
   const router = useRouter();
 
   const [windowHeight, setWindowHeight] = useState<number>();
+  const [windowWidth, setWindowWidth] = useState<number>();
   const [windowNickname, setWindowNickname] = useState("");
 
   const [selectTags, setSelectTags] = useState([]);
@@ -133,6 +178,7 @@ const index = () => {
 
     const resizeHandler = () => {
       setWindowHeight(window.innerHeight);
+      setWindowWidth(window.innerWidth);
     };
 
     resizeHandler();
@@ -162,6 +208,7 @@ const index = () => {
           </TopBox>
           <MiddleBox>
             <PreferTags
+              windowWidth={windowWidth}
               setSelectTags={setSelectTags}
               selectTags={selectTags}
             ></PreferTags>
