@@ -8,9 +8,16 @@ const Container = styled.div`
   /* width: 300px; */
   justify-content: flex-start;
   background-color: white;
-  font-size: 14px;
-  padding: 4px;
-  margin-bottom: 8px;
+  @media only screen and (min-width: 768px) {
+    font-size: 13px;
+    padding: 3px;
+    margin-bottom: 6px;
+  }
+  @media only screen and (min-width: 1280px) {
+    font-size: 14px;
+    padding: 4px;
+    margin-bottom: 8px;
+  }
 `;
 
 const Wrapper1 = styled.div`
@@ -25,10 +32,17 @@ const CommentImg = styled.div`
   /* justify-items: start; */
   /* align-content: start; */
   /* align-items: start; */
-  width: 30px;
-  height: 30px;
+
   margin-top: 8px;
   margin-right: 10px;
+  @media only screen and (min-width: 768px) {
+    width: 24px;
+    height: 24px;
+  }
+  @media only screen and (min-width: 1280px) {
+    width: 30px;
+    height: 30px;
+  }
 `;
 
 const Wrapper2 = styled.div`
@@ -40,7 +54,6 @@ const Wrapper2 = styled.div`
 const Wrapper3 = styled.div`
   display: flex;
   align-items: center;
-
   width: 100%;
   /* height: 24px; */
   margin-bottom: 4px;

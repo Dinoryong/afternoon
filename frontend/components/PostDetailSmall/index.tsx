@@ -22,20 +22,10 @@ const Container = styled.div`
   display: flex;
   background-color: white;
   border-radius: 4px;
-  @media only screen and (min-width: 768px) {
-    min-height: 720px;
-    min-width: 720px;
-    height: 90%;
-    width: 90%;
-    font-size: 13px;
-  }
-  @media only screen and (min-width: 1280px) {
-    min-height: 700px;
-    min-width: 1050px;
-    height: 90%;
-    width: 90%;
-    font-size: 14px;
-  }
+  min-height: 540px;
+  min-width: 360px;
+  height: 95%;
+  width: 95%;
 `;
 
 const Wrapper = styled.div`
@@ -73,20 +63,14 @@ const NewPinIcon = styled.div`
   display: flex;
   justify-content: center;
   align-items: center;
+  width: 40px;
+  height: 40px;
   border-radius: 50%;
   background-color: ${color.white.default};
   /* border: 2px solid ${color.white.default}; */
   top: 50%;
   left: 50%;
   cursor: pointer;
-  @media only screen and (min-width: 768px) {
-    width: 32px;
-    height: 32px;
-  }
-  @media only screen and (min-width: 1280px) {
-    width: 40px;
-    height: 40px;
-  }
 `;
 
 const ArrowLeft = styled.div`
@@ -125,20 +109,14 @@ const OpenInfoFrame = styled.div`
 `;
 
 const InfoWrapper = styled.div`
+  min-width: 400px;
+  width: 400px;
   height: 100%;
   padding: 0px 10px;
   margin-left: 10px;
   display: flex;
   flex-direction: column;
   justify-content: space-between;
-  @media only screen and (min-width: 768px) {
-    min-width: 300px;
-    width: 300px;
-  }
-  @media only screen and (min-width: 1280px) {
-    min-width: 400px;
-    width: 400px;
-  }
 `;
 
 const InfoDiv = styled.div`
@@ -201,24 +179,14 @@ const ProfileRight = styled.div`
 `;
 
 const ProfileNickname = styled.div`
+  font-size: 18px;
   font-weight: 700;
-  @media only screen and (min-width: 768px) {
-    font-size: 16px;
-  }
-  @media only screen and (min-width: 1280px) {
-    font-size: 18px;
-  }
 `;
 
 const PostCreated = styled.div`
   margin-top: 4px;
+  font-size: 14px;
   color: ${color.gray.dark};
-  @media only screen and (min-width: 768px) {
-    font-size: 12px;
-  }
-  @media only screen and (min-width: 1280px) {
-    font-size: 14px;
-  }
 `;
 
 const TagInfo = styled.div`
@@ -227,50 +195,25 @@ const TagInfo = styled.div`
 `;
 
 const PostTitle = styled.div`
+  font-size: 18px;
   font-weight: 700;
-  @media only screen and (min-width: 768px) {
-    font-size: 16px;
-  }
-  @media only screen and (min-width: 1280px) {
-    font-size: 18px;
-  }
 `;
 
 const PostContent = styled.div`
   margin: 12px 0px 24px 0px;
-  @media only screen and (min-width: 768px) {
-    font-size: 13px;
-  }
-  @media only screen and (min-width: 1280px) {
-    font-size: 14px;
-  }
 `;
 
 const PostLikeDiv = styled.div`
   display: flex;
-  @media only screen and (min-width: 768px) {
-    font-size: 13px;
-  }
-  @media only screen and (min-width: 1280px) {
-    font-size: 14px;
-  }
 `;
 
 const PostLikeImage = styled.div`
   position: relative;
+  width: 20px;
+  height: 20px;
   border-radius: 50%;
   margin-right: 8px;
   cursor: pointer;
-  @media only screen and (min-width: 768px) {
-    width: 16px;
-    height: 16px;
-    margin-top: 2px;
-  }
-  @media only screen and (min-width: 1280px) {
-    width: 20px;
-    height: 20px;
-    margin-top: 1px;
-  }
 `;
 
 const PostLikeText = styled.div`
@@ -468,18 +411,6 @@ const index = ({ windowWidth, windowHeight }) => {
   const [inputLink, setInputLink] = useState("");
 
   const requestSubmitComment = async () => {
-    if (
-      currentPin.pinId !== -1 &&
-      inputLink.length > 0 &&
-      !(inputLink.startsWith("https://") || inputLink.startsWith("http://"))
-    ) {
-      Swal.fire({
-        icon: "info",
-        text: "링크는 http:// 또는 https:// 형태로 입력해주세요!",
-      });
-      return;
-    }
-
     const submitCommentReq = {
       postsId: postDetailData.postsId,
       pinName: currentPin.pinName,
@@ -512,6 +443,7 @@ const index = ({ windowWidth, windowHeight }) => {
   return (
     <Container
       style={{
+        width: `${windowWidth - 240}px`,
         height: `${windowHeight - 80}px`,
       }}
     >
@@ -539,12 +471,12 @@ const index = ({ windowWidth, windowHeight }) => {
                             ? {
                                 top: `${
                                   pl.pinLocY -
-                                  (windowWidth > 1280 ? 2000 : 1600) /
+                                  (windowWidth > 768 ? 2000 : 1200) /
                                     imgDim.offsetHeight
                                 }%`,
                                 left: `${
                                   pl.pinLocX -
-                                  (windowWidth > 1280 ? 2000 : 1600) /
+                                  (windowWidth > 768 ? 2000 : 1200) /
                                     imgDim.offsetWidth
                                 }%`,
                               }
@@ -552,12 +484,12 @@ const index = ({ windowWidth, windowHeight }) => {
                                 display: "none",
                                 top: `${
                                   pl.pinLocY -
-                                  (windowWidth > 1280 ? 2000 : 1600) /
+                                  (windowWidth > 768 ? 2000 : 1200) /
                                     imgDim.offsetHeight
                                 }%`,
                                 left: `${
                                   pl.pinLocX -
-                                  (windowWidth > 1280 ? 2000 : 1600) /
+                                  (windowWidth > 768 ? 2000 : 1200) /
                                     imgDim.offsetWidth
                                 }%`,
                               }

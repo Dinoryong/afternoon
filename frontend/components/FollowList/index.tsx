@@ -5,7 +5,7 @@ import Image from "next/image";
 import { useRouter } from "next/router";
 
 const Container = styled.div`
-  width: 300px;
+  width: 240px;
   height: 320px;
   display: flex;
   position: absolute;
@@ -50,7 +50,7 @@ const Wrapper2 = styled.div`
 const FollowingBox2 = styled.div`
   display: flex;
   margin: 10px 0px;
-  width: 220px;
+  width: 200px;
   justify-content: space-between;
   cursor: pointer;
 `;
@@ -95,7 +95,7 @@ const index = ({ toggleFollow, userListState, userList }) => {
               }}
             >
               <FollowingNickname>{ul.nickname}</FollowingNickname>
-              <FollowingPosts>0</FollowingPosts>
+              {/* <FollowingPosts>0</FollowingPosts> */}
             </FollowingBox2>
           ))}
       </Wrapper2>

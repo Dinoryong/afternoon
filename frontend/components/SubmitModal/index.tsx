@@ -112,6 +112,7 @@ const index = ({ windowWidth, windowHeight }) => {
               imageAsFile4,
               setUploadState,
               uploadState,
+              windowWidth,
             }}
           ></ConfirmUpload>
         )}

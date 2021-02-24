@@ -275,13 +275,19 @@ const NewPinIcon = styled.div`
   display: flex;
   justify-content: center;
   align-items: center;
-  width: 40px;
-  height: 40px;
   border-radius: 50%;
   background-color: ${color.white.default};
   /* border: 2px solid ${color.white.default}; */
   top: 50%;
   left: 50%;
+  @media only screen and (min-width: 768px) {
+    width: 32px;
+    height: 32px;
+  }
+  @media only screen and (min-width: 1280px) {
+    width: 40px;
+    height: 40px;
+  }
 `;
 
 const NewPinMini = styled.div`
@@ -341,6 +347,7 @@ const ConfirmUpload = ({
   imageAsFile4,
   setUploadState,
   uploadState,
+  windowWidth,
 }) => {
   const router = useRouter();
   const { toggleSubmit } = useStore();
@@ -553,8 +560,14 @@ const ConfirmUpload = ({
               return (
                 <NewPinIcon
                   style={{
-                    top: `${inputPinPosY[p] - 2000 / imgDim.offsetHeight}%`,
-                    left: `${inputPinPosX[p] - 2000 / imgDim.offsetWidth}%`,
+                    top: `${
+                      inputPinPosY[p] -
+                      (windowWidth > 1280 ? 2000 : 1600) / imgDim.offsetHeight
+                    }%`,
+                    left: `${
+                      inputPinPosX[p] -
+                      (windowWidth > 1280 ? 2000 : 1600) / imgDim.offsetWidth
+                    }%`,
                   }}
                   key={index}
                 >
@@ -573,8 +586,14 @@ const ConfirmUpload = ({
               return (
                 <NewPinIcon
                   style={{
-                    top: `${inputPinPosY[p] - 2000 / imgDim.offsetHeight}%`,
-                    left: `${inputPinPosX[p] - 2000 / imgDim.offsetWidth}%`,
+                    top: `${
+                      inputPinPosY[p] -
+                      (windowWidth > 1280 ? 2000 : 1600) / imgDim.offsetHeight
+                    }%`,
+                    left: `${
+                      inputPinPosX[p] -
+                      (windowWidth > 1280 ? 2000 : 1600) / imgDim.offsetWidth
+                    }%`,
                   }}
                   key={index}
                 >
@@ -593,8 +612,14 @@ const ConfirmUpload = ({
               return (
                 <NewPinIcon
                   style={{
-                    top: `${inputPinPosY[p] - 2000 / imgDim.offsetHeight}%`,
-                    left: `${inputPinPosX[p] - 2000 / imgDim.offsetWidth}%`,
+                    top: `${
+                      inputPinPosY[p] -
+                      (windowWidth > 1280 ? 2000 : 1600) / imgDim.offsetHeight
+                    }%`,
+                    left: `${
+                      inputPinPosX[p] -
+                      (windowWidth > 1280 ? 2000 : 1600) / imgDim.offsetWidth
+                    }%`,
                   }}
                   key={index}
                 >
@@ -613,8 +638,14 @@ const ConfirmUpload = ({
               return (
                 <NewPinIcon
                   style={{
-                    top: `${inputPinPosY[p] - 2000 / imgDim.offsetHeight}%`,
-                    left: `${inputPinPosX[p] - 2000 / imgDim.offsetWidth}%`,
+                    top: `${
+                      inputPinPosY[p] -
+                      (windowWidth > 1280 ? 2000 : 1600) / imgDim.offsetHeight
+                    }%`,
+                    left: `${
+                      inputPinPosX[p] -
+                      (windowWidth > 1280 ? 2000 : 1600) / imgDim.offsetWidth
+                    }%`,
                   }}
                   key={index}
                 >

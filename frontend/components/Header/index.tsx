@@ -8,6 +8,7 @@ import HeaderRight from "./HeaderRight";
 import LoginModal from "../LoginModal";
 import SubmitModal from "../SubmitModal";
 import PostDetail from "../PostDetail";
+import PostDetailSmall from "../PostDetailSmall";
 import Swal from "sweetalert2";
 import HeaderRightSmall from "./HeaderRightSmall";
 import HeaderLeftSmall from "./HeaderLeftSmall";
@@ -223,9 +224,20 @@ const index = () => {
           </ModalFrame>
         )}
         {postShown && (
-          <ModalFrame style={{ height: windowHeight }}>
+          <ModalFrame style={{ height: windowHeight, width: windowWidth }}>
             <CloseBg onClick={togglePost} />
-            <PostDetail windowWidth={windowWidth} windowHeight={windowHeight} />
+            {windowWidth > 768 && (
+              <PostDetail
+                windowWidth={windowWidth}
+                windowHeight={windowHeight}
+              />
+            )}
+            {windowWidth <= 768 && (
+              <PostDetailSmall
+                windowWidth={windowWidth}
+                windowHeight={windowHeight}
+              />
+            )}
           </ModalFrame>
         )}
         {isShown && (

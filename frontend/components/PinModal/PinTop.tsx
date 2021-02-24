@@ -17,13 +17,23 @@ const TitleText = styled.div`
   display: flex;
   color: ${color.black.default};
   font-weight: bold;
-  font-size: 18px;
+  @media only screen and (min-width: 768px) {
+    font-size: 16px;
+  }
+  @media only screen and (min-width: 1280px) {
+    font-size: 18px;
+  }
 `;
 
 const ContentText = styled.div`
   display: flex;
   color: ${color.gray.dark};
-  font-size: 14px;
+  @media only screen and (min-width: 768px) {
+    font-size: 13px;
+  }
+  @media only screen and (min-width: 1280px) {
+    font-size: 14px;
+  }
 `;
 
 const PinTop = ({ pinName, pinApiClass }) => {

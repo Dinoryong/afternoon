@@ -4,14 +4,20 @@ import PinTop from "./PinTop";
 import PinBottom from "./PinBottom";
 
 const Container = styled.div`
-  z-index: 6;
+  z-index: 11;
   position: absolute;
-  width: max-content;
   height: max-content;
   display: flex;
-  justify-content: center;
+  justify-content: flex-start;
   background-color: white;
   box-shadow: 0px 0px 8px 0px gray;
+  width: max-content;
+  @media only screen and (min-width: 768px) {
+    max-width: 180px;
+  }
+  @media only screen and (min-width: 1280px) {
+    max-width: 400px;
+  }
 `;
 
 const Wrapper = styled.div`
@@ -19,7 +25,12 @@ const Wrapper = styled.div`
   flex-direction: column;
   justify-content: space-between;
   align-content: center;
-  margin: 12px 16px 8px 16px;
+  @media only screen and (min-width: 768px) {
+    margin: 4px 12px 4px 8px;
+  }
+  @media only screen and (min-width: 1280px) {
+    margin: 12px 16px 8px 16px;
+  }
 `;
 
 const index = ({ pinData, accountNickname }) => {
