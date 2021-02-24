@@ -161,7 +161,7 @@ const HomeTop = ({
         overIndex={overIndex}
         displayState={displayState}
         frameIndex={0}
-        carouselSrc="/assets/images/home_bg_11.jpg"
+        carouselSrc="/assets/images/home/homebg_1.png"
         setOverIndex={setOverIndex}
         setCurrentIndex={setCurrentIndex}
         setDisplayState={setDisplayState}
@@ -174,7 +174,7 @@ const HomeTop = ({
         overIndex={overIndex}
         displayState={displayState}
         frameIndex={1}
-        carouselSrc="/assets/images/home_bg_5.jpg"
+        carouselSrc="/assets/images/home/homebg_2.jpg"
         setOverIndex={setOverIndex}
         setCurrentIndex={setCurrentIndex}
         setDisplayState={setDisplayState}
@@ -187,7 +187,7 @@ const HomeTop = ({
         overIndex={overIndex}
         displayState={displayState}
         frameIndex={2}
-        carouselSrc="/assets/images/home_bg_9.jpg"
+        carouselSrc="/assets/images/home/homebg_3.jpg"
         setOverIndex={setOverIndex}
         setCurrentIndex={setCurrentIndex}
         setDisplayState={setDisplayState}
@@ -200,7 +200,7 @@ const HomeTop = ({
         overIndex={overIndex}
         displayState={displayState}
         frameIndex={3}
-        carouselSrc="/assets/images/home_bg_7.jpg"
+        carouselSrc="/assets/images/home/homebg_4.jpg"
         setOverIndex={setOverIndex}
         setCurrentIndex={setCurrentIndex}
         setDisplayState={setDisplayState}
@@ -224,7 +224,7 @@ const HomeTop = ({
                     : { color: color.yellow.default }
                 }
               >
-                작업공간
+                컬렉션
               </TextKeyword>
               <TextEnd>을</TextEnd>
             </TextBoxOpacity>
@@ -258,13 +258,13 @@ const HomeTop = ({
                 style={
                   overIndex === currentIndex + 1 ||
                   (overIndex === 0 && currentIndex === maxIndex)
-                    ? { marginLeft: -40, color: color.blue.default }
-                    : { color: color.blue.default }
+                    ? { marginLeft: -40, color: color.red.default }
+                    : { color: color.red.default }
                 }
               >
-                컬렉션
+                취미
               </TextKeyword>
-              <TextEnd>을</TextEnd>
+              <TextEnd>를</TextEnd>
             </TextBoxOpacity>
             <TextBoxOpacity
               style={
@@ -277,13 +277,13 @@ const HomeTop = ({
                 style={
                   overIndex === currentIndex + 1 ||
                   (overIndex === 0 && currentIndex === maxIndex)
-                    ? { marginLeft: -40, color: color.green.dark }
-                    : { color: color.green.default }
+                    ? { marginLeft: -40, color: color.homeTag.i }
+                    : { color: color.homeTag.i }
                 }
               >
-                취미
+                공간
               </TextKeyword>
-              <TextEnd>를</TextEnd>
+              <TextEnd>을</TextEnd>
             </TextBoxOpacity>
           </TextChangeFrame>
           <TextBox

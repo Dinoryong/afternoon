@@ -17,7 +17,6 @@ const TextBox1 = styled.div`
   text-align: left;
   font-size: 48px;
   font-weight: bold;
-  cursor: pointer;
 `;
 
 const TextBox2 = styled.div`
@@ -56,6 +55,7 @@ const Content = styled.div`
 
 const LogoBox = styled.div`
   position: relative;
+  display: flex;
   min-width: 32px;
   width: 48px;
   height: 48px;
@@ -74,8 +74,15 @@ const InnerBox1 = styled.div`
 
 const MiniBox1 = styled.div`
   display: flex;
-  flex-direction: column;
-  width: 100%;
+  align-items: center;
+  width: fit-content;
+  cursor: pointer;
+`;
+
+const TitleText = styled.div`
+  font-size: 28px;
+  margin-bottom: 4px;
+  margin-left: 8px;
 `;
 
 const MiniBox2 = styled.div`
@@ -122,15 +129,15 @@ const index = () => {
   return (
     <Container style={{ height: windowHeight }}>
       <Image
-        src="/assets/images/signupImg.jpg"
+        src="/assets/images/signup_bg.jpg"
         layout="fill"
         objectFit="cover"
       ></Image>
       <BgOpacityFrame />
       <Content>
         <InnerBox1 style={{ height: `${windowHeight - 80}px` }}>
-          <MiniBox1>
-            <Link href="/">
+          <Link href="/">
+            <MiniBox1>
               <LogoBox>
                 <Image
                   src="/assets/icons/eye_open_white.png"
@@ -138,17 +145,18 @@ const index = () => {
                   objectFit="contain"
                 ></Image>
               </LogoBox>
-            </Link>
-          </MiniBox1>
+              <TitleText>애프터눈</TitleText>
+            </MiniBox1>
+          </Link>
           <MiniBox2>
-            <TextBox1>당신이 꿈꾸던 공간을...</TextBox1>
+            <TextBox1>더 나은 당신을 위해, 애프터눈</TextBox1>
             <TextBox2>
-              2,490,795 개의 작업공간을 무료료 고해상도로 어디에서든 구경할 수
-              있습니다
+              실사용자가 추천하는 2,490,795 개의 아이템을 어디에서든 바로 구매할
+              수 있습니다.
             </TextBox2>
           </MiniBox2>
           <MiniBox3>
-            <TextBox3>"amy"님이 3년 전에 업로드한 사진입니다</TextBox3>
+            <TextBox3>프라푸룡 님이 1년 전에 업로드한 사진입니다</TextBox3>
           </MiniBox3>
         </InnerBox1>
         <InnerBox2>
