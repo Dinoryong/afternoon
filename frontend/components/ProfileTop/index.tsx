@@ -11,14 +11,31 @@ import FollowList from "../FollowList";
 const Container1 = styled.div`
   display: flex;
   width: 100%;
-  max-width: 930px;
   margin-bottom: 10px;
+  @media only screen and (max-width: 768px) {
+    flex-direction: column;
+    max-width: 90%;
+  }
+  @media only screen and (min-width: 768px) {
+    max-width: 740px;
+  }
+  @media only screen and (min-width: 1280px) {
+    max-width: 930px;
+  }
 `;
 
 const Container2 = styled.div`
   display: flex;
-  width: 1280px;
   border-bottom: solid ${color.gray.default} 2px;
+  @media only screen and (max-width: 768px) {
+    width: 95%;
+  }
+  @media only screen and (min-width: 768px) {
+    width: 95%;
+  }
+  @media only screen and (min-width: 1280px) {
+    width: 1280px;
+  }
 `;
 
 const Wrapper2 = styled.div`
@@ -29,6 +46,9 @@ const Wrapper2 = styled.div`
   max-width: 640px;
   margin-right: auto;
   margin-left: 10px;
+  @media only screen and (max-width: 768px) {
+    margin-left: 0px;
+  }
 `;
 
 const useStore = () => {

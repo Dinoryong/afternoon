@@ -8,7 +8,16 @@ import { RootStateOrAny, useDispatch, useSelector } from "react-redux";
 const Container = styled.div`
   display: flex;
   width: 100%;
-  max-width: 930px;
+  @media only screen and (max-width: 768px) {
+    flex-direction: column;
+    max-width: 90%;
+  }
+  @media only screen and (min-width: 768px) {
+    max-width: 740px;
+  }
+  @media only screen and (min-width: 1280px) {
+    max-width: 930px;
+  }
 `;
 
 const Wrapper = styled.div`
@@ -19,6 +28,9 @@ const Wrapper = styled.div`
   max-width: 640px;
   margin-right: auto;
   margin-left: 10px;
+  @media only screen and (max-width: 768px) {
+    margin-left: 0px;
+  }
 `;
 const useStore = () => {
   const followShown = useSelector(

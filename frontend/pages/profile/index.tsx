@@ -21,6 +21,9 @@ const TopWrapper = styled.div`
   justify-content: center;
   width: 100%;
   padding-top: 122px;
+  @media only screen and (max-width: 768px) {
+    padding-top: 72px;
+  }
   /* height: 800px; */
 `;
 
@@ -28,8 +31,18 @@ const DynamicDiv = styled.div`
   position: relative;
   display: flex;
   flex-direction: column;
-  width: 1280px;
+  width: 100%;
   margin-top: 60px;
+  max-width: 1280px;
+  @media only screen and (max-width: 768px) {
+    margin-top: 20px;
+  }
+  @media only screen and (min-width: 768px) {
+    margin-top: 40px;
+  }
+  @media only screen and (min-width: 1280px) {
+    margin-top: 60px;
+  }
 `;
 
 const NullPostDiv = styled.div`
@@ -133,32 +146,32 @@ const index = () => {
                 tabState={tabState}
               />
             </TopWrapper>
-            {tabState === 0 && (
-              <DynamicDiv>
-                {postData && postData.length > 0 && (
-                  <DynamicComponentWithNoSSR
-                    postData={postData}
-                  ></DynamicComponentWithNoSSR>
-                )}
-                {postData && postData.length === 0 && (
-                  <NullPostDiv>작성하신 게시물이 없어요</NullPostDiv>
-                )}
-              </DynamicDiv>
-            )}
-            {tabState === 1 && (
-              <DynamicDiv>
-                {likeData && likeData.length > 0 && (
-                  <DynamicComponentWithNoSSR
-                    postData={likeData}
-                  ></DynamicComponentWithNoSSR>
-                )}
-                {likeData && likeData.length === 0 && (
-                  <NullPostDiv>좋아요한 게시물이 없어요</NullPostDiv>
-                )}
-              </DynamicDiv>
-            )}
           </>
         )}
+      {profileData && Object.keys(profileData).length > 0 && tabState === 0 && (
+        <DynamicDiv>
+          {postData && postData.length > 0 && (
+            <DynamicComponentWithNoSSR
+              postData={postData}
+            ></DynamicComponentWithNoSSR>
+          )}
+          {postData && postData.length === 0 && (
+            <NullPostDiv>작성하신 게시물이 없어요</NullPostDiv>
+          )}
+        </DynamicDiv>
+      )}
+      {profileData && Object.keys(profileData).length > 0 && tabState === 1 && (
+        <DynamicDiv>
+          {likeData && likeData.length > 0 && (
+            <DynamicComponentWithNoSSR
+              postData={likeData}
+            ></DynamicComponentWithNoSSR>
+          )}
+          {likeData && likeData.length === 0 && (
+            <NullPostDiv>좋아요한 게시물이 없어요</NullPostDiv>
+          )}
+        </DynamicDiv>
+      )}
     </Container>
   );
 };

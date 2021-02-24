@@ -12,6 +12,9 @@ const Container = styled.div`
   align-items: center;
   padding-top: 82px;
   width: 100%;
+  @media only screen and (max-width: 768px) {
+    padding-top: 72px;
+  }
 `;
 
 const Wrapper = styled.div`

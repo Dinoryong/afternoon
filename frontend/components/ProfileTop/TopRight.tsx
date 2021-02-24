@@ -9,10 +9,17 @@ const TitleBox = styled.div`
   width: 100%;
   margin-top: 10px;
   align-items: center;
+  font-size: 45px;
+  @media only screen and (max-width: 768px) {
+    font-size: 35px;
+    margin-top: 0px;
+    padding-top: 18px;
+    margin-left: 80px;
+    width: fit-content;
+  }
 `;
 
 const UserTitle = styled.div`
-  font-size: 45px;
   font-weight: bold;
 `;
 
@@ -22,6 +29,12 @@ const EditBox = styled.div`
   height: 40px;
   margin-left: 14px;
   margin-top: 16px;
+  @media only screen and (max-width: 768px) {
+    position: absolute;
+    width: fit-content;
+    right: 15px;
+    top: 142px;
+  }
 `;
 
 const FollowBox = styled.div`
@@ -30,6 +43,12 @@ const FollowBox = styled.div`
   margin-top: 15px;
   margin-bottom: 35px;
   justify-content: space-between;
+  @media only screen and (max-width: 768px) {
+    margin-top: 20px;
+    width: 60%;
+    max-width: 285px;
+    margin-bottom: 20px;
+  }
 `;
 
 const UserFollowing = styled.div`
@@ -58,6 +77,9 @@ const UserPost = styled.div`
 const TextBox = styled.div`
   width: 100%;
   margin-bottom: 50px;
+  @media only screen and (max-width: 768px) {
+    margin-bottom: 25px;
+  }
 `;
 
 const UserText = styled.div`
@@ -65,6 +87,9 @@ const UserText = styled.div`
   font-size: 15px;
   font-weight: 100px;
   margin-left: 6px;
+  @media only screen and (max-width: 768px) {
+    margin-left: 0px;
+  }
 `;
 
 const TagDiv = styled.div`
@@ -72,6 +97,9 @@ const TagDiv = styled.div`
   margin-bottom: 30px;
   display: flex;
   flex-wrap: wrap;
+  @media only screen and (max-width: 768px) {
+    margin-bottom: 0px;
+  }
 `;
 
 const TopRight = ({

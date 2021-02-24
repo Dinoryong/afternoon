@@ -16,6 +16,9 @@ const Container = styled.div`
   padding-top: 62px;
   width: 100%;
   min-height: 600px;
+  @media only screen and (max-width: 768px) {
+    padding-top: 52px;
+  }
 `;
 
 const Wrapper = styled.div`

@@ -70,7 +70,7 @@ export const SEARCH_LOGIN_USER = async (req, config) => {
     try {
       await timeout(1000);
       // throw new Error();
-      status = 204;
+      status = 200;
       data = SearchLoginUserData.data;
     } catch (error) {
       //replace_console_log(error);

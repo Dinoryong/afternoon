@@ -94,6 +94,20 @@ export const GetMyInfoData = {
         postsPhoto:
           "https://firebasestorage.googleapis.com/v0/b/ssafy-a302.appspot.com/o/images%2F21pZUwb1qTaBR7O7?alt=media&token=4ff92079-66c2-4aa0-9483-54fe000b6fc4",
       },
+      {
+        postsId: 1,
+        postsWriter: "이재욱",
+        postsTitle: "첫 게시글!",
+        postsPhoto:
+          "https://firebasestorage.googleapis.com/v0/b/ssafy-a302.appspot.com/o/images%2F21pZUwb1qTaBR7O7?alt=media&token=4ff92079-66c2-4aa0-9483-54fe000b6fc4",
+      },
+      {
+        postsId: 1,
+        postsWriter: "이재욱",
+        postsTitle: "첫 게시글!",
+        postsPhoto:
+          "https://firebasestorage.googleapis.com/v0/b/ssafy-a302.appspot.com/o/images%2F21pZUwb1qTaBR7O7?alt=media&token=4ff92079-66c2-4aa0-9483-54fe000b6fc4",
+      },
     ],
     writtenPostsCnt: 1,
     likesPosts: [],
@@ -192,7 +206,16 @@ export const SearchLoginUserData = {
     ],
     writtenPostsCnt: 2,
     likePosts: [],
-    tags: [{ tagId: 14 }, { tagId: 12 }, { tagId: 18 }],
+    tags: [
+      { tagId: 14 },
+      { tagId: 14 },
+      { tagId: 14 },
+      { tagId: 14 },
+      { tagId: 14 },
+      { tagId: 14 },
+      { tagId: 12 },
+      { tagId: 10 },
+    ],
     followState: false,
   },
 };

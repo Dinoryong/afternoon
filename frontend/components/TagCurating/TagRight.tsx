@@ -11,9 +11,6 @@ const Container = styled.div`
   display: flex;
   flex-direction: column;
   justify-content: flex-start;
-  @media only screen and (max-width: 768px) {
-    margin-top: 20px;
-  }
   @media only screen and (min-width: 768px) {
     margin-left: 20px;
     width: 350px;

@@ -21,6 +21,9 @@ const Container = styled.div`
   align-items: center;
   /* justify-content: center; */
   padding-top: 62px;
+  @media only screen and (max-width: 768px) {
+    padding-top: 52px;
+  }
   width: 100%;
 `;
 
@@ -49,6 +52,9 @@ const DynamicDiv = styled.div`
   flex-direction: column;
   width: 100%;
   margin-top: 60px;
+  @media only screen and (max-width: 768px) {
+    margin-top: 20px;
+  }
 `;
 
 const NullDiv = styled.div`
