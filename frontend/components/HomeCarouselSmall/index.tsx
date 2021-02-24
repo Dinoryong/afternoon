@@ -7,9 +7,20 @@ const Container = styled.div<DemensionProps>`
   display: ${(props) =>
     !props.displayState && props.frameIndex !== 0 ? "none" : "unset"};
   position: absolute;
+  left: ${(props) => (props.overIndex === props.frameIndex ? -20 : 0)}px;
   width: 100%;
   height: 100%;
-
+  transform: translateX(
+    ${(props) =>
+      props.currentIndex === props.frameIndex ||
+      props.currentIndex - 1 === props.frameIndex ||
+      (props.currentIndex === 0 && props.frameIndex === 3)
+        ? 0
+        : props.currentIndex + 1 === props.frameIndex ||
+          props.currentIndex - props.maxIndex === props.frameIndex
+        ? props.windowWidth - 36
+        : (props.windowWidth - 36) * 2}px
+  );
   z-index: ${(props) =>
     props.currentIndex === props.frameIndex
       ? 1
@@ -28,34 +39,6 @@ const Container = styled.div<DemensionProps>`
     left 0.5s;
   cursor: ${(props) =>
     props.frameIndex === props.currentIndex ? "default" : "pointer"};
-  @media only screen and (min-width: 768px) {
-    left: ${(props) => (props.overIndex === props.frameIndex ? -40 : 0)}px;
-    transform: translateX(
-      ${(props) =>
-        props.currentIndex === props.frameIndex ||
-        props.currentIndex - 1 === props.frameIndex ||
-        (props.currentIndex === 0 && props.frameIndex === 3)
-          ? 0
-          : props.currentIndex + 1 === props.frameIndex ||
-            props.currentIndex - props.maxIndex === props.frameIndex
-          ? props.windowWidth - 76
-          : (props.windowWidth - 76) * 2}px
-    );
-  }
-  @media only screen and (min-width: 1280px) {
-    left: ${(props) => (props.overIndex === props.frameIndex ? -60 : 0)}px;
-    transform: translateX(
-      ${(props) =>
-        props.currentIndex === props.frameIndex ||
-        props.currentIndex - 1 === props.frameIndex ||
-        (props.currentIndex === 0 && props.frameIndex === 3)
-          ? 0
-          : props.currentIndex + 1 === props.frameIndex ||
-            props.currentIndex - props.maxIndex === props.frameIndex
-          ? props.windowWidth - 116
-          : (props.windowWidth - 116) * 2}px
-    );
-  }
 `;
 
 const ImageFrame = styled.div`

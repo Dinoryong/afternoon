@@ -9,7 +9,6 @@ const Container = styled.div<BoxProps>`
   display: flex;
   width: 100%;
   height: 100%;
-  min-height: 400px;
   color: blue;
   justify-content: center;
   align-items: center;
@@ -30,6 +29,7 @@ const FunctionFrame = styled.div`
   height: 100%;
   z-index: 2;
 `;
+
 const ContentFrame = styled.div`
   display: flex;
   justify-content: flex-end;
@@ -40,8 +40,8 @@ const ContentFrame = styled.div`
 
 const ImageBox = styled.div`
   position: relative;
-  width: ${(props) => (props.boxImageSize === "default" ? `100%` : `80%`)};
-  height: ${(props) => (props.boxImageSize === "default" ? `100%` : `80%`)};
+  width: 80%;
+  height: 100%;
   transition: all 1s;
   margin-bottom: -50px;
 `;
@@ -51,29 +51,18 @@ const TextBox = styled.div`
   display: flex;
   flex-direction: column;
   transition: all 0.35s;
-  @media only screen and (min-width: 768px) {
-    bottom: 30px;
-    left: 30px;
-  }
-  @media only screen and (min-width: 1280px) {
-    bottom: 50px;
-    left: 50px;
-  }
+  bottom: 20px;
+  left: 20px;
 `;
 
 const TagCountText = styled.div<BoxProps>`
   font-size: 16px;
   font-weight: 800;
   color: ${color.black.default};
+  padding-left: 4px;
   opacity: 1;
   transition: all 0.35s;
   font-family: "Darker Grotesque", sans-serif;
-  @media only screen and (min-width: 768px) {
-    padding-left: 4px;
-  }
-  @media only screen and (min-width: 1280px) {
-    padding-left: 7px;
-  }
 `;
 
 const TagTitleText = styled.div<BoxProps>`
@@ -81,29 +70,18 @@ const TagTitleText = styled.div<BoxProps>`
   font-family: "Black Han Sans", sans-serif;
   transition: all 0.35s;
   line-height: 0px;
-  @media only screen and (min-width: 768px) {
-    font-size: 60px;
-    margin-top: -10px;
-  }
-  @media only screen and (min-width: 1280px) {
-    font-size: 80px;
-    margin-top: 0px;
-  }
+  font-size: 50px;
+  margin-top: -15px;
 `;
 
 const ExploreText = styled.div<BoxProps>`
   font-weight: 900;
-  padding-left: 5px;
+  padding-left: 3px;
   transition: all 0.35s;
   letter-spacing: -1px;
   color: ${color.white.default};
   font-family: "Darker Grotesque", sans-serif;
-  @media only screen and (min-width: 768px) {
-    font-size: 24px;
-  }
-  @media only screen and (min-width: 1280px) {
-    font-size: 28px;
-  }
+  font-size: 24px;
 `;
 
 type BoxProps = {
@@ -160,13 +138,12 @@ const index = ({
               ? { opacity: 0 }
               : { opacity: 1, marginBottom: 0 }
           }
-          boxImageSize={boxImageSize}
         >
           {boxBgImage !== "" ? (
             <Image
               src={boxBgImage}
               layout="fill"
-              objectPosition={boxImagePosition}
+              objectPosition={"100%"}
               objectFit="contain"
               quality={100}
             />

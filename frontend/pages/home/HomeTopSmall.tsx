@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from "react";
 import styled from "@emotion/styled";
-import HomeCarousel from "../../components/HomeCarousel/index";
+import HomeCarouselSmall from "../../components/HomeCarouselSmall/index";
 import color from "../../styles/theme";
 import { keyframes } from "@emotion/react";
 
@@ -25,19 +25,14 @@ const HomeTextFrame = styled.div`
 const TextDiv = styled.div`
   display: flex;
   flex-direction: column;
+  font-size: 40px;
   /* font-weight: 700; */
-  margin-left: 60px;
-  margin-bottom: 60px;
+  margin-left: 20px;
+  margin-bottom: 20px;
   z-index: 1;
   font-family: "Black Han Sans", sans-serif;
   cursor: default;
   transition: all 0.35s;
-  @media only screen and (min-width: 768px) {
-    font-size: 60px;
-  }
-  @media only screen and (min-width: 1280px) {
-    font-size: 80px;
-  }
 `;
 
 const TextBox = styled.div`
@@ -49,16 +44,11 @@ const TextChangeFrame = styled.div`
   margin: -20px 0px;
   position: relative;
   width: 900px;
-  @media only screen and (min-width: 768px) {
-    height: 100px;
-  }
-  @media only screen and (min-width: 1280px) {
-    height: 120px;
-  }
+  height: 80px;
 `;
 
 const TextBoxOpacity = styled.div`
-  margin-left: 40px;
+  margin-left: 20px;
   position: absolute;
   display: flex;
   color: ${color.white.default};
@@ -84,8 +74,8 @@ const SwiperPoint = styled.div`
   margin: 0px 10px;
   background-color: ${color.gray.light};
   opacity: 0.2;
-  width: 16px;
-  height: 16px;
+  width: 12px;
+  height: 12px;
   border-radius: 50%;
   border: 2px solid white;
   transition: all 0.5s;
@@ -94,37 +84,37 @@ const SwiperPoint = styled.div`
 
 const scroll = keyframes`
   0% {
-    margin-top: 12px;
+    margin-top: 7px;
     height: 5px;
   }
 
   20% {
-    margin-top: 12px;
+    margin-top: 7px;
     height: 10px;
   }
 
   40% {
-    margin-top: 15px;
+    margin-top: 10px;
     height: 7px;
   }
 
   60% {
-    margin-top: 17px;
+    margin-top: 12px;
     height: 5px;
   }
 
   100% {
-    margin-top: 12px;
+    margin-top: 7px;
     height: 5px;
   }
 `;
 
 const ScrollIcon = styled.div`
   position: absolute;
-  bottom: 20px;
+  bottom: 10px;
   left: 49%;
-  width: 32px;
-  height: 56px;
+  width: 24px;
+  height: 42px;
   border: 2px solid ${color.white.default};
   border-radius: 20px;
   display: flex;
@@ -140,7 +130,7 @@ const ScrollPoint = styled.div`
   animation: ${scroll} 1.2s ease-out infinite;
 `;
 
-const HomeTop = ({
+const HomeTopSmall = ({
   windowHeight,
   windowWidth,
   displayState,
@@ -152,8 +142,8 @@ const HomeTop = ({
   const maxIndex: number = 3;
 
   return (
-    <Container style={{ height: windowHeight }}>
-      <HomeCarousel
+    <Container style={{ height: 500 }}>
+      <HomeCarouselSmall
         windowHeight={windowHeight}
         windowWidth={windowWidth}
         currentIndex={currentIndex}
@@ -166,7 +156,7 @@ const HomeTop = ({
         setCurrentIndex={setCurrentIndex}
         setDisplayState={setDisplayState}
       />
-      <HomeCarousel
+      <HomeCarouselSmall
         windowHeight={windowHeight}
         windowWidth={windowWidth}
         currentIndex={currentIndex}
@@ -179,7 +169,7 @@ const HomeTop = ({
         setCurrentIndex={setCurrentIndex}
         setDisplayState={setDisplayState}
       />
-      <HomeCarousel
+      <HomeCarouselSmall
         windowHeight={windowHeight}
         windowWidth={windowWidth}
         currentIndex={currentIndex}
@@ -192,7 +182,7 @@ const HomeTop = ({
         setCurrentIndex={setCurrentIndex}
         setDisplayState={setDisplayState}
       />
-      <HomeCarousel
+      <HomeCarouselSmall
         windowHeight={windowHeight}
         windowWidth={windowWidth}
         currentIndex={currentIndex}
@@ -212,7 +202,7 @@ const HomeTop = ({
             <TextBoxOpacity
               style={
                 currentIndex === 0
-                  ? { opacity: 1, color: color.white.default, marginTop: 12 }
+                  ? { opacity: 1, color: color.white.default, marginTop: 15 }
                   : null
               }
             >
@@ -220,7 +210,7 @@ const HomeTop = ({
                 style={
                   overIndex === currentIndex + 1 ||
                   (overIndex === 0 && currentIndex === maxIndex)
-                    ? { marginLeft: -40, color: color.yellow.default }
+                    ? { marginLeft: -20, color: color.yellow.default }
                     : { color: color.yellow.default }
                 }
               >
@@ -231,7 +221,7 @@ const HomeTop = ({
             <TextBoxOpacity
               style={
                 currentIndex === 1
-                  ? { opacity: 1, color: color.white.default, marginTop: 12 }
+                  ? { opacity: 1, color: color.white.default, marginTop: 15 }
                   : null
               }
             >
@@ -239,7 +229,7 @@ const HomeTop = ({
                 style={
                   overIndex === currentIndex + 1 ||
                   (overIndex === 0 && currentIndex === maxIndex)
-                    ? { marginLeft: -40, color: color.pink.default }
+                    ? { marginLeft: -20, color: color.pink.default }
                     : { color: color.pink.default }
                 }
               >
@@ -250,7 +240,7 @@ const HomeTop = ({
             <TextBoxOpacity
               style={
                 currentIndex === 2
-                  ? { opacity: 1, color: color.white.default, marginTop: 12 }
+                  ? { opacity: 1, color: color.white.default, marginTop: 15 }
                   : null
               }
             >
@@ -258,7 +248,7 @@ const HomeTop = ({
                 style={
                   overIndex === currentIndex + 1 ||
                   (overIndex === 0 && currentIndex === maxIndex)
-                    ? { marginLeft: -40, color: color.blue.default }
+                    ? { marginLeft: -20, color: color.blue.default }
                     : { color: color.blue.default }
                 }
               >
@@ -269,7 +259,7 @@ const HomeTop = ({
             <TextBoxOpacity
               style={
                 currentIndex === 3
-                  ? { opacity: 1, color: color.white.default, marginTop: 12 }
+                  ? { opacity: 1, color: color.white.default, marginTop: 15 }
                   : null
               }
             >
@@ -277,7 +267,7 @@ const HomeTop = ({
                 style={
                   overIndex === currentIndex + 1 ||
                   (overIndex === 0 && currentIndex === maxIndex)
-                    ? { marginLeft: -40, color: color.green.dark }
+                    ? { marginLeft: -20, color: color.green.dark }
                     : { color: color.green.default }
                 }
               >
@@ -291,7 +281,7 @@ const HomeTop = ({
               overIndex === currentIndex + 1 ||
               (overIndex === 0 && currentIndex === maxIndex)
                 ? { marginLeft: 0 }
-                : { marginLeft: 80 }
+                : { marginLeft: 40 }
             }
           >
             공유하세요
@@ -339,4 +329,4 @@ const HomeTop = ({
   );
 };
 
-export default HomeTop;
+export default HomeTopSmall;
