@@ -6,9 +6,18 @@ import TagList from "../../data/TagList";
 
 const Container = styled.div`
   width: 100%;
-  max-width: 1000px;
   display: flex;
   justify-content: center;
+  @media only screen and (max-width: 768px) {
+    flex-direction: column;
+    max-width: 90%;
+  }
+  @media only screen and (min-width: 768px) {
+    max-width: 720px;
+  }
+  @media only screen and (min-width: 1280px) {
+    max-width: 1000px;
+  }
 `;
 
 const index = ({ searchData, routerQuery }) => {

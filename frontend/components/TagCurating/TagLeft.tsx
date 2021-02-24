@@ -7,7 +7,15 @@ const Container = styled.div`
   width: 100%;
   flex-direction: column;
   justify-content: space-between;
-  margin-right: 60px;
+  @media only screen and (max-width: 768px) {
+    margin-bottom: 20px;
+  }
+  @media only screen and (min-width: 768px) {
+    margin-right: 20px;
+  }
+  @media only screen and (min-width: 1280px) {
+    margin-right: 60px;
+  }
 `;
 
 const TextBox = styled.div`
@@ -21,6 +29,9 @@ const TitleText = styled.div`
   font-weight: bold;
   font-size: 40px;
   margin-bottom: 30px;
+  @media only screen and (max-width: 768px) {
+    margin-bottom: 20px;
+  }
 `;
 
 const ContentText = styled.div`

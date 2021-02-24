@@ -182,6 +182,13 @@ export const SearchLoginUserData = {
         postsPhoto:
           "https://firebasestorage.googleapis.com/v0/b/ssafy-a302.appspot.com/o/images%2FQzddbMK6AHAxhEiY?alt=media&token=dd0e875c-9b15-426a-9339-5d91eb8ab109",
       },
+      {
+        postsId: 36,
+        postsWriter: "난재",
+        postsTitle: "헬스장",
+        postsPhoto:
+          "https://firebasestorage.googleapis.com/v0/b/ssafy-a302.appspot.com/o/images%2FQzddbMK6AHAxhEiY?alt=media&token=dd0e875c-9b15-426a-9339-5d91eb8ab109",
+      },
     ],
     writtenPostsCnt: 2,
     likePosts: [],
@@ -219,6 +226,20 @@ export const SearchLoginTagData = {
     ],
     mostPopularPosts: [1, 2, 3],
     writtenPosts: [
+      {
+        postsId: 24,
+        postsWriter: "이재욱",
+        postsTitle: "내 수집품!",
+        postsPhoto:
+          "https://firebasestorage.googleapis.com/v0/b/ssafy-a302.appspot.com/o/images%2FdkIg4OEz3NvI0SPb?alt=media&token=6534e2ac-217a-4a5b-ae05-befd7d43e348",
+      },
+      {
+        postsId: 24,
+        postsWriter: "이재욱",
+        postsTitle: "내 수집품!",
+        postsPhoto:
+          "https://firebasestorage.googleapis.com/v0/b/ssafy-a302.appspot.com/o/images%2FdkIg4OEz3NvI0SPb?alt=media&token=6534e2ac-217a-4a5b-ae05-befd7d43e348",
+      },
       {
         postsId: 24,
         postsWriter: "이재욱",

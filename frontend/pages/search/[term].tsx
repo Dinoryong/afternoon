@@ -17,7 +17,9 @@ import Swal from "sweetalert2";
 
 const Container = styled.div`
   display: flex;
-  justify-content: center;
+  flex-direction: column;
+  align-items: center;
+  /* justify-content: center; */
   padding-top: 62px;
   width: 100%;
 `;
@@ -28,15 +30,24 @@ const Wrapper = styled.div`
   flex-direction: column;
   justify-content: flex-start;
   align-items: center;
-  width: 1280px;
-  margin-top: 60px;
+  width: 100%;
+  max-width: 1280px;
+  @media only screen and (max-width: 768px) {
+    margin-top: 20px;
+  }
+  @media only screen and (min-width: 768px) {
+    margin-top: 40px;
+  }
+  @media only screen and (min-width: 1280px) {
+    margin-top: 60px;
+  }
 `;
 
 const DynamicDiv = styled.div`
   position: relative;
   display: flex;
   flex-direction: column;
-  width: 1280px;
+  width: 100%;
   margin-top: 60px;
 `;
 
@@ -189,13 +200,13 @@ const index = () => {
             Object.keys(userData).length > 0 && (
               <UserCurating searchData={userData}></UserCurating>
             )}
-          {postData && Object.keys(postData).length > 0 && (
-            <DynamicDiv>
+          <DynamicDiv>
+            {postData && Object.keys(postData).length > 0 && (
               <DynamicComponentWithNoSSR
                 postData={postData}
               ></DynamicComponentWithNoSSR>
-            </DynamicDiv>
-          )}
+            )}
+          </DynamicDiv>
         </Wrapper>
       )}
       {routerQuery !== undefined && !termExist && (

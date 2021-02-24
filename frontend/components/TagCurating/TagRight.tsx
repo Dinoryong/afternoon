@@ -9,11 +9,21 @@ import { useRouter } from "next/router";
 
 const Container = styled.div`
   display: flex;
-  width: 450px;
-  min-width: 400px;
   flex-direction: column;
   justify-content: flex-start;
-  margin-left: 80px;
+  @media only screen and (max-width: 768px) {
+    margin-top: 20px;
+  }
+  @media only screen and (min-width: 768px) {
+    margin-left: 20px;
+    width: 350px;
+    min-width: 300px;
+  }
+  @media only screen and (min-width: 1280px) {
+    margin-left: 80px;
+    width: 450px;
+    min-width: 400px;
+  }
 `;
 
 const TopBox = styled.div`
