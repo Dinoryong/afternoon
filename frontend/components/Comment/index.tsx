@@ -8,6 +8,11 @@ const Container = styled.div`
   /* width: 300px; */
   justify-content: flex-start;
   background-color: white;
+  @media only screen and (max-width: 768px) {
+    font-size: 13px;
+    padding: 3px;
+    margin-bottom: 6px;
+  }
   @media only screen and (min-width: 768px) {
     font-size: 13px;
     padding: 3px;
@@ -32,9 +37,12 @@ const CommentImg = styled.div`
   /* justify-items: start; */
   /* align-content: start; */
   /* align-items: start; */
-
   margin-top: 8px;
   margin-right: 10px;
+  @media only screen and (max-width: 768px) {
+    width: 24px;
+    height: 24px;
+  }
   @media only screen and (min-width: 768px) {
     width: 24px;
     height: 24px;

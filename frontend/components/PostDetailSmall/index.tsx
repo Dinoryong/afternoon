@@ -22,18 +22,19 @@ const Container = styled.div`
   display: flex;
   background-color: white;
   border-radius: 4px;
+  width: 95%;
+  height: 95%;
   min-height: 540px;
   min-width: 360px;
-  height: 95%;
-  width: 95%;
 `;
 
 const Wrapper = styled.div`
   position: relative;
   display: flex;
+  flex-direction: column;
   width: 100%;
   height: 100%;
-  padding: 15px 20px;
+  padding: 10px 10px;
 `;
 
 const ImageDiv = styled.div`
@@ -42,7 +43,8 @@ const ImageDiv = styled.div`
   justify-content: center;
   align-items: center;
   width: 100%;
-  height: 100%;
+  height: fit-content;
+  max-height: 450px;
 `;
 
 const ImageBox = styled("img")`
@@ -63,14 +65,14 @@ const NewPinIcon = styled.div`
   display: flex;
   justify-content: center;
   align-items: center;
-  width: 40px;
-  height: 40px;
   border-radius: 50%;
   background-color: ${color.white.default};
   /* border: 2px solid ${color.white.default}; */
   top: 50%;
   left: 50%;
   cursor: pointer;
+  width: 24px;
+  height: 24px;
 `;
 
 const ArrowLeft = styled.div`
@@ -79,11 +81,11 @@ const ArrowLeft = styled.div`
   display: flex;
   justify-content: center;
   align-items: center;
-  width: 32px;
-  height: 32px;
+  width: 24px;
+  height: 24px;
   background-color: rgba(255, 255, 255, 1);
   border-radius: 50%;
-  left: -16px;
+  left: 2px;
   cursor: pointer;
 `;
 
@@ -93,11 +95,11 @@ const ArrowRight = styled.div`
   justify-content: center;
   display: flex;
   align-items: center;
-  width: 32px;
-  height: 32px;
+  width: 24px;
+  height: 24px;
   background-color: rgba(255, 255, 255, 1);
   border-radius: 50%;
-  right: -16px;
+  right: 2px;
   cursor: pointer;
 `;
 
@@ -105,15 +107,11 @@ const OpenInfoFrame = styled.div`
   position: absoulte;
   width: 100%;
   height: 100%;
-  cursor: ${(props) => (props.infoState ? "zoom-out" : "zoom-in")};
+  /* cursor: ${(props) => (props.infoState ? "zoom-out" : "zoom-in")}; */
 `;
 
 const InfoWrapper = styled.div`
-  min-width: 400px;
-  width: 400px;
   height: 100%;
-  padding: 0px 10px;
-  margin-left: 10px;
   display: flex;
   flex-direction: column;
   justify-content: space-between;
@@ -145,7 +143,7 @@ const BoxLine = styled.div`
   width: 100%;
   min-height: 1px;
   background-color: ${color.gray.default};
-  margin: 10px 0px;
+  margin: 8px 0px;
 `;
 
 const ProfileInfo = styled.div`
@@ -156,6 +154,7 @@ const ProfileInfo = styled.div`
 
 const ProfileRow = styled.div`
   display: flex;
+  width: fit-content;
   cursor: pointer;
 `;
 
@@ -179,14 +178,14 @@ const ProfileRight = styled.div`
 `;
 
 const ProfileNickname = styled.div`
-  font-size: 18px;
   font-weight: 700;
+  font-size: 16px;
 `;
 
 const PostCreated = styled.div`
   margin-top: 4px;
-  font-size: 14px;
   color: ${color.gray.dark};
+  font-size: 12px;
 `;
 
 const TagInfo = styled.div`
@@ -195,25 +194,28 @@ const TagInfo = styled.div`
 `;
 
 const PostTitle = styled.div`
-  font-size: 18px;
   font-weight: 700;
+  font-size: 16px;
 `;
 
 const PostContent = styled.div`
   margin: 12px 0px 24px 0px;
+  font-size: 13px;
 `;
 
 const PostLikeDiv = styled.div`
   display: flex;
+  font-size: 13px;
 `;
 
 const PostLikeImage = styled.div`
   position: relative;
-  width: 20px;
-  height: 20px;
   border-radius: 50%;
   margin-right: 8px;
   cursor: pointer;
+  width: 16px;
+  height: 16px;
+  margin-top: 2px;
 `;
 
 const PostLikeText = styled.div`
@@ -411,6 +413,26 @@ const index = ({ windowWidth, windowHeight }) => {
   const [inputLink, setInputLink] = useState("");
 
   const requestSubmitComment = async () => {
+    if (inputComment === "") {
+      Swal.fire({
+        icon: "info",
+        text: "댓글 내용을 입력해주세요!",
+      });
+      return;
+    }
+
+    if (
+      currentPin.pinId !== -1 &&
+      inputLink.length > 0 &&
+      !(inputLink.startsWith("https://") || inputLink.startsWith("http://"))
+    ) {
+      Swal.fire({
+        icon: "info",
+        text: "링크는 http:// 또는 https:// 형태로 입력해주세요!",
+      });
+      return;
+    }
+
     const submitCommentReq = {
       postsId: postDetailData.postsId,
       pinName: currentPin.pinName,
@@ -441,135 +463,9 @@ const index = ({ windowWidth, windowHeight }) => {
   };
 
   return (
-    <Container
-      style={{
-        width: `${windowWidth - 240}px`,
-        height: `${windowHeight - 80}px`,
-      }}
-    >
+    <Container>
       <Wrapper>
         {postDetailData && Object.keys(postDetailData).length > 0 && (
-          <ImageDiv>
-            {imgDim && imgDim.offsetHeight !== 0 && imgDim.offsetWidth !== 0 && (
-              <PinClickFrame
-                style={{
-                  width: imgDim.offsetWidth,
-                  height: imgDim.offsetHeight,
-                }}
-              >
-                <OpenInfoFrame
-                  onClick={() => setInfoState(!infoState)}
-                  infoState={infoState}
-                ></OpenInfoFrame>
-                {pinList &&
-                  pinList.length > 0 &&
-                  pinList.map((pl, index) => {
-                    return (
-                      <NewPinIcon
-                        style={
-                          currentImg === pl.pinNum - 1
-                            ? {
-                                top: `${
-                                  pl.pinLocY -
-                                  (windowWidth > 768 ? 2000 : 1200) /
-                                    imgDim.offsetHeight
-                                }%`,
-                                left: `${
-                                  pl.pinLocX -
-                                  (windowWidth > 768 ? 2000 : 1200) /
-                                    imgDim.offsetWidth
-                                }%`,
-                              }
-                            : {
-                                display: "none",
-                                top: `${
-                                  pl.pinLocY -
-                                  (windowWidth > 768 ? 2000 : 1200) /
-                                    imgDim.offsetHeight
-                                }%`,
-                                left: `${
-                                  pl.pinLocX -
-                                  (windowWidth > 768 ? 2000 : 1200) /
-                                    imgDim.offsetWidth
-                                }%`,
-                              }
-                        }
-                        isCurrent={currentPin.pinId === pl.pinId}
-                        key={index}
-                        onClick={() => pinCircleOnClick(pl)}
-                      >
-                        <Image
-                          src={
-                            currentPin.pinId === pl.pinId
-                              ? "/assets/icons/eye_open.png"
-                              : "/assets/icons/eye_close.png"
-                          }
-                          width={36}
-                          height={36}
-                          objectFit="contain"
-                        ></Image>
-                        {currentImg === pl.pinNum - 1 &&
-                          currentPin.pinId === pl.pinId && (
-                            <PinModal
-                              key={index}
-                              pinData={pl}
-                              accountNickname={
-                                postDetailData.postsWriter.accountNickname
-                              }
-                            ></PinModal>
-                          )}
-                      </NewPinIcon>
-                    );
-                  })}
-              </PinClickFrame>
-            )}
-            {photoList && Object.keys(photoList).length > 1 && (
-              <ArrowLeft
-                onClick={() =>
-                  setCurrentImg(
-                    currentImg === 0 ? maxPhoto - 1 : currentImg - 1
-                  )
-                }
-              >
-                <Image
-                  src={"/assets/icons/arrow_left.png"}
-                  width="18"
-                  height="18"
-                  objectFit="contain"
-                ></Image>
-              </ArrowLeft>
-            )}
-            {photoList &&
-              Object.keys(photoList).length > 0 &&
-              photoList.map((pl, index) => {
-                return (
-                  <ImageBox
-                    key={index}
-                    style={currentImg === index ? {} : { display: "none" }}
-                    id={`pinImage${index}`}
-                    src={pl}
-                  ></ImageBox>
-                );
-              })}
-            {photoList && Object.keys(photoList).length > 1 && (
-              <ArrowRight
-                onClick={() =>
-                  setCurrentImg(
-                    currentImg === maxPhoto - 1 ? 0 : currentImg + 1
-                  )
-                }
-              >
-                <Image
-                  src={"/assets/icons/arrow_right.png"}
-                  width="18"
-                  height="18"
-                  objectFit="contain"
-                ></Image>
-              </ArrowRight>
-            )}
-          </ImageDiv>
-        )}
-        {infoState && postDetailData && Object.keys(postDetailData).length > 0 && (
           <InfoWrapper>
             <InfoDiv>
               <InfoTopDiv>
@@ -621,6 +517,117 @@ const index = ({ windowWidth, windowHeight }) => {
                   </TagInfo>
                 </ProfileInfo>
               </InfoTopDiv>
+              <BoxLine />
+              <ImageDiv>
+                {imgDim &&
+                  imgDim.offsetHeight !== 0 &&
+                  imgDim.offsetWidth !== 0 && (
+                    <PinClickFrame
+                      style={{
+                        width: imgDim.offsetWidth,
+                        height: imgDim.offsetHeight,
+                      }}
+                    >
+                      <OpenInfoFrame></OpenInfoFrame>
+                      {pinList &&
+                        pinList.length > 0 &&
+                        pinList.map((pl, index) => {
+                          return (
+                            <NewPinIcon
+                              style={
+                                currentImg === pl.pinNum - 1
+                                  ? {
+                                      top: `${
+                                        pl.pinLocY - 1200 / imgDim.offsetHeight
+                                      }%`,
+                                      left: `${
+                                        pl.pinLocX - 1200 / imgDim.offsetWidth
+                                      }%`,
+                                    }
+                                  : {
+                                      display: "none",
+                                      top: `${
+                                        pl.pinLocY - 1200 / imgDim.offsetHeight
+                                      }%`,
+                                      left: `${
+                                        pl.pinLocX - 1200 / imgDim.offsetWidth
+                                      }%`,
+                                    }
+                              }
+                              isCurrent={currentPin.pinId === pl.pinId}
+                              key={index}
+                              onClick={() => pinCircleOnClick(pl)}
+                            >
+                              <Image
+                                src={
+                                  currentPin.pinId === pl.pinId
+                                    ? "/assets/icons/eye_open.png"
+                                    : "/assets/icons/eye_close.png"
+                                }
+                                width={36}
+                                height={36}
+                                objectFit="contain"
+                              ></Image>
+                              {currentImg === pl.pinNum - 1 &&
+                                currentPin.pinId === pl.pinId && (
+                                  <PinModal
+                                    key={index}
+                                    pinData={pl}
+                                    accountNickname={
+                                      postDetailData.postsWriter.accountNickname
+                                    }
+                                  ></PinModal>
+                                )}
+                            </NewPinIcon>
+                          );
+                        })}
+                    </PinClickFrame>
+                  )}
+                {photoList && Object.keys(photoList).length > 1 && (
+                  <ArrowLeft
+                    onClick={() =>
+                      setCurrentImg(
+                        currentImg === 0 ? maxPhoto - 1 : currentImg - 1
+                      )
+                    }
+                  >
+                    <Image
+                      src={"/assets/icons/arrow_left.png"}
+                      width="18"
+                      height="18"
+                      objectFit="contain"
+                    ></Image>
+                  </ArrowLeft>
+                )}
+                {photoList &&
+                  Object.keys(photoList).length > 0 &&
+                  photoList.map((pl, index) => {
+                    return (
+                      <ImageBox
+                        key={index}
+                        style={currentImg === index ? {} : { display: "none" }}
+                        id={`pinImage${index}`}
+                        src={pl}
+                      ></ImageBox>
+                    );
+                  })}
+                {photoList && Object.keys(photoList).length > 1 && (
+                  <ArrowRight
+                    onClick={() =>
+                      setCurrentImg(
+                        currentImg === maxPhoto - 1 ? 0 : currentImg + 1
+                      )
+                    }
+                  >
+                    <Image
+                      src={"/assets/icons/arrow_right.png"}
+                      width="18"
+                      height="18"
+                      objectFit="contain"
+                    ></Image>
+                  </ArrowRight>
+                )}
+              </ImageDiv>
               <BoxLine />
               <InfoContentDiv>
                 <PostTitle>{postDetailData.postsTitle}</PostTitle>

@@ -12,9 +12,6 @@ const Container = styled.div`
   background-color: white;
   box-shadow: 0px 0px 8px 0px gray;
   width: max-content;
-  @media only screen and (max-width: 768px) {
-    max-width: 180px;
-  }
   @media only screen and (min-width: 768px) {
     max-width: 180px;
   }
@@ -28,9 +25,6 @@ const Wrapper = styled.div`
   flex-direction: column;
   justify-content: space-between;
   align-content: center;
-  @media only screen and (max-width: 768px) {
-    margin: 4px 12px 4px 8px;
-  }
   @media only screen and (min-width: 768px) {
     margin: 4px 12px 4px 8px;
   }

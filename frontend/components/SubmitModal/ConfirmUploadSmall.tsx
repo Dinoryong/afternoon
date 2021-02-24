@@ -38,9 +38,8 @@ const ImageDiv = styled.div`
   justify-content: center;
   align-items: center;
   width: 100%;
-  height: 450px;
+  height: fit-content;
   max-height: 450px;
-  min-height: 450px;
 `;
 
 const ImageBox = styled("img")`
