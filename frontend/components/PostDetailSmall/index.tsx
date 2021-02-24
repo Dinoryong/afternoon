@@ -50,7 +50,7 @@ const ImageDiv = styled.div`
 const ImageBox = styled("img")`
   z-index: 2;
   max-width: 100%;
-  max-height: 100%;
+  max-height: 450px;
 `;
 
 const PinClickFrame = styled.div`

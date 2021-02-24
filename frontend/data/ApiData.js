@@ -348,7 +348,7 @@ export const GetOnePostData = {
       accountNickname: "난재",
     },
     postsPhotos: [
-      "https://firebasestorage.googleapis.com/v0/b/ssafy-a302.appspot.com/o/images%2F21pZUwb1qTaBR7O7?alt=media&token=4ff92079-66c2-4aa0-9483-54fe000b6fc4",
+      "https://images.unsplash.com/photo-1614114531011-26afb982f0ef?ixid=MXwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHw%3D&ixlib=rb-1.2.1&auto=format&fit=crop&w=634&q=80",
       "https://firebasestorage.googleapis.com/v0/b/ssafy-a302.appspot.com/o/images%2FQH5rJq8SoNBLKyJc?alt=media&token=957e2655-d663-4fc8-b569-4efb4a4ab7a2",
     ],
     tags: [{ tagId: 1 }, { tagId: 2 }, { tagId: 3 }],
