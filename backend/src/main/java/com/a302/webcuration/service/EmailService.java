@@ -22,8 +22,8 @@ public class EmailService {
     public void sendMail(String email, String authCode) {
         SimpleMailMessage message = new SimpleMailMessage();
         message.setTo(email);
-        message.setSubject("[PINSET] 로그인(이메일) 인증 코드 발송");
-        message.setText("이메일 인증코드는 "+authCode+" 입니다.");
+        message.setSubject("[애프터눈] 로그인 인증코드 발송");
+        message.setText("로그인 인증코드는 "+authCode+"입니다.");
         logger.info("message"+message);
         mailSender.send(message);
     }

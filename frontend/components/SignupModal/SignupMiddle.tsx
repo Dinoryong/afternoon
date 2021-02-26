@@ -1,11 +1,11 @@
-import React, { useState } from "react";
-import Button from "../Button";
+import React, { useEffect, useState } from "react";
 import styled from "@emotion/styled";
-import color from "../../styles/theme";
-import { SIGN_UP } from "../../pages/api/user";
 import { useRouter } from "next/router";
+import color from "../../styles/theme";
+import Button from "../Button";
+import { SIGN_UP } from "../../pages/api/user";
+import Swal from "sweetalert2";
 
-// 가장 바깥 구획 나누기
 const Container = styled.div`
   display: flex;
   flex-direction: column;
@@ -13,7 +13,6 @@ const Container = styled.div`
   width: 300px;
 `;
 
-// 내부 컨텐츠 시작
 const InputName = styled.input`
   display: flex;
   width: 300px;
@@ -79,28 +78,44 @@ const SignupButton = styled.div`
   margin-bottom: 10px;
 `;
 
+const pattern = new RegExp(
+  /^(("[\w-\s]+")|([\w-]+(?:\.[\w-]+)*)|("[\w-\s]+")([\w-]+(?:\.[\w-]+)*))(@((?:[\w-]+\.)*\w[\w-]{0,66})\.([a-z]{2,6}(?:\.[a-z]{2})?)$)|(@\[?((25[0-5]\.|2[0-4][0-9]\.|1[0-9]{2}\.|[0-9]{1,2}\.))((25[0-5]|2[0-4][0-9]|1[0-9]{2}|[0-9]{1,2})\.){2}(25[0-5]|2[0-4][0-9]|1[0-9]{2}|[0-9]{1,2})\]?$)/i
+);
+
 const SignupMiddle = () => {
   const router = useRouter();
 
   const [inputName, setInputName] = useState("");
   const [inputNickName, setInputNickName] = useState("");
   const [inputEmail, setInputEmail] = useState("");
+  const [signupValid, setSignupValid] = useState(false);
+
+  useEffect(() => {
+    setSignupValid(
+      pattern.test(inputEmail) &&
+        inputNickName.length > 1 &&
+        inputNickName.length < 9 &&
+        inputName.length > 1 &&
+        inputName.length < 9
+    );
+  }, [inputEmail, inputNickName, inputName]);
 
   const requestSignup = async () => {
-    const signupProps = {
+    const signupReq = {
       accountName: inputName,
       accountEmail: inputEmail,
       accountNickname: inputNickName,
     };
 
-    const result = await SIGN_UP(signupProps);
+    const result = await SIGN_UP(signupReq);
+    //replace_console_log(result);
 
     if (result.status === 201) {
       window.localStorage.setItem("accountEmail", result.data.accountEmail);
-      alert("회원가입에 성공했습니다.");
+      Swal.fire({ icon: "success", text: "회원가입에 성공했습니다" });
       router.push("/");
     } else {
-      alert("회원가입에 실패했습니다.");
+      Swal.fire({ icon: "error", text: "회원가입에 실패했습니다" });
     }
   };
 
@@ -112,24 +127,24 @@ const SignupMiddle = () => {
         onChange={(e) => {
           setInputName(e.target.value);
         }}
-      ></InputName>
+      />
       <InputNickname
         placeholder={"닉네임을 입력해주세요. (영문, 한글 2글자 이상)"}
         value={inputNickName}
         onChange={(e) => {
           setInputNickName(e.target.value);
         }}
-      ></InputNickname>
+      />
       <InputEmail
         placeholder={"이메일을 입력해주세요. (example@site.com)"}
         value={inputEmail}
         onChange={(e) => {
           setInputEmail(e.target.value);
         }}
-      ></InputEmail>
+      />
       <SignupButton>
         <Button
-          btnBgColor={color.red.default}
+          btnBgColor={!signupValid ? color.gray.semidark : color.red.default}
           btnWidth="300px"
           btnText="회원가입"
           btnTextColor={color.white.default}
@@ -137,9 +152,9 @@ const SignupMiddle = () => {
           btnFontWeight={700}
           btnBorderColor="transparent"
           btnHoverBorderColor="transparent"
-          btnHoverBgColor={color.red.dark}
+          btnHoverBgColor={!signupValid ? color.gray.semidark : color.red.dark}
           btnHoverTextColor={color.white.default}
-          btnOnClick={requestSignup}
+          btnOnClick={!signupValid ? () => {} : requestSignup}
         />
       </SignupButton>
     </Container>

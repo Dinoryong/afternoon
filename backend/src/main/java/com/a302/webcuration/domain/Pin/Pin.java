@@ -5,6 +5,7 @@ import com.a302.webcuration.domain.Post.Posts;
 import lombok.*;
 
 import javax.persistence.*;
+import javax.validation.constraints.NotNull;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -14,16 +15,18 @@ public class Pin {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     private Long pinId;
-    // TODO: 2021-02-04 pinName추가
+    @NotNull
     private String pinName;
     private Double pinLocY;
     private Double pinLocX;
     // 작성자
+    @Column(columnDefinition = "TEXT")
     private String pinLink;
     // 네이버 API가 설정한 URL
-
+    @Column(columnDefinition = "TEXT")
+    private String pinApiLink;
     // 네이버 API 통한 분류 소분류
-    private String pinClass;
+    private String pinApiClass;
     //해당하는 사진의 순서를 위한 핀넘버링
     private Integer pinNum;
     @ManyToOne

@@ -59,7 +59,7 @@ public class LoginControllerTest extends BaseControllerTest {
     @Test
     public void Login_AuthKey_Off_성공() throws Exception {
 
-        String AuthKey = "cgqspygy";
+        String AuthKey = "399odadr";
 
         AccountDto.LoginRequest  account = new AccountDto.LoginRequest();
         account.setAct("check-authKey-off");
@@ -93,11 +93,11 @@ public class LoginControllerTest extends BaseControllerTest {
     @Test
     public void Login_AuthKey_On_성공() throws Exception {
 
-        String AuthKey = "cgqspygy";
+        String AuthKey = "oalfivrq";
 
         AccountDto.LoginRequest  account = new AccountDto.LoginRequest();
         account.setAct("check-authKey-on");
-        account.setAccountEmail("dntjr4772@naver.com");
+        account.setAccountEmail("dngngn3045@hanmail.net");
         account.setAccountAuthKey(AuthKey);
 
         mockMvc.perform(post("/api/login")
@@ -110,14 +110,14 @@ public class LoginControllerTest extends BaseControllerTest {
     @Test
     public void auto_login_성공() throws Exception {
 
-        String AuthKey = "erizabvc";
-        Long id = 2L;
+        String AuthKey = "mumqdi31";
+        Long id = 24L;
         String email = "dntjr4772@naver.com";
         AccountDto.LoginRequest  account = new AccountDto.LoginRequest();
         account.setAccountEmail(email);
         account.setAccountId(id);
 
-        String token = "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJzdWIiOiLroZzqt7jsnbjthqDtgbAiLCJleHAiOjE2MTI2ODEwOTEsImFjY291bnRJZCI6MiwiYWNjb3VudEVtYWlsIjoiamFzb245NjdAbmF2ZXIuY29tIn0.QjDFiYA35WZy7sH_pOld3KeL99fAKLaNbalmrA_AWng";
+        String token = "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJzdWIiOiLroZzqt7jsnbjthqDtgbAiLCJleHAiOjE2MTMxMTYwODQsImFjY291bnRJZCI6MjQsImFjY291bnRFbWFpbCI6ImRudGpyNDc3MkBuYXZlci5jb20ifQ.BpeSjW2avZkVLnqCUF_uSY89dmfSYwmfF5W0XPLfPMs";
         mockMvc.perform(post("/api/auto-login")
                 .contentType(MediaType.APPLICATION_JSON)
                 .header("Authorization","Bearer "+token)

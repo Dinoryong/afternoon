@@ -26,6 +26,7 @@ public class Posts {
     //@ElementCollection - List<String> 사용 가능 참조 링크 - (https://antoniogoncalves.org/2009/11/01/mapping-and-querying-a-list-of-primitive-types-with-jpa-2-0/)
     @ElementCollection
     private List<String> postsPhotos;
+    private String postsFirstPhoto;
     @CreationTimestamp
     private LocalDate postsWriteTime;
     @UpdateTimestamp
@@ -46,7 +47,7 @@ public class Posts {
     private List<Tag> postsTags =new ArrayList<>();
 
     @Builder.Default
-    @OneToMany(mappedBy = "commentPosts")
+    @OneToMany(mappedBy = "commentPosts", cascade = CascadeType.REMOVE)
     private List<Comment> comments=new ArrayList<>();
 
     public void writePost(Account account){
@@ -54,4 +55,16 @@ public class Posts {
         account.getMyPosts().add(this);
     }
 
+
+
+    @Override
+    public String toString() {
+        return "Posts{" +
+                "postsId=" + postsId +
+                ", postsTitle='" + postsTitle + '\'' +
+                ", postsContents='" + postsContents + '\'' +
+                ", postsPhotos=" + postsPhotos +
+                ", postsWriteTime=" + postsWriteTime +
+                '}';
+    }
 }

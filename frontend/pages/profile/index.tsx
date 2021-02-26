@@ -1,47 +1,178 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 import styled from "@emotion/styled";
 import ProfileTop from "../../components/ProfileTop";
-import Button from "../../components/Button";
-import color from "../../styles/theme";
-import Image from "next/image";
+import { GET_MY_INFO } from "../api/profile";
+import dynamic from "next/dynamic";
+import { useRouter } from "next/router";
+import { RootStateOrAny, useDispatch, useSelector } from "react-redux";
 
-const Container1 = styled.div`
+const Container = styled.div`
+  position: relative;
   display: flex;
   flex-direction: column;
   align-items: center;
-	justify-content: center;
   width: 100%;
+`;
+
+const TopWrapper = styled.div`
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  width: 100%;
+  padding-top: 122px;
+  @media only screen and (max-width: 768px) {
+    padding-top: 72px;
+  }
   /* height: 800px; */
 `;
 
-const Container2 = styled.div`
+const DynamicDiv = styled.div`
+  position: relative;
   display: flex;
+  flex-direction: column;
   width: 100%;
-  height: 800px;
+  margin-top: 60px;
+  max-width: 1280px;
+  @media only screen and (max-width: 768px) {
+    margin-top: 20px;
+  }
+  @media only screen and (min-width: 768px) {
+    margin-top: 40px;
+  }
+  @media only screen and (min-width: 1280px) {
+    margin-top: 60px;
+  }
 `;
 
-const index = () => {
-  const profileData = {
-    profileImg:
-      "https://images.unsplash.com/photo-1611759931890-db159d745102?ixid=MXwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHw%3D&ixlib=rb-1.2.1&auto=format&fit=crop&w=632&q=80",
-    profileName: "Alex",
-    profileBox:
-      "보이는 가치를 사랑의 끓는다. 굳세게 산야에  품었기 이상의 속잎나고, 그리하였는가? 타오르고 못하다 가치를 귀는 없는 속에서 따뜻한 보이는 내는 쓸쓸하랴? 인간은 가슴에 새 그들에게 자신과 대한 길지 것이다. 날카로우나 얼마나 용감 그리하였는가? 타오르고 최대 3줄 적당",
-    profileFollowing: "159",
-    profileFollwer: "143534",
-		profileMyposts: "376",
-		profileLikes: "100",
-		profileTags: "",
-		profileCollections: "13",
+const NullPostDiv = styled.div`
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: 100%;
+  margin-top: 100px;
+  font-size: 18px;
+`;
+
+const useStore = () => {
+  const loginState = useSelector(
+    (state: RootStateOrAny) => state.login.loginState
+  );
+
+  return {
+    loginState,
   };
+};
+
+const index = () => {
+  const [infoState, setInfoState] = useState(0);
+
+  const [tabState, setTabState] = useState(0);
+
+  const [profileData, setProfileData] = useState({});
+  const [postData, setPostData] = useState([]);
+  const [likeData, setLikeData] = useState([]);
+  const [getMyInfoApiState, setgetMyInfoApiState] = useState(false);
+
+  const router = useRouter();
+  const { loginState } = useStore();
+
+  const [windowHeight, setWindowHeight] = useState<number>();
+
+  useEffect(() => {
+    if (!loginState) {
+      router.push("/");
+    }
+
+    const requestGetMyInfo = async () => {
+      const getMyInfoConfig = {
+        headers: {
+          Authorization: `Bearer ${window.localStorage.getItem("authToken")}`,
+        },
+      };
+
+      const result = await GET_MY_INFO(getMyInfoConfig);
+      //replace_console_log(result);
+
+      if (result.status === 200) {
+        setProfileData(result.data);
+        setPostData(result.data.writtenPosts);
+        setLikeData(result.data.likesPosts);
+        setInfoState(2);
+      } else {
+        router.push("/");
+      }
+    };
+
+    if (!getMyInfoApiState) {
+      setgetMyInfoApiState(true);
+      setInfoState(1);
+      requestGetMyInfo();
+    }
+
+    const resizeHandler = () => {
+      setWindowHeight(window.innerHeight);
+    };
+
+    resizeHandler();
+
+    window.addEventListener("resize", resizeHandler);
+
+    const cleanup = () => {
+      window.removeEventListener("resize", resizeHandler);
+    };
+
+    return cleanup;
+  });
+
+  const DynamicComponentWithNoSSR = dynamic(
+    () => import("../../components/Egjs"),
+    {
+      ssr: false,
+    }
+  );
 
   return (
-    <>
-      <Container1>
-        <ProfileTop profileData={profileData}></ProfileTop>
-      </Container1>
-      <Container2>{/* <ProfileBottom></ProfileBottom> */}</Container2>
-    </>
+    <Container style={{ height: windowHeight }}>
+      {infoState !== 0 &&
+        infoState === 2 &&
+        profileData &&
+        Object.keys(profileData).length > 0 && (
+          <>
+            <TopWrapper>
+              <ProfileTop
+                profileData={profileData}
+                setTabState={setTabState}
+                tabState={tabState}
+              />
+            </TopWrapper>
+          </>
+        )}
+      {profileData && Object.keys(profileData).length > 0 && tabState === 0 && (
+        <DynamicDiv>
+          {postData && postData.length > 0 && (
+            <DynamicComponentWithNoSSR
+              postData={postData}
+            ></DynamicComponentWithNoSSR>
+          )}
+          {postData && postData.length === 0 && (
+            <NullPostDiv>작성하신 게시물이 없어요</NullPostDiv>
+          )}
+        </DynamicDiv>
+      )}
+      {profileData && Object.keys(profileData).length > 0 && tabState === 1 && (
+        <DynamicDiv>
+          {likeData && likeData.length > 0 && (
+            <DynamicComponentWithNoSSR
+              postData={likeData}
+            ></DynamicComponentWithNoSSR>
+          )}
+          {likeData && likeData.length === 0 && (
+            <NullPostDiv>좋아요한 게시물이 없어요</NullPostDiv>
+          )}
+        </DynamicDiv>
+      )}
+    </Container>
   );
 };
 

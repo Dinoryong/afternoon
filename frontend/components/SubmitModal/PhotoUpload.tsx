@@ -6,7 +6,8 @@ import UploadButtonBox from "./UploadButtonBox";
 import UploadPreviewBox from "./UploadPreviewBox";
 import firebase from "firebase";
 import { keyframes } from "@emotion/react";
-import { useSelector } from "react-redux";
+import { RootStateOrAny, useDispatch, useSelector } from "react-redux";
+import Swal from "sweetalert2";
 
 const Container = styled.div`
   display: flex;
@@ -140,11 +141,20 @@ const makeid = (length) => {
   return result;
 };
 
-const useCounter = () => {
-  const submitShown = useSelector((state) => state.submit.submitShown);
+const useStore = () => {
+  const submitShown = useSelector(
+    (state: RootStateOrAny) => state.submit.submitShown
+  );
+
+  const dispatch = useDispatch();
+
+  const toggleSubmit = async () => {
+    dispatch({ type: "TOGGLE_SUBMIT" });
+  };
 
   return {
     submitShown,
+    toggleSubmit,
   };
 };
 
@@ -162,7 +172,7 @@ const PhotoUpload = ({
 }) => {
   const storage = firebase.storage();
 
-  const { submitShown } = useCounter();
+  const { submitShown, toggleSubmit } = useStore();
   const [blockNext, setBlockNext] = useState(
     imageAsFile1.url === "" ? true : false
   );
@@ -208,7 +218,7 @@ const PhotoUpload = ({
   ]);
 
   const uploadToFirebase = (imageAsFile, setImageAsFile) => {
-    console.log("start of upload");
+    //replace_console_log("FIREBASE : UPLOAD");
     // async magic goes here...
     const { image } = imageAsFile;
     const imageId = makeid(16);
@@ -231,7 +241,7 @@ const PhotoUpload = ({
       },
       (err) => {
         //catches the errors
-        console.log(err);
+        //replace_console_log(err);
       },
       () => {
         // gets the functions from storage refences the image storage in firebase by the children
@@ -343,16 +353,26 @@ const PhotoUpload = ({
       </TopWrapper>
       <BottomWrapper>
         <WarningDiv>
-          (!) 사진 제거 시 해당 사진에 작성된 핀 내용이 삭제됩니다.
+          (!) 사진 제거 시 해당 사진에 작성된 눈 내용이 삭제됩니다.
         </WarningDiv>
         <ButtonDiv>
           <Button
             btnText={"취소"}
-            btnOnClick={(): void => {
-              console.log(imageAsFile1);
-              console.log(imageAsFile2);
-              console.log(imageAsFile3);
-              console.log(imageAsFile4);
+            btnOnClick={() => {
+              Swal.fire({
+                title: "사진 등록을 취소하시겠습니까?",
+                text: "확인을 누르시면 현재까지 작업이 사라집니다",
+                icon: "warning",
+                showCancelButton: true,
+                confirmButtonColor: "#3085d6",
+                cancelButtonColor: "#d33",
+                confirmButtonText: "확인",
+                cancelButtonText: "취소",
+              }).then((result) => {
+                if (result.isConfirmed) {
+                  toggleSubmit();
+                }
+              });
             }}
           ></Button>
           <Button

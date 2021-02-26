@@ -1,46 +1,47 @@
-import React, { useState } from "react";
+import React from "react";
 import styled from "@emotion/styled";
-import color from "../../styles/theme";
 import TagLeft from "./TagLeft";
 import TagRight from "./TagRight";
+import TagList from "../../data/TagList";
 
 const Container = styled.div`
   width: 100%;
-  max-width: 1000px;
-  height: 280px;
   display: flex;
   justify-content: center;
+  @media only screen and (max-width: 768px) {
+    flex-direction: column;
+    max-width: 90%;
+  }
+  @media only screen and (min-width: 768px) {
+    max-width: 720px;
+  }
+  @media only screen and (min-width: 1280px) {
+    max-width: 1000px;
+  }
 `;
 
-// const Wrapper = styled.div`
-//   display: flex;
-//   margin: 10px 0px;
-// `;
+const index = ({ searchData, routerQuery }) => {
+  const currentTag = TagList.find((x) => x.tagTitle === routerQuery);
 
-const index = ({ tagData }) => {
-  // const [expand, setExpand] = useState(false);
-  const {
-    tagTitle,
-    tagText,
-    tagContributions,
-    tagUsers,
-    tagTopUser,
-    tagTopPost,
-    tagTopContributer,
-  } = tagData;
   return (
-    <Container>
-      {/* <Wrapper> */}
-      <TagLeft tagTitle={tagTitle} tagText={tagText}></TagLeft>
-      <TagRight
-        tagContributions={tagContributions}
-        tagUsers={tagUsers}
-        tagTopUser={tagTopUser}
-        tagTopPost={tagTopPost}
-        tagTopContributer={tagTopContributer}
-      ></TagRight>
-      {/* </Wrapper> */}
-    </Container>
+    <>
+      {currentTag && currentTag.tagTitle && (
+        <Container>
+          <TagLeft
+            tagTitle={currentTag.tagTitle}
+            tagDesc={currentTag.tagDesc}
+          />
+          <TagRight
+            tagState={searchData.tagState}
+            writtenPostsCnt={searchData.writtenPostsCnt}
+            interestedPeopleCnt={searchData.interestedPeopleCnt}
+            mostContributor={searchData.mostContributor}
+            mostPopularPosts={searchData.mostPopularPosts}
+            tagId={currentTag.tagId}
+          />
+        </Container>
+      )}
+    </>
   );
 };
 

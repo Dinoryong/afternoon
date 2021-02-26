@@ -1,42 +1,60 @@
-import React, { useEffect, useState } from "react";
+import React, { Dispatch, SetStateAction } from "react";
 import styled from "@emotion/styled";
 import Button from "../Button";
 import color from "../../styles/theme";
 import { NextRouter } from "next/router";
-import { useSelector, useDispatch } from "react-redux";
+import { useSelector, useDispatch, RootStateOrAny } from "react-redux";
 import { LOG_OUT } from "../../pages/api/user";
+import Swal from "sweetalert2";
 
 const Container = styled.div`
   display: flex;
   align-items: center;
-  padding-left: 15px;
   border-left: 1px solid ${color.gray.default};
+  @media only screen and (min-width: 768px) {
+    padding-left: 10px;
+  }
+  @media only screen and (min-width: 1280px) {
+    padding-left: 15px;
+  }
 `;
 
 type HeaderProps = {
   routerPath?: String;
   router?: NextRouter;
+  inputFocus?: boolean;
+  setInputFocus?: Dispatch<SetStateAction<boolean>>;
+  windowWidth?: number;
 };
 
-const useCounter = () => {
-  const loginState = useSelector((state) => state.login.loginState);
+const useStore = () => {
+  const loginState = useSelector(
+    (state: RootStateOrAny) => state.login.loginState
+  );
   const dispatch = useDispatch();
   const toggle = async () => {
-    await dispatch({ type: "TOGGLE" });
+    dispatch({ type: "TOGGLE" });
   };
   const loginStateFalse = async () => {
-    await dispatch({ type: "LOGIN_STATE_FALSE" });
+    dispatch({ type: "LOGIN_STATE_FALSE" });
   };
   const autoLoginFalse = async () => {
-    await dispatch({ type: "AUTO_LOGIN_FALSE" });
+    dispatch({ type: "AUTO_LOGIN_FALSE" });
   };
   return { loginState, loginStateFalse, toggle, autoLoginFalse };
 };
 
-const HeaderRight = ({ router, routerPath }: HeaderProps) => {
-  const { loginState, loginStateFalse, toggle, autoLoginFalse } = useCounter();
+const HeaderRight = ({
+  router,
+  routerPath,
+  inputFocus,
+  setInputFocus,
+  windowWidth,
+}: HeaderProps) => {
+  const { loginState, loginStateFalse, toggle, autoLoginFalse } = useStore();
 
   const toggleLogin = (): void => {
+    setInputFocus(false);
     toggle();
   };
 
@@ -44,7 +62,7 @@ const HeaderRight = ({ router, routerPath }: HeaderProps) => {
     await autoLoginFalse();
     await LOG_OUT();
     await loginStateFalse();
-    alert("로그아웃 되었습니다.");
+    Swal.fire({ icon: "success", text: "로그아웃 되었습니다." });
     router.push("/");
   };
 
@@ -65,16 +83,25 @@ const HeaderRight = ({ router, routerPath }: HeaderProps) => {
             btnWidth="60px"
             btnHoverBorderColor="transparent"
             btnMarginLeft="0px"
+            btnMarginRight={windowWidth < 1280 ? "0px" : "8px"}
             btnBorderColor="transparent"
-            btnBgColor={routerPath === "/" ? "transparent" : null}
+            btnBgColor={"transparent"}
             btnOnClick={requestLogout}
-            btnTextColor={routerPath === "/" ? "white" : color.black.default}
-            btnUseOpacity={routerPath === "/" ? false : true}
+            btnTextColor={
+              (routerPath === "/" || routerPath === "/home") && !inputFocus
+                ? "white"
+                : color.black.default
+            }
+            btnUseOpacity={
+              (routerPath === "/" || routerPath === "/home") && !inputFocus
+                ? false
+                : true
+            }
             btnSetOpacity={"0.4"}
           />
           <Button
             btnText={"프로필"}
-            btnWidth="80px"
+            btnWidth={windowWidth < 1280 ? "70px" : "80px"}
             btnBorderColor={color.green.default}
             btnBgColor={color.green.default}
             btnTextColor={color.white.default}
@@ -93,14 +120,19 @@ const HeaderRight = ({ router, routerPath }: HeaderProps) => {
             btnWidth="60px"
             btnHoverBorderColor="transparent"
             btnMarginLeft="0px"
+            btnMarginRight={windowWidth < 1280 ? "0px" : "8px"}
             btnBorderColor="transparent"
-            btnBgColor={routerPath === "/" ? "transparent" : null}
-            btnTextColor={routerPath === "/" ? "white" : null}
+            btnBgColor={"transparent"}
+            btnTextColor={
+              (routerPath === "/" || routerPath === "/home") && !inputFocus
+                ? "white"
+                : null
+            }
             btnOnClick={toggleLogin}
           />
           <Button
             btnText={"회원가입"}
-            btnWidth="80px"
+            btnWidth={windowWidth < 1280 ? "70px" : "80px"}
             btnBorderColor={color.green.default}
             btnBgColor={color.green.default}
             btnTextColor={color.white.default}

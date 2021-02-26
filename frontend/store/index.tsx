@@ -1,46 +1,11 @@
 import { useMemo } from "react";
 import { combineReducers, createStore } from "redux";
-import { AUTO_LOGIN } from "../pages/api/user";
 
 let store;
 
-const baseInitialState = {
-  lastUpdate: 0,
-  light: false,
-  count: 0,
-};
-
-const baseReducer = (state = initialState.base, action) => {
-  switch (action.type) {
-    case "TICK":
-      return {
-        ...state,
-        lastUpdate: action.lastUpdate,
-        light: !!action.light,
-      };
-    case "INCREMENT":
-      return {
-        ...state,
-        count: state.count + 1,
-      };
-    case "DECREMENT":
-      return {
-        ...state,
-        count: state.count - 1,
-      };
-    case "RESET":
-      return {
-        ...state,
-        count: state.count,
-      };
-    default:
-      return state;
-  }
-};
-
 const loginInitialState = {
   isShown: false,
-  autoLogin: false,
+  autoLogin: 0,
   loginState: false,
 };
 
@@ -57,9 +22,9 @@ const loginReducer = (state = initialState.login, action) => {
       const authToken = window.localStorage.getItem("authToken");
 
       if (accountEmail !== null && accountId !== null && authToken !== null) {
-        state.autoLogin = true;
+        state.autoLogin = 1;
       } else {
-        state.autoLogin = false;
+        state.autoLogin = 2;
       }
 
       return {
@@ -67,7 +32,7 @@ const loginReducer = (state = initialState.login, action) => {
         autoLogin: state.autoLogin,
       };
     case "AUTO_LOGIN_FALSE":
-      state.autoLogin = false;
+      state.autoLogin = 2;
       return {
         ...state,
         autoLogin: state.autoLogin,
@@ -80,6 +45,7 @@ const loginReducer = (state = initialState.login, action) => {
       };
     case "LOGIN_STATE_FALSE":
       state.loginState = false;
+
       return {
         ...state,
         loginState: state.loginState,
@@ -102,16 +68,58 @@ const submitReducer = (state = initialState.submit, action) => {
   }
 };
 
+const postInitialState = {
+  postShown: false,
+  toggleId: 0,
+};
+
+const postReducer = (state = initialState.post, action) => {
+  switch (action.type) {
+    case "TOGGLE_POST":
+      return {
+        ...state,
+        postShown: !state.postShown,
+        toggleId: action.toggleId,
+      };
+    default:
+      return state;
+  }
+};
+
+const userInitialState = {
+  editShown: false,
+  followShown: false,
+};
+
+const userReducer = (state = initialState.user, action) => {
+  switch (action.type) {
+    case "TOGGLE_EDIT":
+      return {
+        ...state,
+        editShown: !state.editShown,
+      };
+    case "TOGGLE_FOLLOW":
+      return {
+        ...state,
+        followShown: !state.followShown,
+      };
+    default:
+      return state;
+  }
+};
+
 const initialState = {
-  base: baseInitialState,
   login: loginInitialState,
   submit: submitInitialState,
+  post: postInitialState,
+  user: userInitialState,
 };
 
 const rootReducer = combineReducers({
-  base: baseReducer,
   login: loginReducer,
   submit: submitReducer,
+  post: postReducer,
+  user: userReducer,
 });
 
 function initStore(preloadedState = initialState) {

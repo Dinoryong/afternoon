@@ -1,8 +1,9 @@
 import React, { useEffect, useState } from "react";
-import Button from "../Button";
 import styled from "@emotion/styled";
 import color from "../../styles/theme";
-import { REQUEST_LOGIN } from "../../pages/api/user";
+import Button from "../Button";
+import { EMAIL_LOGIN } from "../../pages/api/user";
+import Swal from "sweetalert2";
 
 const Container = styled.div`
   display: flex;
@@ -43,7 +44,6 @@ const InputEmail = styled.input`
 const Text = styled.div`
   display: flex;
   width: 300px;
-  /* margin-top: 4px; */
   justify-content: center;
   align-items: center;
   font-size: 12px;
@@ -65,34 +65,44 @@ const pattern = new RegExp(
   /^(("[\w-\s]+")|([\w-]+(?:\.[\w-]+)*)|("[\w-\s]+")([\w-]+(?:\.[\w-]+)*))(@((?:[\w-]+\.)*\w[\w-]{0,66})\.([a-z]{2,6}(?:\.[a-z]{2})?)$)|(@\[?((25[0-5]\.|2[0-4][0-9]\.|1[0-9]{2}\.|[0-9]{1,2}\.))((25[0-5]|2[0-4][0-9]|1[0-9]{2}|[0-9]{1,2})\.){2}(25[0-5]|2[0-4][0-9]|1[0-9]{2}|[0-9]{1,2})\]?$)/i
 );
 
-const LoginMiddle = ({ setAuthState, setCurrentEmail }) => {
-  const autoEmail = window.localStorage.getItem("accountEmail");
+const LoginMiddle = ({ toggle, setAuthState, setCurrentEmail }) => {
+  let autoEmail = "";
+  if (window.localStorage.getItem("accountEmail") !== null)
+    autoEmail = window.localStorage.getItem("accountEmail");
+
+  const [emailValid, setEmailValid] = useState(false);
   const [inputEmail, setInputEmail] = useState(
     autoEmail !== undefined ? autoEmail : ""
   );
-  const [emailValid, setEmailValid] = useState(false);
 
   useEffect(() => {
     setEmailValid(pattern.test(inputEmail));
   }, [inputEmail]);
 
-  const requestLogin = async () => {
+  const requestEmailLogin = async () => {
+    Swal.fire({
+      icon: "success",
+      title: "인증번호 발송 완료",
+      text: `서비스 상황에 따라 3~10초 정도 소요됩니다`,
+    });
+    setCurrentEmail(inputEmail);
+    setAuthState(1);
     if (pattern.test(inputEmail)) {
-      const loginProps = {
+      const emailLoginReq = {
         act: "login-request",
         accountEmail: inputEmail,
       };
 
-      const result = await REQUEST_LOGIN(loginProps);
+      const result = await EMAIL_LOGIN(emailLoginReq);
+      //replace_console_log(result);
 
-      if (result.status) {
-        setAuthState(1);
-        setCurrentEmail(inputEmail);
+      if (result.status === 200) {
       } else {
-        alert("로그인 요청 실패");
+        toggle();
+        Swal.fire({ icon: "error", text: "로그인 요청에 실패했습니다" });
       }
     } else {
-      alert("이메일 형식이 아닙니다.");
+      Swal.fire({ icon: "info", text: "이메일 형식으로 입력해주세요" });
     }
   };
 
@@ -105,7 +115,7 @@ const LoginMiddle = ({ setAuthState, setCurrentEmail }) => {
           onChange={(e) => {
             setInputEmail(e.target.value);
           }}
-        ></InputEmail>
+        />
         <Text>로그인 요청하기 버튼을 누르시면</Text>
         <Text>이메일로 인증번호가 발송됩니다</Text>
         <LoginButton>
@@ -120,7 +130,7 @@ const LoginMiddle = ({ setAuthState, setCurrentEmail }) => {
             btnHoverBorderColor="transparent"
             btnHoverBgColor={!emailValid ? color.gray.semidark : color.red.dark}
             btnHoverTextColor={color.white.default}
-            btnOnClick={!emailValid ? () => {} : requestLogin}
+            btnOnClick={!emailValid ? () => {} : requestEmailLogin}
           />
         </LoginButton>
       </InputBox>

@@ -3,10 +3,13 @@ package com.a302.webcuration.service;
 import com.a302.webcuration.common.BaseMessage;
 import com.a302.webcuration.common.BaseStatus;
 import com.a302.webcuration.controller.CommentController;
+import com.a302.webcuration.domain.Account.Account;
+import com.a302.webcuration.domain.Account.AccountRepository;
 import com.a302.webcuration.domain.Comment.Comment;
 import com.a302.webcuration.domain.Comment.CommentDto;
 import com.a302.webcuration.domain.Comment.CommentRepository;
 import com.a302.webcuration.domain.Pin.Pin;
+import com.a302.webcuration.domain.Pin.PinDto;
 import com.a302.webcuration.domain.Pin.PinRepository;
 import com.a302.webcuration.domain.Post.Posts;
 import com.a302.webcuration.domain.Post.PostsRepository;
@@ -29,8 +32,11 @@ public class CommentService {
 
     private final PostsRepository postsRepository;
     private final CommentRepository commentRepository;
+    private final AccountRepository accountRepository;
     private final PinRepository pinRepository;
     private final ModelMapper modelMapper;
+    private final PostsService postsService;
+
 
     public static final Logger logger = LoggerFactory.getLogger(CommentController.class);
 
@@ -39,7 +45,7 @@ public class CommentService {
     {
         if (!request.getCommentLink().isEmpty())
         {
-            if(request.getPinId()==null || request.getPinNum()==0)
+            if(request.getPinId()==null)
             {
                 return false;
             }
@@ -48,7 +54,7 @@ public class CommentService {
     }
 
     @Transactional
-    public BaseMessage createComment(long postsId, long accountId, CommentDto.CreateCommentRequest request)
+    public BaseMessage createComment(long accountId, CommentDto.CreateCommentRequest request)
     {
         //사용가능 여부 판별
         Boolean isValid = createCommentValidation(request);
@@ -59,10 +65,11 @@ public class CommentService {
             return new BaseMessage(HttpStatus.BAD_REQUEST,resultMap);
         }
         Comment comment = request.toEntity();
-        comment.addCommentWriterId(accountId);
+        Account myAccount = accountRepository.findAccountByAccountId(accountId);
+        comment.addCommentWriter(myAccount.getAccountNickname(),myAccount.getAccountPhoto());
 
         try {
-            //링크가 존재하는 경우
+            //핀이 존재하는 경우
             Pin pin = pinRepository.findPinByPinId(request.getPinId());
             if(pin!=null)
             {
@@ -71,18 +78,17 @@ public class CommentService {
             }
             else resultMap.put("message","핀을가지고 있지 않습니다.");
 
-            Posts post = postsRepository.findPostsByPostsId(postsId);
+            Posts post = postsRepository.findPostsByPostsId(request.getPostsId());
             comment.saveWithCascadePosts(post);
             commentRepository.save(comment);
             resultMap.put("message","게시물에 댓글이 등록되었습니다.");
-            return new BaseMessage(HttpStatus.OK,resultMap);
+            return new BaseMessage(HttpStatus.CREATED,resultMap);
         }catch (Exception e)
         {
             resultMap.put("error","게시물의 아이디가 존재하지않습니다.");
             return new BaseMessage(HttpStatus.BAD_REQUEST,resultMap);
         }
     }
-    @Transactional
     public BaseMessage retrieveComment(Long postid) {
         logger.info(postid+"번 게시물 댓글 조회");
         try {

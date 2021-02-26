@@ -1,6 +1,7 @@
 import React from "react";
 import styled from "@emotion/styled";
 import color from "../../styles/theme";
+import { useSelector } from "react-redux";
 
 const Container = styled.div`
   display: flex;
@@ -10,24 +11,32 @@ const Container = styled.div`
 
 const ModalText = styled.div`
   display: flex;
-	width: 300px;
+  width: 300px;
   margin-top: 4px;
   justify-content: center;
   align-items: center;
   font-size: 12px;
   font-weight: bold;
   color: ${color.black.default};
+  cursor: pointer;
 `;
 
-type footProps = { 
-  footText?: string
-}
+type footProps = {
+  footText?: string;
+  footOnClick?: Function;
+};
 
-const UserModalFoot = ({ footText }:footProps) => {
+const UserModalFoot = ({ footText, footOnClick }: footProps) => {
   return (
-        <Container>
-          <ModalText>{footText}</ModalText>
-        </Container>
+    <Container>
+      <ModalText
+        onClick={() => {
+          footOnClick();
+        }}
+      >
+        {footText}
+      </ModalText>
+    </Container>
   );
 };
 

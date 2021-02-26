@@ -1,16 +1,23 @@
-import React, { useEffect, useState } from "react";
+import React, { Dispatch, SetStateAction, useEffect, useState } from "react";
 import styled from "@emotion/styled";
 import Button from "../Button";
 import Image from "next/image";
 import color from "../../styles/theme";
-import { useDispatch } from "react-redux";
+import { useSelector, useDispatch } from "react-redux";
+import Swal from "sweetalert2";
 
 const Container = styled.div`
   display: flex;
   justify-content: flex-end;
   align-items: center;
-  padding-right: 20px;
-  min-width: 180px;
+  @media only screen and (min-width: 768px) {
+    padding-right: 10px;
+    min-width: 90px;
+  }
+  @media only screen and (min-width: 1280px) {
+    padding-right: 20px;
+    min-width: 120px;
+  }
 `;
 
 const NoticeIcon = styled.div<HeaderProps>`
@@ -24,44 +31,68 @@ const NoticeIcon = styled.div<HeaderProps>`
   border-radius: 50%;
   :hover {
     border-color: ${(props) =>
-      props.routerPath === "/" ? color.white.default : color.gray.darker};
+      (props.routerPath === "/" || props.routerPath === "/home") &&
+      !props.inputFocus
+        ? color.white.default
+        : color.gray.darker};
   }
-  transition: all 0.2s;
+  transition: all 0.3s;
+`;
+
+const IconBox = styled.div`
+  position: relative;
+  width: 20px;
+  height: 20px;
 `;
 
 type HeaderProps = {
   routerPath?: String;
+  inputFocus?: boolean;
+  setInputFocus?: Dispatch<SetStateAction<boolean>>;
+  windowWidth?: number;
 };
 
-const useCounter = () => {
+const useStore = () => {
+  const loginState = useSelector((state) => state.login.loginState);
+
   const dispatch = useDispatch();
   const toggleSubmit = async () => {
     await dispatch({ type: "TOGGLE_SUBMIT" });
   };
+  const toggle = async () => {
+    await dispatch({ type: "TOGGLE" });
+  };
 
   return {
     toggleSubmit,
+    loginState,
+    toggle,
   };
 };
 
-const HeaderRight = ({ routerPath }: HeaderProps) => {
-  const { toggleSubmit } = useCounter();
+const HeaderCenter = ({
+  routerPath,
+  inputFocus,
+  setInputFocus,
+  windowWidth,
+}: HeaderProps) => {
+  const { toggleSubmit, loginState, toggle } = useStore();
 
   const [noticeImg, setNoticeImg] = useState<string>(
-    routerPath === "/"
+    (routerPath === "/" || routerPath === "/home") && !inputFocus
       ? "/assets/icons/bell_white.png"
       : "/assets/icons/bell_black_light.png"
   );
 
   useEffect(() => {
     setNoticeImg(
-      routerPath === "/"
+      (routerPath === "/" || routerPath === "/home") && !inputFocus
         ? "/assets/icons/bell_white.png"
         : "/assets/icons/bell_black_light.png"
     );
-  }, [routerPath]);
+  }, [routerPath, inputFocus]);
 
-  const props = { routerPath };
+  const props = { routerPath, inputFocus };
 
   const noticeIconStyle = {
     borderRadius: "50%",
@@ -71,28 +102,65 @@ const HeaderRight = ({ routerPath }: HeaderProps) => {
     <Container>
       <Button
         btnText="사진 등록"
-        btnWidth="80px"
-        btnMarginLeft="20px"
-        btnMarginRight="20px"
-        btnHoverBorderColor={routerPath === "/" ? "transparent" : null}
-        btnBgColor={routerPath === "/" ? "transparent" : null}
-        btnTextColor={routerPath === "/" ? "white" : color.black.default}
-        btnBorderColor={routerPath === "/" ? "white" : color.black.default}
-        btnUseOpacity={routerPath === "/" ? false : true}
+        btnWidth={windowWidth < 1280 ? "70px" : "80px"}
+        btnMarginLeft={windowWidth < 1280 ? "10px" : "20px"}
+        btnMarginRight="0px"
+        btnHoverBorderColor={
+          (routerPath === "/" || routerPath === "/home") && !inputFocus
+            ? "transparent"
+            : null
+        }
+        btnBgColor={
+          (routerPath === "/" || routerPath === "/home") && !inputFocus
+            ? "transparent"
+            : null
+        }
+        btnTextColor={
+          (routerPath === "/" || routerPath === "/home") && !inputFocus
+            ? "white"
+            : color.black.default
+        }
+        btnBorderColor={
+          (routerPath === "/" || routerPath === "/home") && !inputFocus
+            ? "white"
+            : color.black.default
+        }
+        btnUseOpacity={
+          (routerPath === "/" || routerPath === "/home") && !inputFocus
+            ? false
+            : true
+        }
         btnSetOpacity={"0.4"}
-        btnOnClick={toggleSubmit}
+        btnOnClick={() => {
+          if (loginState) {
+            setInputFocus(false);
+            toggleSubmit();
+          } else {
+            toggle();
+          }
+        }}
       />
-      <NoticeIcon {...props} style={noticeIconStyle}>
-        <Image
-          src={noticeImg}
-          width="22"
-          height="22"
-          quality="100"
-          objectFit="contain"
-        />
-      </NoticeIcon>
+      {/* <NoticeIcon {...props} style={noticeIconStyle}>
+        <IconBox
+          onClick={() => {
+            Swal.fire({
+              icon: "info",
+              title: "알림 서비스 준비 중..",
+              text: "슬프게도 여기에 시간을 투자할 수가 없어요..",
+            });
+            setInputFocus(false);
+          }}
+        >
+          <Image
+            src={noticeImg}
+            layout="fill"
+            quality="100"
+            objectFit="contain"
+          />
+        </IconBox>
+      </NoticeIcon> */}
     </Container>
   );
 };
 
-export default HeaderRight;
+export default HeaderCenter;

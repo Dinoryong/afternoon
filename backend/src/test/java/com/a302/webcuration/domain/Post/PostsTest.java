@@ -35,7 +35,6 @@ public class PostsTest extends BaseDomainTest {
 //                .accountEmail(accountEmail)
 //                .build();
         Account postWriter=accountRepository.findByAccountEmail("dntjr4772@naver.com");
-        // TODO: 2021-01-25  postWriter가 없어도 작성되고있음 예외처리 필요
         Posts posts=Posts.builder()
                 .postsTitle(postsTitle)
                 .postsContents(postsContents)
@@ -48,5 +47,7 @@ public class PostsTest extends BaseDomainTest {
     public void 게시물_전부삭제(){
         postsRepository.deleteAll();
     }
+
+
 
 }

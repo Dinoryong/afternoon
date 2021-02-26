@@ -2,6 +2,7 @@ import React from "react";
 import Button from "../Button";
 import styled from "@emotion/styled";
 import color from "../../styles/theme";
+import Swal from "sweetalert2";
 
 const Container = styled.div`
   display: flex;
@@ -76,10 +77,17 @@ const UserModalBottom = ({
           btnHoverBgColor={color.blue.dark}
           btnHoverTextColor={color.white.default}
           btnUseIcon={true}
-          btnIconSrc={"/assets/icons/search_white.png"}
+          btnIconSrc={"/assets/icons/facebook_icon.png"}
           btnIconHeight={"18px"}
           btnIconWidth={"18px"}
           btnIconMargin={"0px 0px 0px 20px"}
+          btnOnClick={() => {
+            Swal.fire({
+              icon: "info",
+              title: "소셜 연동 서비스 준비 중..",
+              text: "일반 로그인 및 회원가입을 이용해주세요",
+            });
+          }}
         />
       </SnsButton1>
       <SnsButton2>
@@ -95,10 +103,17 @@ const UserModalBottom = ({
           btnHoverBgColor={color.yellow.dark}
           btnHoverTextColor={color.black.default}
           btnUseIcon={true}
-          btnIconSrc={"/assets/icons/search_white.png"}
+          btnIconSrc={"/assets/icons/kakao_icon.png"}
           btnIconHeight={"18px"}
           btnIconWidth={"18px"}
           btnIconMargin={"0px 0px 0px 20px"}
+          btnOnClick={() => {
+            Swal.fire({
+              icon: "info",
+              title: "소셜 연동 서비스 준비 중..",
+              text: "일반 로그인 및 회원가입을 이용해주세요",
+            });
+          }}
         />
       </SnsButton2>
       <SnsButton3>
@@ -114,10 +129,17 @@ const UserModalBottom = ({
           btnHoverBgColor={color.gray.semidark}
           btnHoverTextColor={color.black.default}
           btnUseIcon={true}
-          btnIconSrc={"/assets/icons/search_white.png"}
-          btnIconHeight={"18px"}
-          btnIconWidth={"18px"}
-          btnIconMargin={"0px 0px 0px 20px"}
+          btnIconSrc={"/assets/icons/google_icon.png"}
+          btnIconHeight={"16px"}
+          btnIconWidth={"16px"}
+          btnIconMargin={"0px 1px 0px 21px"}
+          btnOnClick={() => {
+            Swal.fire({
+              icon: "info",
+              title: "소셜 연동 서비스 준비 중..",
+              text: "일반 로그인 및 회원가입을 이용해주세요",
+            });
+          }}
         />
       </SnsButton3>
     </Container>

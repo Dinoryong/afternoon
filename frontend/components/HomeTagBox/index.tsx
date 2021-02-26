@@ -1,7 +1,8 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import styled from "@emotion/styled";
 import Image from "next/image";
 import color from "../../styles/theme";
+import { useRouter } from "next/router";
 
 const Container = styled.div<BoxProps>`
   position: relative;
@@ -32,52 +33,77 @@ const FunctionFrame = styled.div`
 const ContentFrame = styled.div`
   display: flex;
   justify-content: flex-end;
-  align-items: flex-end;
+  align-items: center;
   width: 100%;
   height: 100%;
 `;
 
 const ImageBox = styled.div`
   position: relative;
-  width: 100%;
-  height: 100%;
+  width: ${(props) => (props.boxImageSize === "default" ? `100%` : `80%`)};
+  height: ${(props) => (props.boxImageSize === "default" ? `100%` : `80%`)};
+  transition: all 1s;
+  margin-bottom: -50px;
 `;
 
 const TextBox = styled.div`
   position: absolute;
   display: flex;
   flex-direction: column;
-  bottom: 50px;
-  left: 50px;
   transition: all 0.35s;
+  @media only screen and (min-width: 768px) {
+    bottom: 30px;
+    left: 30px;
+  }
+  @media only screen and (min-width: 1280px) {
+    bottom: 50px;
+    left: 50px;
+  }
 `;
 
 const TagCountText = styled.div<BoxProps>`
   font-size: 16px;
   font-weight: 800;
   color: ${color.black.default};
-  padding-left: 7px;
   opacity: 1;
   transition: all 0.35s;
   font-family: "Darker Grotesque", sans-serif;
+  @media only screen and (min-width: 768px) {
+    padding-left: 4px;
+  }
+  @media only screen and (min-width: 1280px) {
+    padding-left: 7px;
+  }
 `;
 
 const TagTitleText = styled.div<BoxProps>`
   z-index: 1;
-  font-size: 100px;
   font-family: "Black Han Sans", sans-serif;
   transition: all 0.35s;
   line-height: 0px;
+  @media only screen and (min-width: 768px) {
+    font-size: 60px;
+    margin-top: -10px;
+  }
+  @media only screen and (min-width: 1280px) {
+    font-size: 80px;
+    margin-top: 0px;
+  }
 `;
 
 const ExploreText = styled.div<BoxProps>`
-  font-size: 28px;
   font-weight: 900;
   padding-left: 5px;
   transition: all 0.35s;
   letter-spacing: -1px;
   color: ${color.white.default};
   font-family: "Darker Grotesque", sans-serif;
+  @media only screen and (min-width: 768px) {
+    font-size: 24px;
+  }
+  @media only screen and (min-width: 1280px) {
+    font-size: 28px;
+  }
 `;
 
 type BoxProps = {
@@ -88,6 +114,9 @@ type BoxProps = {
   boxImagePosition?: string;
   boxCountText?: number;
   boxTitleText?: string;
+  boxScrollObs?: number;
+  scrollTop?: number;
+  boxImageSize?: string;
 };
 
 const index = ({
@@ -97,8 +126,13 @@ const index = ({
   boxCountText = 0,
   boxTitleText = "태그",
   boxImagePosition = "",
+  boxScrollObs = 0,
+  scrollTop = 0,
+  boxImageSize = "default",
 }: BoxProps) => {
   const [frameOpacity, setFrameOpacity] = useState<number>(0);
+
+  const router = useRouter();
 
   const onMouseOver = (): void => {
     setFrameOpacity(1);
@@ -109,13 +143,25 @@ const index = ({
   };
 
   return (
-    <Container style={{ backgroundColor: boxBgColor }}>
+    <Container
+      onClick={() => {
+        router.push(`/search/${boxTitleText}`);
+      }}
+      style={{ backgroundColor: boxBgColor }}
+    >
       <ColorFrame
         style={{ backgroundColor: boxFrameColor }}
         {...{ frameOpacity }}
       ></ColorFrame>
       <ContentFrame>
-        <ImageBox>
+        <ImageBox
+          style={
+            boxScrollObs > scrollTop
+              ? { opacity: 0 }
+              : { opacity: 1, marginBottom: 0 }
+          }
+          boxImageSize={boxImageSize}
+        >
           {boxBgImage !== "" ? (
             <Image
               src={boxBgImage}
@@ -129,7 +175,7 @@ const index = ({
         <TextBox>
           <TagCountText
             style={{
-              marginBottom: frameOpacity === 1 ? "35px" : "50px",
+              marginBottom: frameOpacity === 1 ? "30px" : "45px",
               opacity: frameOpacity === 1 ? 0 : 1,
             }}
           >

@@ -3,121 +3,131 @@ import Button from "../../components/Button";
 import styled from "@emotion/styled";
 import color from "../../styles/theme";
 import Image from "next/image";
+import TagList from "../../data/TagList";
 
 const TagRow = styled.div`
   display: flex;
   width: 100%;
-  justify-content: space-between;
-`;
-
-type TagInfo = {
-  name?: string;
-  image?: string;
-};
-
-const TagImg = styled.div`
-  display: flex;
-  position: absolute;
-  width: 100%;
-	height: 100%;
-	border-radius: 8px;
+  justify-content: center;
 `;
 
 const TagBox = styled.div`
   display: flex;
   flex-direction: column;
   position: relative;
-  width: 260px;
-  height: 150px;
-  background-color: gray;
   justify-content: center;
-	align-items: center;
-	border-radius: 8px;
+  align-items: center;
+  border-radius: 8px;
+  margin: 10px;
+  cursor: pointer;
+  color: ${color.white.default};
+  transition: all 0.2s;
+  @media only screen and (max-width: 768px) {
+    width: 140px;
+    min-width: 140px;
+    min-height: 80px;
+    font-size: 16px;
+    :hover {
+      font-size: 20px;
+    }
+  }
+  @media only screen and (min-width: 768px) {
+    width: 140px;
+    min-width: 140px;
+    min-height: 80px;
+    font-size: 16px;
+    :hover {
+      font-size: 20px;
+    }
+  }
+  @media only screen and (min-width: 1280px) {
+    width: 180px;
+    min-width: 180px;
+    min-height: 100px;
+    font-size: 20px;
+    :hover {
+      font-size: 24px;
+    }
+  }
+`;
+
+const TagImg = styled.div`
+  display: flex;
+  position: absolute;
+  width: 100%;
+  height: 100%;
+  border-radius: 8px;
 `;
 
 const TagTitle = styled.div`
-	display: flex;
-	position: absolute;
+  height: 40px;
+  display: flex;
+  position: absolute;
   justify-content: center;
-  color: ${color.white.default};
-  font-size: 30px;
+  align-items: center;
   font-weight: 700;
+  pointer-events: none;
+  height: 30px;
+  /* text-shadow: 0px 0px 2px white; */
 `;
 
 const BgOpacityFrame = styled.div`
-	position: absolute;
-	display: flex;
+  position: absolute;
+  display: flex;
   width: 100%;
   height: 100%;
   background-color: black;
-	opacity: 0.3;
-	border-radius: 8px;
+  /* opacity: 0.2; */
+  border-radius: 8px;
+  :hover {
+    /* opacity: 0.7; */
+  }
+  transition: all 0.3s;
 `;
 
-const PreferTags = () => {
-  const TagArray: TagInfo[] = [
-    { name: "designer space", image: "/assets/images/designer_desk.jpg" },
-    { name: "engineer space", image: "/assets/images/designer_desk.jpg" },
-    { name: "chef space", image: "/assets/images/designer_desk.jpg" },
-    { name: "bathroom", image: "/assets/images/designer_desk.jpg" },
-    { name: "den", image: "/assets/images/designer_desk.jpg" },
-    { name: "terrace", image: "/assets/images/designer_desk.jpg" },
-    { name: "ski", image: "/assets/images/designer_desk.jpg" },
-    { name: "camping", image: "/assets/images/designer_desk.jpg" },
-    { name: "scuber diving", image: "/assets/images/designer_desk.jpg" },
-    { name: "tennis", image: "/assets/images/designer_desk.jpg" },
-    { name: "toy", image: "/assets/images/designer_desk.jpg" },
-    { name: "climbing", image: "/assets/images/designer_desk.jpg" },
-    { name: "photographer", image: "/assets/images/designer_desk.jpg" },
-    { name: "painter", image: "/assets/images/designer_desk.jpg" },
-    { name: "kids room", image: "/assets/images/designer_desk.jpg" },
-    { name: "wine bar", image: "/assets/images/designer_desk.jpg" },
-  ];
+const PreferTags = ({ windowWidth, selectTags, setSelectTags }) => {
+  const MAX_ROW = windowWidth <= 768 ? 2 : 4;
+  const MAX_COL = TagList.length / MAX_ROW;
+  let tagRows = 1;
 
-  const MAX_COUNt = 4;
-  let tagRows = 0;
+  let tagRowList = [];
 
-  const tagSlice1 = TagArray.slice(
-    tagRows * MAX_COUNt,
-    (tagRows++ + 1) * MAX_COUNt
-  );
-  const tagSlice2 = TagArray.slice(
-    tagRows * MAX_COUNt,
-    (tagRows++ + 1) * MAX_COUNt
-  );
-  const tagSlice3 = TagArray.slice(
-    tagRows * MAX_COUNt,
-    (tagRows++ + 1) * MAX_COUNt
-  );
-  const tagSlice4 = TagArray.slice(
-    tagRows * MAX_COUNt,
-    (tagRows++ + 1) * MAX_COUNt
-  );
-
-  let tagSliceGroup = [];
-  tagSliceGroup.push(tagSlice1);
-  tagSliceGroup.push(tagSlice2);
-  tagSliceGroup.push(tagSlice3);
-  tagSliceGroup.push(tagSlice4);
+  for (let tagCols = 0; tagCols < MAX_COL; tagCols++) {
+    tagRowList.push(TagList.slice(tagCols * MAX_ROW, tagRows++ * MAX_ROW));
+  }
 
   return (
     <>
-      {tagSliceGroup &&
-        tagSliceGroup.map((tg, index) => (
+      {tagRowList &&
+        tagRowList.length !== 0 &&
+        tagRowList.map((tg, index) => (
           <TagRow key={index}>
             {tg &&
               tg.map((t, index) => (
-                <TagBox key={index}>
+                <TagBox
+                  onClick={() => {
+                    if (selectTags.findIndex((x) => x === t.tagId) < 0)
+                      setSelectTags([...selectTags, t.tagId]);
+                    else setSelectTags(selectTags.filter((x) => x !== t.tagId));
+                  }}
+                  key={index}
+                >
                   <TagImg>
                     <Image
-											className="next_border_image"
-                      src={t.image}
+                      className="next_border_image"
+                      src={t.tagSrc}
                       layout="fill"
-											objectFit="cover"
+                      objectFit="cover"
                     ></Image>
                   </TagImg>
-                  <BgOpacityFrame></BgOpacityFrame>
-                  <TagTitle>{t.name}</TagTitle>
+                  <BgOpacityFrame
+                    style={
+                      selectTags.findIndex((x) => x === t.tagId) >= 0
+                        ? { backgroundColor: "rgba(0,0,0,0.8)" }
+                        : { backgroundColor: "rgba(0,0,0,0.3)" }
+                    }
+                  ></BgOpacityFrame>
+                  <TagTitle>{t.tagTitle}</TagTitle>
                 </TagBox>
               ))}
           </TagRow>

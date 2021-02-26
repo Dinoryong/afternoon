@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from "react";
 import styled from "@emotion/styled";
 import TagBox from "../../components/TagBox";
+import Comment from  "../../components/Comment"
 
 const Container = styled.div`
   position: relative;
@@ -24,7 +25,7 @@ const index = () => {
 
   return (
     <Container style={{ height: windowHeight }}>
-      <TagBox tagId={1}></TagBox>
+      {/* <TagBox tagId={1}></TagBox>
       <TagBox tagId={2}></TagBox>
       <TagBox tagId={3}></TagBox>
       <TagBox tagId={4}></TagBox>
@@ -46,7 +47,8 @@ const index = () => {
       <TagBox tagId={20}></TagBox>
       <TagBox tagId={21}></TagBox>
       <TagBox tagId={22}></TagBox>
-      <TagBox tagId={23}></TagBox>
+      <TagBox tagId={23}></TagBox> */}
+      <Comment></Comment>
     </Container>
   );
 };

@@ -2,6 +2,7 @@ import React, { useEffect, useState } from "react";
 import styled from "@emotion/styled";
 import HomeCarousel from "../../components/HomeCarousel/index";
 import color from "../../styles/theme";
+import { keyframes } from "@emotion/react";
 
 const Container = styled.div`
   position: relative;
@@ -24,7 +25,6 @@ const HomeTextFrame = styled.div`
 const TextDiv = styled.div`
   display: flex;
   flex-direction: column;
-  font-size: 100px;
   /* font-weight: 700; */
   margin-left: 60px;
   margin-bottom: 60px;
@@ -32,6 +32,12 @@ const TextDiv = styled.div`
   font-family: "Black Han Sans", sans-serif;
   cursor: default;
   transition: all 0.35s;
+  @media only screen and (min-width: 768px) {
+    font-size: 60px;
+  }
+  @media only screen and (min-width: 1280px) {
+    font-size: 80px;
+  }
 `;
 
 const TextBox = styled.div`
@@ -43,7 +49,12 @@ const TextChangeFrame = styled.div`
   margin: -20px 0px;
   position: relative;
   width: 900px;
-  height: 120px;
+  @media only screen and (min-width: 768px) {
+    height: 100px;
+  }
+  @media only screen and (min-width: 1280px) {
+    height: 120px;
+  }
 `;
 
 const TextBoxOpacity = styled.div`
@@ -81,33 +92,62 @@ const SwiperPoint = styled.div`
   cursor: pointer;
 `;
 
-const HomeTop = () => {
-  const [windowHeight, setWindowHeight] = useState<number>();
-  const [windowWidth, setWindowWidth] = useState<number>();
+const scroll = keyframes`
+  0% {
+    margin-top: 12px;
+    height: 5px;
+  }
+
+  20% {
+    margin-top: 12px;
+    height: 10px;
+  }
+
+  40% {
+    margin-top: 15px;
+    height: 7px;
+  }
+
+  60% {
+    margin-top: 17px;
+    height: 5px;
+  }
+
+  100% {
+    margin-top: 12px;
+    height: 5px;
+  }
+`;
+
+const ScrollIcon = styled.div`
+  position: absolute;
+  bottom: 20px;
+  left: 49%;
+  width: 32px;
+  height: 56px;
+  border: 2px solid ${color.white.default};
+  border-radius: 20px;
+  display: flex;
+  justify-content: center;
+`;
+
+const ScrollPoint = styled.div`
+  margin-top: 10px;
+  width: 4px;
+  height: 8px;
+  background-color: ${color.white.default};
+  border-radius: 4px;
+  animation: ${scroll} 1.2s ease-out infinite;
+`;
+
+const HomeTop = ({
+  windowHeight,
+  windowWidth,
+  displayState,
+  setDisplayState,
+}) => {
   const [overIndex, setOverIndex] = useState<number>(-1);
   const [currentIndex, setCurrentIndex] = useState<number>(0);
-  const [displayState, setDisplayState] = useState<boolean>(false);
-
-  useEffect(function mount() {
-    const resizeHandler = () => {
-      setWindowHeight(window.innerHeight);
-      setWindowWidth(window.innerWidth);
-    };
-
-    resizeHandler();
-
-    setTimeout(() => {
-      setDisplayState(true);
-    }, 1);
-
-    window.addEventListener("resize", resizeHandler);
-
-    const cleanup = () => {
-      window.removeEventListener("resize", resizeHandler);
-    };
-
-    return cleanup;
-  });
 
   const maxIndex: number = 3;
 
@@ -121,7 +161,7 @@ const HomeTop = () => {
         overIndex={overIndex}
         displayState={displayState}
         frameIndex={0}
-        carouselSrc="/assets/images/home_bg_11.jpg"
+        carouselSrc="/assets/images/home/homebg_1.png"
         setOverIndex={setOverIndex}
         setCurrentIndex={setCurrentIndex}
         setDisplayState={setDisplayState}
@@ -134,7 +174,7 @@ const HomeTop = () => {
         overIndex={overIndex}
         displayState={displayState}
         frameIndex={1}
-        carouselSrc="/assets/images/home_bg_5.jpg"
+        carouselSrc="/assets/images/home/homebg_2.jpg"
         setOverIndex={setOverIndex}
         setCurrentIndex={setCurrentIndex}
         setDisplayState={setDisplayState}
@@ -147,7 +187,7 @@ const HomeTop = () => {
         overIndex={overIndex}
         displayState={displayState}
         frameIndex={2}
-        carouselSrc="/assets/images/home_bg_9.jpg"
+        carouselSrc="/assets/images/home/homebg_3.jpg"
         setOverIndex={setOverIndex}
         setCurrentIndex={setCurrentIndex}
         setDisplayState={setDisplayState}
@@ -160,7 +200,7 @@ const HomeTop = () => {
         overIndex={overIndex}
         displayState={displayState}
         frameIndex={3}
-        carouselSrc="/assets/images/home_bg_7.jpg"
+        carouselSrc="/assets/images/home/homebg_4.jpg"
         setOverIndex={setOverIndex}
         setCurrentIndex={setCurrentIndex}
         setDisplayState={setDisplayState}
@@ -172,7 +212,7 @@ const HomeTop = () => {
             <TextBoxOpacity
               style={
                 currentIndex === 0
-                  ? { opacity: 1, color: color.white.default, marginTop: 0 }
+                  ? { opacity: 1, color: color.white.default, marginTop: 12 }
                   : null
               }
             >
@@ -184,14 +224,14 @@ const HomeTop = () => {
                     : { color: color.yellow.default }
                 }
               >
-                작업공간
+                컬렉션
               </TextKeyword>
               <TextEnd>을</TextEnd>
             </TextBoxOpacity>
             <TextBoxOpacity
               style={
                 currentIndex === 1
-                  ? { opacity: 1, color: color.white.default, marginTop: 0 }
+                  ? { opacity: 1, color: color.white.default, marginTop: 12 }
                   : null
               }
             >
@@ -210,7 +250,7 @@ const HomeTop = () => {
             <TextBoxOpacity
               style={
                 currentIndex === 2
-                  ? { opacity: 1, color: color.white.default, marginTop: 0 }
+                  ? { opacity: 1, color: color.white.default, marginTop: 12 }
                   : null
               }
             >
@@ -218,32 +258,32 @@ const HomeTop = () => {
                 style={
                   overIndex === currentIndex + 1 ||
                   (overIndex === 0 && currentIndex === maxIndex)
-                    ? { marginLeft: -40, color: color.blue.default }
-                    : { color: color.blue.default }
-                }
-              >
-                컬렉션
-              </TextKeyword>
-              <TextEnd>을</TextEnd>
-            </TextBoxOpacity>
-            <TextBoxOpacity
-              style={
-                currentIndex === 3
-                  ? { opacity: 1, color: color.white.default, marginTop: 0 }
-                  : null
-              }
-            >
-              <TextKeyword
-                style={
-                  overIndex === currentIndex + 1 ||
-                  (overIndex === 0 && currentIndex === maxIndex)
-                    ? { marginLeft: -40, color: color.green.dark }
-                    : { color: color.green.default }
+                    ? { marginLeft: -40, color: color.red.default }
+                    : { color: color.red.default }
                 }
               >
                 취미
               </TextKeyword>
               <TextEnd>를</TextEnd>
+            </TextBoxOpacity>
+            <TextBoxOpacity
+              style={
+                currentIndex === 3
+                  ? { opacity: 1, color: color.white.default, marginTop: 12 }
+                  : null
+              }
+            >
+              <TextKeyword
+                style={
+                  overIndex === currentIndex + 1 ||
+                  (overIndex === 0 && currentIndex === maxIndex)
+                    ? { marginLeft: -40, color: color.homeTag.i }
+                    : { color: color.homeTag.i }
+                }
+              >
+                공간
+              </TextKeyword>
+              <TextEnd>을</TextEnd>
             </TextBoxOpacity>
           </TextChangeFrame>
           <TextBox
@@ -289,6 +329,9 @@ const HomeTop = () => {
               }
               onClick={() => setCurrentIndex(3)}
             />
+            <ScrollIcon>
+              <ScrollPoint></ScrollPoint>
+            </ScrollIcon>
           </SwiperBox>
         </TextDiv>
       </HomeTextFrame>

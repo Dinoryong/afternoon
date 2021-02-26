@@ -25,7 +25,7 @@ public class JwtService {
 	public String create(Long id,String email) {
 		JwtBuilder jwtBuilder = Jwts.builder();
 //		JWT Token = Header + Payload + Signature
-		
+		logger.info("create jwttoken id "+id);
 //		Header 설정
 		jwtBuilder.setHeaderParam("typ", "JWT"); // 토큰의 타입으로 고정 값.
 

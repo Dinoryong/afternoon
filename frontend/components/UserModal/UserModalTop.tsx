@@ -28,7 +28,7 @@ const ModalTitle = styled.div`
   align-items: center;
   color: ${color.black.default};
   font-size: 20px;
-  font-weight: 50px;
+  font-weight: 500;
 `;
 
 const ModalText = styled.div`
@@ -46,12 +46,12 @@ const UserModalTop = () => {
     <Container>
       <LogoBox>
         <Image
-          src="/assets/logos/pinset_logo_black.png"
+          src="/assets/icons/eye_open.png"
           layout="fill"
           objectFit="contain"
         ></Image>
       </LogoBox>
-      <ModalTitle>PINSET에 오신 것을 환영합니다</ModalTitle>
+      <ModalTitle>애프터눈에 오신 것을 환영합니다</ModalTitle>
       <ModalText>당신의 공간을 공유하세요</ModalText>
     </Container>
   );

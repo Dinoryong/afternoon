@@ -36,9 +36,12 @@ public class Account {
     private LocalDate accountCreateDate;
     @UpdateTimestamp
     private LocalDateTime accountUpdateDate;
-    // TODO: 2021-02-04 Bio
+    //유저 소개글
     @Builder.Default
-    private String accountDesc="";
+    private String accountBio ="";
+    //프로필 사진
+    @Builder.Default
+    private String accountPhoto ="";
 
     //인증
     @Builder.Default
@@ -50,7 +53,7 @@ public class Account {
     private Role accountRole = Role.TEMPORARY;
     //팔로잉
     @Builder.Default
-    @ManyToMany(fetch = FetchType.EAGER)
+    @ManyToMany
     private Set<Account> following=new HashSet<>();
 
     @Builder.Default
@@ -58,8 +61,13 @@ public class Account {
     private Set<Account> follower=new HashSet<>();
     //관심 태그
     @Builder.Default
-    @ManyToMany(mappedBy = "accounts")
-    private List<Tag> tags=new ArrayList<>();
+    @ManyToMany
+    @JoinTable(
+            name = "ACCOUNT_TAGS",
+            joinColumns = @JoinColumn(name = "ACCOUNT_ID"),
+            inverseJoinColumns = @JoinColumn(name = "TAG_ID")
+    )
+    private Set<Tag> tags=new HashSet<>();
     //좋아요한 게시글
     @Builder.Default
     @ManyToMany
@@ -72,8 +80,10 @@ public class Account {
 
     public void updateAccount(AccountDto.UpdateRequest request)
     {
+        this.accountName=request.getAccountName();
         this.accountNickname=request.getAccountNickname();
-        this.accountDesc=request.getAccountDesc();
+        this.accountBio =request.getAccountBio();
+        this.accountPhoto=request.getAccountPhoto();
     }
 
     public void changeAuthKey(String accountAuthKey){
@@ -89,23 +99,58 @@ public class Account {
         account.getFollower().add(this);
     }
 
+    public void disconnectAccount(Account yourAccount){
+        for (Account account : following){
+            if(account==yourAccount){
+                this.getFollowing().remove(account);
+                account.getFollower().remove(this);
+            }
+        }
+    }
+
     public void tagging(Tag tag){
             this.getTags().add(tag);
             tag.getAccounts().add(this);
     }
 
-//    @Override
-//    public String toString() {
-//        return "Account{" +
-//                "accountId=" + accountId +
-//                ", accountName='" + accountName + '\'' +
-//                ", accountNickname='" + accountNickname + '\'' +
-//                ", accountEmail='" + accountEmail + '\'' +
-//                ", accountCreateDate=" + accountCreateDate +
-//                ", accountUpdateDate=" + accountUpdateDate +
-//                ", accountDesc='" + accountDesc + '\'' +
-//                ", accountAuthKey='" + accountAuthKey + '\'' +
-//                ", accountRole=" + accountRole +
-//                '}';
-//    }
+    //관심태그 삭제
+    public boolean deleteTag(Tag deleteTag){
+        for (Tag tag : tags){
+            if(tag==deleteTag){
+                this.tags.remove(deleteTag);
+                tag.getAccounts().remove(this);
+                return true;
+            }
+        }
+        return false;
+    }
+    //게시물 좋아요
+    public boolean likePosts(Posts posts){
+        if(this.getLikePosts().contains(posts))
+            return false;
+        this.getLikePosts().add(posts);
+        posts.getLikeAccounts().add(this);
+        return true;
+    }
+    //게시물 좋아요 취소
+    public boolean cancelLikedPosts(Posts posts){
+        if(!this.getLikePosts().contains(posts))
+            return false;
+        this.likePosts.remove(posts);
+        posts.getLikeAccounts().remove(this);
+        return true;
+    }
+
+    @Override
+    public String toString() {
+        return "Account{" +
+                "accountId=" + accountId +
+                ", accountName='" + accountName + '\'' +
+                ", accountNickname='" + accountNickname + '\'' +
+                ", accountEmail='" + accountEmail + '\'' +
+                ", accountCreateDate=" + accountCreateDate +
+                ", accountBio='" + accountBio + '\'' +
+                ", myPosts=" + myPosts +
+                '}';
+    }
 }

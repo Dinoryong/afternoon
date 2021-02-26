@@ -1,6 +1,6 @@
 import styled from "@emotion/styled";
 import React, { useState } from "react";
-import TagList from "../../data/tagList";
+import TagList from "../../data/TagList";
 import color from "../../styles/theme";
 
 const Container = styled.div`
@@ -9,11 +9,12 @@ const Container = styled.div`
   justify-content: center;
   align-items: center;
   width: 80px;
+  min-width: 80px;
   padding: 4px 0px;
   font-size: 14px;
   color: ${color.white.default};
   border: 1px solid ${color.white.default};
-  font-weight: 500;
+  font-weight: 400;
   border-radius: 4px;
   cursor: pointer;
   transition: all 0.3s;
@@ -33,7 +34,7 @@ const index = ({
   tagId = 1,
   tagMargin = "0px",
   tagOnClick = () => {
-    console.log(tagId);
+    //replace_console_log(tagId);
   },
   tagUseDelete = true,
 }) => {

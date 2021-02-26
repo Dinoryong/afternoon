@@ -25,19 +25,11 @@ public class AccountControllerTest extends BaseControllerTest {
     private ModelMapper modelMapper;
 
     @Test
-    public void Account_profile_조회_성공() throws Exception {
-
-        Long id = 1L;
-        mockMvc.perform(get("/api/accounts/" +Long.toString(id))
-                .contentType(MediaType.APPLICATION_JSON))
-                .andExpect(status().isOk())
-                .andDo(print());
-    }
-
-    @Test
     public void Account_조회_성공() throws Exception {
+        String token = "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJzdWIiOiLroZzqt7jsnbjthqDtgbAiLCJleHAiOjE2MTM1NjcyMDksImFjY291bnRJZCI6MjQsImFjY291bnRFbWFpbCI6ImRuZ25nbjMwNDVAZ21haWwuY29tIn0.X0LgmJiC4gvwjuJ5MPdshlBcCF864N4Qntn6oEeQjCI";
+
         mockMvc.perform(get("/api/accounts")
-                .header("Authorization","BlahBlah")
+                .header("Authorization","Bearer "+token)
                 .contentType(MediaType.APPLICATION_JSON))
                 .andExpect(status().isOk())
                 .andDo(print());
@@ -47,8 +39,8 @@ public class AccountControllerTest extends BaseControllerTest {
     public void Account_생성_성공() throws Exception {
         //When
         AccountDto.CreateAccountRequest createAccountRequest = AccountDto.CreateAccountRequest.builder()
-                .accountName("한우석")
-                .accountNickname("vvs우석")
+                .accountName("최재웅")
+                .accountNickname("GS재웅")
                 .accountEmail("dntjr4772@naver.com")
                 .build();
 
@@ -108,19 +100,18 @@ public class AccountControllerTest extends BaseControllerTest {
 
     @Test
     public void Account_update_성공() throws Exception {
-
-        String Id = "8";
-
         AccountDto.UpdateRequest request = new AccountDto.UpdateRequest();
-        request.setAccountDesc("안녕하세요");
-
-
-        mockMvc.perform(put("/api/accounts/"+Id)
+        String token = "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJzdWIiOiLroZzqt7jsnbjthqDtgbAiLCJleHAiOjE2MTM2Njc3MzksImFjY291bnRJZCI6MSwiYWNjb3VudEVtYWlsIjoiZG50anI0NzcyQG5hdGUuY29tIn0.sVdShJvwy1DXLeT08_yQKwUQ6XCo2Z9FPhI_ufuC59M";
+        request.setAccountBio("최재웅이");
+        request.setAccountNickname("GS재웅님");
+        request.setAccountName("최재웅");
+        request.setAccountPhoto("https://image.chosun.com/sitedata/image/202002/06/2020020602404_0.png");
+        mockMvc.perform(put("/api/accounts/")
+                .header("Authorization","Bearer "+token)
                 .contentType(MediaType.APPLICATION_JSON)
                 .content(objectMapper.writeValueAsString(request)))
-                .andExpect(status().isAccepted())
+                .andExpect(status().isOk())
                 .andDo(print());
-
     }
 
     @Test
@@ -129,7 +120,7 @@ public class AccountControllerTest extends BaseControllerTest {
         String Id = "7";
 
         AccountDto.UpdateRequest request = new AccountDto.UpdateRequest();
-        request.setAccountDesc("안녕하세요");
+        request.setAccountBio("안녕하세요");
         request.setAccountNickname("dntjrrr");
 
         mockMvc.perform(put("/api/accounts/"+Id)
@@ -143,17 +134,30 @@ public class AccountControllerTest extends BaseControllerTest {
     @Test
     public void follow_성공() throws Exception {
 
-        Long yourId = 24L;
+        Long yourId = 27L;
 
         AccountDto.FollowRequest request =new  AccountDto.FollowRequest();
         request.setYourId(yourId);
 
 
-        String token = "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJzdWIiOiLroZzqt7jsnbjthqDtgbAiLCJleHAiOjE2MTI4NzI0NDEsImFjY291bnRJZCI6NDYsImFjY291bnRFbWFpbCI6ImRudGpyNDc3MkBuYXZlci5jb20ifQ.Pl-viia-cG_7qa1G2opwqPZobtYPyfVZJxZ6YqHtShQ";
-        mockMvc.perform(put("/api/accounts/my-following")
+        String token = "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJzdWIiOiLroZzqt7jsnbjthqDtgbAiLCJleHAiOjE2MTMxODkyMzQsImFjY291bnRJZCI6MjQsImFjY291bnRFbWFpbCI6ImRudGpyNDc3MkBuYXRlLmNvbSJ9.QU_FxH4hw6qHQEU2mYmbe4729DXqkmeD0k0lop-_3EY";
+        mockMvc.perform(put("/api/accounts/myfollowing")
                 .header("Authorization","Bearer "+token)
                 .contentType(MediaType.APPLICATION_JSON)
                 .content(objectMapper.writeValueAsString(request)))
+                .andExpect(status().isOk())
+                .andDo(print());
+    }
+
+    @Test
+    public void disconnect_성공() throws Exception {
+
+        Long yourId = 27L;
+
+        String token = "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJzdWIiOiLroZzqt7jsnbjthqDtgbAiLCJleHAiOjE2MTMxODkyMzQsImFjY291bnRJZCI6MjQsImFjY291bnRFbWFpbCI6ImRudGpyNDc3MkBuYXRlLmNvbSJ9.QU_FxH4hw6qHQEU2mYmbe4729DXqkmeD0k0lop-_3EY";
+        mockMvc.perform(delete("/api/accounts/myfollowing/"+yourId)
+                .header("Authorization","Bearer "+token)
+                .contentType(MediaType.APPLICATION_JSON))
                 .andExpect(status().isOk())
                 .andDo(print());
     }
@@ -214,19 +218,16 @@ public class AccountControllerTest extends BaseControllerTest {
 
     @Test
     public void 관심태그지정_성공() throws Exception{
-
-        //When
-        //작업공간
         AccountDto.AccountTagRequest accountTagRequest=new AccountDto.AccountTagRequest();
-        String tagName="인테리어";
+        String tagName="아기방";
         Tag tag=tagRepository.findByTagTitle(tagName);
         accountTagRequest.getTags().add(modelMapper.map(tag, TagDto.Tag.class));
 
-        tagName="스키";
+        tagName="캠핑";
         tag=tagRepository.findByTagTitle(tagName);
         accountTagRequest.getTags().add(modelMapper.map(tag, TagDto.Tag.class));
 
-        String token = "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJzdWIiOiLroZzqt7jsnbjthqDtgbAiLCJleHAiOjE2MTI4NTA3ODEsImFjY291bnRJZCI6MjAsImFjY291bnRFbWFpbCI6ImRudGpyNDc3MkBuYXZlci5jb20ifQ.2GdyblKPOqCBXnCQoxMYCan3bAkVTE4QY216KjexqEI";
+        String token = "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJzdWIiOiLroZzqt7jsnbjthqDtgbAiLCJleHAiOjE2MTMyODExMjUsImFjY291bnRJZCI6MjQsImFjY291bnRFbWFpbCI6ImRudGpyNDc3MkBuYXZlci5jb20ifQ._yBdL2TyTOxTT2hF47G6oCjnI-Gy84pUYR-80BmILIk";
         mockMvc.perform(put("/api/accounts/mytag")
                 .header("Authorization","Bearer "+token)
                 .contentType(MediaType.APPLICATION_JSON)
@@ -234,6 +235,18 @@ public class AccountControllerTest extends BaseControllerTest {
                 .andExpect(status().isOk())
                 .andDo(print());
     }
+
+    @Test
+    public void 관심태그취소_성공() throws Exception{
+        String tagId="10";
+        String token = "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJzdWIiOiLroZzqt7jsnbjthqDtgbAiLCJleHAiOjE2MTMyODExMjUsImFjY291bnRJZCI6MjQsImFjY291bnRFbWFpbCI6ImRudGpyNDc3MkBuYXZlci5jb20ifQ._yBdL2TyTOxTT2hF47G6oCjnI-Gy84pUYR-80BmILIk";
+        mockMvc.perform(delete("/api/accounts/mytag/"+tagId)
+                .header("Authorization","Bearer "+token)
+                .contentType(MediaType.APPLICATION_JSON))
+                .andExpect(status().isOk())
+                .andDo(print());
+    }
+
     //--------------------------------------태그 기준 피드------------------------------------------------------
     @Test
     public void 태그기준피드_성공() throws Exception{
@@ -251,6 +264,79 @@ public class AccountControllerTest extends BaseControllerTest {
         mockMvc.perform(get("/api/accounts/feed/follow/"+Id)
                 .contentType(MediaType.APPLICATION_JSON))
                 .andExpect(status().isOk())
+                .andDo(print());
+    }
+
+    //--------------------------------------게시물 좋아요------------------------------------------------------
+    @Test
+    public void 게시물좋아요_성공() throws Exception{
+        AccountDto.LikeRequest likeRequest=new AccountDto.LikeRequest();
+        likeRequest.setPostId(27L);
+        String token = "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJzdWIiOiLroZzqt7jsnbjthqDtgbAiLCJleHAiOjE2MTQ0OTg1OTAsImFjY291bnRJZCI6MzQsImFjY291bnRFbWFpbCI6ImRuZ25nbjMwNDVAaGFubWFpbC5uZXQifQ.F1Vh48LNW0kaFJtzVNiRMGFf_1U6D57tfdZv7C8CzGg";
+        mockMvc.perform(put("/api/accounts/like")
+                .header("Authorization","Bearer "+token)
+                .contentType(MediaType.APPLICATION_JSON)
+                .content(objectMapper.writeValueAsString(likeRequest)))
+                .andExpect(status().isOk())
+                .andDo(print());
+    }
+
+    @Test
+    public void 게시물좋아요_실패_이미좋아요() throws Exception{
+        AccountDto.LikeRequest likeRequest=new AccountDto.LikeRequest();
+        likeRequest.setPostId(29L);
+        String token = "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJzdWIiOiLroZzqt7jsnbjthqDtgbAiLCJleHAiOjE2MTMzOTYxMjQsImFjY291bnRJZCI6MjQsImFjY291bnRFbWFpbCI6ImRudGpyNDc3MkBuYXZlci5jb20ifQ.0mWYyk4V9kE92-VX4x66EiHQRTDMbLN_b44cxG20mR8";
+        mockMvc.perform(put("/api/accounts/like")
+                .header("Authorization","Bearer "+token)
+                .contentType(MediaType.APPLICATION_JSON)
+                .content(objectMapper.writeValueAsString(likeRequest)))
+                .andExpect(status().isBadRequest())
+                .andDo(print());
+    }
+
+    @Test
+    public void 게시물좋아요_실패_없는게시물() throws Exception{
+        AccountDto.LikeRequest likeRequest=new AccountDto.LikeRequest();
+        likeRequest.setPostId(30L);
+        String token = "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJzdWIiOiLroZzqt7jsnbjthqDtgbAiLCJleHAiOjE2MTMzOTYxMjQsImFjY291bnRJZCI6MjQsImFjY291bnRFbWFpbCI6ImRudGpyNDc3MkBuYXZlci5jb20ifQ.0mWYyk4V9kE92-VX4x66EiHQRTDMbLN_b44cxG20mR8";
+        mockMvc.perform(put("/api/accounts/like")
+                .header("Authorization","Bearer "+token)
+                .contentType(MediaType.APPLICATION_JSON)
+                .content(objectMapper.writeValueAsString(likeRequest)))
+                .andExpect(status().isBadRequest())
+                .andDo(print());
+    }
+
+    @Test
+    public void 게시물좋아요취소_성공() throws Exception{
+        String id="29";
+        String token = "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJzdWIiOiLroZzqt7jsnbjthqDtgbAiLCJleHAiOjE2MTMzOTYxMjQsImFjY291bnRJZCI6MjQsImFjY291bnRFbWFpbCI6ImRudGpyNDc3MkBuYXZlci5jb20ifQ.0mWYyk4V9kE92-VX4x66EiHQRTDMbLN_b44cxG20mR8";
+        mockMvc.perform(delete("/api/accounts/like/"+id)
+                .header("Authorization","Bearer "+token)
+                .contentType(MediaType.APPLICATION_JSON))
+                .andExpect(status().isOk())
+                .andDo(print());
+    }
+
+    @Test
+    public void 게시물좋아요취소_실패_이미좋아요취소() throws Exception{
+        String id="29";
+        String token = "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJzdWIiOiLroZzqt7jsnbjthqDtgbAiLCJleHAiOjE2MTMzOTYxMjQsImFjY291bnRJZCI6MjQsImFjY291bnRFbWFpbCI6ImRudGpyNDc3MkBuYXZlci5jb20ifQ.0mWYyk4V9kE92-VX4x66EiHQRTDMbLN_b44cxG20mR8";
+        mockMvc.perform(delete("/api/accounts/like/"+id)
+                .header("Authorization","Bearer "+token)
+                .contentType(MediaType.APPLICATION_JSON))
+                .andExpect(status().isBadRequest())
+                .andDo(print());
+    }
+
+    @Test
+    public void 게시물좋아요취소_실패_존재하지않는게시물() throws Exception{
+        String id="30";
+        String token = "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJzdWIiOiLroZzqt7jsnbjthqDtgbAiLCJleHAiOjE2MTMzOTYxMjQsImFjY291bnRJZCI6MjQsImFjY291bnRFbWFpbCI6ImRudGpyNDc3MkBuYXZlci5jb20ifQ.0mWYyk4V9kE92-VX4x66EiHQRTDMbLN_b44cxG20mR8";
+        mockMvc.perform(delete("/api/accounts/like/"+id)
+                .header("Authorization","Bearer "+token)
+                .contentType(MediaType.APPLICATION_JSON))
+                .andExpect(status().isBadRequest())
                 .andDo(print());
     }
 }

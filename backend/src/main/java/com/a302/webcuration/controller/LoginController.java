@@ -37,13 +37,13 @@ public class LoginController {
     @PostMapping("/login")
     public ResponseEntity login(@RequestBody @Valid AccountDto.LoginRequest loginRequest) {
         BaseMessage bm = loginService.login(loginRequest);
-        return new ResponseEntity(bm.getData(),bm.getHeaders(),bm.getHttpStatus());
+        return new ResponseEntity(new BaseMessage(bm.getHttpStatus(),bm.getData()),bm.getHeaders(),bm.getHttpStatus());
     }
 
     @PostMapping("/auto-login")
     public ResponseEntity autoLogin(@RequestBody @Valid AccountDto.LoginRequest loginRequest,@RequestHeader(value = "Authorization") String token) {
 
         BaseMessage bm = loginService.autoLogin(loginRequest,token);
-        return new ResponseEntity(bm.getData(),bm.getHeaders(), bm.getHttpStatus());
+        return new ResponseEntity(bm,bm.getHttpStatus());
     }
 }

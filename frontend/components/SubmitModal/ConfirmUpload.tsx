@@ -6,6 +6,12 @@ import color from "../../styles/theme";
 import { SUBMIT_POST } from "../../pages/api/post";
 import PinIcon from "../PinIcon";
 import TagBox from "../TagBox";
+import { useRouter } from "next/router";
+import { useDispatch } from "react-redux";
+import Swal from "sweetalert2";
+import SelectTags from "./SelectTags";
+import SelectTagBox from "./SelectTagBox";
+import DeleteTagBox from "./DeleteTagBox";
 
 const Container = styled.div`
   position: relative;
@@ -33,8 +39,13 @@ const ImageBox = styled("img")`
 
 const InfoWrapper = styled.div`
   position: relative;
-  min-width: 400px;
   height: 100%;
+  @media only screen and (min-width: 768px) {
+    min-width: 300px;
+  }
+  @media only screen and (min-width: 1280px) {
+    min-width: 400px;
+  }
 `;
 
 const InfoDiv = styled.div`
@@ -43,7 +54,12 @@ const InfoDiv = styled.div`
   justify-content: space-between;
   height: 100%;
   margin-left: 20px;
-  font-size: 14px;
+  @media only screen and (min-width: 768px) {
+    font-size: 13px;
+  }
+  @media only screen and (min-width: 1280px) {
+    font-size: 14px;
+  }
 `;
 
 const InfoTop = styled.div`
@@ -83,7 +99,6 @@ const BoxLabel = styled.div`
 `;
 
 const CommonInput = styled("textarea")`
-  font-size: 16px;
   margin-top: 10px;
   border: 0px;
   padding: 0px;
@@ -109,9 +124,9 @@ const InputContent = styled(CommonInput)`
 const PinGuide = styled.div`
   display: flex;
   justify-content: center;
-  margin-top: 10px;
   font-weight: 700;
   color: ${color.gray.dark};
+  margin-top: 10px;
 `;
 
 const SelectPhotoBox = styled.div`
@@ -122,14 +137,20 @@ const SelectPhotoBox = styled.div`
 `;
 
 const PhotoButton = styled.div`
-  margin: 0px 8px;
-  padding: 4px 16px;
   background-color: ${color.black.default};
   border-radius: 4px;
   color: ${color.white.default};
   cursor: pointer;
   opacity: 0.2;
-  transition: all 0.3s;
+  transition: opacity 0.3s;
+  @media only screen and (min-width: 768px) {
+    margin: 0px 4px;
+    padding: 4px 12px;
+  }
+  @media only screen and (min-width: 1280px) {
+    margin: 0px 8px;
+    padding: 4px 16px;
+  }
 `;
 
 const PinControlDiv = styled.div`
@@ -167,6 +188,12 @@ const PinLinkBox = styled.div`
 const PinLabel = styled.div`
   font-weight: 700;
   margin-right: 8px;
+  @media only screen and (min-width: 768px) {
+    min-width: 40px;
+  }
+  @media only screen and (min-width: 1280px) {
+    min-width: 45px;
+  }
 `;
 
 const PinInput = styled("input")`
@@ -248,12 +275,19 @@ const NewPinIcon = styled.div`
   display: flex;
   justify-content: center;
   align-items: center;
-  width: 20px;
-  height: 20px;
   border-radius: 50%;
-  border: 2px solid ${color.white.default};
+  background-color: ${color.white.default};
+  /* border: 2px solid ${color.white.default}; */
   top: 50%;
   left: 50%;
+  @media only screen and (min-width: 768px) {
+    width: 32px;
+    height: 32px;
+  }
+  @media only screen and (min-width: 1280px) {
+    width: 40px;
+    height: 40px;
+  }
 `;
 
 const NewPinMini = styled.div`
@@ -273,19 +307,37 @@ const AddTagBox = styled.div`
   justify-content: center;
   align-items: center;
   padding: 4px 8px;
-  font-size: 14px;
   color: ${color.black.default};
   background-color: ${color.white.default};
   border: 1px dashed ${color.black.default};
   font-weight: 500;
   border-radius: 4px;
-  width: 80px;
   margin: 0px 6px;
   cursor: pointer;
+  @media only screen and (min-width: 768px) {
+    font-size: 13px;
+    width: 65px;
+  }
+  @media only screen and (min-width: 1280px) {
+    font-size: 14px;
+    width: 80px;
+  }
 `;
 
 type StateProps = {
   addState?: boolean;
+};
+
+const useStore = () => {
+  const dispatch = useDispatch();
+
+  const toggleSubmit = async () => {
+    await dispatch({ type: "TOGGLE_SUBMIT" });
+  };
+
+  return {
+    toggleSubmit,
+  };
 };
 
 const ConfirmUpload = ({
@@ -295,7 +347,11 @@ const ConfirmUpload = ({
   imageAsFile4,
   setUploadState,
   uploadState,
+  windowWidth,
 }) => {
+  const router = useRouter();
+  const { toggleSubmit } = useStore();
+
   const [currentImg, setCurrentImg] = useState(0);
   const [addState, setAddState] = useState(false);
   const [imgDim, setImgDim] = useState({ offsetWidth: 0, offsetHeight: 0 });
@@ -303,6 +359,8 @@ const ConfirmUpload = ({
   const [inputTitle, setInputTitle] = useState("");
   const [inputContent, setInputContent] = useState("");
   const [selectTagList, setSelectTagList] = useState([]);
+
+  const [toggleTags, setToggleTags] = useState(false);
 
   const [img1HasPin, setImg1HasPin] = useState([]);
   const [img2HasPin, setImg2HasPin] = useState([]);
@@ -403,6 +461,31 @@ const ConfirmUpload = ({
     return postRequest;
   };
 
+  const requestSubmitPost = async () => {
+    if (selectTagList.length === 0) {
+      Swal.fire({ icon: "info", text: "태그를 선택해주세요" });
+      return;
+    }
+
+    const submitPostReq = setPostRequest();
+    const submitPostConfig = {
+      headers: {
+        Authorization: `Bearer ${window.localStorage.getItem("authToken")}`,
+      },
+    };
+
+    const result = await SUBMIT_POST(submitPostReq, submitPostConfig);
+    //replace_console_log(result);
+
+    if (result.status === 201) {
+      Swal.fire({ icon: "success", text: "게시물 등록 성공" });
+      toggleSubmit();
+      router.push("/submit");
+    } else {
+      Swal.fire({ icon: "error", text: "게시물 등록 실패" });
+    }
+  };
+
   useEffect(() => {
     let pinImage = document.getElementById(`pinImage${currentImg}`);
     let { offsetWidth, offsetHeight } = pinImage;
@@ -441,15 +524,16 @@ const ConfirmUpload = ({
   };
 
   const onClickAddTag = () => {
-    let tagId = window.prompt("태그ID 입럭", "");
-    if (tagId === null || tagId === "") {
-      return;
-    } else if (parseInt(tagId) > 23 || parseInt(tagId) < 1) {
-      window.alert("1 ~ 23 사이의 숫자를 입력해주세요.");
-      onClickAddTag();
-    } else {
-      setSelectTagList([...selectTagList, tagId]);
-    }
+    setToggleTags(!toggleTags);
+    // let tagId = window.prompt("태그ID 입럭", "");
+    // if (tagId === null || tagId === "") {
+    //   return;
+    // } else if (parseInt(tagId) > 23 || parseInt(tagId) < 1) {
+    //   window.alert("1 ~ 23 사이의 숫자를 입력해주세요.");
+    //   onClickAddTag();
+    // } else {
+    //   setSelectTagList([...selectTagList, tagId]);
+    // }
   };
 
   return (
@@ -476,12 +560,23 @@ const ConfirmUpload = ({
               return (
                 <NewPinIcon
                   style={{
-                    top: `${inputPinPosY[p] - 1000 / imgDim.offsetHeight}%`,
-                    left: `${inputPinPosX[p] - 1000 / imgDim.offsetWidth}%`,
+                    top: `${
+                      inputPinPosY[p] -
+                      (windowWidth > 1280 ? 2000 : 1600) / imgDim.offsetHeight
+                    }%`,
+                    left: `${
+                      inputPinPosX[p] -
+                      (windowWidth > 1280 ? 2000 : 1600) / imgDim.offsetWidth
+                    }%`,
                   }}
                   key={index}
                 >
-                  <NewPinMini></NewPinMini>
+                  <Image
+                    src={"/assets/icons/eye_close.png"}
+                    width={36}
+                    height={36}
+                    objectFit="contain"
+                  ></Image>
                 </NewPinIcon>
               );
             })}
@@ -491,12 +586,23 @@ const ConfirmUpload = ({
               return (
                 <NewPinIcon
                   style={{
-                    top: `${inputPinPosY[p] - 1000 / imgDim.offsetHeight}%`,
-                    left: `${inputPinPosX[p] - 1000 / imgDim.offsetWidth}%`,
+                    top: `${
+                      inputPinPosY[p] -
+                      (windowWidth > 1280 ? 2000 : 1600) / imgDim.offsetHeight
+                    }%`,
+                    left: `${
+                      inputPinPosX[p] -
+                      (windowWidth > 1280 ? 2000 : 1600) / imgDim.offsetWidth
+                    }%`,
                   }}
                   key={index}
                 >
-                  <NewPinMini></NewPinMini>
+                  <Image
+                    src={"/assets/icons/eye_close.png"}
+                    width={36}
+                    height={36}
+                    objectFit="contain"
+                  ></Image>
                 </NewPinIcon>
               );
             })}
@@ -506,12 +612,23 @@ const ConfirmUpload = ({
               return (
                 <NewPinIcon
                   style={{
-                    top: `${inputPinPosY[p] - 1000 / imgDim.offsetHeight}%`,
-                    left: `${inputPinPosX[p] - 1000 / imgDim.offsetWidth}%`,
+                    top: `${
+                      inputPinPosY[p] -
+                      (windowWidth > 1280 ? 2000 : 1600) / imgDim.offsetHeight
+                    }%`,
+                    left: `${
+                      inputPinPosX[p] -
+                      (windowWidth > 1280 ? 2000 : 1600) / imgDim.offsetWidth
+                    }%`,
                   }}
                   key={index}
                 >
-                  <NewPinMini></NewPinMini>
+                  <Image
+                    src={"/assets/icons/eye_close.png"}
+                    width={36}
+                    height={36}
+                    objectFit="contain"
+                  ></Image>
                 </NewPinIcon>
               );
             })}
@@ -521,12 +638,23 @@ const ConfirmUpload = ({
               return (
                 <NewPinIcon
                   style={{
-                    top: `${inputPinPosY[p] - 1000 / imgDim.offsetHeight}%`,
-                    left: `${inputPinPosX[p] - 1000 / imgDim.offsetWidth}%`,
+                    top: `${
+                      inputPinPosY[p] -
+                      (windowWidth > 1280 ? 2000 : 1600) / imgDim.offsetHeight
+                    }%`,
+                    left: `${
+                      inputPinPosX[p] -
+                      (windowWidth > 1280 ? 2000 : 1600) / imgDim.offsetWidth
+                    }%`,
                   }}
                   key={index}
                 >
-                  <NewPinMini></NewPinMini>
+                  <Image
+                    src={"/assets/icons/eye_close.png"}
+                    width={36}
+                    height={36}
+                    objectFit="contain"
+                  ></Image>
                 </NewPinIcon>
               );
             })}
@@ -549,17 +677,24 @@ const ConfirmUpload = ({
             <AddTagDiv>
               {selectTagList &&
                 selectTagList.map((t, index) => (
-                  <TagBox
+                  <DeleteTagBox
                     key={index}
                     tagId={t}
                     tagMargin={"0px 6px"}
                     tagOnClick={() => {
                       setSelectTagList(selectTagList.filter((tl) => tl != t));
                     }}
-                  ></TagBox>
+                  ></DeleteTagBox>
                 ))}
               {selectTagList && selectTagList.length < 4 && (
                 <AddTagBox onClick={onClickAddTag}>+</AddTagBox>
+              )}
+              {toggleTags && (
+                <SelectTags
+                  setSelectTagList={setSelectTagList}
+                  selectTagList={selectTagList}
+                  setToggleTags={setToggleTags}
+                ></SelectTags>
               )}
             </AddTagDiv>
             <BoxLine />
@@ -585,9 +720,9 @@ const ConfirmUpload = ({
               }}
             ></InputContent>
             <BoxLine />
-            <BoxLabel>핀 추가 (선택)</BoxLabel>
+            <BoxLabel>눈 추가 (선택)</BoxLabel>
             <PinGuide>
-              사진을 선택하시고 + 버튼을 눌러 핀 위치를 지정해주세요
+              사진 선택 후 + 버튼을 눌러 눈 위치를 지정해주세요
             </PinGuide>
             <SelectPhotoBox>
               <PhotoButton
@@ -636,9 +771,9 @@ const ConfirmUpload = ({
                   return (
                     <EditPinDiv key={index}>
                       <PinNameBox>
-                        <PinLabel>핀 이름</PinLabel>
+                        <PinLabel>눈 이름</PinLabel>
                         <PinInput
-                          placeholder={"핀 이름을 입력해주세요"}
+                          placeholder={"눈 이름을 입력해주세요"}
                           value={inputPinName[p]}
                           onChange={(event) =>
                             setInputPinName(
@@ -650,9 +785,9 @@ const ConfirmUpload = ({
                         ></PinInput>
                       </PinNameBox>
                       <PinLinkBox>
-                        <PinLabel>핀 링크</PinLabel>
+                        <PinLabel>눈 링크</PinLabel>
                         <PinInput
-                          placeholder={"핀 링크를 입력해주세요"}
+                          placeholder={"눈 링크를 입력해주세요"}
                           value={inputPinLink[p]}
                           onChange={(event) =>
                             setInputPinLink(
@@ -666,12 +801,12 @@ const ConfirmUpload = ({
                       <PinNavBox>
                         <PinTagBox>
                           <PinIcon />
-                          <PinTag>핀 {String.fromCharCode(65 + index)}</PinTag>
+                          <PinTag>눈 {String.fromCharCode(65 + index)}</PinTag>
                         </PinTagBox>
                         <PinButtonBox>
-                          <Button btnText={"위치변경"} btnHeight="28px" />
+                          {/* <Button btnText={"위치변경"} btnHeight="28px" /> */}
                           <Button
-                            btnText={"핀 삭제"}
+                            btnText={"눈 삭제"}
                             btnHeight="28px"
                             btnBgColor={color.red.dark}
                             btnTextColor={color.white.default}
@@ -713,9 +848,9 @@ const ConfirmUpload = ({
                   return (
                     <EditPinDiv key={index}>
                       <PinNameBox>
-                        <PinLabel>핀 이름</PinLabel>
+                        <PinLabel>눈 이름</PinLabel>
                         <PinInput
-                          placeholder={"핀 이름을 입력해주세요"}
+                          placeholder={"눈 이름을 입력해주세요"}
                           value={inputPinName[p]}
                           onChange={(event) =>
                             setInputPinName(
@@ -727,9 +862,9 @@ const ConfirmUpload = ({
                         ></PinInput>
                       </PinNameBox>
                       <PinLinkBox>
-                        <PinLabel>핀 링크</PinLabel>
+                        <PinLabel>눈 링크</PinLabel>
                         <PinInput
-                          placeholder={"핀 링크를 입력해주세요"}
+                          placeholder={"눈 링크를 입력해주세요"}
                           value={inputPinLink[p]}
                           onChange={(event) =>
                             setInputPinLink(
@@ -743,12 +878,12 @@ const ConfirmUpload = ({
                       <PinNavBox>
                         <PinTagBox>
                           <PinIcon />
-                          <PinTag>핀 {String.fromCharCode(65 + index)}</PinTag>
+                          <PinTag>눈 {String.fromCharCode(65 + index)}</PinTag>
                         </PinTagBox>
                         <PinButtonBox>
-                          <Button btnText={"위치변경"} btnHeight="28px" />
+                          {/* <Button btnText={"위치변경"} btnHeight="28px" /> */}
                           <Button
-                            btnText={"핀 삭제"}
+                            btnText={"눈 삭제"}
                             btnHeight="28px"
                             btnBgColor={color.red.dark}
                             btnTextColor={color.white.default}
@@ -790,9 +925,9 @@ const ConfirmUpload = ({
                   return (
                     <EditPinDiv key={index}>
                       <PinNameBox>
-                        <PinLabel>핀 이름</PinLabel>
+                        <PinLabel>눈 이름</PinLabel>
                         <PinInput
-                          placeholder={"핀 이름을 입력해주세요"}
+                          placeholder={"눈 이름을 입력해주세요"}
                           value={inputPinName[p]}
                           onChange={(event) =>
                             setInputPinName(
@@ -804,9 +939,9 @@ const ConfirmUpload = ({
                         ></PinInput>
                       </PinNameBox>
                       <PinLinkBox>
-                        <PinLabel>핀 링크</PinLabel>
+                        <PinLabel>눈 링크</PinLabel>
                         <PinInput
-                          placeholder={"핀 링크를 입력해주세요"}
+                          placeholder={"눈 링크를 입력해주세요"}
                           value={inputPinLink[p]}
                           onChange={(event) =>
                             setInputPinLink(
@@ -820,12 +955,12 @@ const ConfirmUpload = ({
                       <PinNavBox>
                         <PinTagBox>
                           <PinIcon />
-                          <PinTag>핀 {String.fromCharCode(65 + index)}</PinTag>
+                          <PinTag>눈 {String.fromCharCode(65 + index)}</PinTag>
                         </PinTagBox>
                         <PinButtonBox>
-                          <Button btnText={"위치변경"} btnHeight="28px" />
+                          {/* <Button btnText={"위치변경"} btnHeight="28px" /> */}
                           <Button
-                            btnText={"핀 삭제"}
+                            btnText={"눈 삭제"}
                             btnHeight="28px"
                             btnBgColor={color.red.dark}
                             btnTextColor={color.white.default}
@@ -867,9 +1002,9 @@ const ConfirmUpload = ({
                   return (
                     <EditPinDiv key={index}>
                       <PinNameBox>
-                        <PinLabel>핀 이름</PinLabel>
+                        <PinLabel>눈 이름</PinLabel>
                         <PinInput
-                          placeholder={"핀 이름을 입력해주세요"}
+                          placeholder={"눈 이름을 입력해주세요"}
                           value={inputPinName[p]}
                           onChange={(event) =>
                             setInputPinName(
@@ -881,9 +1016,9 @@ const ConfirmUpload = ({
                         ></PinInput>
                       </PinNameBox>
                       <PinLinkBox>
-                        <PinLabel>핀 링크</PinLabel>
+                        <PinLabel>눈 링크</PinLabel>
                         <PinInput
-                          placeholder={"핀 링크를 입력해주세요"}
+                          placeholder={"눈 링크를 입력해주세요"}
                           value={inputPinLink[p]}
                           onChange={(event) =>
                             setInputPinLink(
@@ -897,12 +1032,12 @@ const ConfirmUpload = ({
                       <PinNavBox>
                         <PinTagBox>
                           <PinIcon />
-                          <PinTag>핀 {String.fromCharCode(65 + index)}</PinTag>
+                          <PinTag>눈 {String.fromCharCode(65 + index)}</PinTag>
                         </PinTagBox>
                         <PinButtonBox>
-                          <Button btnText={"위치변경"} btnHeight="28px" />
+                          {/* <Button btnText={"위치변경"} btnHeight="28px" /> */}
                           <Button
-                            btnText={"핀 삭제"}
+                            btnText={"눈 삭제"}
                             btnHeight="28px"
                             btnBgColor={color.red.dark}
                             btnTextColor={color.white.default}
@@ -980,30 +1115,6 @@ const ConfirmUpload = ({
               />
               <RightButtonBox>
                 <Button
-                  btnOnClick={() => {
-                    console.log("태그 : " + selectTagList);
-                    console.log("제목 : " + inputTitle);
-                    console.log("내용 : " + inputContent);
-                    console.log("사진1 : " + img1HasPin);
-                    console.log("사진2 : " + img2HasPin);
-                    console.log("사진3 : " + img3HasPin);
-                    console.log("사진4 : " + img4HasPin);
-                    console.log({
-                      inputPinName,
-                      inputPinLink,
-                      inputPinPosX,
-                      inputPinPosY,
-                    });
-
-                    let reqTagList = [];
-
-                    selectTagList.map((t) => {
-                      reqTagList.push({ tagId: t });
-                    });
-                    console.log(reqTagList);
-
-                    console.log(setPostRequest());
-                  }}
                   btnText={"취소"}
                   btnHoverBgColor={color.red.default}
                   btnHoverBorderColor={color.red.default}
@@ -1011,12 +1122,25 @@ const ConfirmUpload = ({
                   btnMarginLeft="0"
                   btnMarginRight="0"
                   btnWidth="80px"
+                  btnOnClick={() => {
+                    Swal.fire({
+                      title: "사진 등록을 취소하시겠습니까?",
+                      text: "확인을 누르시면 현재까지 작업이 사라집니다",
+                      icon: "warning",
+                      showCancelButton: true,
+                      confirmButtonColor: "#3085d6",
+                      cancelButtonColor: "#d33",
+                      confirmButtonText: "확인",
+                      cancelButtonText: "취소",
+                    }).then((result) => {
+                      if (result.isConfirmed) {
+                        toggleSubmit();
+                      }
+                    });
+                  }}
                 />
                 <Button
-                  btnOnClick={() => {
-                    const result = SUBMIT_POST(setPostRequest());
-                    console.log(result);
-                  }}
+                  btnOnClick={requestSubmitPost}
                   btnBgColor={color.black.default}
                   btnBorderColor={color.black.default}
                   btnTextColor={color.white.default}

@@ -1,10 +1,11 @@
-import React, { useState } from "react";
-import Button from "../Button";
+import React, { useEffect, useState } from "react";
 import styled from "@emotion/styled";
-import color from "../../styles/theme";
-import { CHECK_EMAIL, CONFIRM_LOGIN } from "../../pages/api/user";
 import { useRouter } from "next/router";
-import { useSelector, useDispatch } from "react-redux";
+import { useDispatch } from "react-redux";
+import color from "../../styles/theme";
+import Button from "../Button";
+import { CHECK_EMAIL, CONFIRM_LOGIN } from "../../pages/api/user";
+import Swal from "sweetalert2";
 
 const Container = styled.div`
   display: flex;
@@ -50,19 +51,20 @@ const ConfirmButton = styled.div`
 
 const SendingBox = styled.div`
   display: flex;
-  /* flex-direction: column; */
   justify-content: space-between;
   width: 300px;
   color: ${color.black.default};
   font-size: 12px;
   font-weight: 400;
   margin: 20px 0px;
+  cursor: pointer;
 `;
 
 const SendingText = styled.div`
   display: flex;
   width: 150px;
   justify-content: center;
+  cursor: pointer;
 `;
 
 const LoginButton = styled.div`
@@ -74,66 +76,132 @@ const LoginButton = styled.div`
   margin-bottom: 10px;
 `;
 
-const useCounter = () => {
+const useStore = () => {
   const dispatch = useDispatch();
-  const toggle = async () => {
-    await dispatch({ type: "TOGGLE" });
+
+  const toggle = () => {
+    dispatch({ type: "TOGGLE" });
   };
-  const autoLoginCheck = async () => {
-    await dispatch({ type: "AUTO_LOGIN_CHECK" });
+  const loginStateTrue = () => {
+    dispatch({ type: "LOGIN_STATE_TRUE" });
   };
-  const loginStateTrue = async () => {
-    await dispatch({ type: "LOGIN_STATE_TRUE" });
-  };
-  return { toggle, autoLoginCheck, loginStateTrue };
+
+  return { toggle, loginStateTrue };
 };
 
 const AuthMiddle = ({ currentEmail }) => {
-  const [authKey, setAuthKey] = useState("");
-
   const router = useRouter();
+  const { toggle, loginStateTrue } = useStore();
 
-  const { toggle, autoLoginCheck, loginStateTrue } = useCounter();
+  const [authKey, setAuthKey] = useState("");
+  const [checkState, setCheckState] = useState(false);
+  const [authValid, setAuthValid] = useState(false);
+
+  useEffect(() => {
+    setAuthValid(authKey.length > 0);
+  }, [authKey]);
+
+  const openMailBox = () => {
+    const mailType = currentEmail.split("@")[1];
+    switch (mailType) {
+      case "gmail.com":
+        window.open("https://gmail.com");
+        break;
+      case "naver.com":
+        window.open("https://mail.naver.com");
+        break;
+      case "daum.net":
+        window.open("https://mail.daum.net");
+        break;
+      case "hanmail.net":
+        window.open("https://mail.daum.net");
+        break;
+      case "nate.com":
+        window.open("https://mail.nate.com");
+        break;
+      case "kakao.com":
+        window.open("https://mail.kakao.com");
+        break;
+      case "yahoo.com":
+        window.open("https://mail.yahoo.com");
+        break;
+      case "lycos.com":
+        window.open("https://mail.lycos.com/");
+        break;
+      case "yandex.com":
+        window.open("https://mail.yandex.com");
+        break;
+      case "yandex.ru":
+        window.open("https://mail.yandex.com");
+        break;
+      case "outlook.kr":
+        window.open("https://www.outlook.com");
+        break;
+      case "outlook.com":
+        window.open("https://www.outlook.com");
+        break;
+      case "hotmail.com":
+        window.open("https://www.outlook.com");
+        break;
+      default:
+        Swal.fire({
+          icon: "info",
+          title: "현재 바로가기를 지원하지 않는 이메일입니다.",
+          text:
+            "지원 중인 이메일 : gmail, naver, daum, hanmail, nate, kakao, yahoo, lycos, yandex, outlook, hotmail",
+        });
+        break;
+    }
+  };
 
   const requestCheckEmail = async () => {
-    const checkProps = {
+    const checkEmailReq = {
       act: "check-authKey-off",
       accountEmail: currentEmail,
       accountAuthKey: authKey,
     };
 
-    const result = await CHECK_EMAIL(checkProps);
+    const result = await CHECK_EMAIL(checkEmailReq);
+    //replace_console_log(result);
 
     if (result.status === 200) {
-      alert("이메일 인증 성공");
+      setCheckState(true);
+      Swal.fire({ icon: "success", text: "이메일 인증 성공" });
     } else {
-      alert("이메일 인증 실패");
+      Swal.fire({ icon: "error", text: "이메일 인증 실패" });
     }
   };
 
   const requestConfirmLogin = async () => {
-    const checkProps = {
+    const confirmLoginReq = {
       act: "check-authKey-on",
       accountEmail: currentEmail,
       accountAuthKey: authKey,
     };
 
-    const result = await CONFIRM_LOGIN(checkProps);
-    console.log(result);
+    const result = await CONFIRM_LOGIN(confirmLoginReq);
+    //replace_console_log(result);
 
     if (result.status === 200) {
-      alert("로그인 성공");
-
-      const authToken = result.headers.authorization.slice(7);
-
       window.localStorage.setItem("accountEmail", result.data.accountEmail);
-      window.localStorage.setItem("accountId", result.data.accountId);
-      window.localStorage.setItem("authToken", authToken);
+      window.localStorage.setItem(
+        "accountId",
+        result.data.accountId.toString()
+      );
+      window.localStorage.setItem(
+        "accountNickname",
+        result.data.accountNickname
+      );
+      window.localStorage.setItem(
+        "authToken",
+        result.headers.authorization.slice(7)
+      );
       loginStateTrue();
       toggle();
+      Swal.fire({ icon: "success", text: "로그인 성공" });
       router.push("/feed");
     } else {
-      alert("로그인 실패 : " + result.status);
+      Swal.fire({ icon: "success", text: "로그인 실패" });
     }
   };
 
@@ -146,10 +214,10 @@ const AuthMiddle = ({ currentEmail }) => {
           onChange={(e) => {
             setAuthKey(e.target.value);
           }}
-        ></InputNumber>
+        />
         <ConfirmButton>
           <Button
-            btnBgColor={color.red.light}
+            btnBgColor={authValid ? color.red.default : color.gray.semidark}
             btnWidth="100px"
             btnText="인증번호 확인"
             btnTextColor={color.white.default}
@@ -157,19 +225,19 @@ const AuthMiddle = ({ currentEmail }) => {
             btnFontWeight={700}
             btnBorderColor="transparent"
             btnHoverBorderColor="transparent"
-            btnHoverBgColor={color.red.dark}
+            btnHoverBgColor={authValid ? color.red.dark : color.gray.semidark}
             btnHoverTextColor={color.white.default}
             btnOnClick={requestCheckEmail}
           />
         </ConfirmButton>
       </InputBox>
       <SendingBox>
-        <SendingText>메일함으로 이동</SendingText>
+        <SendingText onClick={openMailBox}>메일함으로 이동</SendingText>
         <SendingText>인증번호 재발송</SendingText>
       </SendingBox>
       <LoginButton>
         <Button
-          btnBgColor={color.gray.light}
+          btnBgColor={checkState ? color.red.default : color.gray.semidark}
           btnWidth="300px"
           btnText="로그인"
           btnTextColor={color.white.default}
@@ -177,7 +245,7 @@ const AuthMiddle = ({ currentEmail }) => {
           btnFontWeight={700}
           btnBorderColor="transparent"
           btnHoverBorderColor="transparent"
-          btnHoverBgColor={color.gray.semidark}
+          btnHoverBgColor={checkState ? color.red.dark : color.gray.semidark}
           btnHoverTextColor={color.white.default}
           btnOnClick={requestConfirmLogin}
         />

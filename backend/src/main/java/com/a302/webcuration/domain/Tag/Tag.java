@@ -19,9 +19,9 @@ public class Tag {
     private String tagTitle;
 
     //Hibernate MultipleBagFetchException 때문에 List-> Set으로 https://perfectacle.github.io/2019/05/01/hibernate-multiple-bag-fetch-exception/
-    @ManyToMany
+    @ManyToMany(mappedBy = "tags")
     @Builder.Default
-    private Set<Account> accounts=new HashSet<>();
+    private List<Account> accounts=new ArrayList<>();
 
     @ManyToMany
     @JoinTable(
@@ -37,11 +37,12 @@ public class Tag {
         posts.getPostsTags().add(this);
     }
 
-//    @Override
-//    public String toString() {
-//        return "Tag{" +
-//                "tagId=" + tagId +
-//                ", tagTitle='" + tagTitle + '\'' +
-//                '}';
-//    }
+    @Override
+    public String toString() {
+        return "Tag{" +
+                "tagId=" + tagId +
+                ", tagTitle='" + tagTitle + '\'' +
+                ", posts=" + posts +
+                '}';
+    }
 }

@@ -46,7 +46,6 @@ public class LoginService2 {
     }
 
     @Transactional
-    //TODO 디폴트 만들기
     public BaseMessage login(AccountDto.LoginRequest loginRequest)
     {
         Map<String, Object> resultMap = new HashMap<>();
@@ -143,7 +142,8 @@ public class LoginService2 {
 
             String email = account.getAccountEmail();
             Long id = account.getAccountId();
-            resultMap = loginInfo(id,email);
+            String nickname= account.getAccountNickname();
+            resultMap = loginInfo(id,email,nickname);
 
             String token = "Bearer "+jwtService.create(id,email);
             httpHeaders.add("Authorization",token);
@@ -161,7 +161,6 @@ public class LoginService2 {
         }
     }
 
-
     @Transactional
     public BaseMessage autoLogin(AccountDto.LoginRequest request,String token)
     {
@@ -173,24 +172,35 @@ public class LoginService2 {
         }
         String email = jwtService.getAccountEmail(token);
         Long id = jwtService.getAccountId(token);
-        logger.info(email+" "+id);
-        logger.info(request.getAccountId().toString());
-        if(request.getAccountId()==id && request.getAccountEmail().equals(email))
+        //if(request.getAccountId()==id && request.getAccountEmail().equals(email))
+        if(request.getAccountEmail().equals(email))
         {
             resultMap.put("message","인증키가 일치합니다.");
-            return new BaseMessage(HttpStatus.OK,accountService.findAccountById(id));
+            Account account=accountRepository.findByAccountEmail(request.getAccountEmail());
+            String nickname= account.getAccountNickname();
+            resultMap = loginInfo(id,email,nickname);
+            return new BaseMessage(HttpStatus.OK,resultMap);
         }
         else
         {
             resultMap.put("error", "토큰에 저장된 내용과 계정의 정보가 일치하지 않습니다.");
+            logger.error("request.getAccountId() "+request.getAccountId()+", id "+id);
+            logger.error("request.getAccountEmail() "+request.getAccountEmail()+", email "+email);
+            logger.error("request.getAccountId().getClass().getName() : "+request.getAccountId().getClass().getName());
+            logger.error("id.getClass().getName() : "+id.getClass().getName());
+            logger.error("request.getAccountEmail().getClass().getName() : "+request.getAccountEmail().getClass().getName());
+            logger.error("email.getClass().getName() : "+email.getClass().getName());
+            logger.error("id check "+(request.getAccountId()==id));
+            logger.error("email check "+request.getAccountEmail().equals(email));
             return new BaseMessage(HttpStatus.BAD_REQUEST,resultMap);
         }
     }
 
-    private Map loginInfo(Long id, String email){
+    private Map loginInfo(Long id, String email,String nickname){
         Map<String, Object> resultMap = new HashMap<>();
         resultMap.put("accountId", id);
         resultMap.put("accountEmail", email);
+        resultMap.put("accountNickname", nickname);
         return resultMap;
     }
 

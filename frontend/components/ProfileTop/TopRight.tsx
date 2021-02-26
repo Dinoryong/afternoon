@@ -1,149 +1,178 @@
-import React from "react";
+import React, { useState } from "react";
 import styled from "@emotion/styled";
 import Button from "../Button";
 import color from "../../styles/theme";
-import Image from "next/image";
+import ProfileTagBox from "../../components/ProfileTagBox";
 
 const TitleBox = styled.div`
   display: flex;
   width: 100%;
-  /* height: 60px; */
-  align-items: center;
-  /* margin-bottom: 5px; */
   margin-top: 10px;
+  align-items: center;
+  font-size: 45px;
+  @media only screen and (max-width: 768px) {
+    font-size: 35px;
+    margin-top: 0px;
+    padding-top: 18px;
+    margin-left: 80px;
+    width: fit-content;
+  }
 `;
 
-const ProfileTitle = styled.div`
-  font-size: 45px;
+const UserTitle = styled.div`
   font-weight: bold;
+`;
+
+const EditBox = styled.div`
+  display: flex;
+  width: 40px;
+  height: 40px;
+  margin-left: 14px;
+  margin-top: 16px;
+  @media only screen and (max-width: 768px) {
+    position: absolute;
+    width: fit-content;
+    right: 15px;
+    top: 142px;
+  }
 `;
 
 const FollowBox = styled.div`
   width: 50%;
-  /* height: 90px; */
   display: flex;
+  margin-top: 15px;
   margin-bottom: 35px;
   justify-content: space-between;
+  @media only screen and (max-width: 768px) {
+    margin-top: 20px;
+    width: 60%;
+    max-width: 285px;
+    margin-bottom: 20px;
+  }
 `;
 
-const ProfileFollowing = styled.div`
-  /* width: 100%; */
+const UserFollowing = styled.div`
   font-size: 15px;
   font-weight: 100px;
   color: ${color.black.default};
-  /* margin-bottom: 4px; */
+  cursor: pointer;
+  padding: 4px;
 `;
 
-const ProfileFollower = styled.div`
-  /* width: 100%; */
+const UserFollower = styled.div`
   font-size: 15px;
   font-weight: 100px;
   color: ${color.black.default};
-  /* margin-bottom: 4px; */
+  cursor: pointer;
+  padding: 4px;
 `;
 
-const ProfilePost = styled.div`
-  /* width: 100%; */
+const UserPost = styled.div`
   font-size: 15px;
   font-weight: 100px;
   color: ${color.black.default};
-  /* margin-bottom: 4px; */
-`;
-
-const EditBox = styled.div`
-  width: 30px;
-  /* height: 30px; */
-  position: absolute;
+  padding: 4px;
 `;
 
 const TextBox = styled.div`
   width: 100%;
-  /* height: 50px; */
   margin-bottom: 50px;
+  @media only screen and (max-width: 768px) {
+    margin-bottom: 25px;
+  }
 `;
 
-const ProfileText = styled.div`
+const UserText = styled.div`
   width: 100%;
   font-size: 15px;
   font-weight: 100px;
+  margin-left: 6px;
+  @media only screen and (max-width: 768px) {
+    margin-left: 0px;
+  }
 `;
 
-const TagBox = styled.div`
+const TagDiv = styled.div`
   width: 100%;
-  margin-bottom: 70px;
-`;
-
-const TagTitle = styled.div`
-  width: 100%;
-  /* height: 40px; */
-  font-size: 15px;
-  font-weight: "600";
-  margin-bottom: 10px;
-`;
-
-const TagList = styled.div`
+  margin-bottom: 30px;
   display: flex;
-  width: 100%;
-  /* height: 40px; */
-  /* margin: 3px 0px; */
+  flex-wrap: wrap;
+  @media only screen and (max-width: 768px) {
+    margin-bottom: 0px;
+  }
 `;
 
 const TopRight = ({
-  profileName,
-  profileBox,
-  profileFollowing,
-  profileFollower,
-  profileMyposts,
-  profileTags,
+  accountNickname,
+  accountBio,
+  followingCnt,
+  followerCnt,
+  postsCnt,
+  tagList,
+  toggleEdit,
+  setUserListState,
+  toggleFollow,
 }) => {
   return (
     <>
       <TitleBox>
-        <ProfileTitle>{ profileName }</ProfileTitle>
+        <UserTitle>{accountNickname}</UserTitle>
         <EditBox>
-          {/* <Image
-            src="/assets/icons/edit_white.png"
-            layout="fill"
-            objectFit="cover"
-          ></Image> */}
+          <Button
+            btnBgColor="transparent"
+            btnWidth="120px"
+            btnHeight="32px"
+            btnText="프로필 수정"
+            btnFontSize="15px"
+            btnTextColor={color.black.default}
+            btnBorderColor={color.black.default}
+            btnHoverBgColor="transparent"
+            btnUseIcon={true}
+            btnIconSrc={"/assets/icons/edit.png"}
+            btnIconHeight={"15px"}
+            btnIconWidth={"15px"}
+            btnIconMargin={"2px 0px 0px 12px"}
+            btnUseOpacity={true}
+            btnSetOpacity={"0.4"}
+            btnOnClick={toggleEdit}
+          />
         </EditBox>
       </TitleBox>
       <FollowBox>
-        <ProfileFollowing>팔로잉 { profileFollowing }</ProfileFollowing>
-        <ProfileFollower>팔로워 { profileFollower }</ProfileFollower>
-        <ProfilePost>게시물 { profileMyposts }</ProfilePost>
+        <UserFollowing
+          onClick={() => {
+            setUserListState(1);
+            toggleFollow();
+          }}
+        >
+          팔로잉 {followingCnt}
+        </UserFollowing>
+        <UserFollower
+          onClick={() => {
+            setUserListState(2);
+            toggleFollow();
+          }}
+        >
+          팔로워 {followerCnt}
+        </UserFollower>
+        <UserPost>게시물 {postsCnt}</UserPost>
       </FollowBox>
       <TextBox>
-        <ProfileText>
-          { profileBox }
-        </ProfileText>
+        <UserText>{accountBio}</UserText>
       </TextBox>
-      <TagBox>
-        <TagTitle>관심 태그</TagTitle>
-        <TagList>
-          { profileTags }
-          <Button
-            btnText="클라이밍"
-            btnWidth="100px"
-            // btnMarginRight="5px"
-            btnBgColor="${color.gray.light}"
-            btnTextColor="${color.gray.semidark}"
-            btnFontSize="20px"
-            btnFontWeight={500}
-            btnHoverTextColor="${color.gray.dark}"
-          />
-          <Button
-            btnText="엔지니어"
-            btnWidth="100px"
-            // btnMarginRight="5px"
-            btnBgColor="${color.gray.light}"
-            btnTextColor="${color.gray.semidark}"
-            btnFontSize="20px"
-            btnFontWeight={500}
-            btnHoverTextColor="${color.gray.dark}"
-          />
-        </TagList>
-      </TagBox>
+      <TagDiv>
+        {tagList &&
+          tagList.length > 0 &&
+          tagList.map((t, index) => {
+            return (
+              <ProfileTagBox
+                key={index}
+                tagId={t.tagId}
+                tagMargin="0px 8px 8px 0px"
+              />
+            );
+          })}
+      </TagDiv>
     </>
   );
 };

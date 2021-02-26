@@ -1,71 +1,318 @@
 import axios from "axios";
 import secrets from "../../secrets";
+import {
+  FeedListData,
+  FeedNullData,
+  GetOnePostData,
+  SubmitPostData,
+  SubmitCommentData,
+} from "../../data/ApiData";
 
 const API_ROOT_URI = secrets.API_ROOT_URI;
 const VIA_API_DEV = secrets.VIA_API_DEV;
 
-export const SUBMIT_POST = async (req) => {
+const timeout = (ms) => {
+  return new Promise((resolve) => setTimeout(resolve, ms));
+};
+
+export const SUBMIT_POST = async (req, config) => {
+  //replace_console_log("SUBMIT_POST : REQUEST");
+  //replace_console_log(req);
+
+  let status: number = 0;
+  let data: {
+    postsTitle?: String;
+    postsContents?: String;
+    postsPhotos?: Array<string>;
+    tags?: Array<{ tagId: number }>;
+    pins?: Array<{
+      pinName?: string;
+      pinLocY?: number;
+      pinLocX?: number;
+      pinLink?: string;
+      pinNum?: number;
+      pinApiLink?: string;
+      pinApiClass?: string;
+    }>;
+  } = {
+    postsTitle: "",
+    postsContents: "",
+    postsPhotos: [],
+    tags: [],
+    pins: [],
+  };
+
   if (!VIA_API_DEV) {
+    //replace_console_log("SUBMIT_POST : REQUEST");
     try {
-      return { status: 200, data: {} };
+      await timeout(1000);
+      // throw new Error();
+      return { status: 201, data: SubmitPostData.data };
     } catch (error) {
-      console.log(error);
+      //replace_console_log(error);
     }
-    return { status: false };
   } else {
-    // API 요청 시 실행
-    let data = {};
-    let status = 0;
+    //replace_console_log("SUBMIT_POST : REQUEST");
 
     try {
-      await axios
-        .post(`${API_ROOT_URI}/api/posts`, req, {
-          headers: {
-            Authorization: `Bearer ${window.localStorage.getItem("authToken")}`,
-          },
-        })
-        .then((res) => {
-          console.log(res);
-          data = res.data;
-          status = res.status;
-        });
-      return { status, data };
+      await axios.post(`${API_ROOT_URI}/api/posts`, req, config).then((res) => {
+        data = res.data;
+        status = res.status;
+      });
     } catch (error) {
-      console.log(error);
+      //replace_console_log(error);
     }
 
     return { status, data };
   }
 };
 
-export const GET_LOGIN_POST = async () => {
+export const GET_FEED = async (config) => {
+  //replace_console_log("GET_FEED : REQUEST");
+
+  let status: number = 0;
+  let data: Array<{
+    postsId: number;
+    postsWriter: string;
+    postsTitle: string;
+    postsPhoto: string;
+  }> = [];
+
   if (!VIA_API_DEV) {
+    //replace_console_log("GET_FEED : LOCAL");
+
     try {
-      return { status: 200, data: {} };
+      await timeout(1000);
+      // throw new Error();
+      status = 200;
+      // data = FeedListData.data;
+      data = FeedNullData.data;
     } catch (error) {
-      console.log(error);
+      //replace_console_log(error);
     }
-    return { status: false };
   } else {
-    // API 요청 시 실행
-    let data = {};
-    let status = 0;
+    //replace_console_log("GET_FEED : DEV");
+
+    try {
+      await axios.get(`${API_ROOT_URI}/api/feed`, config).then((res) => {
+        data = res.data.data;
+        status = res.status;
+      });
+    } catch (error) {
+      //replace_console_log(error);
+    }
+  }
+
+  return { status, data };
+};
+
+export const GET_ONE_POST_LOGIN = async (req, config) => {
+  //replace_console_log("GET_ONE_POST_LOGIN : REQUEST => " + req);
+
+  let status: number = 0;
+  let data: {
+    postsTitle: String;
+    postsContents: String;
+    postsPhotos: Array<string>;
+    tags: Array<{ tagId: number }>;
+    pins: Array<{
+      pinName: string;
+      pinLocY: number;
+      pinLocX: number;
+      pinLink: string;
+      pinNum: number;
+      pinApiLink: string;
+      pinApiClass: string;
+    }>;
+  } = {
+    postsTitle: "",
+    postsContents: "",
+    postsPhotos: [],
+    tags: [],
+    pins: [],
+  };
+
+  if (!VIA_API_DEV) {
+    //replace_console_log("GET_ONE_POST_LOGIN : LOCAL");
+
+    try {
+      await timeout(1000);
+      // throw new Error();
+      status = 200;
+      data = GetOnePostData.data;
+    } catch (error) {
+      //replace_console_log(error);
+    }
+  } else {
+    //replace_console_log("GET_ONE_POST_LOGIN : DEV");
 
     try {
       await axios
-        .get(`${API_ROOT_URI}/api/feed`, {
-          headers: {
-            Authorization: `Bearer ${window.localStorage.getItem("authToken")}`,
-          },
-        })
+        .get(`${API_ROOT_URI}/api/posts/login/${req}`, config)
         .then((res) => {
-          console.log(res);
+          data = res.data.data;
+          status = res.status;
+        });
+    } catch (error) {
+      //replace_console_log(error);
+    }
+  }
+
+  return { status, data };
+};
+
+export const GET_ONE_POST_LOGOUT = async (req) => {
+  //replace_console_log("GET_ONE_POST_LOGOUT : REQUEST => " + req);
+
+  let status: number = 0;
+  let data: {
+    postsTitle: String;
+    postsContents: String;
+    postsPhotos: Array<string>;
+    tags: Array<{ tagId: number }>;
+    pins: Array<{
+      pinName: string;
+      pinLocY: number;
+      pinLocX: number;
+      pinLink: string;
+      pinNum: number;
+      pinApiLink: string;
+      pinApiClass: string;
+    }>;
+  } = {
+    postsTitle: "",
+    postsContents: "",
+    postsPhotos: [],
+    tags: [],
+    pins: [],
+  };
+
+  if (!VIA_API_DEV) {
+    //replace_console_log("GET_ONE_POST_LOGOUT : LOCAL");
+
+    try {
+      await timeout(1000);
+      // throw new Error();
+      status = 200;
+      data = GetOnePostData.data;
+    } catch (error) {
+      //replace_console_log(error);
+    }
+  } else {
+    //replace_console_log("GET_ONE_POST_LOGOUT : DEV");
+
+    try {
+      await axios.get(`${API_ROOT_URI}/api/posts/${req}`).then((res) => {
+        data = res.data.data;
+        status = res.status;
+      });
+    } catch (error) {
+      //replace_console_log(error);
+    }
+  }
+
+  return { status, data };
+};
+
+export const LIKE_POST = async (req, config) => {
+  //replace_console_log("LIKE_POST : REQUEST");
+  //replace_console_log(req);
+
+  let status: number = 0;
+  let data: {} = {};
+
+  if (!VIA_API_DEV) {
+    //replace_console_log("LIKE_POST : LOCAL");
+
+    try {
+      await timeout(1000);
+      // throw new Error();
+      status = 200;
+      data = {};
+    } catch (error) {
+      //replace_console_log(error);
+    }
+  } else {
+    //replace_console_log("LIKE_POST : DEV");
+
+    try {
+      await axios
+        .put(`${API_ROOT_URI}/api/accounts/like`, req, config)
+        .then((res) => {
+          data = res.data.data;
+          status = res.status;
+        });
+    } catch (error) {
+      //replace_console_log(error);
+    }
+  }
+
+  return { status, data };
+};
+
+export const UNLIKE_POST = async (req, config) => {
+  //replace_console_log("UNLIKE_POST : REQUEST => " + req);
+
+  let status: number = 0;
+  let data: {} = {};
+
+  if (!VIA_API_DEV) {
+    //replace_console_log("UNLIKE_POST : LOCAL");
+
+    try {
+      await timeout(1000);
+      // throw new Error();
+      status = 200;
+      data = {};
+    } catch (error) {
+      //replace_console_log(error);
+    }
+  } else {
+    //replace_console_log("UNLIKE_POST : DEV");
+
+    try {
+      await axios
+        .delete(`${API_ROOT_URI}/api/accounts/like/${req}`, config)
+        .then((res) => {
+          data = res.data.data;
+          status = res.status;
+        });
+    } catch (error) {
+      //replace_console_log(error);
+    }
+  }
+
+  return { status, data };
+};
+
+export const SUBMIT_COMMENT = async (req, config) => {
+  //replace_console_log("SUBMIT_COMMENT : REQUEST");
+  //replace_console_log(req);
+
+  let status: number = 0;
+  let data: {} = {};
+
+  if (!VIA_API_DEV) {
+    //replace_console_log("SUBMIT_COMMENT : LOCAL");
+    try {
+      await timeout(1000);
+      // throw new Error();
+      return { status: 201, data: SubmitCommentData.data };
+    } catch (error) {
+      //replace_console_log(error);
+    }
+  } else {
+    //replace_console_log("SUBMIT_COMMENT : DEV");
+
+    try {
+      await axios
+        .post(`${API_ROOT_URI}/api/comments`, req, config)
+        .then((res) => {
           data = res.data;
           status = res.status;
         });
-      return { status, data };
     } catch (error) {
-      console.log(error);
+      //replace_console_log(error);
     }
 
     return { status, data };

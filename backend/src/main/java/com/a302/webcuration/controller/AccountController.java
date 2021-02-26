@@ -1,7 +1,6 @@
 package com.a302.webcuration.controller;
 
 import com.a302.webcuration.common.BaseMessage;
-import com.a302.webcuration.common.BaseStatus;
 import com.a302.webcuration.domain.Account.Account;
 import com.a302.webcuration.domain.Account.AccountDto;
 import com.a302.webcuration.domain.Account.AccountRepository;
@@ -46,37 +45,29 @@ public class AccountController {
     {
         Account account = createAccountRequest.toEntity();
         accountRepository.save(account);
-        return new ResponseEntity(new BaseMessage(HttpStatus.CREATED,modelMapper.map(account,AccountDto.AccountProfile.class)),HttpStatus.CREATED);
+        return new ResponseEntity(new BaseMessage(HttpStatus.CREATED,modelMapper.map(account, AccountDto.MyAccountProfile.class)),HttpStatus.CREATED);
     }
 
     //-------------------------------수정--------------------------
-    @PutMapping("/{id}")
-    public ResponseEntity updateAccount(@PathVariable Long id , @RequestBody @Valid AccountDto.UpdateRequest request)
+    @PutMapping
+    public ResponseEntity updateAccount(@RequestBody @Valid AccountDto.UpdateRequest request, @RequestHeader(value = "Authorization") String token)
     {
-        accountService.updateAccount(id,request);
-        //TODO 예외처리
-        //일단 오류 체킹 안하고 accepted받기
-        return new ResponseEntity(HttpStatus.ACCEPTED);
+        BaseMessage bm = accountService.updateAccount(request,token);
+
+        return new ResponseEntity(bm,bm.getHttpStatus());
 
     }
 
-    //---------------------조회--------------------
-    @GetMapping("/{id}")
-    public ResponseEntity retrieveAccountById(@PathVariable Long id)
+    //---------------------내 정보 조회--------------------
+    @GetMapping
+    public ResponseEntity retrieveAccountById(@RequestHeader(value = "Authorization") String token)
     {
-        BaseMessage bm = accountService.findAccountById(id);
+        BaseMessage bm = accountService.findAccountById(token);
         return new ResponseEntity(bm,bm.getHttpStatus());
     }
-
-    @GetMapping
-    public ResponseEntity retrieveAccountAll()
-    {
-        return new ResponseEntity(accountService.findAll(),HttpStatus.OK);
-    }
-
     //--------------------------------------팔로잉------------------------------------------------------
 
-    @PutMapping("/my-following")
+    @PutMapping("/myfollowing")
     public ResponseEntity follow(@RequestBody AccountDto.FollowRequest request, @RequestHeader(value = "Authorization") String token){
 
         Long myId = jwtService.getAccountId(token);
@@ -85,6 +76,18 @@ public class AccountController {
         BaseMessage bm = accountService.follow(myId, yourId);
         return new ResponseEntity(bm,bm.getHttpStatus());
     }
+
+
+    @DeleteMapping("/myfollowing/{yourid}")
+    public ResponseEntity disconnect(@PathVariable Long yourid, @RequestHeader(value = "Authorization") String token){
+
+        Long myId = jwtService.getAccountId(token);
+        logger.info("my: "+myId+" your: "+yourid);
+        BaseMessage bm = accountService.disconnect(myId, yourid);
+        return new ResponseEntity(bm,bm.getHttpStatus());
+    }
+
+    //--------------------------------------관심태그------------------------------------------------------
 
     @PutMapping("/mytag")
     public ResponseEntity selectTag(@RequestBody @Valid AccountDto.AccountTagRequest accountTagRequest, @RequestHeader(value = "Authorization") String token) {
@@ -97,4 +100,24 @@ public class AccountController {
             return ResponseEntity.ok().build();
     }
 
+    @DeleteMapping("/mytag/{id}")
+    public ResponseEntity deleteTag(@PathVariable Long id, @RequestHeader(value = "Authorization") String token){
+        BaseMessage bm=accountService.deleteTag(id,token);
+        return new ResponseEntity(bm,bm.getHttpStatus());
+    }
+
+    //--------------------------------------게시물 좋아요------------------------------------------------------
+
+    @PutMapping("/like")
+    public ResponseEntity likePosts(@RequestBody AccountDto.LikeRequest likeRequest,@RequestHeader(value = "Authorization") String token){
+        BaseMessage bm=accountService.likePosts(likeRequest,token);
+        return new ResponseEntity(bm,bm.getHttpStatus());
+    }
+
+    @DeleteMapping("/like/{id}")
+    public ResponseEntity cancelLikedPosts(@PathVariable Long id, @RequestHeader(value = "Authorization") String token){
+        logger.info("id : "+id);
+        BaseMessage bm=accountService.cancelLikedPosts(id,token);
+        return new ResponseEntity(bm,bm.getHttpStatus());
+    }
 }
