@@ -3,7 +3,7 @@
 ![애프터눈로고](docs/afternoon_logo.png)
 ![애프터눈텍스트](docs/afternoon_text.png)
 
-- SSAFY 4기 2학기 공통 프로젝트 1위 수상
+- **SSAFY 4기 2학기 공통 프로젝트 1위 수상**
 
 - [애프터눈 웹사이트](http://i4a302.p.ssafy.io)
 
