@@ -1,4 +1,4 @@
-# 🙆🙋🙆 Welcome to 애프터눈
+# 🙆 Welcome to 애프터눈 🙋
 
 ![애프터눈로고](docs/afternoon_logo.png)
 ![애프터눈텍스트](docs/afternoon_text.png)
