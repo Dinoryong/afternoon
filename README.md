@@ -95,15 +95,15 @@
 ## 👨‍👧‍👦 Who We Are?
 
 <div align="center">
-
-  <img width='500' src='docs/팀원소개.png' />
-
-</div>
-
-<div align="center">
   
   [![Github](https://img.shields.io/badge/이재욱-_-6DB33F?logo=Github)](https://github.com/nanjae)
   [![Github](https://img.shields.io/badge/구영지-_-6DB33F?logo=Github)](https://github.com/Dinoryong)
   [![Github](https://img.shields.io/badge/한우석-_-6DB33F?logo=Github)](https://github.com/dntjr4772)
+
+</div>
+
+<div align="center">
+
+  <img width='500' src='docs/팀원소개.png' />
 
 </div>
