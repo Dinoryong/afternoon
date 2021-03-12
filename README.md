@@ -90,6 +90,9 @@
 
 ## ⭐ Main Feature
 
+<img width='40%' src='docs/홈_태그선택.gif' />
+<img width='40%' src='docs/회원가입_로그인.gif' />
+
 <br>
 
 ## 👨‍👧‍👦 Who We Are?
