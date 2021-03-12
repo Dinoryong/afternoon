@@ -82,7 +82,11 @@
 
 ## System Architecture 🖥️
 
-![애프터눈로고](docs/시스템아키텍처.png)
+<div align="center">
+
+  <img width='1000' src='docs/시스템아키텍처.png' />
+
+</div>
 
 ## Main Feature ⭐
 
@@ -92,7 +96,7 @@
 
 <div align="center">
 
-  <img width='600' src='docs/팀원소개.png' />
+  <img width='500' src='docs/팀원소개.png' />
 
 </div>
 
