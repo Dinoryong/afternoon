@@ -103,7 +103,7 @@
 <div align="center">
   
   [![Github](https://img.shields.io/badge/이재욱-_-6DB33F?logo=Github)](https://github.com/nanjae)
-  ![Github](https://img.shields.io/badge/구영지-_-6DB33F?logo=Github)
-  ![Github](https://img.shields.io/badge/한우석-_-6DB33F?logo=Github)
+  [![Github](https://img.shields.io/badge/구영지-_-6DB33F?logo=Github)](https://github.com/Dinoryong)
+  [![Github](https://img.shields.io/badge/한우석-_-6DB33F?logo=Github)](https://github.com/dntjr4772)
 
 </div>
