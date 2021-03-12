@@ -90,4 +90,8 @@
 
 ## Who We Are? 👨‍👧‍👦
 
-<br>
+  <img width='600' src='docs/팀원소개.png' />
+
+![Github](https://img.shields.io/badge/이재욱-_-6DB33F?logo=Github)
+![Github](https://img.shields.io/badge/이재욱-_-6DB33F?logo=Github)
+![Github](https://img.shields.io/badge/이재욱-_-6DB33F?logo=Github)
