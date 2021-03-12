@@ -58,23 +58,24 @@
 
 <div align="center">
 
-![Next.js](https://img.shields.io/badge/Next.js-_-000000?logo=Next.js)
-![React](https://img.shields.io/badge/React-_-61DAFB?logo=React)
-![Redux](https://img.shields.io/badge/Redux-_-764ABC?logo=Redux)
-![Typescript](https://img.shields.io/badge/Typescript-_-764ABC?logo=Typescript)
-![Javascript](https://img.shields.io/badge/Javascript-_-F7DF1E?logo=Javascript)
+![Next.js](https://img.shields.io/badge/Next.js-10.0.5-000000?logo=Next.js)
+![React](https://img.shields.io/badge/React-17.0.1-61DAFB?logo=React)
+![Redux](https://img.shields.io/badge/Redux-4.0.5-764ABC?logo=Redux)
+![Typescript](https://img.shields.io/badge/Typescript-4.1.3-764ABC?logo=Typescript)
+![Javascript](https://img.shields.io/badge/Javascript-ES6-F7DF1E?logo=Javascript)
 
-![Spring](https://img.shields.io/badge/Spring-_-6DB33F?logo=Spring)
-![Gradle](https://img.shields.io/badge/Gradle-_-02303A?logo=Gradle)
-![Hibernate](https://img.shields.io/badge/Hibernate-_-59666C?logo=Hibernate)
-![MariaDB](https://img.shields.io/badge/MariaDB-_-003545?logo=MariaDB)
-![JSON_Web_Tokens](https://img.shields.io/badge/JSON_Web_Tokens-_-000000?logo=JSON-Web-Tokens)
+![Java](https://img.shields.io/badge/Java-8.0.275-6DB33F?logo=Java)
+![Spring](https://img.shields.io/badge/Spring-5.3.3-6DB33F?logo=Spring)
+![Gradle](https://img.shields.io/badge/Gradle-6.7.1-02303A?logo=Gradle)
+![MariaDB](https://img.shields.io/badge/MariaDB-8.0.22-003545?logo=MariaDB)
+![Hibernate](https://img.shields.io/badge/Hibernate-5.4.27-59666C?logo=Hibernate)
+![JSON_Web_Tokens](https://img.shields.io/badge/JSON_Web_Tokens-0.9.1-000000?logo=JSON-Web-Tokens)
 
-![Amazon_AWS](https://img.shields.io/badge/Amazon_AWS-_-FF9900?logo=Amazon-AWS)
-![Firebase](https://img.shields.io/badge/Firebase-_-FFCA28?logo=Firebase)
-![Docker](https://img.shields.io/badge/Docker-_-2496ED?logo=Docker)
-![NGINX](https://img.shields.io/badge/NGINX-_-269539?logo=NGINX)
-![Let’s_Encrypt](https://img.shields.io/badge/Let’s_Encrypt-_-003A70?logo=Let’s-Encrypt)
+![Ubuntu](https://img.shields.io/badge/Ubuntu-20.04-E95420?logo=Ubuntu)
+![Firebase](https://img.shields.io/badge/Firebase-8.2.4-FFCA28?logo=Firebase)
+![Docker](https://img.shields.io/badge/Docker-20.10.3-2496ED?logo=Docker)
+![NGINX](https://img.shields.io/badge/NGINX-1.18.0-269539?logo=NGINX)
+![Let’s_Encrypt](https://img.shields.io/badge/Let’s_Encrypt-0.40.0-003A70?logo=Let’s-Encrypt)
 
 </div>
 
