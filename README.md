@@ -1,4 +1,4 @@
-# Welcome to 애프터눈 🙆🙋🙆
+# 🙆🙋🙆 Welcome to 애프터눈
 
 ![애프터눈로고](docs/afternoon_logo.png)
 ![애프터눈텍스트](docs/afternoon_text.png)
@@ -20,7 +20,7 @@
 
 <br>
 
-## Project Overview 📆
+## 📆 Project Overview
 
 - **진행 기간** : 2021. 01. 11 ~ 2021. 02. 19 (6주)
 
@@ -54,7 +54,7 @@
 
 <br>
 
-## Tech Stack 🔧
+## 🔧 Tech Stack
 
 <div align="center">
 
@@ -80,7 +80,7 @@
 
 <br>
 
-## System Architecture 🖥️
+## 🖥️ System Architecture
 
 <div align="center">
 
@@ -88,11 +88,11 @@
 
 </div>
 
-## Main Feature ⭐
+## ⭐ Main Feature
 
 <br>
 
-## Who We Are? 👨‍👧‍👦
+## 👨‍👧‍👦 Who We Are?
 
 <div align="center">
 
