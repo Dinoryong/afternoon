@@ -104,6 +104,6 @@
 
 <div align="center">
 
-  <img width='500' src='docs/팀원소개.png' />
+  <img width='600' src='docs/팀원소개.png' />
 
 </div>
