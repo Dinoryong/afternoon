@@ -1,26 +1,26 @@
-# Welcome to 애프터눈 🙆🙋🙆
+# 🙆 Welcome to 애프터눈 🙋
 
 ![애프터눈로고](docs/afternoon_logo.png)
 ![애프터눈텍스트](docs/afternoon_text.png)
 
-- SSAFY 4기 2학기 공통 프로젝트 1위 수상
+- **SSAFY 4기 2학기 공통 프로젝트 1위 수상**
 
-- [애프터눈 웹사이트](http://i4a302.p.ssafy.io)
+- **[애프터눈 웹사이트](http://i4a302.p.ssafy.io)**
 
   > 본 웹사이트는 SSAFY에서 제공한 AWS EC2 클라우드 서버에서 배포되었습니다.<br>
   > 접속이 불가한 경우 제공받은 서버가 회수되었음을 알려드립니다.
 
-- 최종발표 전체영상
+- [최종발표 전체영상](https://youtu.be/Hho1uNJQ64Y)
 
-- 최종발표 시연영상
+- [최종발표 시연영상](https://youtu.be/Qnc_LFPsTrg)
 
-- 최종발표 UCC
+- [최종발표 UCC](https://youtu.be/xClEd_PVuDs)
 
 - <a href='docs/애프터눈_발표자료_v4.pdf'>최종발표 PDF</a>
 
 <br>
 
-## Project Overview 📆
+## 📆 Project Overview
 
 - **진행 기간** : 2021. 01. 11 ~ 2021. 02. 19 (6주)
 
@@ -54,7 +54,7 @@
 
 <br>
 
-## Tech Stack 🔧
+## 🔧 Tech Stack
 
 <div align="center">
 
@@ -80,14 +80,42 @@
 
 <br>
 
-## System Architecture 🖥️
+## 🖥️ System Architecture
 
-![애프터눈로고](docs/시스템아키텍처.png)
+<div align="center">
 
-## Main Feature ⭐
+  <img width='1000' src='docs/시스템아키텍처.png' />
+
+</div>
+
+## ⭐ Main Feature
+
+|홈화면 & 태그선택|회원가입 & 로그인|
+|------|---|
+|<img width='100%' src='docs/홈_태그선택.gif' />|<img width='100%' src='docs/회원가입_로그인.gif' />|
+
+|사진 업로드 & 눈 생성|사진 상세보기 & 댓글|
+|------|---|
+|<img width='100%' src='docs/게시물_업로드.gif' />|<img width='100%' src='docs/게시물_댓글.gif' />|
+
+|관심태그 설정 & 내 피드|태그 큐레이팅 & 팔로우|
+|------|---|
+|<img width='100%' src='docs/관심태그.gif' />|<img width='100%' src='docs/태그_큐레이팅.gif' />|
 
 <br>
 
-## Who We Are? 👨‍👧‍👦
+## 👨‍👧‍👦 Who We Are?
 
-<br>
+<div align="center">
+  
+  [![Github](https://img.shields.io/badge/이재욱-프론트엔드-6DB33F?logo=Github)](https://github.com/nanjae)
+  [![Github](https://img.shields.io/badge/구영지-프론트엔드-6DB33F?logo=Github)](https://github.com/Dinoryong)
+  [![Github](https://img.shields.io/badge/한우석-백엔드-2D832F?logo=Github)](https://github.com/dntjr4772)
+
+</div>
+
+<div align="center">
+
+  <img width='600' src='docs/팀원소개.png' />
+
+</div>
