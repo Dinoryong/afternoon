@@ -90,8 +90,17 @@
 
 ## ⭐ Main Feature
 
-<img width='40%' src='docs/홈_태그선택.gif' />
-<img width='40%' src='docs/회원가입_로그인.gif' />
+|홈화면 & 태그선택|회원가입 & 로그인|
+|------|---|
+|<img width='100%' src='docs/홈_태그선택.gif' />|<img width='100%' src='docs/회원가입_로그인.gif' />|
+
+|사진 업로드 & 눈 생성|사진 상세보기 & 링크 댓글|
+|------|---|
+|<img width='100%' src='docs/게시물_업로드.gif' />|<img width='100%' src='docs/게시물_댓글.gif' />|
+
+|관심태그 설정 & 내 피드|태그 큐레이팅 & 요약|
+|------|---|
+|<img width='100%' src='docs/관심태그.gif' />|<img width='100%' src='docs/태그_큐레이팅.gif' />|
 
 <br>
 
