@@ -10,11 +10,11 @@
   > 본 웹사이트는 SSAFY에서 제공한 AWS EC2 클라우드 서버에서 배포되었습니다.<br>
   > 접속이 불가한 경우 제공받은 서버가 회수되었음을 알려드립니다.
 
-- 최종발표 전체영상
+- [최종발표 전체영상](https://youtu.be/Hho1uNJQ64Y)
 
-- 최종발표 시연영상
+- [최종발표 시연영상](https://youtu.be/Qnc_LFPsTrg)
 
-- 최종발표 UCC
+- [최종발표 UCC](https://youtu.be/xClEd_PVuDs)
 
 - <a href='docs/애프터눈_발표자료_v4.pdf'>최종발표 PDF</a>
 
