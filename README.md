@@ -10,17 +10,25 @@
   > 본 웹사이트는 SSAFY에서 제공한 AWS EC2 클라우드 서버에서 배포되었습니다.<br>
   > 접속이 불가한 경우 제공받은 서버가 회수되었음을 알려드립니다.
 
-- [최종발표 전체영상](https://youtu.be/Hho1uNJQ64Y)
+<br>
 
-- [최종발표 시연영상](https://youtu.be/Qnc_LFPsTrg)
+## ⭐ Main Feature
 
-- [최종발표 UCC](https://youtu.be/xClEd_PVuDs)
+|홈화면 & 태그선택|회원가입 & 로그인|
+|------|---|
+|<img width='100%' src='docs/홈_태그선택.gif' />|<img width='100%' src='docs/회원가입_로그인.gif' />|
 
-- <a href='docs/애프터눈_발표자료_v4.pdf'>최종발표 PDF</a>
+|사진 업로드 & 눈 생성|사진 상세보기 & 댓글|
+|------|---|
+|<img width='100%' src='docs/게시물_업로드.gif' />|<img width='100%' src='docs/게시물_댓글.gif' />|
+
+|관심태그 설정 & 내 피드|태그 큐레이팅 & 팔로우|
+|------|---|
+|<img width='100%' src='docs/관심태그.gif' />|<img width='100%' src='docs/태그_큐레이팅.gif' />|
 
 <br>
 
-## 📆 Project Overview
+## 📆 Overview
 
 - **진행 기간** : 2021. 01. 11 ~ 2021. 02. 19 (6주)
 
@@ -89,22 +97,6 @@
 
 </div>
 
-## ⭐ Main Feature
-
-|홈화면 & 태그선택|회원가입 & 로그인|
-|------|---|
-|<img width='100%' src='docs/홈_태그선택.gif' />|<img width='100%' src='docs/회원가입_로그인.gif' />|
-
-|사진 업로드 & 눈 생성|사진 상세보기 & 댓글|
-|------|---|
-|<img width='100%' src='docs/게시물_업로드.gif' />|<img width='100%' src='docs/게시물_댓글.gif' />|
-
-|관심태그 설정 & 내 피드|태그 큐레이팅 & 팔로우|
-|------|---|
-|<img width='100%' src='docs/관심태그.gif' />|<img width='100%' src='docs/태그_큐레이팅.gif' />|
-
-<br>
-
 ## 👨‍👧‍👦 Who We Are?
 
 <div align="center">
@@ -120,3 +112,13 @@
   <img width='600' src='docs/팀원소개.png' />
 
 </div>
+
+## :package: Deliverables
+
+- [최종발표 전체영상](https://youtu.be/Hho1uNJQ64Y)
+
+- [최종발표 시연영상](https://youtu.be/Qnc_LFPsTrg)
+
+- [최종발표 UCC](https://youtu.be/xClEd_PVuDs)
+
+- <a href='docs/애프터눈_발표자료_v4.pdf'>최종발표 PDF</a>
